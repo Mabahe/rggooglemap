@@ -30,6 +30,56 @@
 require_once(PATH_tslib.'class.tslib_pibase.php');
 
 
+   /**
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   87: class tx_rggooglemap_pi1 extends tslib_pibase
+ *   98:     function init($conf)
+ *  197:     function main($content,$conf)
+ *  258:     function showMap()
+ *  283:     function showRecordsOnMap ()
+ *  297:     function showLocationBox ()
+ *  318:     function showMenu ($additionalCat='', $additionalWhere='')
+ *  430:     function showSearch ()
+ *  459:     function getRecursiveCat($allowedCat, $parentId=0,$level=0 )
+ *  490:     function showCatMenu()
+ *  508:     function geoCodeAddress($address='', $zip='', $city='', $country='')
+ *  555:     function search($searchForm)
+ *  744:     function getActiveRecords($area, $cat)
+ *  800:     function getLLMarkers($markerArray, $conf, $prefix)
+ *  830:     function initMap()
+ *  878:     function infomsg($uid, $table,$tmplPrefix=1)
+ *  932:     function pageBrowserStatistic($offset=0, $table, $field, $where)
+ *  957:     function processCat($data)
+ * 1058:     function processCatTree($data)
+ * 1073:     function processSearchInMenu ($data)
+ * 1120:     function resultSet($var)
+ * 1212:     function displayCatMenu($id=0)
+ * 1270:     function getJs ()
+ * 1395:     function getPOIonStart()
+ * 1437:     function getPoiTab($id,$tab,$table)
+ * 1452:     function getPoiContent($id,$tab,$table)
+ * 1496:     function getMarker($row, $prefix)
+ * 1547:     function helperGetFlexform($sheet, $key, $confOverride='')
+ * 1576:     function xmlFunc($content,$conf)
+ * 1714:     function xmlAddRecord($table, $row,$conf, $img,$test)
+ * 1737:     function xmlGetRowInXML($row,$conf)
+ * 1752:     function xmlNewLevel($name,$beginEndFlag=0,$params=array())
+ * 1777:     function xmlGetResult()
+ * 1788:     function xmlOutput($content)
+ * 1803:     function xmlIndent($b)
+ * 1820:     function xmlFieldWrap($field,$value)
+ * 1825:     function xmlTopLevelName()
+ * 1830:     function xmlRenderHeader()
+ * 1834:     function xmlRenderFooter()
+ *
+ * TOTAL FUNCTIONS: 38
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+
+
 /**
  * Plugin 'Google Map (rggooglemap)' for the 'rggooglemap' extension.
  *
@@ -1280,22 +1330,29 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		// create the gicons JS, needed for valid sizes, don't trust JS on that...
 		$gicon = '';
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('image', 'tx_rggooglemap_cat', 'hidden=0 AND deleted=0');
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,image', 'tx_rggooglemap_cat', 'hidden=0 AND deleted=0');
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$iconSize = @getimagesize('uploads/tx_rggooglemap/'.$row['image']);
+			$width = 0;
+			$height = 0;
 			
-			// todo: get size from tsconf ;)
+			// If icon size can't be get with php, use settings from TS
 			if (!is_array($iconSize)) {
-				$iconSize = array();
-				$iconSize[0] = 16;
-				$iconSize[1] = 16;
+				$iconSizeConf = $this->conf['map.']['iconSize.'];
+
+				$current = $row['uid'].'.';
+				$width = (intval($iconSizeConf[$current]['width']) > 0) ? intval($iconSizeConf[$current]['width']) : intval($iconSizeConf['default.']['width']);
+				$height = (intval($iconSizeConf[$current]['height']) > 0) ? intval($iconSizeConf[$current]['height']) : intval($iconSizeConf['default.']['height']);
+			} else {
+				$width = $iconSize[0];
+				$height = $iconSize[1];
 			}
 					
 			$key = 'gicons["'.$row['image'].'"]';
-			$gicon .= $key.'= new GIcon(baseIcon);';
-			$gicon .= $key.'.image = "'.$urlForIcons.$row['image'].'";';
-			$gicon .= $key.'.iconSize = new GSize('.$iconSize[0].', '.$iconSize[0].');';
-			$gicon .= $key.'.infoWindowAnchor = new GPoint('.($iconSize[0]/2).', '.($iconSize[0]/2).');';
+			$gicon .= $key.'= new GIcon(baseIcon);'.chr(10);
+			$gicon .= $key.'.image = "'.$urlForIcons.$row['image'].'";'.chr(10);
+			$gicon .= $key.'.iconSize = new GSize('.$width.', '.$height.');'.chr(10);
+			$gicon .= $key.'.infoWindowAnchor = new GPoint('.($width/2).', '.($height/2).');'.chr(10).chr(10);
 		}
 		
 		$markerArray['###GICONS###'] = $gicon;
