@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for flexforms of extension 'rggooglemap'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="general.sheetTitle">Settings</label>
+			<label index="general.show">Show</label>
+			<label index="general.show.0">Map</label>
+			<label index="general.show.1">POIs</label>
+			<label index="general.show.2">Menu</label>
+			<label index="general.show.3">Locationbox</label>
+			<label index="general.show.4">Active records</label>
+			<label index="general.show.5">Searchbox</label>			
+			<label index="general.show.6">Catmenu</label>
+			
+			<label index="general.startingpoint">Starting point</label>
+			<label index="general.recursive">Recursive</label>
+			<label index="general.recursive.0"></label>
+			<label index="general.recursive.1">1 level</label>
+			<label index="general.recursive.2">2 levels</label>
+			<label index="general.recursive.3">3 levels</label>
+			<label index="general.recursive.4">4 levels</label>
+			<label index="general.recursive.infinite">Infinite</label>
+			<label index="general.categories">Active categories</label>
+			<label index="general.categoriesselected">Available categories</label>			
+			<label index="general.key">Googlemap Key</label>			
+
+        <!-- Flexforms  map sheet -->
+			<label index="map.sheetTitle">Map</label>
+      <label index="map.width">Width of map</label>
+			<label index="map.height">Height of map</label>
+			<label index="map.lng">Start Longtidude</label>
+			<label index="map.lat">Start Latidude</label>
+			<label index="map.zoom">Start Zoom</label>
+			<label index="map.type">Type of map</label>
+			<label index="map.type.map">Map</label>
+			<label index="map.type.satellite">Satellite</label>
+			<label index="map.type.hybrid">Hybrid</label>
+			<label index="map.type.physical">Terrain</label>			
+			<label index="map.type_controls">Show type controls</label>
+			<label index="map.type_controls.0"></label>
+			<label index="map.type_controls.1">Show</label>
+			<label index="map.type_controls.2">Hide</label>
+			<label index="map.nav_controls">Navigation controls</label>
+			<label index="map.nav_controls.none">None</label>
+			<label index="map.nav_controls.small">Small</label>
+			<label index="map.nav_controls.large">Large</label>
+			<label index="map.controlonmouseover">Hide Controls on Mouseover</label>			
+			<label index="map.mapoverview">Hide overview window</label>			
+			<label index="map.showondefault">Default POI</label>
+			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
+
+
+        <!-- Flexforms  sorting sheet -->
+			<label index="sorting.sheetTitle">Sorting</label>
+			<label index="sorting.orderby.title">...order by</label>			
+      <label index="sorting.orderby.asc">Ascending</label>			
+			<label index="sorting.orderby.desc">Descending</label>
+			<label index="sorting.orderby.name">Name</label>
+			<label index="sorting.orderby.tstamp">Tstamp</label>
+
+      <label index="sorting.catsort">Category in POI view</label>
+      <label index="sorting.poisort">POIs in POI view</label>
+      <label index="sorting.checkboxsort">Checkboxes in MAP view</label>
+
+        <!-- Flexforms  menu sheet -->
+			<label index="menu.sheetTitle">Menu settings</label>
+			<label index="menu.startingpoint">Starting point</label>
+			<label index="menu.categories">Categories</label>
+			<label index="menu.header">Include</label>
+			<label index="menu.header.0">Header of Category</label>
+			<label index="menu.header.1">Description of Category</label>
+			<label index="menu.map">Page with the map</label>
+			<label index="menu.menucatsortorder">Category ordering</label>			
+			<label index="menu.menurecordsort">Records ordering</label>
+			<label index="menu.menurecordsortorder">asc/desc</label>			
+			<label index="menu.usecategorytree">Use category tree in Menu</label>      
+			<label index="menu.usesearchbox">Use searchbox in Menu</label> 
+
+			<label index="sorting.title">Title</label>
+			<label index="sorting.uid">UID</label>
+			<label index="sorting.tstamp">Last modified (tstamp)</label>
+			<label index="sorting.crdate">Creation Date (crdate)</label>
+			
+        <!-- Flexforms  sheet search -->			
+			<label index="search.sheetTitle">Search</label>
+			<label index="search.defaultCountry">Default Country for Geocoding, use "AT" or "Austria" or "Österreich"</label>
+			<label index="search.radiusSearch">Use Radius Search</label>
+		</languageKey>
+
+
+		<languageKey index="de" type="array">
+        <!-- Flexforms  -->
+			<label index="general.title">Allgemein</label>
+			<label index="general.show">Anzeige von</label>
+			<label index="general.show.0">Karte</label>
+			<label index="general.show.1">POIs</label>
+			<label index="general.show.2">Menü</label>			
+			<label index="general.show.3">Ortsuche</label>
+			<label index="general.show.4">Aktive Datensätze</label>
+			<label index="general.show.5">Suche</label>			
+			<label index="general.show.6">Kategoriemenü</label>			
+      <label index="template.template_file">Template</label>
+			<label index="general.key">Googlemap Key</label>      
+			<label index="map.width">Breite der Karte</label>
+			<label index="map.height">Höhe der Karte</label>
+			<label index="map.lng">Längengrad</label>
+			<label index="map.lat">Breitengrad</label>
+			<label index="map.zoom">Zoom</label>
+			<label index="map.type">Kartentyp</label>
+			<label index="map.type.map">Karte</label>
+			<label index="map.type.satellite">Satellit</label>
+			<label index="map.type.hybrid">Hybrid (Karte + Satellit)</label>
+			<label index="map.type_controls">Umschalter für Kartentyp anzeigen</label>
+			<label index="map.type_controls.0"></label>
+			<label index="map.type_controls.1">Anzeigen</label>
+			<label index="map.type_controls.2">Verstecken</label>
+			<label index="map.nav_controls">Navigationsschalter anzeigen</label>
+			<label index="map.nav_controls.none">Keine</label>
+			<label index="map.nav_controls.small">Klein</label>
+			<label index="map.nav_controls.large">Groß</label>
+			<label index="general.startingpoint">Ausgangspunkt</label>
+			<label index="general.recursive">Rekursiv</label>
+			<label index="general.recursive.0"></label>
+			<label index="general.recursive.1">1 Ebene</label>
+			<label index="general.recursive.2">2 Ebenen</label>
+			<label index="general.recursive.3">3 Ebenen</label>
+			<label index="general.recursive.4">4 Ebenen</label>
+			<label index="general.recursive.infinite">Unendlich</label>
+			<label index="general.categories">Aktive Kategorien</label>
+			<label index="general.categoriesselected">Verfügbare Kategorien</label>			
+
+			<label index="map.showondefault">Standard POI</label>
+			
+      <!-- Flexforms  2nd sheet -->
+			<label index="sorting.title">Sortierung</label>
+			<label index="sorting.orderby.title">...sortiert nach</label>			
+      <label index="sorting.orderby.asc">austeigend</label>			
+			<label index="sorting.orderby.desc">abgsteigend</label>
+			<label index="sorting.orderby.name">Name</label>
+			<label index="sorting.orderby.tstamp">Tstamp</label>
+
+      <label index="sorting.catsort">Kategorie in POI-Ansicht</label>
+      <label index="sorting.poisort">POIs in POI-Ansicht</label>
+      <label index="sorting.checkboxsort">Checkoxen in Karten-Ansicht</label>
+
+
+        <!-- Flexforms  3rd sheet -->
+			<label index="menu.title">Menü-Einstellugen</label>
+			<label index="menu.startingpoint">Ausgangspunkt</label>
+			<label index="menu.categories">Kategorien</label>
+			<label index="menu.header">Inklusive</label>
+			<label index="menu.header.0">Kategorietitel</label>
+			<label index="menu.header.1">Kategoriebeschreibung</label>
+			<label index="menu.map">Seite mit Karte</label>
+			<label index="menu.usecategorytree">Kategoriebaum im Menü verwenden</label>			
+			<label index="menu.usesearchbox">Suche im Menü verwenden</label>
+		</languageKey>
+
+		<!-- FRENCH, thx to zatmania -->
+		<languageKey index="fr" type="array">
+			<label index="general.title">Général</label>
+			<label index="general.show">Voir</label>
+			<label index="general.show.0">Carte</label>
+			<label index="general.show.1">POIs</label>
+			<label index="general.show.2">Menu</label>
+			<label index="template.template_file">Fichier Template</label>
+			<label index="map.width">Largeur de la carte</label>
+			<label index="map.height">Hauteur de la carte</label>
+			<label index="map.lng">Longtidude</label>
+			<label index="map.lat">Latidude</label>
+			<label index="map.zoom">Zoom</label>
+			<label index="map.key">Clé Googlemap</label>
+			<label index="map.type">Type de carte</label>
+			<label index="map.type.map">Carte</label>
+			<label index="map.type.satellite">Satellite</label>
+			<label index="map.type.hybrid">Hybrid</label>
+			<label index="map.type_controls">Montrer les commandes type</label>
+			<label index="map.type_controls.0"></label>
+			<label index="map.type_controls.1">Voir</label>
+			<label index="map.type_controls.2">Cacher</label>
+			<label index="map.nav_controls">Commandes de Navigation</label>
+			<label index="map.nav_controls.none">Aucun</label>
+			<label index="map.nav_controls.small">Petit</label>
+			<label index="map.nav_controls.large">Grand</label>
+			<label index="general.startingpoint">Point de départ</label>
+			<label index="general.recursive">Recursif</label>
+			<label index="general.recursive.0"></label>
+			<label index="general.recursive.1">1 niveau</label>
+			<label index="general.recursive.2">2 niveaux</label>
+			<label index="general.recursive.3">3 niveaux</label>
+			<label index="general.recursive.4">4 niveaux</label>
+			<label index="general.recursive.infinite">Infini</label>
+			<label index="general.type.map.alternativeUrl">URL Alternative</label>
+			<label index="map.showondefault">FR: Default POI</label>
+        <!-- Flexforms  2nd sheet -->
+			<label index="sorting.title">Classement</label>
+			<label index="sorting.orderby.title">...trié par</label>			
+      <label index="sorting.orderby.asc">Croissant</label>			
+			<label index="sorting.orderby.desc">Décroissant</label>
+			<label index="sorting.orderby.name">Nom</label>
+			<label index="sorting.orderby.tstamp">Date</label>
+
+      <label index="sorting.catsort">Catégories dans la vue POI</label>
+      <label index="sorting.poisort">Vue des POIs dans POI</label>
+      <label index="sorting.checkboxsort">Case à cocher dans la vue "Carte"</label>
+
+        <!-- Flexforms  3rd sheet -->
+			<label index="menu.title">Menu options</label>
+			<label index="menu.startingpoint">Point de départ</label>
+			<label index="menu.categories">Catégories</label>
+			<label index="menu.header">Insertion</label>
+			<label index="menu.header.0">Entête de la catégorie</label>
+			<label index="menu.header.1">Description de la catégorie</label>
+			<label index="menu.map">Page contenant la carte</label>
+		</languageKey>
+
+	</data>
+</T3locallang>

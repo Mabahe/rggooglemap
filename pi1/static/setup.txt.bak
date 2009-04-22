@@ -1,0 +1,482 @@
+
+plugin.tx_rggooglemap_pi1 {
+
+	##################################
+	############### new ##############
+	
+	generalLL = show,search,directions,more,back,lng,lat
+
+  # search settings
+  search {
+    minChars = 3
+    tt_address = title,description,name 
+    fe_users = comments,name,first_name,last_name,company
+    tx_tour_record = title,description,teasertext,waydescriptiontext
+    tx_housing_record = title,description,keywords,text
+    tx_city_record = title,subtitle,description
+    tx_staticregion_region = title
+    
+    LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description
+		defaultCountry = Austria
+		radiusSearch = 0
+    
+  }
+	
+	# locationbox
+	location {
+		LL = description,search,exampleaddress,zoomlevel_5,zoomlevel_9,zoomlevel_14,label_address,label_zoomlevel
+	}
+	
+	map {
+		LL = loading,remove-directions
+	}
+	
+	# Records current on the map
+	recordsOnMap {
+		LL = description,wait
+		
+		orderBy = rggmtitle ASC
+		#limit = 0,5
+	}
+	
+	
+  # view MENU
+  menu {
+    catOrder = title
+    recordsOrder = rggmtitle
+    recordsOrderBy = asc
+    
+
+  }
+  
+  # URL for the ajax request
+  # 20.value is filled, so don't use that!
+	xmlURL {
+		returnLast = url
+		parameter.data = page:uid
+		additionalParams.stdWrap.cObject = COA
+		additionalParams.stdWrap.cObject {
+			10 = TEXT
+			10.value = &type=500
+			
+			20 = TEXT
+		}
+		
+	}
+	
+	
+	# Title which is displayed when hovering a POI icon on the map
+	# choose the field which is used + stdWrap for it 
+	title {
+		tx_staticregion_region = title
+		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: ||</div>		
+		tt_address = name
+		tx_housing_record = title
+		tx_housing_record.noTrimWrap = |<div class="housing"><u>Unterkunft</u>: ||</div>
+		tx_city_record = title
+		tx_city_record.noTrimWrap = |<div class="city"><u>Ort</u>: ||</div>
+		tx_tour_record = title
+		tx_tour_record.noTrimWrap = |<div class="tour"><u>Wanderung</u>: ||</div>
+		
+		searchresult.noTrimWrap = |<div class=searchresult><u>Treffer</u>: ||</div>
+	}
+	
+	## Category Menu
+	catMenu {
+		# Icon
+		icon {
+			file.maxW = 11
+			file.maxH = 11
+		}
+	
+	}
+
+	### stdWrap for all fields
+	### using the syntax poi.<tablename>
+	poi {
+		LL = directions_header,directions_description
+
+		# CITY RECORDS
+		tx_city_record {
+			lng.crop=10
+			lat.crop=10
+			
+			logo {
+				setContentToCurrent = 1
+				if.isTrue.current = 1
+				stdWrap.cObject = IMAGE
+				stdWrap.cObject {
+					file {
+						import = uploads/tx_city/
+						import.current = 1
+						maxW = 60
+						maxH = 60
+					}
+					params = style="float:right"
+				}
+		
+			}	
+			
+			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
+			generic {
+				link = TEXT
+				link {
+					typolink {
+						returnLast = url
+						parameter.field = pid
+						title.field = title
+					}
+				}
+	
+			}
+		
+			# end generic
+		}
+
+############
+		# CITY RECORDS
+		tx_staticregion_region {
+			lng.crop=10
+			lat.crop=10
+			
+			image {
+				setContentToCurrent = 1
+				if.isTrue.current = 1
+				stdWrap.cObject = IMAGE
+				stdWrap.cObject {
+					file {
+						import = uploads/tx_staticregion/
+						import.current = 1
+						maxW = 60
+						maxH = 60
+					}
+					params = style="float:right"
+				}
+		
+			}	
+			
+			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
+			generic {
+				link = TEXT
+				link {
+					typolink {
+						returnLast = url
+						parameter.field = page
+						title.field = title
+					}
+				}
+	
+			}
+		
+			# end generic
+		}
+############
+
+
+
+		# TOUR RECORDS
+		tx_tour_record {
+
+			teaserimage {
+				setContentToCurrent = 1
+				if.isTrue.current = 1
+				stdWrap.cObject = IMAGE
+				stdWrap.cObject {
+					file {
+						import = uploads/tx_tour/
+						import.current = 1
+						maxW = 60
+						maxH = 60
+					}
+					params = style="float:right"
+					
+					imageLinkWrap  = 1
+					imageLinkWrap {	
+						enable = 1
+						typolink {
+							title.field= tx_chgalleryTitle
+							
+							parameter.override.cObject = IMG_RESOURCE
+							parameter.override.cObject {
+								file.import.data = TSFE:lastImageInfo|origFile
+								file.maxW = 800
+								file.maxH = 600
+								
+								stdWrap.postUserFunc = user_replaceSpaces
+							}
+				
+							# used lightbox is pmkslimbox
+							ATagParams = rel="lightbox"
+							ATagParams.override = rel="lightbox[presentlb{field:uid}]"
+							ATagParams.insertData = 1
+							
+							
+						}
+					}	
+					
+				}
+			}
+			
+			tx_rggmtour_lng.crop=10
+			tx_rggmtour_lat.crop=10
+			
+			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
+			generic {
+				link = TEXT
+				link {
+					typolink {
+						returnLast = url
+						parameter.field = pid
+						title.field = title
+					}
+				}
+	
+			}
+		
+			# end generic
+		}
+
+		# Housing RECORDS
+		tx_housing_record {
+
+			teaserimage {
+				setContentToCurrent = 1
+				if.isTrue.current = 1
+				stdWrap.cObject = IMAGE
+				stdWrap.cObject {
+					file {
+						import = uploads/tx_housing/
+						import.current = 1
+						maxW = 60
+						maxH = 60
+					}
+					params = style="float:right"
+
+					imageLinkWrap  = 1
+					imageLinkWrap {	
+						enable = 1
+						typolink {
+							title.field= tx_chgalleryTitle
+							
+							parameter.override.cObject = IMG_RESOURCE
+							parameter.override.cObject {
+								file.import.data = TSFE:lastImageInfo|origFile
+								file.maxW = 800
+								file.maxH = 600
+								
+								stdWrap.postUserFunc = user_replaceSpaces
+							}
+				
+							# used lightbox is pmkslimbox
+							ATagParams = rel="lightbox"
+							ATagParams.override = rel="lightbox[presentlb{field:uid}]"
+							ATagParams.insertData = 1
+							
+							
+						}
+					}	
+								
+				}
+			}
+			
+			tx_rggmhousing_lng.crop=10
+			tx_rggmhousing_lat.crop=10
+			
+			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
+			generic {
+				link = TEXT
+				link {
+					typolink {
+						parameter.field = pid
+						returnLast = url
+						additionalParams.cObject = COA
+						additionalParams.cObject {
+							
+							10 = CONTENT
+							10 {
+								table = tx_housing_cat
+								select {
+									pidInList = 10798
+									selectFields = tx_housing_cat.uid as catuid
+									join =  tx_housing_record_cat_mm ON (tx_housing_cat.uid = tx_housing_record_cat_mm.uid_foreign) INNER JOIN tx_housing_record ON (tx_housing_record.uid = tx_housing_record_cat_mm.uid_local)
+									max = 1
+								}
+								
+								renderObj = TEXT
+								renderObj {
+									field = catuid
+									wrap = &tx_housing_pi1[cat]=|
+								}
+						
+							}
+							
+							20 = TEXT
+							20 {
+								field = uid
+								wrap = &tx_housing_pi1[record]=|
+							}
+							
+						}
+						title.field = title
+					}
+				}
+	
+			}
+		
+			# end generic
+		}
+
+	}
+	
+  templateFileJS = EXT:rggooglemap/templateJS.js
+	
+	############### new ##############
+
+
+  templateFile = EXT:rggooglemap/template.html
+  cssFile = EXT:rggooglemap/res/rggm.css
+  pidList = 
+  recursive = 
+  mapDiv = map  
+  mapWidth = 769
+  mapHeight = 450
+  mapLng = 13.537216186523438
+  mapLat = 47.585673399138294
+  mapZoom = 11
+  mapKey = 
+  mapType = G_NORMAL_MAP
+  mapControl = show
+  mapNavigation = small
+  mapNavigationOnMouseOver = 0
+  mapOverview = 0
+  mapActiveCats = 
+  mapAvailableCats = 
+
+
+  enableDoubleClickZoom = 1
+  enableContinuousZoom = 1
+  enableScrollWheelZoom = 1
+  
+  recordsPerPage = 30
+
+
+
+  # stdWrap for all markers in the info bubble
+  poi {
+    name.wrap = 
+  }
+
+  
+  # Images in the info bubble
+  imageFields = image
+  
+  poiImage = IMAGE
+  poiImage {
+    file.maxW = 60
+    file.maxH = 80
+    #imageLightbox2 = 1
+    #imageLightbox2.imageset = 1
+    #imageLightbox2.saveImageShow = 1
+    #imageLightbox2.printImageShow = 1
+    wrap =
+    imageLinkWrap = 1
+    imageLinkWrap {
+      enable = 1
+      bodyTag = <body bgColor="#dddddd">
+      wrap = <a href="javascript:close();"> | </a>
+      width = 1000m
+      height = 800
+      JSwindow = 1
+      JSwindow.newWindow = 1
+      JSwindow.expand = 17,20
+    }
+  #  stdWrap.spaceAfter=10
+  }  
+  
+  # Links in the info bubble
+  linkFields = email,www
+  
+  link {
+    # static text for www
+    #www.value = A link
+    # dynamic text from given field
+    #www.field= name
+  }
+  
+  
+  
+  # stdWrap for all markers in the popup window
+  popup {
+  
+  }  
+  
+  
+
+  
+
+  
+  activateCluster = 0
+  
+  geocodeDefaultCountry = germany
+  
+  # CSS styles
+  _CSS_DEFAULT_STYLE (
+  )
+
+
+}
+# end pi1
+
+# link tags
+plugin.tx_rggooglemap_pi2 {
+  mapId < plugin.tx_rggooglemap_pi1.mapId
+  tt_addressOnly = 1
+  tableType = tt_address
+} 
+
+# category tags
+plugin.tx_rggooglemap_pi3 {
+  mapId < plugin.tx_rggooglemap_pi1.mapId
+} 
+
+
+## Set up page/type number:
+export_xml >
+export_xml = PAGE
+export_xml {
+  typeNum=500
+  config.disableAllHeaderCode = 1
+  config.metaCharset = utf-8
+  config.additionalHeaders = Content-Type:text/xml;charset=utf-8
+  config.xhtml_cleaning = 0
+  config.admPanel = 0
+  config.sendNoCacheHeaders = 1
+  config.no_cache = 1
+  
+  ## Includes the lib:
+  #includeLibs.export_xml = EXT:rggooglemap/pi1/class.tx_rgooglemap_pi1.php
+  
+  ## Inserting the USER cObject for XML rendering
+  10 = CONTENT
+  10 {
+    table = tt_content
+    select {
+      pidInList = this   
+      max = 1
+      andWhere = list_type='rggooglemap_pi1'
+    #  languageField = sys_language_uid
+    }
+
+    renderObj = COA
+    renderObj {
+      10 < plugin.tx_rggooglemap_pi1
+      10.userFunc = tx_rggooglemap_pi1->xmlFunc
+    }
+  }  
+}
+
+
+
+[globalString = IENV:HTTP_HOST=wandern.projekt.cyberhouse.at]
+plugin.tx_rggooglemap_pi1.mapKey = ABQIAAAA70kOcaqPF5-fTHiOW_eQ-xQkMvUeiai_pYOhlmPXBiaMLz8m_xTh8O6dWss9pswLSzWvGfUjF7sEzg
+[global]
