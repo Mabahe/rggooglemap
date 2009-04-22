@@ -202,7 +202,6 @@ plugin.tx_rggooglemap_pi1 {
 					}
 					params = style="float:right"
 				}
-		
 			}	
 			
 			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
@@ -378,12 +377,13 @@ plugin.tx_rggooglemap_pi1 {
 
 	}
 	
-  templateFileJS = EXT:rggooglemap/templateJS.js
+
 	
 	############### new ##############
 
 
   templateFile = EXT:rggooglemap/template.html
+  templateFileJS = EXT:rggooglemap/templateJS.js  
   cssFile = EXT:rggooglemap/res/rggm.css
   pidList = 
   recursive = 
@@ -416,42 +416,7 @@ plugin.tx_rggooglemap_pi1 {
     name.wrap = 
   }
 
-  
-  # Images in the info bubble
-  imageFields = image
-  
-  poiImage = IMAGE
-  poiImage {
-    file.maxW = 60
-    file.maxH = 80
-    #imageLightbox2 = 1
-    #imageLightbox2.imageset = 1
-    #imageLightbox2.saveImageShow = 1
-    #imageLightbox2.printImageShow = 1
-    wrap =
-    imageLinkWrap = 1
-    imageLinkWrap {
-      enable = 1
-      bodyTag = <body bgColor="#dddddd">
-      wrap = <a href="javascript:close();"> | </a>
-      width = 1000m
-      height = 800
-      JSwindow = 1
-      JSwindow.newWindow = 1
-      JSwindow.expand = 17,20
-    }
-  #  stdWrap.spaceAfter=10
-  }  
-  
-  # Links in the info bubble
-  linkFields = email,www
-  
-  link {
-    # static text for www
-    #www.value = A link
-    # dynamic text from given field
-    #www.field= name
-  }
+
   
   
   
@@ -468,10 +433,7 @@ plugin.tx_rggooglemap_pi1 {
   activateCluster = 0
   
   geocodeDefaultCountry = germany
-  
-  # CSS styles
-  _CSS_DEFAULT_STYLE (
-  )
+
 
 
 }
