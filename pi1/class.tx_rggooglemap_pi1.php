@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006 Georg Ringer <typo3 et ringerge dot org>
+*  (c) 2006 Georg Ringer <www.ringer.it>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -87,7 +87,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 /**
  * Plugin 'Google Map (rggooglemap)' for the 'rggooglemap' extension.
  *
- * @author	Georg Ringer <typo3@ringerge.org>
+ * @author	Georg Ringer <www.ringer.it>
  */
 
 class tx_rggooglemap_pi1 extends tslib_pibase {
@@ -490,7 +490,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	  $zip: zip
 	 * @param	string	  $city: city
 	 * @param	string	  $country: country
-   * @return	lat,lng
+   * @return	array with the status
 	 */
   function geoCodeAddress($address='', $zip='', $city='', $country='') {
 		$geocode	= array();
@@ -527,14 +527,17 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$response = explode(',',$response);
 			
 			// if there is a result
-			if ($response[0]=='200' && $response[2]!= '' && $response[3] != '') {
-				$coords['lat'] = $response[2];
-				$coords['lng'] = $response[3];
-				return $response[2].','.$response[3]; // lat,lng
-			}
+			$coords['status'] 	= $response[0];
+			$coords['accuracy']	= $response[1];
+			$coords['lat']			= $response[2];
+			$coords['lng']			= $response[3];
+			return $coords; // lat,lng
+
+		} else {
+				$coords['status']	= 601;
 		}
 		
-		return '';
+		return $coords;
   }
 
 	/**
@@ -548,9 +551,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 
-		$test ='';
-		$debug  =array();
-
+		$test		= '';
+		$debug	= array();
+		$error	= array();
 
 		// minimum characters needed, default = 3
 		if (strlen($searchForm['rggmsearchValue']) >= $this->conf['search.']['minChars'] ||
@@ -594,11 +597,22 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					// radius search (umkreissuche)
 					if ($searchForm['rggmActivateRadius']=='on') {
 						$coordinates = $this->geoCodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
-						if ($coordinates!='') {
-							$coordinates = explode(',',$coordinates);
-							$select = '*,SQRT(POW('.$coordinates[1].'-lng,2)*6400 + POW('.$coordinates[0].'-lat,2)*12100) AS distance';
-							$searchClause['radius']= ' SQRT(POW('.$coordinates[1].'-lng,2)*6400 + POW('.$coordinates[0].'-lat,2)*12100) <'.intval($searchForm['rggmRadius']);
+						
+						// if status is ok (200) and accuracy fits settings in TS
+						if ($coordinates['status'] == 200 && (intval($coordinates['accuracy']) >= intval($this->conf['search.']['radiusSearch.']['minAccuracy']))) {
+							$select = '*,SQRT(POW('.$coordinates['lng'].'-lng,2)*6400 + POW('.$coordinates['lat'].'-lat,2)*12100) AS distance';
+							$searchClause['radius']= ' SQRT(POW('.$coordinates['lng'].'-lng,2)*6400 + POW('.$coordinates['lat'].'-lat,2)*12100) <'.intval($searchForm['rggmRadius']);
 							$orderBy = 'distance';
+						} else {
+							$searchClause['errorWithRadiusSearch'] = '1==2';
+							
+							// if status is ok, the accuracy failed
+							if ($coordinates['status']==200) {
+								$error['accuracy']	= $this->pi_getLL('search_error_geocode-accuracy');
+							} else {
+								$error['status'] 		= $this->pi_getLL('search_error_geocode-status-'.$coordinates['status']);
+							}
+
 						}
 					}
 
@@ -616,110 +630,135 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'])) {
 						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'] as $_classRef) {
 							$_procObj = & t3lib_div::getUserObj($_classRef);
-							$searchClause = $_procObj->extraSearchProcessor($table,$searchClause,$orderBy, $limit, $this);
+							$searchClause = $_procObj->extraSearchProcessor($table,$searchClause,$orderBy, $limit, $error, $this);
 						}
 					}
 
 					$where = implode(' AND ', $searchClause);
-
-					$res += $this->generic->exec_SELECTquery($select,$table,$where,$groupBy,$orderBy, $limit);
+#$where = '1=1';
+				#	if (count($error) == 0) {
+						$res += $this->generic->exec_SELECTquery($select,$table,$where,$groupBy,$orderBy, $limit);
+			#		}
 				}
 
 				$debug[$table]['where'] = $where;
 			}
 
 
-			// todo Limit
-			$res = array_slice($res, 0,99);
-
-
-			/*
-			 * Create the output of the search
-			 */
-			$i = 0;
-			$jsResultDelete = 'deleteSearchResult();';
-			$jsResultUpdate = 'var bounds = new GLatLngBounds();';
-			$debug['count'] = 0;
-			$debug[$table]['res'] = $res;
-
-			// run through the results
-			while($row=array_shift($res)) {
-				$debug['count']++;
-
-				// check if there is really no records with lng/lat = 0
-				if (intval($row['lat'])==0 || intval($row['lng'])==0) {
-					continue;
+			if (count($error) == 0) {
+				// todo Limit
+				$res = array_slice($res, 0,99);
+	
+	
+				/*
+				 * Create the output of the search
+				 */
+				$i = 0;
+				$jsResultDelete = 'deleteSearchResult();';
+				$jsResultUpdate = 'var bounds = new GLatLngBounds();';
+				$debug['count'] = 0;
+				$debug[$table]['res'] = $res;
+	
+				// run through the results
+				while($row=array_shift($res)) {
+					$debug['count']++;
+	
+					// check if there is really no records with lng/lat = 0
+					if (intval($row['lat'])==0 || intval($row['lng'])==0) {
+						continue;
+					}
+	
+	
+					$markerArray = $this->getMarker($row,'search.');
+	
+	
+					$markerArray['###ODDEVEN###'] = ($i % 2==0) ? 'odd' : 'even';
+					$markerArray['###SEARCHID###'] = $i+1;
+	
+					// set the title right
+					$title = ($this->cObj2->stdWrap(htmlspecialchars($row['rggmtitle']), $this->conf['title.']['searchresult.']));
+					$title = str_replace('\'', '"', $title);
+	
+					// icon for the map
+					$icon = 'marker'.($i+1).'.png';
+	
+					// JS which displayes the search markers
+					$jsResultUpdate .= '
+						marker = createMarker(new GLatLng('.$row['lat'].','.$row['lng'].'), '. $row['uid'].', \''. $icon.'\', \''. $title.'\', \''. $row['table'].'\', 1);
+	
+						map.addOverlay( marker );
+						searchresultmarkers['.$i.'] = marker;
+						bounds.extend(new GLatLng('.$row['lat'].','.$row['lng'].'));
+					';
+	
+					$i++;
+	
+					$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+				}
+	
+				$jsResultUpdate.= $test;
+	
+				$markerArray['###SEARCHEXPRESSION###'] = $searchForm['rggmsearchValue'];
+				$markerArray['###SEARCHCOUNT###'] = $i;
+	
+	
+				$subpartArray['###CONTENT###'] = $content_item;
+	
+				$jsResultUpdate .= '
+					var zoom=map.getBoundsZoomLevel(bounds);
+	
+					var centerLat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) /2;
+					var centerLng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) /2;
+					map.setCenter(new GLatLng(centerLat,centerLng),zoom);
+				';
+	
+	
+				// Nothing found
+				if ($i ==0) {
+					$subpartArray['###CONTENT###'] = $this->pi_getLL('searchNoResult');
+					$jsResultUpdate = '';
 				}
 
-
-				$markerArray = $this->getMarker($row,'search.');
-
-
-				$markerArray['###ODDEVEN###'] = ($i % 2==0) ? 'odd' : 'even';
-				$markerArray['###SEARCHID###'] = $i+1;
-
-				// set the title right
-				$title = ($this->cObj2->stdWrap(htmlspecialchars($row['rggmtitle']), $this->conf['title.']['searchresult.']));
-				$title = str_replace('\'', '"', $title);
-
-				// icon for the map
-				$icon = 'marker'.($i+1).'.png';
-
-				// JS which displayes the search markers
-				$jsResultUpdate .= '
-					marker = createMarker(new GLatLng('.$row['lat'].','.$row['lng'].'), '. $row['uid'].', \''. $icon.'\', \''. $title.'\', \''. $row['table'].'\', 1);
-
-					map.addOverlay( marker );
-					searchresultmarkers['.$i.'] = marker;
-					bounds.extend(new GLatLng('.$row['lat'].','.$row['lng'].'));
-				';
-
-				$i++;
-
-				$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+				$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray,$wrappedSubpartArray);
 			}
 
-			$jsResultUpdate.= $test;
-
-			$markerArray['###SEARCHEXPRESSION###'] = $searchForm['rggmsearchValue'];
-			$markerArray['###SEARCHCOUNT###'] = $i;
-
-
-			$subpartArray['###CONTENT###'] = $content_item;
-
-			$jsResultUpdate .= '
-				var zoom=map.getBoundsZoomLevel(bounds);
-
-				var centerLat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) /2;
-				var centerLng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) /2;
-				map.setCenter(new GLatLng(centerLat,centerLng),zoom);
-			';
-
-
-			// Nothing found
-			if ($i ==0) {
-				$subpartArray['###CONTENT###'] = $this->pi_getLL('searchNoResult');
-				$jsResultUpdate = '';
-			}
-
-
-			$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray,$wrappedSubpartArray);
-
-			if ($debug==1) {
+			$debugOut = 0;
+			if ($debugOut==1) {
 				$content = t3lib_div::view_array($debug).$content;
 			}
+			
 
-			$objResponse->addScript($jsResultDelete);
-			$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
-			$objResponse->addScript($jsResultUpdate);
 
-			$objResponse->addAssign('searchFormError', 'innerHTML','');
+		$objResponse->addScript($jsResultDelete);
+		$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
+		$objResponse->addScript($jsResultUpdate);
+
+			#$objResponse->addAssign('searchFormError', 'innerHTML','');
 
 		// minimum character length not reached
 		} else {
-			$content.= sprintf($this->pi_getLL('searchMinChars'), $this->conf['search.']['minChars']);
+			$error['minChars'] = sprintf($this->pi_getLL('searchMinChars'), $this->conf['search.']['minChars']);
 			$objResponse->addAssign('searchFormError', 'innerHTML',$content);
 		}
+
+		// if any errors are found, load the error template
+		if (count($error) > 0) {
+			$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH_RESULTS_ERROR###');
+			$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
+			
+			foreach ($error as $key) {
+				$markerArray['###ERROR###'] = $key;
+				$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);
+			}
+			$subpartArray['###CONTENT###'] = $content_item;
+
+			$markerArray['###LL_HEADER###'] = $this->pi_getLL('search_error_header');				
+
+			$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
+			
+		}
+		
+
 
 		return $objResponse->getXML();
 	}

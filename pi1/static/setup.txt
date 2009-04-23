@@ -19,6 +19,12 @@ plugin.tx_rggooglemap_pi1 {
     LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description
 		defaultCountry = Austria
 		radiusSearch = 0
+		
+		radiusSearch {
+			# todo > to manual
+			# http://code.google.com/intl/de-DE/apis/maps/documentation/geocoding/#CSV bottom
+			minAccuracy = 4
+		}
     
   }
 	

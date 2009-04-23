@@ -42,8 +42,18 @@
 			<label index="search_label_zip">City or ZIP code</label>
 			<label index="search_label_activateradius">Activate Radius Search</label>		
 			<label index="search_label_name">Search expression</label>
-			<label index="search_label_maponly">Search only in selected map area</label>						
+			<label index="search_label_maponly">Search only in selected map area</label>
+			<label index="search_error_header">There haven been the following error(s)</label>
+			<label index="search_error_geocode-accuracy">Your calculated position was not accurate enough.</label>									
+			<label index="search_error_geocode-status-500">A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is unknown.</label>
+			<label index="search_error_geocode-status-601">An empty address was specified in the HTTP q parameter.</label>
+			<label index="search_error_geocode-status-602">No corresponding geographic location could be found for the specified address, possibly because the address is relatively new, or because it may be incorrect.</label>
+			<label index="search_error_geocode-status-603">The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.</label>
+			<label index="search_error_geocode-status-610">The given key is either invalid or does not match the domain for which it was given.</label>
+			<label index="search_error_geocode-status-620">The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time.</label>			
 
+			
+			
 			<label index="search_description">Search for a record, e.g. &lt;i&gt;"Hotel"&lt;/i&gt;.</label>
 
 			<label index="recordsonmap_description">Records which are currently shown on the map</label>
