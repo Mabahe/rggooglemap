@@ -43,7 +43,8 @@
 			<label index="search_label_activateradius">Activate Radius Search</label>		
 			<label index="search_label_name">Search expression</label>
 			<label index="search_label_maponly">Search only in selected map area</label>
-			<label index="search_error_header">There haven been the following error(s)</label>
+			<label index="search_clearsearch">Clear search</label>
+			<label index="search_error-header">There haven been the following error(s)</label>
 			<label index="search_error_geocode-accuracy">Your calculated position was not accurate enough.</label>									
 			<label index="search_error_geocode-status-500">A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is unknown.</label>
 			<label index="search_error_geocode-status-601">An empty address was specified in the HTTP q parameter.</label>

@@ -32,7 +32,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * ToDO :
 	 * -	 recordsPerPage is used as global TS, split it + maybe flexforms too
 	 * - check flexform, especially menu
-	 * - geoCodeAddress > return array instead of string which needs to be exploded again, return also the status and give an error msg	 
+	 * - search: add some ts vars to manipulate js for search, before after,...
 
    /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -556,6 +556,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$error	= array();
 		
 		$jsResultDelete = 'deleteSearchResult();';		
+		$markerArray = $this->getLLMarkers(array(), $this->conf['search.']['LL'], 'search');		
 
 		// minimum characters needed, default = 3
 		if (strlen($searchForm['rggmsearchValue']) >= $this->conf['search.']['minChars'] ||

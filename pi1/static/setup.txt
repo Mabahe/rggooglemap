@@ -16,7 +16,7 @@ plugin.tx_rggooglemap_pi1 {
     tx_city_record = title,subtitle,description
     tx_staticregion_region = title
     
-    LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description
+    LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
 		defaultCountry = Austria
 		radiusSearch = 0
 		
