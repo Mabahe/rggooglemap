@@ -554,6 +554,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$test		= '';
 		$debug	= array();
 		$error	= array();
+		
+		$jsResultDelete = 'deleteSearchResult();';		
 
 		// minimum characters needed, default = 3
 		if (strlen($searchForm['rggmsearchValue']) >= $this->conf['search.']['minChars'] ||
@@ -654,7 +656,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				 * Create the output of the search
 				 */
 				$i = 0;
-				$jsResultDelete = 'deleteSearchResult();';
+
 				$jsResultUpdate = 'var bounds = new GLatLngBounds();';
 				$debug['count'] = 0;
 				$debug[$table]['res'] = $res;
@@ -729,9 +731,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			
 
 
-		$objResponse->addScript($jsResultDelete);
-		$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
-		$objResponse->addScript($jsResultUpdate);
 
 			#$objResponse->addAssign('searchFormError', 'innerHTML','');
 
@@ -758,6 +757,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			
 		}
 		
+		$objResponse->addScript($jsResultDelete);
+		$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
+		$objResponse->addScript($jsResultUpdate);
 
 
 		return $objResponse->getXML();
