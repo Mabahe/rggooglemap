@@ -470,7 +470,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$limit = $smallConf['limit'];
 		$res = $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
 
-#$res = array_slice($res, 0,1);
+		// if just 1 result, render a different subpart
 		if (count($res)==1) {
 			$suffix = '_SINGLE';
 			$subpartArray['###HIDE_MULTISELECTION###'] = '';			
@@ -494,8 +494,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
 
 
-
-		
 		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
 		return $content;
 	}
@@ -507,9 +505,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	  $zip: zip
 	 * @param	string	  $city: city
 	 * @param	string	  $country: country
-   * @return	array with the status
+	 * @return	array with the status
 	 */
-  function geoCodeAddress($address='', $zip='', $city='', $country='') {
+	function geoCodeAddress($address='', $zip='', $city='', $country='') {
 		$geocode	= array();
 		$coords		= array();
 		$search		= false;
@@ -796,21 +794,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$template['item'] = $this->cObj2->getSubpart( $template['allrecords'],'###SINGLE###');
 
 		// build the query
-		$areaArr=split('%2C%20',$area);
-		$where = 'lng between '.$areaArr[1].' AND '.$areaArr[3].'
-							AND	lat between '.$areaArr[0].' AND '.$areaArr[2].$this->config['pid_list'];
-
-
-		// if no category chosen, be sure no result gets displayed
-		if($cat==9999) {
-			$where .= ' AND 1=2 ';
-		} else {
-			$catList = explode(',',$cat);
-			foreach ($catList as $key=>$value) {
-				$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
-			}
-			$where .= ' AND ( '.substr($where2,0,-3).' ) ';
-		}
+		$where = $this->helperGetAvailableRecords($cat, $area);
 
 		// language markers
 		$languageMarkers = $this->helperGetLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
@@ -1414,14 +1398,20 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function getPoiOnStart() {
     $showPOIonStart = '';
+
     // pivars overrules flexform/ts
 		$defaultPOI = ($this->piVars['poi']!='') ? $this->piVars['poi'] : $this->config['mapShowOnDefault'];
+		$table = 'tt_address';
 
   	if ($defaultPOI!='') {
 			// split it up by using '-' to get a possible table
 			$split = explode('-', $defaultPOI);
 
 			if (count($split)==1) {
+				if (!empty($this->piVars['table']) && !t3lib_div::inList($this->config['tables'], $this->piVars['table'])) {
+					$table = $this->piVars['table'];
+				} 
+ 
 				$table	= 'tt_address';
 				$uid		= $split[0];
 			} else {
@@ -1432,7 +1422,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$uid = intval($uid);
 
 			if ($uid > 0) {
-				$where = 'lng!="" AND lat!= "" AND uid = '.$uid.$this->config['pid_list'];
+				$where = 'uid = '.$uid.$this->helperGetAvailableRecords($this->config['categories']);
 				$res = $this->generic->exec_SELECTquery('uid, lng, lat',$table,$where,$groupBy,$orderBy,$offset);
 				$row=array_shift($res);
 
@@ -1552,14 +1542,22 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
     return $markerArray;
   }
-  
+
+
+	/**
+	 * Predefine the where clause
+	 *
+	 * @param	string		$catList: List of current categories
+	 * @param	string	$areaSearch: Coordinates of the map holding the corner points
+	 * @return the marker array
+	 */  
   function helperGetAvailableRecords($catList='', $areaSearch='') {
-		$where = 'lng!=0 AND lat!=0 '.$this->config['pid_list'];
+		$where = ' lng!=0 AND lat!=0 '.$this->config['pid_list'];
 
 		if (!empty($areaSearch)) {
 		// build the query
-		$areaArr=split('%2C%20',$areaSearh);
-		$where = 'lng between '.$areaArr[1].' AND '.$areaArr[3].'
+		$areaArr=split('%2C%20',$areaSearch);
+		$where .= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
 							AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
 		}
 
@@ -1586,7 +1584,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	int	  $parentId: Parent id of the record
    * @return	array with all allowed categories
 	 */
-
 	function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 ) {
 		#  $catArr = array();
 		$level++;
