@@ -178,6 +178,7 @@ class tx_rggooglemap_table {
           // count for the offset needed
           $count++;     		
     		} # end while
+    		$GLOBALS['TYPO3_DB']->sql_free_result($res);
       } # end foreach table
     }
       
@@ -235,6 +236,8 @@ class tx_rggooglemap_table {
       $row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
       
       $count+=$row[0];   
+      
+      $GLOBALS['TYPO3_DB']->sql_free_result($res);
   	}
     
     return $count;
