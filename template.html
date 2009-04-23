@@ -648,7 +648,7 @@ Template for the directions
 </script>
  
  
-<form action="#" id="geocode" name="geocode" onsubmit="getDirectionsLong(this.directionaddr.value, this.fromcountry.value, this.fromaddress.value, gdir2, 'removedirections2'); return false;">
+<form action="#" id="geocode" name="geocode" onsubmit="getDirectionsLong(this.directionaddr.value, this.fromcountry.value, this.fromaddress.value, 'removedirections2'); return false;">
   <fieldset class="csc-mailform">
   	<div class="csc-mailform-field">
   		<label for="rggm-directions-address">###LL_LABEL_ADDRESS###</label> 
@@ -663,7 +663,9 @@ Template for the directions
 		  </select>
  
   	</div>
-
+  	
+  	
+		<!-- ###HIDE_MULTISELECTION### -->
   	<div class="csc-mailform-field">
   		<label for="rggm-directions-record">###LL_LABEL_RECORD###</label> 
 		  <select name="directionaddr" id="rggm-directions-record">
@@ -674,6 +676,16 @@ Template for the directions
 			  <!-- ###CONTENT### -->
 		  </select>
   	</div>
+		<!-- ###HIDE_MULTISELECTION### -->
+		
+		<!-- ###HIDE_SINGLESELECTION### -->		  	
+				<!-- ###CONTENT_SINGLE### -->
+				 <!-- ###SINGLE_SINGLE### -->
+						<input value="###TITLE###@###LAT###,###LNG###" type="hidden" name="directionaddr" />
+				 <!-- ###SINGLE_SINGLE### -->
+			  <!-- ###CONTENT_SINGLE### -->
+
+		<!-- ###HIDE_SINGLESELECTION### -->
 
   	<div class="csc-mailform-field">  	
   		<input type="submit" value="###LL_SEARCH###" class="csc-mailform-submit"  />

@@ -13,7 +13,8 @@ function makeMap() {
 		
 		//map = new GMap2(document.getElementById("###MAP_DIV###"));
 		map = new GMap2(document.getElementById("map"),###MAP_TYPES###);		
-		gdir=new GDirections(map, document.getElementById('getdirections'));    
+		gdir=new GDirections(map, document.getElementById('getdirections'));
+		gdir2=new GDirections(map, document.getElementById('getdirections2'));		    
 		geocoder = new GClientGeocoder();
 		new GKeyboardHandler(map);
 		boundsgeneral = new GLatLngBounds();

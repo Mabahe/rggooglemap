@@ -457,8 +457,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */	
 	function showDirections() {
 		$smallConf = $this->conf['directions.'];
-		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_DIRECTIONS###');
-		$template['item'] = $this->cObj2->getSubpart($template['list'],'###SINGLE###');
 		
 		$subpartArray = array();
 		$markerArray = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'directions');
@@ -472,12 +470,26 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$limit = $smallConf['limit'];
 		$res = $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
 
+#$res = array_slice($res, 0,1);
+		if (count($res)==1) {
+			$suffix = '_SINGLE';
+			$subpartArray['###HIDE_MULTISELECTION###'] = '';			
+		} else {
+			$suffix = '';
+			$subpartArray['###HIDE_SINGLESELECTION###'] = '';
+		}
+		
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_DIRECTIONS###');
+		$template['item'] = $this->cObj2->getSubpart($template['list'],'###SINGLE'.$suffix.'###');
+		
+
 		while($row=array_shift($res)) {
 			$markerArray = $this->getMarker($row, 'directions.');
 
 			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
 		}
-		$subpartArray['###CONTENT###'] = $content_item;
+		
+		$subpartArray['###CONTENT'.$suffix.'###'] = $content_item;
 		
 		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
 
@@ -1542,7 +1554,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
   }
   
   function helperGetAvailableRecords($catList='', $areaSearch='') {
-		$where = '1=1'.$this->config['pid_list'];
+		$where = 'lng!=0 AND lat!=0 '.$this->config['pid_list'];
 
 		if (!empty($areaSearch)) {
 		// build the query

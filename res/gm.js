@@ -129,9 +129,9 @@ function getDirections() {
 	show('removedirections');
 }    
 
-function getDirectionsLong(to, FromCountry,FromAddr, dirobj, showDir) {
-	var daddr = FromCountry +', '+ FromAddr;
-	dirobj.load('from: '+daddr+' to: '+to);
+function getDirectionsLong(to, FromCountry,FromAddr, showDir) {
+	var daddr = FromAddr+', '+ FromCountry;
+	gdir2.load('from: '+daddr+' to: '+to);
 	show(showDir);
 } 
 
