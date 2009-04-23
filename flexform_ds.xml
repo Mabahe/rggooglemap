@@ -20,7 +20,6 @@
 								<minitems>1</minitems>
 								<itemsProcFunc>tx_rggooglemap_itemsProcFunc->user_insertExtraCodes</itemsProcFunc>
 								<size>6</size>
-								<multiple>1</multiple>
 								<selectedListStyle>width:150px</selectedListStyle>
 								<itemListStyle>width:150px</itemListStyle>
 								
@@ -49,7 +48,10 @@
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.5</numIndex>
 										<numIndex index="1">SEARCH</numIndex>
 									</numIndex>	
-									
+									<numIndex index="7" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.7</numIndex>
+										<numIndex index="1">DIRECTIONS</numIndex>
+									</numIndex>	
                 </items>
 							</config>
 						</TCEforms>

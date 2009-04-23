@@ -15,6 +15,7 @@
 			<label index="general.show.4">Active records</label>
 			<label index="general.show.5">Searchbox</label>			
 			<label index="general.show.6">Catmenu</label>
+			<label index="general.show.7">Directions</label>
 			
 			<label index="general.startingpoint">Starting point</label>
 			<label index="general.recursive">Recursive</label>
@@ -86,9 +87,9 @@
 			<label index="sorting.crdate">Creation Date (crdate)</label>
 			
         <!-- Flexforms  sheet search -->			
-			<label index="search.sheetTitle">Search</label>
+			<label index="search.sheetTitle">Search &amp; Directions</label>
 			<label index="search.defaultCountry">Default Country for Geocoding, use "AT" or "Austria" or "Österreich"</label>
-			<label index="search.radiusSearch">Use Radius Search</label>
+			<label index="search.radiusSearch">Enable Radius Search</label>
 		</languageKey>
 
 
@@ -102,7 +103,8 @@
 			<label index="general.show.3">Ortsuche</label>
 			<label index="general.show.4">Aktive Datensätze</label>
 			<label index="general.show.5">Suche</label>			
-			<label index="general.show.6">Kategoriemenü</label>			
+			<label index="general.show.6">Kategoriemenü</label>
+			<label index="general.show.7">Anfahrt</label>			
       <label index="template.template_file">Template</label>
 			<label index="general.key">Googlemap Key</label>      
 			<label index="map.width">Breite der Karte</label>

@@ -47,12 +47,12 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *  297:     function showLocationBox ()
  *  318:     function showMenu ($additionalCat='', $additionalWhere='')
  *  430:     function showSearch ()
- *  459:     function getRecursiveCat($allowedCat, $parentId=0,$level=0 )
+ *  459:     function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 )
  *  490:     function showCatMenu()
  *  508:     function geoCodeAddress($address='', $zip='', $city='', $country='')
  *  555:     function search($searchForm)
  *  744:     function getActiveRecords($area, $cat)
- *  800:     function getLLMarkers($markerArray, $conf, $prefix)
+ *  800:     function helperGetLLMarkers($markerArray, $conf, $prefix)
  *  830:     function initMap()
  *  878:     function infomsg($uid, $table,$tmplPrefix=1)
  *  932:     function pageBrowserStatistic($offset=0, $table, $field, $where)
@@ -62,7 +62,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1120:     function resultSet($var)
  * 1212:     function displayCatMenu($id=0)
  * 1270:     function getJs ()
- * 1395:     function getPOIonStart()
+ * 1395:     function getPoiOnStart()
  * 1437:     function getPoiTab($id,$tab,$table)
  * 1452:     function getPoiContent($id,$tab,$table)
  * 1496:     function getMarker($row, $prefix)
@@ -170,7 +170,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox');    // Use searchbbox in menu view
 
 		// search tab
-		$this->config['search']['defaultCountry'] 	= $this->helperGetFlexform('search', 'defaultCountry', 'search.defaultCountry');
+		$this->config['defaultCountry'] 	= $this->helperGetFlexform('search', 'defaultCountry', 'defaultCountry');
 		$this->config['search']['radiusSearch'] 		= $this->helperGetFlexform('search', 'radiusSearch', 'search.radiusSearch');
 
 
@@ -231,6 +231,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				case 'SEARCH':
 					$content .= $this->showSearch();
 					break;
+				case 'DIRECTIONS':
+					$content .= $this->showDirections();
+					break;
+
 				default:
 					// Adds hook for processing of extra codes
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraCodesHook'])) {
@@ -269,7 +273,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
     }
 
   	// title, text - markers
-  	$markerArray = $this->getLLMarkers(array(), $this->conf['map.']['LL'], 'map');
+  	$markerArray = $this->helperGetLLMarkers(array(), $this->conf['map.']['LL'], 'map');
     $markerArray['###CAT_MENU###'] = $this->displayCatMenu(0);
     $markerArray['###CAT_LIST###'] = ($this->config['categoriesActive']!='') ? $this->config['categoriesActive'] : '9999';
     $markerArray['###MAP_WIDTH###'] = $this->config['mapWidth'];
@@ -287,7 +291,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function showRecordsOnMap () {
 		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDSONMAP###');
-		$markerArray = $this->getLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
+		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
 		
 		$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray);
 		return $content;
@@ -301,7 +305,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function showLocationBox () {
 		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_LOCATIONBOX###');
-		$markerArray = $this->getLLMarkers(array(), $this->conf['location.']['LL'], 'location');
+		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['location.']['LL'], 'location');
 		
 		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray);
 		return $content;
@@ -418,7 +422,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function showSearch () {
 		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH###');
 		$subpartArray = array();
-		$markerArray = $this->getLLMarkers(array(), $this->conf['search.']['LL'], 'search');
+		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['search.']['LL'], 'search');
 
 		// hide the radisus search by using a subpart
 		if ($this->config['search']['radiusSearch']!=1) {
@@ -426,60 +430,61 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		// set the default country
-		$markerArray['##DEFAULT_COUNTRY###'] = $this->config['search']['defaultCountry'];
+		$markerArray['##DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
 
 		// fetch the allowed categories as option list
-		$markerArray['###CATEGORY###'] = $this->getRecursiveCat($this->config['categories']);
+		$markerArray['###CATEGORY###'] = $this->helperGetRecursiveCat($this->config['categories']);
 
 		$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
 		return $content;
 	}
 
 
-	/**
-	 * Get the recursive categories
-	 *
-	 * @param	string		$allowedCat: the allowed categories
-	 * @param	int	  $parentId: Parent id of the record
-   * @return	array with all allowed categories
-	 */
-
-	function getRecursiveCat($allowedCat, $parentId=0,$level=0 ) {
-		#  $catArr = array();
-		$level++;
-		
-		$where = 'hidden = 0 AND deleted=0 AND parent_uid='.$parentId;
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid,uid,title,parent_uid','tx_rggooglemap_cat',$where);
-		/*
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			if (in_array($row['uid'], explode(',',$allowedCat))) {
-				$catArr[$row['uid']]['name']= $row['title'];
-				$recursiveCat =   $this->getRecursiveCat($allowedCat,$row['uid']);
-				if (is_array($recursiveCat))  $catArr[$row['uid']]['child']= $recursiveCat;
-			}
-		}*/
-		
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			if (in_array($row['uid'], explode(',',$allowedCat))) {
-				$catArr .= '<option class="searchlvl'.$level.'" value="'.$row['uid'].'">'.$row['title'].'</option>';
-				$recursiveCat =   $this->getRecursiveCat($allowedCat,$row['uid'],$level);
-				if ($recursiveCat!='')  {
-					$catArr.= $recursiveCat;
-				}
-			}
-		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-		
-		return $catArr;
-	}
-
-
 	function showCatMenu() {
-		$template['new'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NEW###');
-		
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NEW###');
+		$markerArray = array();		
 		$markerArray['###ITEMS###'] = $this->displayCatMenu();
 		
-		$content = $this->cObj2->substituteMarkerArrayCached($template['new'],$markerArray, $subpartArray,$wrappedSubpartArray);
+		$content = $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray);
+		return $content;
+	}
+	
+	
+	/**
+	 * Show the directions to some records
+	 *
+   * @return directions
+	 */	
+	function showDirections() {
+		$smallConf = $this->conf['directions.'];
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_DIRECTIONS###');
+		$template['item'] = $this->cObj2->getSubpart($template['list'],'###SINGLE###');
+		
+		$subpartArray = array();
+		$markerArray = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'directions');
+ 
+
+		// query
+		$table = $this->config['tables'];
+		$field = '*';
+		$where = $this->helperGetAvailableRecords($this->config['categories']);
+		$orderBy = $smallConf['orderBy'];
+		$limit = $smallConf['limit'];
+		$res = $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
+
+		while($row=array_shift($res)) {
+			$markerArray = $this->getMarker($row, 'directions.');
+
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+		}
+		$subpartArray['###CONTENT###'] = $content_item;
+		
+		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
+
+
+
+		
+		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
 		return $content;
 	}
 
@@ -512,7 +517,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if ($country!='')  {
 			$geocode[] = $country;
 		}  else {
-			$geocode[] = $this->conf['geocodeDefaultCountry'];
+			$geocode[] = $this->config['defaultCountry'];
 		}
 		
 		// just if there are some values additional to the country
@@ -556,7 +561,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$error	= array();
 		
 		$jsResultDelete = 'deleteSearchResult();';		
-		$markerArray = $this->getLLMarkers(array(), $this->conf['search.']['LL'], 'search');		
+		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['search.']['LL'], 'search');		
 
 		// minimum characters needed, default = 3
 		if (strlen($searchForm['rggmsearchValue']) >= $this->conf['search.']['minChars'] ||
@@ -796,7 +801,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		// language markers
-		$languageMarkers = $this->getLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
+		$languageMarkers = $this->helperGetLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
 
 		// query
 		$table = $this->config['tables'];
@@ -819,39 +824,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$objResponse->addAssign('rggooglemap-recordsonmap', 'innerHTML',$content);
 		return $objResponse->getXML();
 	}
-
-
-	/**
-	 * Get specific language markers
-	 *
-	 * @param	array		$markerArray: the markerarray which will be filled with the language markers
-	 * @param	string		$conf: The keys of the language markers
-	 * @param	string		$prefix: Prefix which is used in the locallang file
-	 * @return the marker array with the language markers
-	 */
-	function getLLMarkers($markerArray, $conf, $prefix) {
-		// add the general language markers
-		if ($this->conf['generalLL']!='') {
-			$markerList = t3lib_div::trimExplode(',', $this->conf['generalLL']);
-			foreach($markerList as $key) {
-				$markerArray['###LL_'.strtoupper($key).'###'] = $this->pi_getLL('general_'.$key);
-			}
-		}
-
-		// add the specific language markers
-		if($conf=='') {
-			return $markerArray;
-		} else {
-			$prefix = trim($prefix).'_';
-			$markerList = t3lib_div::trimExplode(',', $conf);
-			foreach($markerList as $key) {
-				$markerArray['###LL_'.strtoupper($key).'###'] = $this->pi_getLL($prefix.$key);
-			}
-		}
-
-		return $markerArray;
-	}
-
 
 
 	/**
@@ -1359,7 +1331,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 
 		$markerArray['###HIDECONTROLSMOUSEOUT###'] = $hideControlsOnMouseOut;
-		$markerArray['###POI_ON_START###'] = $this->getPOIonStart();
+		$markerArray['###POI_ON_START###'] = $this->getPoiOnStart();
 		$markerArray['###SETTINGS###'] = $settings;
 		$markerArray['###MAP_ZOOM###'] = $this->config['mapZoom'];
 		$markerArray['###MAP_LNG###'] = $this->config['mapLng'];
@@ -1428,7 +1400,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string		$tbl: the table name
    * @return the content
 	 */
-	function getPOIonStart() {
+	function getPoiOnStart() {
     $showPOIonStart = '';
     // pivars overrules flexform/ts
 		$defaultPOI = ($this->piVars['poi']!='') ? $this->piVars['poi'] : $this->config['mapShowOnDefault'];
@@ -1556,7 +1528,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		// language markers
-		$markerArray = $this->getLLMarkers($markerArray, $this->conf[$prefix]['LL'], strtolower($prefiWithOutDot));
+		$markerArray = $this->helperGetLLMarkers($markerArray, $this->conf[$prefix]['LL'], strtolower($prefiWithOutDot));
 
 		// Adds hook for processing of extra item markers
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraItemMarkerHook'])) {
@@ -1568,8 +1540,102 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
     return $markerArray;
   }
+  
+  function helperGetAvailableRecords($catList='', $areaSearch='') {
+		$where = '1=1'.$this->config['pid_list'];
+
+		if (!empty($areaSearch)) {
+		// build the query
+		$areaArr=split('%2C%20',$areaSearh);
+		$where = 'lng between '.$areaArr[1].' AND '.$areaArr[3].'
+							AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
+		}
+
+		// if no category chosen, be sure no result gets displayed
+		if($catList==9999) {
+			$where .= ' AND 1=2 ';
+		} elseif ($catList!='') {
+		
+			$catList = explode(',',$catList);
+			foreach ($catList as $key=>$value) {
+				$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
+			}
+			$where .= ' AND ( '.substr($where2,0,-3).' ) ';
+		}
+		
+		return $where;
+	}
 
 
+	/**
+	 * Get the recursive categories
+	 *
+	 * @param	string		$allowedCat: the allowed categories
+	 * @param	int	  $parentId: Parent id of the record
+   * @return	array with all allowed categories
+	 */
+
+	function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 ) {
+		#  $catArr = array();
+		$level++;
+		
+		$where = 'hidden = 0 AND deleted=0 AND parent_uid='.$parentId;
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid,uid,title,parent_uid','tx_rggooglemap_cat',$where);
+		/*
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if (in_array($row['uid'], explode(',',$allowedCat))) {
+				$catArr[$row['uid']]['name']= $row['title'];
+				$recursiveCat =   $this->helperGetRecursiveCat($allowedCat,$row['uid']);
+				if (is_array($recursiveCat))  $catArr[$row['uid']]['child']= $recursiveCat;
+			}
+		}*/
+		
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if (in_array($row['uid'], explode(',',$allowedCat))) {
+				$catArr .= '<option class="searchlvl'.$level.'" value="'.$row['uid'].'">'.$row['title'].'</option>';
+				$recursiveCat =   $this->helperGetRecursiveCat($allowedCat,$row['uid'],$level);
+				if ($recursiveCat!='')  {
+					$catArr.= $recursiveCat;
+				}
+			}
+		}
+		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		
+		return $catArr;
+	}
+
+
+	/**
+	 * Get specific language markers
+	 *
+	 * @param	array		$markerArray: the markerarray which will be filled with the language markers
+	 * @param	string		$conf: The keys of the language markers
+	 * @param	string		$prefix: Prefix which is used in the locallang file
+	 * @return the marker array with the language markers
+	 */
+	function helperGetLLMarkers($markerArray, $conf, $prefix) {
+		// add the general language markers
+		if ($this->conf['generalLL']!='') {
+			$markerList = t3lib_div::trimExplode(',', $this->conf['generalLL']);
+			foreach($markerList as $key) {
+				$markerArray['###LL_'.strtoupper($key).'###'] = $this->pi_getLL('general_'.$key);
+			}
+		}
+
+		// add the specific language markers
+		if($conf=='') {
+			return $markerArray;
+		} else {
+			$prefix = trim($prefix).'_';
+			$markerList = t3lib_div::trimExplode(',', $conf);
+			foreach($markerList as $key) {
+				$markerArray['###LL_'.strtoupper($key).'###'] = $this->pi_getLL($prefix.$key);
+			}
+		}
+
+		return $markerArray;
+	}
+	
 
 	/**
 	 * Get the value out of the flexforms and if empty, take if from TS

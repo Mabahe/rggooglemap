@@ -4,7 +4,15 @@ plugin.tx_rggooglemap_pi1 {
 	##################################
 	############### new ##############
 	
-	generalLL = show,search,directions,more,back,lng,lat
+	generalLL = show,search,directions,more,back,lng,lat,exampleaddress
+	
+	# Directions
+	directions {
+		LL = title,description,label_country,label_record,label_address,search,remove-directions
+		
+		orderBy = rggmtitle ASC
+		limit = 0,50
+	}
 
   # search settings
   search {
@@ -17,7 +25,6 @@ plugin.tx_rggooglemap_pi1 {
     tx_staticregion_region = title
     
     LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
-		defaultCountry = Austria
 		radiusSearch = 0
 		
 		radiusSearch {
@@ -414,7 +421,7 @@ plugin.tx_rggooglemap_pi1 {
   enableScrollWheelZoom = 1
   
   recordsPerPage = 30
-
+	defaultCountry = Austria
 
 
   # stdWrap for all markers in the info bubble
@@ -438,7 +445,6 @@ plugin.tx_rggooglemap_pi1 {
   
   activateCluster = 0
   
-  geocodeDefaultCountry = germany
 
 
 

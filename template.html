@@ -631,6 +631,70 @@ The template for the catmenu for the menu view
 
 <!-- ###TEMPLATE_CATMENU_NEW### -->
 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  D I R E C T I O N S -  T E M P L A T E  - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the directions
+
+<!-- ###TEMPLATE_DIRECTIONS### -->
+<strong>###LL_TITLE###</strong><br />
+###LL_DESCRIPTION###<br /><br />
+ 
+<script type="text/javascript">
+  if (GBrowserIsCompatible()) {
+		var gdir2=new GDirections(map, document.getElementById('getdirections2'));
+	}
+</script>
+ 
+ 
+<form action="#" id="geocode" name="geocode" onsubmit="getDirectionsLong(this.directionaddr.value, this.fromcountry.value, this.fromaddress.value, gdir2, 'removedirections2'); return false;">
+  <fieldset class="csc-mailform">
+  	<div class="csc-mailform-field">
+  		<label for="rggm-directions-address">###LL_LABEL_ADDRESS###</label> 
+  		<input id="rggm-directions-address" type="text" name="fromaddress" value="###LL_EXAMPLEADDRESS###" onFocus="if(this.value==defaultValue)this.value='';" />
+  	</div>
+
+  	<div class="csc-mailform-field">
+  		<label for="rggm-directions-country">###LL_LABEL_COUNTRY###</label> 
+		  <select name="fromcountry" id="rggm-directions-country">
+				<option value="Austria">Austria</option>
+				<option value="Germany">Germany</option>
+		  </select>
+ 
+  	</div>
+
+  	<div class="csc-mailform-field">
+  		<label for="rggm-directions-record">###LL_LABEL_RECORD###</label> 
+		  <select name="directionaddr" id="rggm-directions-record">
+				<!-- ###CONTENT### -->
+				 <!-- ###SINGLE### -->
+						<option value="###TITLE###@###LAT###,###LNG###">###RGGMTITLE###</option>
+				 <!-- ###SINGLE### -->
+			  <!-- ###CONTENT### -->
+		  </select>
+  	</div>
+
+  	<div class="csc-mailform-field">  	
+  		<input type="submit" value="###LL_SEARCH###" class="csc-mailform-submit"  />
+  	</div>
+  </fieldset>  
+</form>
+
+
+<div class="rggooglemap-directionresults">
+	<div id="removedirections2" style="display:none">
+		<a onclick="gdir2.clear();hide('removedirections2')" href="javascript:void(0);">###LL_REMOVE-DIRECTIONS###</a>
+	</div>
+	<div id="getdirections2">
+	
+	</div>
+
+</div>
+
+
+
+<!-- ###TEMPLATE_DIRECTIONS### -->
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  = =  T H E   E  N D = = = = = = = = = = = = =  
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

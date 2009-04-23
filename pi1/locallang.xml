@@ -24,19 +24,20 @@
 			<label index="general_back">Back</label>
 			<label index="general_lat">Latitude</label>
 			<label index="general_lng">Longitude</label>
+			<label index="general_exampleaddress">Gosau, Austria</label>
 			
 			<label index="map_remove-directions">Remove directions</label>
 			<label index="map_loading">Loading</label>
 			
 			<label index="location_description">Enter the location with the syntax: &lt;i&gt;Street, City, Country or City, Country&lt;/i&gt;.</label>
-			<label index="location_exampleaddress">Gosau, Austria</label>
 			<label index="location_search">Go to this location</label>
 			<label index="location_zoomlevel_5">Far away</label>
 			<label index="location_zoomlevel_9">Near</label>
 			<label index="location_zoomlevel_14">Closeup</label>
 			<label index="location_label_address">Address</label>
 			<label index="location_label_zoomlevel">Zoomlevel</label>				
-			
+
+			<label index="search_description">Search for a record, e.g. &lt;i&gt;"Hotel"&lt;/i&gt;.</label>			
 			<label index="search_label_cat">Category</label>
 			<label index="search_label_radius">Radius</label>
 			<label index="search_label_zip">City or ZIP code</label>
@@ -53,15 +54,19 @@
 			<label index="search_error_geocode-status-610">The given key is either invalid or does not match the domain for which it was given.</label>
 			<label index="search_error_geocode-status-620">The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time.</label>			
 
-			
-			
-			<label index="search_description">Search for a record, e.g. &lt;i&gt;"Hotel"&lt;/i&gt;.</label>
-
 			<label index="recordsonmap_description">Records which are currently shown on the map</label>
 			<label index="recordsonmap_wait">Please wait for a short moment.</label>
 			
 			<label index="poi_directions_header">Get your directions</label>			
 			<label index="poi_directions_description">Add your address in the &lt;i&gt;format Street, City, Country&lt;/i&gt;.</label>
+			
+			<label index="directions_title">Get the directions</label>
+			<label index="directions_description">Insert your address and you will know how do get there</label>
+			<label index="directions_label_address">Your Address</label>
+			<label index="directions_label_country">Your Country</label>
+			<label index="directions_label_record">Directions to</label>
+			<label index="directions_search">Get there!</label>
+			<label index="directions_remove-directions">Remove directions</label>			
     </languageKey>
 
 <!--

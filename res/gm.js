@@ -127,8 +127,13 @@ function getDirections() {
 	var daddr = document.getElementById('daddr').value;
 	gdir.load('from: '+saddr+' to: '+daddr);
 	show('removedirections');
-
 }    
+
+function getDirectionsLong(to, FromCountry,FromAddr, dirobj, showDir) {
+	var daddr = FromCountry +', '+ FromAddr;
+	dirobj.load('from: '+daddr+' to: '+to);
+	show(showDir);
+} 
 
 function removeDirections() {
 	gdir.clear();
