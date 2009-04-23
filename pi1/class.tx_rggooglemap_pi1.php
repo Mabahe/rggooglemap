@@ -604,7 +604,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 							$searchClause['radius']= ' SQRT(POW('.$coordinates['lng'].'-lng,2)*6400 + POW('.$coordinates['lat'].'-lat,2)*12100) <'.intval($searchForm['rggmRadius']);
 							$orderBy = 'distance';
 						} else {
-							$searchClause['errorWithRadiusSearch'] = '1==2';
+							$searchClause['errorWithRadiusSearch'] = '1=2';
 							
 							// if status is ok, the accuracy failed
 							if ($coordinates['status']==200) {
@@ -635,10 +635,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					}
 
 					$where = implode(' AND ', $searchClause);
-#$where = '1=1';
-				#	if (count($error) == 0) {
+
+					if (count($error) == 0) {
 						$res += $this->generic->exec_SELECTquery($select,$table,$where,$groupBy,$orderBy, $limit);
-			#		}
+					}
 				}
 
 				$debug[$table]['where'] = $where;
