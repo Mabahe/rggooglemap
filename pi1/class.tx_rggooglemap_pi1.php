@@ -33,6 +33,10 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * -	 recordsPerPage is used as global TS, split it + maybe flexforms too
 	 * - check flexform, especially menu
 	 * - search: add some ts vars to manipulate js for search, before after,...
+	 * - group pois
+	 * - xmlFunc optimize
+	 * - menu func
+	 * - json?	 	 	 	 
 
    /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -1702,133 +1706,128 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 
-  /*
-  * **********************************
-  * ********** X M L *****************
-  * **********************************
-  **/
-  function xmlFunc($content,$conf)	{
-    $this->init($conf);
-  	$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
-
-    $postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
-
+	/*
+	* **********************************
+	* ********** X M L *****************
+	* **********************************
+	**/
+	function xmlFunc($content,$conf)	{
+		$this->init($conf);
+		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
+		
+		$postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
+		
 		// fetch the content of a single poi
-    if ($postvars['detail']!='') {
-      $content = $this->getPoiContent($postvars['detail'],1,$postvars['table']);
-      return $content;
-    } else {
-
-     // categories
-     $cat = $postvars['cat'];
-     if ($cat) { // cat selected
-        if ($cat!=9999) { // nothing selected
-          $catList = explode(',',$cat);
-        }
-     } else { // nothing selected means 1st call!!
-        $catList =  explode(',',$this->config['categoriesActive']);
-     }
-
-      // category image
-      $table = 'tx_rggooglemap_cat';
-      $field = 'uid,image,parent_uid';
-      $where = 'deleted = 0 AND hidden=0 ';
-      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-      while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-        if ($row['image']=='') {
-          // get image of parent category
-          $whereTemp = 'deleted = 0 AND hidden=0 AND uid = '.$row['parent_uid'];
-          $res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$whereTemp);
-          $row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2);
-          $catImg[$row['uid']] = $row2['image'];
-        } else {
-          $catImg[$row['uid']] = $row['image'];
-        }
-      }
-      $GLOBALS['TYPO3_DB']->sql_free_result($res);
-
-      $this->xmlRenderHeader();
-
-      if ($catList) {
-        $table =  $this->config['tables'];
-      	$field = '*';
-      	$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
-
-      	if (strlen($postvars['area'])>5) {
-          $areaArr=array();
-         	$areaArr=split(', ',$postvars['area']);
-    	  	$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
-    				        AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
-
-        }
-
-        // category selection
-        $catTmp = false;
-        foreach ($catList as $key=>$value) {
-          if ($value) {
-            $catTmp=true;
-            $where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';}
-        }
-        $where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
-
-
-
-          $limit = '';
-
-          if ($this->conf['extraquery']==1) {
-            $extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses','rggmttnews2'));
-            if ($extraquery!= '') {
-              $where.= ' AND uid IN ('.$extraquery.') ';
-            }
-          }
-
-
-					// Adds hook for processing of the xml func
-					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
-						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
-							$_procObj = & t3lib_div::getUserObj($_classRef);
-							$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
-						}
+		if ($postvars['detail']!='') {
+			$content = $this->getPoiContent($postvars['detail'],1,$postvars['table']);
+			return $content;
+		// fetch the xml for the pois
+		} else {
+			
+			// categories
+			$cat = $postvars['cat'];
+			if ($cat) { // cat selected
+				if ($cat!=9999) { // nothing selected
+					$catList = explode(',',$cat);
+				}
+			} else { // nothing selected means 1st call!!
+				$catList =  explode(',',$this->config['categoriesActive']);
+			}
+			
+			// category image
+			$table = 'tx_rggooglemap_cat';
+			$field = 'uid,image,parent_uid';
+			$where = 'deleted = 0 AND hidden=0 ';
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
+			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row['image']=='') {
+					// get image of parent category
+					$whereTemp = 'deleted = 0 AND hidden=0 AND uid = '.$row['parent_uid'];
+					$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$whereTemp);
+					$row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2);
+					$GLOBALS['TYPO3_DB']->sql_free_result($res2);
+					$catImg[$row['uid']] = $row2['image'];
+				} else {
+					$catImg[$row['uid']] = $row['image'];
+				}
+			}
+			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			
+			$this->xmlRenderHeader();
+			
+			if ($catList) {
+				$table =  $this->config['tables'];
+				$field = '*';
+				$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
+				
+				if (strlen($postvars['area'])>5) {
+					$areaArr=array();
+					$areaArr=split(', ',$postvars['area']);
+					$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
+										 AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
+				}
+				
+				// category selection
+				$catTmp = false;
+				foreach ($catList as $key=>$value) {
+					if ($value) {
+						$catTmp=true;
+						$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
 					}
+				}
+				$where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
+				
+				
+				
+				$limit = '';
+				
+				if ($this->conf['extraquery']==1) {
+					$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses','rggmttnews2'));
+					if ($extraquery!= '') {
+						$where.= ' AND uid IN ('.$extraquery.') ';
+					}
+				}
+				
+				
+				// Adds hook for processing of the xml func
+				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
+					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
+						$_procObj = & t3lib_div::getUserObj($_classRef);
+						$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
+					}
+				}
+				
+				
+				$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
+				while($row=array_shift($res)) {
+					$catDivider = strpos($row['rggmcat'],',');
+					if ($catDivider == false) {
+						if (!$catImg[$row['rggmcat']]) {
+							if (!file_exists('uploads/tx_rggooglemap/dot.png')) {
+								@copy($this->conf['defaultPOIIcon'],'uploads/tx_rggooglemap/dot.png');
+							}
+							$catImg[$row['rggmcat']] = 'dot.png';
+							
+						}
+						$img = $catImg[$row['rggmcat']];
 
-
-          #$limit = '0,100';
-          $res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
-          while($row=array_shift($res)) {
-
-          $catDivider = strpos($row['rggmcat'],',');
-          if ($catDivider == false) {
-            if (!$catImg[$row['rggmcat']]) {
-              if (!file_exists('uploads/tx_rggooglemap/dot.png')) {
-                @copy($this->conf['defaultPOIIcon'],'uploads/tx_rggooglemap/dot.png');
-              }
-              $catImg[$row['rggmcat']] = 'dot.png';
-
-            }
-          	$img = $catImg[$row['rggmcat']];
-          	#
-          } else {
-            $firstCat = substr($row['rggmcat'],0,$catDivider);
-            $img = $catImg[$firstCat];
-          }
-
-          $test = '';
-
-
-  #          $conf['recursive'] = 2;
-
-          $this->xmlAddRecord($table, $row,$conf, $img,$test);
-        }
-      }
-      $this->xmlRenderFooter();
-
-  		$result = $this->xmlGetResult();
-
-  	#	$result = json_encode($result);
-
-  		return $result;
-    }
-  }
+					} else {
+						$firstCat = substr($row['rggmcat'],0,$catDivider);
+						$img = $catImg[$firstCat];
+					}
+					
+					$test = '';
+					
+					
+					$this->xmlAddRecord($table, $row,$conf, $img,$test);
+				}
+			}
+			$this->xmlRenderFooter();
+			
+			$result = $this->xmlGetResult();
+			return $result;
+			}
+	}
 
 
 
