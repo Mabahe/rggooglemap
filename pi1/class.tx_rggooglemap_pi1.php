@@ -818,25 +818,24 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// template
 		$template['allrecords'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_ACTIVERECORDS###');
 		$template['item'] = $this->cObj2->getSubpart( $template['allrecords'],'###SINGLE###');
-
-		// build the query
-		$where = $this->helperGetAvailableRecords($cat, $area);
+		$smallConf = $this->conf['recordsOnMap.'];
 
 		// language markers
-		$languageMarkers = $this->helperGetLLMarkers(array(), $this->conf['recordsOnMap.']['LL'], 'recordsonmap');
+		$languageMarkers = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'recordsonmap');
 
 		// query
-		$table = $this->config['tables'];
-		$field = '*';
-		$orderBy = $this->conf['recordsOnMap.']['orderBy'];
-		$limit = $this->conf['recordsOnMap.']['limit'];
-		$res = $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
+		$table 		= $this->config['tables'];
+		$field 		= '*';
+		$where 		= $this->helperGetAvailableRecords($cat, $area);		
+		$orderBy 	= $smallConf['orderBy'];
+		$limit 		= $smallConf['limit'];
+		$res 			= $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
 
 		while($row=array_shift($res)) {
 			$markerArray = $this->getMarker($row, 'recordsOnMap.');
-
 			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
 		}
+		
 		$subpartArray['###CONTENT###'] = $content_item;
 
 		$markerArray = $languageMarkers;
@@ -869,8 +868,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->registerFunction(array('infomsg', &$this, 'ajaxGetInfomsg'));
 		$this->xajax->registerFunction(array('activeRecords', &$this, 'ajaxGetActiveRecords'));
 		$this->xajax->registerFunction(array('processCat', &$this, 'ajaxProcessCat'));
-		//$this->xajax->registerFunction(array('processFormData', &$this, 'ajaxProcessFormData'));
-		//$this->xajax->registerFunction(array('getPoiList', &$this, 'getPoiList'));
 		$this->xajax->registerFunction(array('resultSet', &$this, 'ajaxGetResultSet'));
 		$this->xajax->registerFunction(array('tab', &$this, 'ajaxGetPoiTab'));
 		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
@@ -947,6 +944,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		return $objResponse->getXML();
 	}
+
 
 	/**
 	 * Creates the "Show record 1 to 9 of 9"
@@ -1077,6 +1075,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $objResponse->getXML();
   }
 
+
 	/**
 	 * Modifies the menu output with including the cateory selection
 	 *
@@ -1091,6 +1090,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		return $objResponse->getXML();
   }
+
 
 	/**
 	 * Modifies the menu output with including the search box
@@ -1316,15 +1316,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
     if ($this->config['mapControlOnMouseOver'] == 1) {
       $hideControlsOnMouseOut = 'map.hideControls();
-              GEvent.addListener(map, "mouseover", function(){
-                map.showControls();
-              });
-              GEvent.addListener(map, "mouseout", function(){
-              map.hideControls();
-              });';
+        GEvent.addListener(map, "mouseover", function(){
+          map.showControls();
+        });
+        GEvent.addListener(map, "mouseout", function(){
+        map.hideControls();
+        });';
     }
-    if ($this->conf['enableDoubleClickZoom']== 1) $settings .= 'map.enableDoubleClickZoom();';
-    if ($this->conf['enableContinuousZoom']== 1) $settings .= 'map.enableContinuousZoom();';
+    if ($this->conf['enableDoubleClickZoom']== 1)	$settings .= 'map.enableDoubleClickZoom();';
+    if ($this->conf['enableContinuousZoom']== 1)	$settings .= 'map.enableContinuousZoom();';
     if ($this->conf['enableScrollWheelZoom']== 1) $settings .= 'map.enableScrollWheelZoom();';
 
 
@@ -1498,7 +1498,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		// query for single record
 		$field = '*';
-		$where = 'uid = '.intval($id);
+		$where = 'uid = '.$id;
 		$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$offset='');
 		$row=array_shift($res);
 
@@ -1620,15 +1620,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		$where = 'hidden = 0 AND deleted=0 AND parent_uid='.$parentId;
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid,uid,title,parent_uid','tx_rggooglemap_cat',$where);
-		/*
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			if (in_array($row['uid'], explode(',',$allowedCat))) {
-				$catArr[$row['uid']]['name']= $row['title'];
-				$recursiveCat =   $this->helperGetRecursiveCat($allowedCat,$row['uid']);
-				if (is_array($recursiveCat))  $catArr[$row['uid']]['child']= $recursiveCat;
-			}
-		}*/
 		
+		// recursive query
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			if (in_array($row['uid'], explode(',',$allowedCat))) {
 				$catArr .= '<option class="searchlvl'.$level.'" value="'.$row['uid'].'">'.$row['title'].'</option>';
@@ -1708,9 +1701,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
+
   /*
   * **********************************
-  *  ********** X M L **************
+  * ********** X M L *****************
   * **********************************
   **/
   function xmlFunc($content,$conf)	{
