@@ -198,7 +198,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$GLOBALS['TSFE']->additionalHeaderData['rggooglemap_css'] = '<link rel="stylesheet" href="' . $pathToCSS . '" type="text/css" />';
 			}
 		}
-
+		
+		// Adds hook for changing the configuration
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['configHook'])) {
+			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['configHook'] as $_classRef) {
+				$_procObj = & t3lib_div::getUserObj($_classRef);
+				$this->config = $_procObj->extraSearchProcessor($this);
+			}
+		}		
 
   }
 
@@ -496,7 +503,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		while($row=array_shift($res)) {
 			$markerArray = $this->getMarker($row, 'directions.');
-
 			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
 		}
 		
@@ -508,6 +514,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
 		return $content;
 	}
+
 
 	/**
 	 * Geocode an adress string, which needs already to be in the correct order
@@ -566,6 +573,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $coords;
   }
 
+
 	/**
 	* Function for the ajax search results
 	*
@@ -588,11 +596,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if (strlen($searchForm['rggmsearchValue']) >= $this->conf['search.']['minChars'] ||
 			 ($searchForm['rggmActivateRadius']=='1' && $searchForm['rggmRadius']>0)) {
 			$res = Array();
+			$coordinatesSaved = array();
 
 			/*
 			 * Search for the text
 			 */
-
 
 			// escaping the search-value
 			$delete = array("'", "\"", "\\", "/", "");
@@ -625,8 +633,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 					// radius search (umkreissuche)
 					if ($searchForm['rggmActivateRadius']=='on') {
-						$coordinates = $this->geoCodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
 						
+						// avoid multiple geocoding calls, just 1 is necessary
+						if (count($coordinatesSaved) == 0) {
+							$coordinates = $this->geoCodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
+							$coordinatesSaved = $coordinates;
+						} else {
+							$coordinates = $coordinatesSaved;
+						}
+
 						// if status is ok (200) and accuracy fits settings in TS
 						if ($coordinates['status'] == 200 && (intval($coordinates['accuracy']) >= intval($this->conf['search.']['radiusSearch.']['minAccuracy']))) {
 							$select = '*,SQRT(POW('.$coordinates['lng'].'-lng,2)*6400 + POW('.$coordinates['lat'].'-lat,2)*12100) AS distance';
