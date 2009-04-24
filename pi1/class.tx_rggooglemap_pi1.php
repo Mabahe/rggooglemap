@@ -50,20 +50,20 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *  459:     function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 )
  *  490:     function showCatMenu()
  *  508:     function geoCodeAddress($address='', $zip='', $city='', $country='')
- *  555:     function search($searchForm)
- *  744:     function getActiveRecords($area, $cat)
+ *  555:     function ajaxSearch($searchForm)
+ *  744:     function ajaxGetActiveRecords($area, $cat)
  *  800:     function helperGetLLMarkers($markerArray, $conf, $prefix)
  *  830:     function initMap()
- *  878:     function infomsg($uid, $table,$tmplPrefix=1)
+ *  878:     function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)
  *  932:     function pageBrowserStatistic($offset=0, $table, $field, $where)
- *  957:     function processCat($data)
- * 1058:     function processCatTree($data)
- * 1073:     function processSearchInMenu ($data)
- * 1120:     function resultSet($var)
+ *  957:     function ajaxProcessCat($data)
+ * 1058:     function ajaxProcessCatTree($data)
+ * 1073:     function ajaxProcessSearchInMenu ($data)
+ * 1120:     function ajaxGetResultSet($var)
  * 1212:     function displayCatMenu($id=0)
  * 1270:     function getJs ()
  * 1395:     function getPoiOnStart()
- * 1437:     function getPoiTab($id,$tab,$table)
+ * 1437:     function ajaxGetPoiTab($id,$tab,$table)
  * 1452:     function getPoiContent($id,$tab,$table)
  * 1496:     function getMarker($row, $prefix)
  * 1547:     function helperGetFlexform($sheet, $key, $confOverride='')
@@ -327,7 +327,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * View "MENU": Show all records of the selected categories and starting point, linking to the map on a different page
 	 *
 
-	 * $param array $additional: Function can be called by processCatTree to change used categories dynamically
+	 * $param array $additional: Function can be called by ajaxProcessCatTree to change used categories dynamically
 	 * @return	The plugin content
 	 */
   function showMenu ($additionalCat='', $additionalWhere='') {
@@ -572,7 +572,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	* @param	string		$searchFields: The search fiels (search word & search on map only)
 	* @return	Records found with search value
 	*/
-	function search($searchForm)	{
+	function ajaxSearch($searchForm)	{
 		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH_RESULTS###');
 		$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
@@ -799,7 +799,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string		$area: the area of the map
 	 * @return all available (=visible) records
 	 */
-	function getActiveRecords($area, $cat)	{
+	function ajaxGetActiveRecords($area, $cat)	{
 		// template
 		$template['allrecords'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_ACTIVERECORDS###');
 		$template['item'] = $this->cObj2->getSubpart( $template['allrecords'],'###SINGLE###');
@@ -851,16 +851,16 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->statusMessagesOn(); 		// Do you wnat messages in the status bar?
 
 		// register the functions of the ajax requests
-		$this->xajax->registerFunction(array('infomsg', &$this, 'infomsg'));
-		$this->xajax->registerFunction(array('activeRecords', &$this, 'getActiveRecords'));
-		$this->xajax->registerFunction(array('processCat', &$this, 'processCat'));
-		$this->xajax->registerFunction(array('processFormData', &$this, 'processFormData'));
-		$this->xajax->registerFunction(array('getPoiList', &$this, 'getPoiList'));
-		$this->xajax->registerFunction(array('resultSet', &$this, 'resultSet'));
-		$this->xajax->registerFunction(array('tab', &$this, 'getPoiTab'));
-		$this->xajax->registerFunction(array('search', &$this, 'search'));
-		$this->xajax->registerFunction(array('processCatTree', &$this, 'processCatTree'));
-		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'processSearchInMenu'));
+		$this->xajax->registerFunction(array('infomsg', &$this, 'ajaxGetInfomsg'));
+		$this->xajax->registerFunction(array('activeRecords', &$this, 'ajaxGetActiveRecords'));
+		$this->xajax->registerFunction(array('processCat', &$this, 'ajaxProcessCat'));
+		//$this->xajax->registerFunction(array('processFormData', &$this, 'ajaxProcessFormData'));
+		//$this->xajax->registerFunction(array('getPoiList', &$this, 'getPoiList'));
+		$this->xajax->registerFunction(array('resultSet', &$this, 'ajaxGetResultSet'));
+		$this->xajax->registerFunction(array('tab', &$this, 'ajaxGetPoiTab'));
+		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
+		$this->xajax->registerFunction(array('processCatTree', &$this, 'ajaxProcessCatTree'));
+		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'ajaxProcessSearchInMenu'));
   	$this->xajax->processRequests(); 		// Else create javascript and add it to the header output
 
 
@@ -886,7 +886,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param int     $prefix: Prefix for tabs in info window
 	 * @return	The content of the info window
 	 */
-  function infomsg($uid, $table,$tmplPrefix=1)	{
+  function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)	{
 
     $template['infobox'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_INFOBOX_'.$tmplPrefix.'###');
 
@@ -967,7 +967,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	array	$data: selected checboxes
 	 * @return	Result records including the pagebrowser for the 1st result page
 	 */
-	function processCat($data)	{
+	function ajaxProcessCat($data)	{
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 
 		if (is_Array($data['cb'])){
@@ -1068,7 +1068,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	array	$data: selected checboxes
 	 * @return	Result records
 	 */
-	function processCatTree($data)	{
+	function ajaxProcessCatTree($data)	{
 	  $content.= $this->showMenu($data['cb']);
 
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
@@ -1083,7 +1083,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	array	$data: selected uids
 	 * @return	where clause for search
 	 */
-	function processSearchInMenu ($data)	{
+	function ajaxProcessSearchInMenu ($data)	{
 
 	  $searchExpression = $data['rggmsearchValue'];
 
@@ -1131,7 +1131,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	$offset: offset value
 	 * @return	Result records including the pagebrowser
 	 */
-  function resultSet($var) {
+  function ajaxGetResultSet($var) {
 		$offset = intval($var);
 
 		// template
@@ -1455,7 +1455,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	int		$tan: the id of the tab which should get filled (every tab has got an own template)
 	 * @return the content
 	 */
-	function getPoiTab($id,$tab,$table)	{
+	function ajaxGetPoiTab($id,$tab,$table)	{
 		$content = $this->getPoiContent($id,$tab, $table);
 		
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
