@@ -177,7 +177,17 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// which tables should be uses
 		$tmp_confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 		$this->config['tables'] = ($this->confArr['tables']!='') ? $this->confArr['tables'] : $tmp_confArr['tables'];
+		// avoid using t3lib_div::trimExplode everytime, delete blanks just once
+		$this->config['tables'] = str_replace(' ', '', $this->config['tables']);
 
+		// get default table 
+		$defaultTableFound = false;
+		if (empty($this->conf['defaultTable']) || t3lib_div::inList($this->config['tables'], $this->conf['defaultTable'])) {
+			$split = explode(',', $this->config['tables']);
+			$this->conf['defaultTable'] = $split[0];
+		} 
+		
+		// get the generic select functions
 		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'res/class.tx_rggooglemap_table.php');
 		$this->generic = t3lib_div::makeInstance('tx_rggooglemap_table');
 
@@ -188,6 +198,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$GLOBALS['TSFE']->additionalHeaderData['rggooglemap_css'] = '<link rel="stylesheet" href="' . $pathToCSS . '" type="text/css" />';
 			}
 		}
+
 
   }
 
@@ -389,7 +400,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
         if ($this->config['menu-map']!='') {
           $vars['poi'] = $row2['uid'];
 
-          if ($row2['table'] !='tt_address') {
+          if ($row2['table'] != $this->conf['defaultTable']) {
             $vars['table'] = $row2['table'];
           }
 
@@ -1083,6 +1094,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
       $searchExpression = trim(str_replace($delete, '', $searchExpression));
 
       // query for the search
+      // todo > check what tt_adderws does here 
       $searchField = explode(',',$this->conf['search.']['tt_address']);
       foreach ($searchField as $key=>$value) {
         $where2.= " $value LIKE '%$searchExpression%' OR";
@@ -1401,19 +1413,18 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
     // pivars overrules flexform/ts
 		$defaultPOI = ($this->piVars['poi']!='') ? $this->piVars['poi'] : $this->config['mapShowOnDefault'];
-		$table = 'tt_address';
+		$table = $this->conf['defaultTable']; // default table
 
   	if ($defaultPOI!='') {
 			// split it up by using '-' to get a possible table
 			$split = explode('-', $defaultPOI);
 
 			if (count($split)==1) {
+				$uid		= $split[0];
+
 				if (!empty($this->piVars['table']) && !t3lib_div::inList($this->config['tables'], $this->piVars['table'])) {
 					$table = $this->piVars['table'];
 				} 
- 
-				$table	= 'tt_address';
-				$uid		= $split[0];
 			} else {
 				$table	= $split[0];
 				$uid		= $split[1];
@@ -1421,6 +1432,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 			$uid = intval($uid);
 
+			// fetch coords for this record
 			if ($uid > 0) {
 				$where = 'uid = '.$uid.$this->helperGetAvailableRecords($this->config['categories']);
 				$res = $this->generic->exec_SELECTquery('uid, lng, lat',$table,$where,$groupBy,$orderBy,$offset);
@@ -1445,10 +1457,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function getPoiTab($id,$tab,$table)	{
 		$content = $this->getPoiContent($id,$tab, $table);
+		
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('poi', 'innerHTML', $content);
 		return $objResponse->getXML();
 	}
+
 
 	/**
 	 * Shows the content of a POI bubble
@@ -1476,7 +1490,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		$markerArray = $this->getMarker($row, 'poi.');
 
-		$tablePrefix = ($table!='tt_address') ? '_'.strtoupper($table) : '';
+		$tablePrefix = '_'.strtoupper($table);
 
  		// get the correct template subpart
 		$template['all'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_INFOPOI'.$tablePrefix.$markerArray['###TABPREFIX###'].'_'.$tab.'###');
@@ -1504,13 +1518,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
   function getMarker($row, $prefix) {
     $prefiWithOutDot = trim($prefix, '.');
+    
     // language setting
     if ($GLOBALS['TSFE']->sys_language_content) {
       $OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
       $row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($row['table'], $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
     }
 
-    // general handling
+    // general stdWrap handling
     $short = $this->conf[$prefix][$row['table'].'.'];
     foreach ($row as $key=>$value) {
       $this->cObj2->data[$key]=$value; // thanks tobi
@@ -1739,10 +1754,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
         }
 
         // category selection
-
-
-  #      $catList = ($cat!=0) ? explode(',',$cat) : explode(',',$this->config['categoriesActive']);
-
         $catTmp = false;
         foreach ($catList as $key=>$value) {
           if ($value) {
@@ -1780,7 +1791,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
           if ($catDivider == false) {
             if (!$catImg[$row['rggmcat']]) {
               if (!file_exists('uploads/tx_rggooglemap/dot.png')) {
-                copy($this->conf['defaultPOIIcon'],'uploads/tx_rggooglemap/dot.png');
+                @copy($this->conf['defaultPOIIcon'],'uploads/tx_rggooglemap/dot.png');
               }
               $catImg[$row['rggmcat']] = 'dot.png';
 

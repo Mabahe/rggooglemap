@@ -422,6 +422,7 @@ plugin.tx_rggooglemap_pi1 {
   
   recordsPerPage = 30
 	defaultCountry = Austria
+	defaultTable = tt_address
 
 
   # stdWrap for all markers in the info bubble
