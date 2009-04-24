@@ -37,6 +37,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * - xmlFunc optimize
 	 * - menu func
 	 * - json?	 	 	 	 
+	 * - !!! check for special tab prefix like _K	 
 
    /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -1302,9 +1303,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @return	all the js
 	 */
 	function getJs () {
-    $postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
-
-
     // some settings for controlling
 
     // map type

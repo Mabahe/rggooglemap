@@ -36,9 +36,12 @@
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  M A I N  -  T E M P L A T E  - - - - -  
+  -  J S  -  H E A D E R  - - - - -  
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This is the main template, including the map and the tree
+Subpart for the JS-Header which is used to embed the needed javascript files
+Available markers:
+ - ###PATH### > Path to EXT:rggooglemap/res
+ - ###DYNAMIC_JS### > the dynamic part of the js, which comes from the seperate file templateJS.js
 
 <!-- ###HEADER### -->
 <!--
@@ -62,6 +65,16 @@ This is the main template, including the map and the tree
 -->
 <!-- ###HEADER### -->
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  M A P  -  T E M P L A T E  - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is the main subpart, holding the map
+
+Available markers:
+	CAT_LIST > needed, so don't delete that!
+	MAP_HEIGHT > height of map
+	MAP_WIDTH > width of map
+	LL_LOADING > loading text
 
 <!-- ###MAP### -->
 <div id="mapcatlist" style="display:none;">###CAT_LIST###</div>
@@ -79,9 +92,9 @@ This is the main template, including the map and the tree
 <div id="formResult"></div>
 
 
-
 <div id="infobox" style="left:490px;top:320px;"></div>
 <div id="coordinfo"></div>
+
 
 <div class="rggooglemap-directionresults">
 	<div id="removedirections" style="display:none"><a href="javascript:removeDirections();">###LL_REMOVE-DIRECTIONS###</a></div>
