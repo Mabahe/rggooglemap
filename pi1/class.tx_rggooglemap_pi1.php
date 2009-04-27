@@ -1451,7 +1451,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 			// fetch coords for this record
 			if ($uid > 0) {
-				$where = 'uid = '.$uid.$this->helperGetAvailableRecords($this->config['categories']);
+				$where = 'uid = '.$uid.' AND '.$this->helperGetAvailableRecords($this->config['categories']);
 				$res = $this->generic->exec_SELECTquery('uid, lng, lat',$table,$where,$groupBy,$orderBy,$offset);
 				$row=array_shift($res);
 
