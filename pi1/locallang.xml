@@ -13,8 +13,9 @@
 			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>
 			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>
 			<label index="errror_no-status">ERROR: No status selected!</label>
+			<label index="error_wrong-domains">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid urls for an ajax request! Your current domain: &quot;%s&quot;, the domain for the ajax requests: &quot;%s&quot;. Those need to be the same, e.g. use the 2nd domain!</label>			
 			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No template subpart is defined for &lt;br /&gt;%s &lt;br /&gt;inside the template!</label>
-			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>
+			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>			
 			<label index="general_show">Show on map</label>
 			<label index="general_search">Search</label>
 			<label index="general_directions">Directions</label>

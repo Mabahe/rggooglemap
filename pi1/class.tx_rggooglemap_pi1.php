@@ -229,6 +229,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
+		
+		// check if this is the correct domain (no cross domain scripts for ajax requests
+		$check = $this->helperCheckForWrongUrl();
+		if (count($check)> 0) {
+			return sprintf($this->pi_getLL('error_wrong-domains'), $check['current'], $check['link']);
+		}
 
 
 		// what should be displayed
@@ -1669,6 +1675,28 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		return $markerArray;
+	}
+
+
+	/**
+	 * Check if ajax url is the same domain as for current url
+	 * no cross site ajax requests possible!	 
+	 *
+	 * @return	array holding the infos for the error msg
+	 */
+
+	function helperCheckForWrongUrl() {
+		$status = array();
+		
+		$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
+		$linkDomain = $this->pi_getPageLink($GLOBALS['TSFE']->id);
+		
+		if (strpos($linkDomain, $currentDomain) === false) {
+			$status['current']	= $currentDomain;
+			$status['link']			= $linkDomain;
+		}
+		
+		return $status;
 	}
 	
 
