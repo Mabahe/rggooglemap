@@ -51,7 +51,7 @@ plugin.tx_rggooglemap_pi1 {
 				height	= 16
 			}
 		
-			use the category uid to set the sizes for each category seperatly
+			# use the category uid to set the sizes for each category seperatly
 			999 {
 				width		= 32
 				height 	= 32

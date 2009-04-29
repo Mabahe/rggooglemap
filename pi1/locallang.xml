@@ -8,16 +8,14 @@
 		<languageKey index="default" type="array">
 			<label index="pagebrowser">Record %s-%s of %s total</label>
 			<label index="pagebrowser_prev">&lt;a %s&gt;previous Page (%s)&lt;/a&gt;</label>
-			<label index="pagebrowser_next">&lt;a %s&gt;next Page (%s)&lt;/a&gt;</label>		
+			<label index="pagebrowser_next">&lt;a %s&gt;next Page (%s)&lt;/a&gt;</label>
 			<label index="pagebrowser_act">Page %s</label>
-			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>			
-			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>	
-					
+			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>
+			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>
 			<label index="errror_no-status">ERROR: No status selected!</label>
 			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No template subpart is defined for &lt;br /&gt;%s &lt;br /&gt;inside the template!</label>
-			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table "%s", uid "%s" and tab "%s"!</label>
-			
-			<label index="general_show">Show on map</label>			
+			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>
+			<label index="general_show">Show on map</label>
 			<label index="general_search">Search</label>
 			<label index="general_directions">Directions</label>
 			<label index="general_more">More information</label>
@@ -25,105 +23,46 @@
 			<label index="general_lat">Latitude</label>
 			<label index="general_lng">Longitude</label>
 			<label index="general_exampleaddress">Gosau, Austria</label>
-			
 			<label index="map_remove-directions">Remove directions</label>
 			<label index="map_loading">Loading</label>
-			
 			<label index="location_description">Enter the location with the syntax: &lt;i&gt;Street, City, Country or City, Country&lt;/i&gt;.</label>
 			<label index="location_search">Go to this location</label>
 			<label index="location_zoomlevel_5">Far away</label>
 			<label index="location_zoomlevel_9">Near</label>
 			<label index="location_zoomlevel_14">Closeup</label>
 			<label index="location_label_address">Address</label>
-			<label index="location_label_zoomlevel">Zoomlevel</label>				
-
-			<label index="search_description">Search for a record, e.g. &lt;i&gt;"Hotel"&lt;/i&gt;.</label>			
+			<label index="location_label_zoomlevel">Zoomlevel</label>
+			<label index="search_description">Search for a record, e.g. &lt;i&gt;&quot;Hotel&quot;&lt;/i&gt;.</label>
 			<label index="search_label_cat">Category</label>
 			<label index="search_label_radius">Radius</label>
 			<label index="search_label_zip">City or ZIP code</label>
-			<label index="search_label_activateradius">Activate Radius Search</label>		
+			<label index="search_label_activateradius">Activate Radius Search</label>
 			<label index="search_label_name">Search expression</label>
 			<label index="search_label_maponly">Search only in selected map area</label>
 			<label index="search_clearsearch">Clear search</label>
 			<label index="search_error-header">There haven been the following error(s)</label>
-			<label index="search_error_geocode-accuracy">Your calculated position was not accurate enough.</label>									
+			<label index="search_error_geocode-accuracy">Your calculated position was not accurate enough.</label>
 			<label index="search_error_geocode-status-500">A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is unknown.</label>
 			<label index="search_error_geocode-status-601">An empty address was specified in the HTTP q parameter.</label>
 			<label index="search_error_geocode-status-602">No corresponding geographic location could be found for the specified address, possibly because the address is relatively new, or because it may be incorrect.</label>
 			<label index="search_error_geocode-status-603">The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.</label>
 			<label index="search_error_geocode-status-610">The given key is either invalid or does not match the domain for which it was given.</label>
-			<label index="search_error_geocode-status-620">The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time.</label>			
-
+			<label index="search_error_geocode-status-620">The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time.</label>
 			<label index="recordsonmap_description">Records which are currently shown on the map</label>
 			<label index="recordsonmap_wait">Please wait for a short moment.</label>
-			
-			<label index="poi_directions_header">Get your directions</label>			
+			<label index="poi_directions_header">Get your directions</label>
 			<label index="poi_directions_description">Add your address in the &lt;i&gt;format Street, City, Country&lt;/i&gt;.</label>
-			
 			<label index="directions_title">Get the directions</label>
 			<label index="directions_description">Insert your address and you will know how do get there</label>
 			<label index="directions_label_address">Your Address</label>
 			<label index="directions_label_country">Your Country</label>
 			<label index="directions_label_record">Directions to</label>
 			<label index="directions_search">Get there!</label>
-			<label index="directions_remove-directions">Remove directions</label>			
-    </languageKey>
-
-<!--
- label_cat,label_radius,label_zip
--->
-
-    <!-- GERMAN (DEUTSCH) -->
-		<languageKey index="de" type="array">
-			<label index="pagebrowser">Datensatz %s-%s von %s insgesamt</label>
-			<label index="pagebrowser_prev">&lt;a %s&gt;vorige Seite (%s)&lt;/a&gt;</label>
-			<label index="pagebrowser_next">&lt;a %s&gt;nächste Seite (%s)&lt;/a&gt;</label>
-			<label index="pagebrowser_act">Seite %s</label>		
-			<label index="searchNoResult">&lt;i&gt;Leider kein Ergebnis&lt;/&gt;</label>
-			<label index="searchMinChars">&lt;i&gt;Minimumlänge von %s Buchstaben benötigt&lt;/i&gt;</label>
-
-			<label index="errror_no-status">ERROR: Kein Status ausgewählt!</label>
-			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; Kein Template Subpart wurde definiert für &lt;br /&gt;%s &lt;br /&gt;innerhalb des HTML-Templates!</label>
-			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; Kein gülten Parameter für die Tabelle "%s", uid "%s" und Tab "%s"!</label>
-			
-			<label index="general_show">Auf Karte zeigen</label>			
-			<label index="general_search">Suchen</label>
-			<label index="general_directions">Anfahrt</label>
-			<label index="general_more">Mehr Information</label>
-			<label index="general_back">Zurück</label>
-			<label index="general_lat">Breitengrad</label>
-			<label index="general_lng">Längengrad</label>
-			
-			<label index="map_remove-directions">Anfahrtsberechnung verbergen</label>
-			<label index="map_loading">wird geladen</label>
-			
-			<label index="location_description">Geben Sie einen Ort mit der Syntax: &lt;i&gt;Straße, Land, Ort oder Land, Staat&lt;/i&gt; ein.</label>
-			<label index="location_exampleaddress">Gosau, Österreich</label>
-			<label index="location_search">Gehe zu diesem ort</label>
-			<label index="location_zoomlevel_5">weit weg</label>
-			<label index="location_zoomlevel_9">nahe</label>
-			<label index="location_zoomlevel_14">sehr nache</label>
-			<label index="location_label_address">Adresse</label>
-			<label index="location_label_zoomlevel">Zoom-Level</label>				
-			
-			<label index="search_label_cat">Kategorie</label>
-			<label index="search_label_radius">Radius</label>
-			<label index="search_label_zip">Ort oder PLZ</label>
-			<label index="search_label_activateradius">Umkreissuche aktivieren</label>		
-			<label index="search_label_name">Suchausdruck</label>
-			<label index="search_label_maponly">Nur im Bereich der Karte suchen</label>						
-
-			<label index="search_description">Suche nach einem Datensatz, z.B. &lt;i&gt;"Hotel"&lt;/i&gt;.</label>
-
-			<label index="recordsonmap_description">Datensätze, die gerade auf der Karte angezeigt werden.</label>
-			<label index="recordsonmap_wait">Bitte einen kurzen Moment warten.</label>
-			
-			<label index="poi_directions_header">Ihre Anfahrt</label>			
-			<label index="poi_directions_description">Geben Sie ihre Adresse im Format &lt;i&gt;Straße, Ort, Land&lt;/i&gt; ein.</label>
-
-
-    </languageKey>
-		
-		
+			<label index="directions_remove-directions">Remove directions</label>
+		</languageKey>
 	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
 </T3locallang>

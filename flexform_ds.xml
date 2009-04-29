@@ -68,6 +68,38 @@
 					</key>
           	      	
 
+
+					<categoriesselected>
+						<TCEforms>
+							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.categoriesselected</label>
+							<config>
+								<type>select</type>
+								<foreign_table>tx_rggooglemap_cat</foreign_table>
+								<foreign_table_where>ORDER BY tx_rggooglemap_cat.title ASC</foreign_table_where>
+								<size>6</size>
+								<maxitems>42</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+							</config>
+						</TCEforms>
+					</categoriesselected>	
+					
+					<categories>
+						<TCEforms>
+							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.categories</label>
+							<config>
+								<type>select</type>
+								<foreign_table>tx_rggooglemap_cat</foreign_table>
+								<foreign_table_where>ORDER BY tx_rggooglemap_cat.title ASC</foreign_table_where>
+								<size>6</size>
+								<maxitems>42</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+							</config>
+						</TCEforms>
+					</categories>					
+
+					
             
             
 					<startingpoint>
@@ -122,38 +154,6 @@
 							</config>
 						</TCEforms>
 					</recursive>
-
-					<categoriesselected>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.categoriesselected</label>
-							<config>
-								<type>select</type>
-								<foreign_table>tx_rggooglemap_cat</foreign_table>
-								<foreign_table_where>ORDER BY tx_rggooglemap_cat.title ASC</foreign_table_where>
-								<size>6</size>
-								<maxitems>42</maxitems>
-								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
-							</config>
-						</TCEforms>
-					</categoriesselected>	
-					
-					<categories>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.categories</label>
-							<config>
-								<type>select</type>
-								<foreign_table>tx_rggooglemap_cat</foreign_table>
-								<foreign_table_where>ORDER BY tx_rggooglemap_cat.title ASC</foreign_table_where>
-								<size>6</size>
-								<maxitems>42</maxitems>
-								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
-							</config>
-						</TCEforms>
-					</categories>					
-
-					
   
 		
 	    </el>

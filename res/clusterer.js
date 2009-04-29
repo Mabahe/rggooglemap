@@ -50,8 +50,8 @@ Clusterer = function ( map )
 
 
 Clusterer.defaultMaxVisibleMarkers = 50;
-Clusterer.defaultGridSize = 5;
-Clusterer.defaultMinMarkersPerCluster = 5;
+Clusterer.defaultGridSize = 3;
+Clusterer.defaultMinMarkersPerCluster = 3;
 Clusterer.defaultMaxLinesPerInfoBox = 5;
 
 Clusterer.defaultIcon = new GIcon();
