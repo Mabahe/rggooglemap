@@ -1352,6 +1352,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
     }
 
     // use cluster, default = 0
+    #$this->conf['activateCluster'] = 1;
     $addMarker = ($this->conf['activateCluster']==1) ? 'clusterer.AddMarker(marker,title);' : 'map.addOverlay( marker );';
 
 
