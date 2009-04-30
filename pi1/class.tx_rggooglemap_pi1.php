@@ -75,7 +75,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1752:     function xmlNewLevel($name,$beginEndFlag=0,$params=array())
  * 1777:     function xmlGetResult()
  * 1788:     function xmlOutput($content)
- * 1803:     function xmlIndent($b)
  * 1820:     function xmlFieldWrap($field,$value)
  * 1825:     function xmlTopLevelName()
  * 1830:     function xmlRenderHeader()
@@ -1880,13 +1879,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($table, $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
-		
 
 		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'"  >';
 
-		$this->xmlIndent(1);
+
 		$this->xmlGetRowInXML($row,$conf);
-		$this->xmlIndent(0);
 		$this->xmlLines[]=$this->xmlIcode.'</marker>';
 	}
 
@@ -1925,9 +1922,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 
 			$this->xmlLines[]=$this->xmlIcode.'<'.$name.$pList.'>';
-			$this->xmlIndent(1);
 		} else {
-			$this->xmlIndent(0);
 			$this->xmlLines[]=$this->xmlIcode.'</'.$name.'>';
 		}
 	}
@@ -1946,15 +1941,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
-	function xmlIndent($b) {
-		if ($b) $this->XMLIndent++; else $this->XMLIndent--;
-			$this->xmlIcode='';
-		for ($i=0;$i<$this->XMLIndent;$i++) {
-			$this->xmlIcode.=chr(9);
-		}
-		return $this->xmlIcode;
-
-	}
 
 	function xmlFieldWrap($field,$value)       {
 		return '<'.$field.'>'.$value.'</'.$field.'>';
