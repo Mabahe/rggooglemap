@@ -36,8 +36,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * - group pois
 	 * - xmlFunc optimize
 	 * - menu func
-	 * - json?	 	 	 	 
-	 * - !!! check for special tab prefix like _K	 
+	 * - json?	 	 	 	 	 
 
    /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -1558,6 +1557,19 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
     $markerArray['###POPUP###'] = ' onClick=\' show("infobox"); ' . $this->prefixId . 'infomsg('.$row['uid'].', "'.$row['table'].'"); \'  ';
     $markerArray['###PREFIX###'] = $prefix;
+    
+    
+    // get the prefix from the 1st category record for the record
+    if ($row['rggmcat']) {
+      $catIds = explode(',',$row['rggmcat']);
+    	
+      $resPrefix = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tabprefix','tx_rggooglemap_cat','uid = '.$catIds[0]);
+      $rowPrefix = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resPrefix);
+      $GLOBALS['TYPO3_DB']->sql_free_result($resPrefix);
+      $markerArray['###TABPREFIX###'] = ($rowPrefix['tabprefix']) ? '_'.$rowPrefix['tabprefix'] : '';
+    } else {
+      $markerArray['###TABPREFIX###'] = '';
+    }    
 
 		// generic markers
 		$short = $this->conf[$prefix][$row['table'].'.']['generic.'];
