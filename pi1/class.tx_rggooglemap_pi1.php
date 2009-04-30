@@ -34,7 +34,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * - check flexform, especially menu
 	 * - search: add some ts vars to manipulate js for search, before after,...
 	 * - group pois
-	 * - xmlFunc optimize
 	 * - json?	 	 	 	 	 
 
    /**
@@ -1365,7 +1364,18 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$gicon = '';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,image', 'tx_rggooglemap_cat', 'hidden=0 AND deleted=0');
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			$iconSize = @getimagesize('uploads/tx_rggooglemap/'.$row['image']);
+
+			// set the correct paths if no icon is found
+			if ($row['image']=='') {
+				$iconPath 	= $this->conf['map.']['defaultIcon'];
+				$iconPathJS	= t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->conf['map.']['defaultIcon'];
+			} else {
+				$iconPath = 'uploads/tx_rggooglemap/'.$row['image'];
+				$iconPathJS	= $urlForIcons.$row['image'];
+			}
+ 
+		
+			$iconSize = @getimagesize($iconPath);
 			$width = 0;
 			$height = 0;
 
@@ -1381,9 +1391,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$height = $iconSize[1];
 			}
 
-			$key = 'gicons["'.$row['image'].'"]';
+			$key = 'gicons['.$row['uid'].']';
 			$gicon .= $key.'= new GIcon(baseIcon);'.chr(10);
-			$gicon .= $key.'.image = "'.$urlForIcons.$row['image'].'";'.chr(10);
+			$gicon .= $key.'.image = "'.$iconPathJS.'";'.chr(10);
 			$gicon .= $key.'.iconSize = new GSize('.$width.', '.$height.');'.chr(10);
 			$gicon .= $key.'.infoWindowAnchor = new GPoint('.($width/2).', '.($height/2).');'.chr(10).chr(10);
 		}
@@ -1732,6 +1742,37 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
+	/**
+	 * Get the image of the categories
+	 * todo: create a real recursive function	 
+
+	 * @param	array		$catImg: array holding the record
+	 * @param	int		$parent: id of the parent category
+	 * @return	array list of category records with their images
+	 */
+	function helperGetCategoryImage($catImg, $parent=0) {
+		$table = 'tx_rggooglemap_cat';
+		$field = 'uid,image,parent_uid';
+		$where = 'deleted = 0 AND hidden=0 ';
+		
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row['image']=='') {
+				// get image of parent category
+				$whereTemp = 'deleted = 0 AND hidden=0 AND uid = '.$row['parent_uid'];
+				$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$whereTemp);
+				$row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2);
+				$GLOBALS['TYPO3_DB']->sql_free_result($res2);
+				$catImg[$row['uid']] = $row2['image'];
+			} else {
+				$catImg[$row['uid']] = $row['image'];
+			}
+		}
+		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		
+		return $catImg;
+	}
+
 
 	/*
 	* **********************************
@@ -1748,112 +1789,80 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if ($postvars['detail']!='') {
 			$content = $this->getPoiContent($postvars['detail'],1,$postvars['table']);
 			return $content;
-		// fetch the xml for the pois
-		} else {
+		}
 			
-			// categories
-			$cat = $postvars['cat'];
-			if ($cat) { // cat selected
-				if ($cat!=9999) { // nothing selected
-					$catList = explode(',',$cat);
-				}
-			} else { // nothing selected means 1st call!!
-				$catList =  explode(',',$this->config['categoriesActive']);
+		// categories
+		$cat = $postvars['cat'];
+		if ($cat) { // cat selected
+			if ($cat!=9999) { // nothing selected
+				$catList = explode(',', $cat);
+			}
+		} else { // nothing selected means 1st call!
+			$catList =  explode(',', $this->config['categoriesActive']);
+		}
+		
+		$this->xmlRenderHeader();
+		
+		if ($catList) {
+			$catImg = $this->helperGetCategoryImage(array()); // category images
+						
+			$table =  $this->config['tables'];
+			$field = '*';
+			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
+			
+			if (strlen($postvars['area'])>5) {
+				$areaArr=array();
+				$areaArr=split(', ',$postvars['area']);
+				$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
+									 AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
 			}
 			
-			// category image
-			$table = 'tx_rggooglemap_cat';
-			$field = 'uid,image,parent_uid';
-			$where = 'deleted = 0 AND hidden=0 ';
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				if ($row['image']=='') {
-					// get image of parent category
-					$whereTemp = 'deleted = 0 AND hidden=0 AND uid = '.$row['parent_uid'];
-					$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$whereTemp);
-					$row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2);
-					$GLOBALS['TYPO3_DB']->sql_free_result($res2);
-					$catImg[$row['uid']] = $row2['image'];
-				} else {
-					$catImg[$row['uid']] = $row['image'];
+			// category selection
+			$catTmp = false;
+			foreach ($catList as $key=>$value) {
+				if ($value) {
+					$catTmp=true;
+					$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
 			
-			$this->xmlRenderHeader();
 			
-			if ($catList) {
-				$table =  $this->config['tables'];
-				$field = '*';
-				$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
-				
-				if (strlen($postvars['area'])>5) {
-					$areaArr=array();
-					$areaArr=split(', ',$postvars['area']);
-					$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
-										 AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
-				}
-				
-				// category selection
-				$catTmp = false;
-				foreach ($catList as $key=>$value) {
-					if ($value) {
-						$catTmp=true;
-						$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
-					}
-				}
-				$where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
-				
-				
-				
-				$limit = '';
-				
-				if ($this->conf['extraquery']==1) {
-					$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses','rggmttnews2'));
-					if ($extraquery!= '') {
-						$where.= ' AND uid IN ('.$extraquery.') ';
-					}
-				}
-				
-				
-				// Adds hook for processing of the xml func
-				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
-					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
-						$_procObj = & t3lib_div::getUserObj($_classRef);
-						$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
-					}
-				}
-				
-				
-				$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
-				while($row=array_shift($res)) {
-					$catDivider = strpos($row['rggmcat'],',');
-					if ($catDivider == false) {
-						if (!$catImg[$row['rggmcat']]) {
-							if (!file_exists('uploads/tx_rggooglemap/dot.png')) {
-								@copy($this->conf['defaultPOIIcon'],'uploads/tx_rggooglemap/dot.png');
-							}
-							$catImg[$row['rggmcat']] = 'dot.png';
-							
-						}
-						$img = $catImg[$row['rggmcat']];
-
-					} else {
-						$firstCat = substr($row['rggmcat'],0,$catDivider);
-						$img = $catImg[$firstCat];
-					}
-					
-					$test = '';
-					
-					
-					$this->xmlAddRecord($table, $row,$conf, $img,$test);
+			
+			$limit = '';
+			
+			if ($this->conf['extraquery']==1) {
+				$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses','rggmttnews2'));
+				if ($extraquery!= '') {
+					$where.= ' AND uid IN ('.$extraquery.') ';
 				}
 			}
-			$this->xmlRenderFooter();
 			
-			$result = $this->xmlGetResult();
-			return $result;
+			
+			// Adds hook for processing of the xml func
+			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
+				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
+					$_procObj = & t3lib_div::getUserObj($_classRef);
+					$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
+				}
 			}
+			
+			
+			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
+			while($row=array_shift($res)) {
+				$test = '';
+				
+				$catList = explode(',', $row['rggmcat']);
+				$img = $catImg[$catList[0]];	
+				$img = $catList[0];
+				
+				$this->xmlAddRecord($table, $row,$conf, $img, $test);
+			}
+		}
+		$this->xmlRenderFooter();
+		
+		$result = $this->xmlGetResult();
+		return $result;
 	}
 
 
@@ -1865,14 +1874,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return single line @ xml
 	 */
-	function xmlAddRecord($table, $row,$conf, $img,$test) {
+	function xmlAddRecord($table, $row,$conf, $img, $test) {
 		// language setting
 		if ($GLOBALS['TSFE']->sys_language_content) {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($table, $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
+		
 
-		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'" test="'.$test.'" >';
+		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'"  >';
 
 		$this->xmlIndent(1);
 		$this->xmlGetRowInXML($row,$conf);
