@@ -104,7 +104,7 @@
             
 					<startingpoint>
 						<TCEforms>
-							<label>LLL:EXT:lang/locallang_general.php:LGL.startingpoint</label>
+							<label>LLL:EXT:lang/locallang_general.xml:LGL.startingpoint</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -119,7 +119,7 @@
 
 					<recursive>
 						<TCEforms>
-							<label>LLL:EXT:lang/locallang_general.php:LGL.recursive</label>
+							<label>LLL:EXT:lang/locallang_general.xml:LGL.recursive</label>
 							<config>
 								<type>select</type>
 									<items type="array">
@@ -128,23 +128,23 @@
 											<numIndex index="1"></numIndex>
 										</numIndex>
 										<numIndex index="1" type="array">
-											<numIndex index="0">LLL:EXT:cms/locallang_ttc.php:recursive.I.1</numIndex>
+											<numIndex index="0">LLL:EXT:cms/locallang_ttc.xml:recursive.I.1</numIndex>
 											<numIndex index="1">1</numIndex>
 										</numIndex>
 										<numIndex index="2" type="array">
-											<numIndex index="0">LLL:EXT:cms/locallang_ttc.php:recursive.I.2</numIndex>
+											<numIndex index="0">LLL:EXT:cms/locallang_ttc.xml:recursive.I.2</numIndex>
 											<numIndex index="1">2</numIndex>
 										</numIndex>
 										<numIndex index="3" type="array">
-											<numIndex index="0">LLL:EXT:cms/locallang_ttc.php:recursive.I.3</numIndex>
+											<numIndex index="0">LLL:EXT:cms/locallang_ttc.xml:recursive.I.3</numIndex>
 											<numIndex index="1">3</numIndex>
 										</numIndex>
 										<numIndex index="4" type="array">
-											<numIndex index="0">LLL:EXT:cms/locallang_ttc.php:recursive.I.4</numIndex>
+											<numIndex index="0">LLL:EXT:cms/locallang_ttc.xml:recursive.I.4</numIndex>
 											<numIndex index="1">4</numIndex>
 										</numIndex>
 										<numIndex index="5" type="array">
-											<numIndex index="0">LLL:EXT:cms/locallang_ttc.php:recursive.I.5</numIndex>
+											<numIndex index="0">LLL:EXT:cms/locallang_ttc.xml:recursive.I.5</numIndex>
 											<numIndex index="1">250</numIndex>
 										</numIndex>
 									</items>
@@ -339,16 +339,16 @@
 								<type>select</type>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.none</numIndex>
-										<numIndex index="1">none</numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.small</numIndex>
 										<numIndex index="1">small</numIndex>
 									</numIndex>
-									<numIndex index="2" type="array">
+									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.large</numIndex>
 										<numIndex index="1">large</numIndex>
+									</numIndex>									
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.none</numIndex>
+										<numIndex index="1">none</numIndex>
 									</numIndex>
 								</items>
 							</config>
