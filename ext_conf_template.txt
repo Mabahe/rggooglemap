@@ -54,3 +54,6 @@ tables = tt_address
 
 # cat=basic; type=boolean; label=Auto Insert of lng+lat for new records: If a new record is saved, it is tried to get its coordinates.
 autoSearch = 1 
+
+# cat=basic; type=boolean; label=Auto Category records in page module: Don't show the category records in the page module
+hideInPageModule = 0
