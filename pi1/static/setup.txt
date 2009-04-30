@@ -6,6 +6,9 @@ plugin.tx_rggooglemap_pi1 {
 	
 	generalLL = show,search,directions,more,back,lng,lat,exampleaddress
 	
+	# not yet finished
+	getRecordOverlay = 0
+	
 	# Directions
 	directions {
 		LL = title,description,label_country,label_record,label_address,search,remove-directions
@@ -42,6 +45,8 @@ plugin.tx_rggooglemap_pi1 {
 	
 	map {
 		LL = loading,remove-directions
+		
+		defaultIcon = typo3conf/ext/rggooglemap/res/dot.png
 		
 		# Icon sizes if it can be fetched from the image
 		iconSize {

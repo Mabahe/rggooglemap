@@ -1540,7 +1540,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$prefiWithOutDot = trim($prefix, '.');
 		
 		// language setting
-		if ($GLOBALS['TSFE']->sys_language_content) {
+		if ($GLOBALS['TSFE']->sys_language_content && $this->conf['getRecordOverlay'] == 1) {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($row['table'], $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
@@ -1875,7 +1875,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function xmlAddRecord($table, $row,$conf, $img, $test) {
 		// language setting
-		if ($GLOBALS['TSFE']->sys_language_content) {
+		if ($GLOBALS['TSFE']->sys_language_content && $this->conf['getRecordOverlay'] == 1 ) {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($table, $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
