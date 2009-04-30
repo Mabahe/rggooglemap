@@ -1929,20 +1929,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 	function xmlGetResult() {
 		$content = implode(chr(10),$this->xmlLines);
-		return $this->xmlOutput($content);
+		return $content;
 	}
 
-	function xmlOutput($content) {
-		if ($this->XMLdebug) {
-			return '<pre>'.htmlspecialchars($content).'</pre>
-			<hr /><font color="red">Size: '.strlen($content).'</font>';
-		} else {
-			return $content;
-		}
-	}
-
-
-	function xmlFieldWrap($field,$value)       {
+	function xmlFieldWrap($field,$value) {
 		return '<'.$field.'>'.$value.'</'.$field.'>';
 	}
 
