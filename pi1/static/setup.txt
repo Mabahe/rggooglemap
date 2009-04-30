@@ -466,9 +466,26 @@ plugin.tx_rggooglemap_pi1 {
 
 # link tags
 plugin.tx_rggooglemap_pi2 {
-  mapId < plugin.tx_rggooglemap_pi1.mapId
-  tt_addressOnly = 1
-  tableType = tt_address
+  # Target of the link
+	mapId = 10851
+	# use stdWrap to get e.g. the current page
+	#mapId.data = page:uid
+
+	# table rewrites to make it easier for the editors
+  tables {
+  	address = tt_address
+  	user = fe_users
+		city = tx_city_record
+		house = tx_housing_record
+	}
+
+	# allow JS links, works only if the target ID is the current page 
+	useJSlinkOnSamePage = 1
+
+	# typolink for the link
+	link {
+		useCacheHash = 1
+	}
 } 
 
 # category tags

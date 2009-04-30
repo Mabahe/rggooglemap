@@ -44,63 +44,92 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 	 * @return	The content that is displayed on the website (TypoTag)
 	 */
 	function main($content,$conf)	{
-		$tag_content = $this->cObj->getCurrentVal();
-		$id = array_keys($this->cObj->parameters);
-    
-    // just id set: <map ID>text</map>
-    if (count($id)==2) {  
-      $mapId = $conf['mapId']; 
-      $tableType = $conf['tableType'];
-    }
-    // id + target-id set: <map ID TARGET>text</map>
-    if (count($id)==3) { 
-      $mapId = $id[1]; 
-      $tableType = $conf['tableType'];	
-    }
-    // id + target + table set: <map ID TARGET TABLE>text</table>
-    if (count($id)==4) { 
-      $mapId = $id[1]; 
-      $tableType = $id[2];
-    }
-    
-    // underscore dissappears > get correct table name 
-    switch ($tableType) {
-      case 'ttaddress': $table = 'tt_address'; break;
-      case 'feusers': $table = 'fe_users'; break;
-      default: $table = 'tt_address'; 	break;
-    }
-    
-    // Debug
-    #t3lib_div::debug($id);
-    #echo $table.': '.$id[0].'@ '.$mapId.' ('.$tag_content.') '.count($id).'<hr>';
-    		
-    
-    $field = 'tx_rggooglemap_lat, tx_rggooglemap_lng, uid';
-    $where = 'deleted = 0 AND tx_rggooglemap_display = 1 AND tx_rggooglemap_lat!= \'\' AND tx_rggooglemap_lng!= \'\' AND uid ='.$id[0]; 
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-    
-    $link = $tag_content;
-
-    if($res) {
-    	$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-    	if ($row['tx_rggooglemap_lng']!= '' || $row['tx_rggooglemap_lat']!= '') {
-    	   if (count($id) < 4) {
-    	    $paramArr = Array('tx_rggooglemap_pi1[poi]'=>$row['uid']);
-    	    $paramArr = Array('poi'=>$row['uid']);
-         } else {
-          $paramArr =  Array('tx_rggooglemap_pi1[poi]'=>$row['uid'], 'tx_rggooglemap_pi1[table]'=>$table);
-          $paramArr =  Array('poi'=>$row['uid'], 'tbl'=>$table);
-    	   }
-    	   $link = $this->pi_linkToPage($tag_content, $mapId, $target='', $paramArr);
-    	   $link = $this->pi_linkTP_keepPIvars($tag_content, $paramArr, 1,1,$mapId);
-      }
-    }
-
-    
-#    	    $link = $this->pi_linkToPage($tag_content, $mapId, $target='', Array('lng'=>$row['tx_rggooglemap_lng'], 'lat'=>$row['tx_rggooglemap_lat']));
+		$linkText = $this->cObj->getCurrentVal();
+		$params = $this->cObj->parameters;
+		unset($params['allParams']); // unset this key to count correctly
+		
+		$params = array_keys($params);
+		$tableType = '';
 
 
-   return '<span class="maplink">'.$link.'</span>';
+		// just id set: <map ID>text</map>
+		if (count($params) == 1) {
+			
+			$tableType = $conf['tableType'];
+
+		// id + target-id set: <map ID TARGET>text</map>
+		} elseif (count($params) == 2) {
+			
+			// if 2nd param is no integer, assume it is the tablename (or its given name by TS)
+			if (intval($params[1]) == 0) {
+				$tableType	= $params[1];
+				$mapId 			= $this->cObj->stdWrap($conf['mapId'], $conf['mapId.']);
+			} else {
+				$mapId 			= $params[1];
+			}
+			
+		// id + target + table set: <map ID TARGET TABLE>text</table>
+		} elseif (count($params) == 3) {
+			$mapId 			= $params[1]; 
+			$tableType	= $params[2];
+		}
+
+		// Table
+		$confArr		= unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
+		$tableList	= t3lib_div::trimExplode(',', $confArr['tables']);
+
+		if ($tableType != '' && $conf['tables.'][$tableType] != '') {
+			$table 			= $conf['tables.'][$tableType];
+		} else {
+			$table			= $tableList[0];
+		}
+		
+		// Check if the minium requirements are fulfilled
+		if ($table =='' || intval($params[0]) == 0) {
+			return $link;
+		} 
+
+		// get the generic query class
+		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'res/class.tx_rggooglemap_table.php');
+		$this->generic = t3lib_div::makeInstance('tx_rggooglemap_table');
+
+		// query
+		$where = 'deleted = 0 AND hidden=0 AND lat!= "" AND lng!= "" AND uid ='.$params[0];
+
+		$res = $this->generic->exec_SELECTquery('uid, lng, lat',$table,$where);
+		$row=array_shift($res);
+
+		if (intval($row['lng'])!=0 && intval($row['lat'])!=0) {
+
+			// generate the link
+			// use a js link if the map is on the same page
+			if ($conf['useJSlinkOnSamePage'] == 1 && $GLOBALS['TSFE']->id == $mapId) {
+				$link = '<a href="javascript:void(0);" onclick="myclick('.$row['uid'].','.$row['lng'].','.$row['lat'].',"'.$table.'");">'.$linkText.'</a>';
+			
+			// generate a typolink
+			} else {
+				$linkConf = $conf['link.'];
+				$linkConf['parameter'] = $mapId;
+				$linkConf['additionalParams'] .= '&tx_rggooglemap_pi1[poi]='.$row['uid'];
+				
+				// add tablename only if it is no the default table
+				if ($table != $tableList[0]) {
+					$linkConf['additionalParams'] .= '&tx_rggooglemap_pi1[table]='.$table;
+				}
+			
+				$link = $this->cObj->typolink($linkText, $linkConf);	
+			}
+	
+		}
+		
+		// output the link if generated
+		if (!empty($link)) {
+			$link = '<span class="maplink">'.$link.'</span>';
+		} else {
+			$link = $linkText;
+		}
+		
+		return $link;
 	}
 }
 

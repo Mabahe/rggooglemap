@@ -1442,7 +1442,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			if (count($split)==1) {
 				$uid		= $split[0];
 
-				if (!empty($this->piVars['table']) && !t3lib_div::inList($this->config['tables'], $this->piVars['table'])) {
+				if (!empty($this->piVars['table']) && t3lib_div::inList($this->config['tables'], $this->piVars['table'])) {
 					$table = $this->piVars['table'];
 				} 
 			} else {
