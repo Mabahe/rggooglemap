@@ -56,7 +56,7 @@ t3lib_extMgm::addService($_EXTKEY,  'rggmData' /* sv type */,  'tx_rggooglemap_s
 
             'subtype' => 'tt_address',
 
-            'available' => TRUE,
+            'available' => true,
             'priority' => 50,
             'quality' => 50,
 
@@ -74,8 +74,8 @@ t3lib_extMgm::addService($_EXTKEY,  'rggmData' /* sv type */,  'tx_rggooglemap_s
 
 if ($confArr['hideInPageModule']!=1) {
 	$TYPO3_CONF_VARS['EXTCONF']['cms']['db_layout']['addTables']['tx_rggooglemap_cat'][0] = array(
-	    'fList' => 'title,image,tabprefix',
-	    'icon' => false
+		'fList' => 'title,image,tabprefix',
+		'icon' => false
 	);
 }
 

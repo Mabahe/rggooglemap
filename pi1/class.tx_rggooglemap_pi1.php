@@ -35,7 +35,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * - search: add some ts vars to manipulate js for search, before after,...
 	 * - group pois
 	 * - xmlFunc optimize
-	 * - menu func
 	 * - json?	 	 	 	 	 
 
    /**
@@ -347,97 +346,89 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * $param array $additional: Function can be called by ajaxProcessCatTree to change used categories dynamically
 	 * @return	The plugin content
 	 */
-  function showMenu ($additionalCat='', $additionalWhere='') {
-    $template['total'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_MENU###');
-    $template['item'] = $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE###');
-    $template['item2'] = $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE2###');
-
-    // query for the categories
-    $table = 'tx_rggooglemap_cat';
-
-    // if the tree is used in menu view, take the IDs from there, otherwise out of the plugin
-    if ($additionalCat!='') {
-      $menuCatList.= ' AND uid IN ('.implode(',',$additionalCat).') ';
-    } else {
-      $menuCatList = (($this->config['categories']!='') ? ' AND uid IN ('.$this->config['categories'].') ' : '');
-    }
-    $where = '1=1 '.$this->cObj->enableFields($table).$menuCatList;
-    $orderBy = $this->config['menu-catSort'].' '.$this->config['menu-catSortBy'];
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*',$table,$where,$groupBy='',$orderBy,$limit='');
-
-    $i = 0;
-    $count = array();
-    // List of the Categories
-    while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-      foreach ($row as $key=>$value) {
-      	$markerArray['###'.strtoupper($key).'###'] = $this->cObj->stdWrap($value,$his->conf['menuCategory.'][$key.'.']);
-      }
-      #t3lib_div::print_array($markerArray);
-
-
-      // query for single records in category
-
-      $firstCategory = explode(',',$row['uid']);
-      // display not yet
-
-      $where2 = ' rggmcat = '.$firstCategory{0}.' AND lat!=0 AND lng!=0 AND lng != \'\' AND lat != \'\' '.$this->config['pid_list'];
-
-
-      // search mode
-      if ($additionalWhere!= '') {
-        $where2 .= $additionalWhere;
-      }
-      $table = $this->config['tables'];
-
-      if ($this->config['menu-recordSort']) {
-      	$orderBy2 = $this->config['menu-recordSort'].' '.$this->config['menu-recordSortBy'];
-      }
-
-
-      $res2 = $this->generic->exec_SELECTquery('*',$table,$where2,$groupBy='',$orderBy2,$limit='');
-      // List of single records
-      $content_item2 = '';
-
-      //x while($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2)) {
-      while($row2=array_shift($res2)) {
-        $i++;
-        /*foreach ($row2 as $key=>$value) {
-           $this->cObj->data[$key]=$value; // thanks to tobi
-        	$markerArray['###'.strtoupper($key).'###'] = $this->cObj->stdWrap($value,$this->conf['menu.'][$key.'.']);
-        } */
-
-
-        $markerArray2 = $this->getMarker($row2, 'menu.');
-
-        // odd/even
-        $markerArray2['###ZEBRA###'] = ($i%2==0) ? 'odd' : 'even';
-
-
-        // no page ID for map > suggesting plugin is on the same page => javascript links
-        if ($this->config['menu-map']!='') {
-          $vars['poi'] = $row2['uid'];
-
-          if ($row2['table'] != $this->conf['defaultTable']) {
-            $vars['table'] = $row2['table'];
-          }
-
-          $wrappedSubpartArray['###LINK_ITEM###'] = explode('|', $this->pi_linkTP_keepPIvars('|', $vars, 1,1,$this->config['menu-map']));
-        } else {
-          $wrappedSubpartArray['###LINK_ITEM###'] = explode('|', '<a onclick="myclick('.$row2['uid'].','.$row2['lng'].','.$row2['lat'].', \''.$row2['table'].'\')" href="javascript:void(0)">|</a>');
-        }
-
-        $content_item2 .=$this->cObj->substituteMarkerArrayCached($template['item2'],$markerArray2, $subpartArray,$wrappedSubpartArray );
-      } # end while
-
-
-      $subpartArray['###CONTENT2###'] = $content_item2 ;
+	function showMenu ($additionalCat='', $additionalWhere='') {
+		$confSmall = $this->conf['menu.'];
+		
+		$template['total'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_MENU###');
+		$template['item'] = $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE###');
+		$template['item2'] = $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE2###');
+		
+		// query for the categories
+		$table = 'tx_rggooglemap_cat';
+		
+		// if the tree is used in menu view, take the IDs from there, otherwise out of the plugin
+		if ($additionalCat!='') {
+			$menuCatList.= ' AND uid IN ('.implode(',',$additionalCat).') ';
+		} else {
+			$menuCatList = (($this->config['categories']!='') ? ' AND uid IN ('.$this->config['categories'].') ' : '');
+		}
+		
+		$where = '1=1 '.$this->cObj->enableFields($table).$menuCatList;
+		$orderBy = $this->config['menu-catSort'].' '.$this->config['menu-catSortBy'];
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*',$table,$where,$groupBy='',$orderBy,$limit='');
+		
+		$i = 0;
+		$count = array();
+		
+		// List of the Categories
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			// stdwrap for the categories
+			foreach ($row as $key=>$value) {
+				$markerArray['###'.strtoupper($key).'###'] = $this->cObj->stdWrap($value,$confSmall['category.'][$key.'.']);
+			}
+			
+			// query for single records in category
+			$firstCategory = explode(',',$row['uid']);
+			
+			$where2 = ' rggmcat = '.$firstCategory{0}.' AND lat!=0 AND lng!=0 AND lng != \'\' AND lat != \'\' '.$this->config['pid_list'];
+			
+			// search mode
+			if ($additionalWhere!= '') {
+				$where2 .= $additionalWhere;
+			}
+			
+			// orderBy
+			if ($this->config['menu-recordSort']) {
+				$orderByRecords = $this->config['menu-recordSort'].' '.$this->config['menu-recordSortBy'];
+			}
+			
+			$res2 = $this->generic->exec_SELECTquery('*',$this->config['tables'],$where2,$groupBy='',$orderByRecords,$limit='');
+			
+			// List of single records
+			$content_item2 = '';
+			
+			// run through the reocrds of the category
+			while($row2=array_shift($res2)) {
+				$i++;
+				
+				$markerArray2 = $this->getMarker($row2, 'menu.');
+				$markerArray2['###ZEBRA###'] = ($i%2==0) ? 'odd' : 'even'; // odd/even
+				
+				// no page ID for map > suggesting plugin is on the same page => javascript links
+				if ($this->config['menu-map']!='') {
+					$vars['poi'] = $row2['uid'];
+					
+					if ($row2['table'] != $this->conf['defaultTable']) {
+						$vars['table'] = $row2['table'];
+					}
+					
+					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', $this->pi_linkTP_keepPIvars('|', $vars, 1,1,$this->config['menu-map']));
+				} else {
+					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', '<a onclick="myclick('.$row2['uid'].','.$row2['lng'].','.$row2['lat'].', \''.$row2['table'].'\')" href="javascript:void(0)">|</a>');
+				}
+				
+				$content_item2 .=$this->cObj->substituteMarkerArrayCached($template['item2'],$markerArray2, $subpartArray,$wrappedSubpartArray );
+			}
+			
+			
+			$subpartArray['###CONTENT2###'] = $content_item2 ;
 			$content_item .=($i>0) ? $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, $subpartArray,$wrappedSubpartArray ) :'';
-
-		} # end while
+			
+		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 		$subpartArray['###CONTENT###'] =($i>0) ? $content_item : '';
-
-    $content.= $this->cObj->substituteMarkerArrayCached($template['total'],$markerArray, $subpartArray,$wrappedSubpartArray);
+		
+		$content.= $this->cObj->substituteMarkerArrayCached($template['total'],$markerArray, $subpartArray,$wrappedSubpartArray);
 		return $content;
 	}
 

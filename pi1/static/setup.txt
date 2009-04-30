@@ -74,6 +74,13 @@ plugin.tx_rggooglemap_pi1 {
     recordsOrder = rggmtitle
     recordsOrderBy = asc
     
+    # stdWrap for all fields of the category
+    category {
+			title {
+				htmlSpecialChars = 1	 
+			}
+		}
+    
 
   }
   

@@ -88,7 +88,7 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
     	    $paramArr = Array('tx_rggooglemap_pi1[poi]'=>$row['uid']);
     	    $paramArr = Array('poi'=>$row['uid']);
          } else {
-          $paramArr =  Array('tx_rggooglemap_pi1[poi]'=>$row['uid'], 'tx_rggooglemap_pi1[tbl]'=>$table);
+          $paramArr =  Array('tx_rggooglemap_pi1[poi]'=>$row['uid'], 'tx_rggooglemap_pi1[table]'=>$table);
           $paramArr =  Array('poi'=>$row['uid'], 'tbl'=>$table);
     	   }
     	   $link = $this->pi_linkToPage($tag_content, $mapId, $target='', $paramArr);
