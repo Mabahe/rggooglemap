@@ -95,9 +95,9 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  */
 
 class tx_rggooglemap_pi1 extends tslib_pibase {
-	var $prefixId      = 'tx_rggooglemap_pi1';		// Same as class name
-	var $scriptRelPath = 'pi1/class.tx_rggooglemap_pi1.php';	// Path to this script relative to the extension dir.
-	var $extKey        = 'rggooglemap';	// The extension key.
+	var $prefixId				= 'tx_rggooglemap_pi1';		// Same as class name
+	var $scriptRelPath	= 'pi1/class.tx_rggooglemap_pi1.php';	// Path to this script relative to the extension dir.
+	var $extKey					= 'rggooglemap';	// The extension key.
 
 	/**
 	 * Just some intialization, mainly reading the settings in the flexforms
@@ -107,7 +107,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function init($conf) {
 		require_once (PATH_tslib.'/class.tslib_content.php');
 		$this->cObj2 = t3lib_div::makeInstance('tslib_cObj'); // Local cObj.
-    $this->conf = $conf; // Storing configuration as a member var
+		$this->conf = $conf; // Storing configuration as a member var
 		$this->pi_loadLL(); // Loading language-labels
 		$this->pi_setPiVarDefaults(); // Set default piVars from TS
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
@@ -117,9 +117,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// Template code
 		$this->templateCode = $this->cObj2->fileResource($this->conf['templateFile']);
 
-    /*
-    * 1st sheet: Map settings
-    */
+		/*
+		* 1st sheet: Map settings
+		*/
 
 		$pid_list =  $this->helperGetFlexform('sDEF', 'startingpoint', 'pidList');
 		if (intval($this->piVars['pidList'])!=0) {
@@ -145,33 +145,33 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->config['mapDiv'] 						= $this->conf['mapDiv']; 		// map div id
 		$this->config['mapWidth'] 					= $this->helperGetFlexform('map', 'width', 'mapWidth');		// width
 		$this->config['mapHeight'] 					= $this->helperGetFlexform('map', 'height', 'mapHeight');		// height
-		$this->config['mapLng'] 						= $this->helperGetFlexform('map', 'lng', 'mapLng');    // lng
-		$this->config['mapLat'] 						= $this->helperGetFlexform('map', 'lat', 'mapLat');    // lat
-		$this->config['mapZoom'] 						= $this->helperGetFlexform('map', 'zoom', 'mapZoom');    // zoom
-		$key = $this->helperGetFlexform('sDEF', 'key', 'mapKey');    // google map key
+		$this->config['mapLng'] 						= $this->helperGetFlexform('map', 'lng', 'mapLng');		// lng
+		$this->config['mapLat'] 						= $this->helperGetFlexform('map', 'lat', 'mapLat');		// lat
+		$this->config['mapZoom'] 						= $this->helperGetFlexform('map', 'zoom', 'mapZoom');		// zoom
+		$key = $this->helperGetFlexform('sDEF', 'key', 'mapKey');		// google map key
 		$this->config['mapKey'] 						= ($key!='') ? $key : $this->confArr['googleKey'];
 
-		$this->config['mapType'] 						= $this->helperGetFlexform('map', 'type', 'mapType');    // map control
+		$this->config['mapType'] 						= $this->helperGetFlexform('map', 'type', 'mapType');		// map control
 		$this->config['mapTypeControl'] 		= $this->helperGetFlexform('map', 'type_controls', 'mapControl');
 		$this->config['mapNavControl'] 			= $this->helperGetFlexform('map', 'nav_controls', 'mapNavigation');
 		$this->config['mapControlOnMouseOver'] = $this->helperGetFlexform('map', 'controlonmouseouver', 'mapNavigationOnMouseOver');
 		$this->config['mapOverview'] 				= $this->helperGetFlexform('map', 'mapoverview', 'mapOverview');
 
-		$this->config['mapShowOnDefault'] 	= $this->helperGetFlexform('map', 'showondefault', 'showOnDefault');    // default POI to show on begin
+		$this->config['mapShowOnDefault'] 	= $this->helperGetFlexform('map', 'showondefault', 'showOnDefault');		// default POI to show on begin
 		$this->config['loadDynamicList'] 	= $this->helperGetFlexform('map', 'loadDynamicList', 'loadDynamicList');
 
 		/*
 		* 3rd sheet: Config for Menu-output
 		*/
 		$this->config['menu-cat']						= $this->helperGetFlexform('menu', 'categories');
-		$this->config['menu-include'] 			= $this->helperGetFlexform('menu', 'include');    // Checkbox to include header + description
-		$this->config['menu-map'] 					= $this->helperGetFlexform('menu', 'map');    // ID of the map page
-		$this->config['menu-catSort'] 			= $this->helperGetFlexform('menu', 'menucatsortorder', 'menu.catOrder');    // orderBy of categories and records
+		$this->config['menu-include'] 			= $this->helperGetFlexform('menu', 'include');		// Checkbox to include header + description
+		$this->config['menu-map'] 					= $this->helperGetFlexform('menu', 'map');		// ID of the map page
+		$this->config['menu-catSort'] 			= $this->helperGetFlexform('menu', 'menucatsortorder', 'menu.catOrder');	// orderBy of categories and records
 		$this->config['menu-catSortBy'] 		= $this->helperGetFlexform('menu', 'menucatsortorderby', 'menu.catOrderBy');
 		$this->config['menu-recordSort'] 		= $this->helperGetFlexform('menu', 'menurecordsort', 'menu.recordsOrder');
 		$this->config['menu-recordSortBy'] 	= $this->helperGetFlexform('menu', 'menurecordsortby', 'menu.recordsOrderBy');
-		$this->config['menu-categorytree'] 	= $this->helperGetFlexform('menu', 'usecategorytree');    // Use category-tree in menu view
-		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox');    // Use searchbbox in menu view
+		$this->config['menu-categorytree'] 	= $this->helperGetFlexform('menu', 'usecategorytree');	// Use category-tree in menu view
+		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox');	// Use searchbbox in menu view
 
 		// search tab
 		$this->config['defaultCountry'] 	= $this->helperGetFlexform('search', 'defaultCountry', 'defaultCountry');
@@ -295,19 +295,19 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function showMap() {
 		$this->initMap();
 
-    $template['list'] = $this->cObj2->getSubpart($this->templateCode,'###MAP###');
-    if ($this->config['menu-categorytree'] == 1 ) {
-      $template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_MENU###');
-    }
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###MAP###');
+		if ($this->config['menu-categorytree'] == 1 ) {
+			$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_MENU###');
+	}
 
-  	// title, text - markers
-  	$markerArray = $this->helperGetLLMarkers(array(), $this->conf['map.']['LL'], 'map');
-    $markerArray['###CAT_MENU###'] = $this->displayCatMenu(0);
-    $markerArray['###CAT_LIST###'] = ($this->config['categoriesActive']!='') ? $this->config['categoriesActive'] : '9999';
-    $markerArray['###MAP_WIDTH###'] = $this->config['mapWidth'];
-    $markerArray['###MAP_HEIGHT###'] = $this->config['mapHeight'];
-
-    $content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray,$wrappedSubpartArray);
+		// title, text - markers
+		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['map.']['LL'], 'map');
+		$markerArray['###CAT_MENU###'] = $this->displayCatMenu(0);
+		$markerArray['###CAT_LIST###'] = ($this->config['categoriesActive']!='') ? $this->config['categoriesActive'] : '9999';
+		$markerArray['###MAP_WIDTH###'] = $this->config['mapWidth'];
+		$markerArray['###MAP_HEIGHT###'] = $this->config['mapHeight'];
+		
+		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray,$wrappedSubpartArray);
 		return $content;
 	}
 
@@ -965,24 +965,24 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	$where: $where of query
 	 * @return	Array with information for the page browser
 	 */
-  function pageBrowserStatistic($offset=0, $table, $field, $where) {
-    $records=$this->generic->exec_COUNTquery($table,$where);
-    $pages=ceil($records/$this->conf['recordsPerPage']);
-
-    $max = ($this->conf['recordsPerPage']>= $records) ? $records :  ($offset*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
-
-     $content['text'] =  	sprintf(
-      $this->pi_getLL('pagebrowser'),
+	function pageBrowserStatistic($offset=0, $table, $field, $where) {
+		$records=$this->generic->exec_COUNTquery($table,$where);
+		$pages=ceil($records/$this->conf['recordsPerPage']);
+		
+		$max = ($this->conf['recordsPerPage']>= $records) ? $records :  ($offset*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
+		
+		$content['text'] =  	sprintf(
+			$this->pi_getLL('pagebrowser'),
 			$offset*$this->conf['recordsPerPage']+1,
 			$max,
 			$records
 		);
-
+		
 		$content['pages'] = $pages;
 		$content['offset'] = $offset;
-
-    return $content;
-  }
+		
+		return $content;
+	}
 
 	/**
 	 * Creates the result records for the first page
@@ -1310,56 +1310,53 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function getJs () {
     // some settings for controlling
 
-    // map type
+		// map type
 		if ($this->config['mapType']!='') {
 			$markerArray['###MAP_TYPES###'] = '{mapTypes:['.$this->config['mapType'].']}';
 		}
-
-
-    if ($this->config['mapNavControl'] == 'large') $settings .= 'map.addControl(new GLargeMapControl());';
-    elseif ($this->config['mapNavControl'] == 'small') $settings .= 'map.addControl(new GSmallMapControl());';
-    elseif ($this->config['mapTypeControl'] == 'show') $settings .= 'map.addControl(new GMapTypeControl());';
-    if ($this->config['mapOverview'] == 1) $settings .= 'map.addControl(new GOverviewMapControl());';
-
-    if ($this->config['mapControlOnMouseOver'] == 1) {
-      $hideControlsOnMouseOut = 'map.hideControls();
-        GEvent.addListener(map, "mouseover", function(){
-          map.showControls();
-        });
-        GEvent.addListener(map, "mouseout", function(){
-        map.hideControls();
-        });';
-    }
-    if ($this->conf['enableDoubleClickZoom']== 1)	$settings .= 'map.enableDoubleClickZoom();';
-    if ($this->conf['enableContinuousZoom']== 1)	$settings .= 'map.enableContinuousZoom();';
-    if ($this->conf['enableScrollWheelZoom']== 1) $settings .= 'map.enableScrollWheelZoom();';
-
-
-    // urls
-    $xmlUrlConf = $this->conf['xmlURL.'];
-    $url = $this->cObj2->typolink('', $xmlUrlConf);
-
-    $urlForIcons = t3lib_div::getIndpEnv('TYPO3_SITE_URL').'uploads/tx_rggooglemap/';
-    $urlExt = t3lib_div::getIndpEnv('TYPO3_SITE_URL').t3lib_extMgm::siteRelpath('rggooglemap');
-
-    // records for the selected categories
-    if ($this->config['categoriesActive']!= '') {
-      $selectedCat = 'var cat = new Array();
-                      cat["cb"] = new Object();';
-      $cats = explode(',',$this->config['categoriesActive']);
-      foreach ($cats as $key=>$value) {
-      	$selectedCat .= 'cat["cb"]['.$value.'] = '.$value.';';
-
-      }
-      $selectedCat.= ' tx_rggooglemap_pi1processCat(cat);';
-    } else {
-      $selectedCat.= ' tx_rggooglemap_pi1processCat("default");';
-    }
-
-    // use cluster, default = 0
-    #$this->conf['activateCluster'] = 1;
-    $addMarker = ($this->conf['activateCluster']==1) ? 'clusterer.AddMarker(marker,title);' : 'map.addOverlay( marker );';
-
+		
+		if ($this->config['mapNavControl'] == 'large') $settings .= 'map.addControl(new GLargeMapControl());';
+		elseif ($this->config['mapNavControl'] == 'small') $settings .= 'map.addControl(new GSmallMapControl());';
+		elseif ($this->config['mapTypeControl'] == 'show') $settings .= 'map.addControl(new GMapTypeControl());';
+		if ($this->config['mapOverview'] == 1) $settings .= 'map.addControl(new GOverviewMapControl());';
+		
+		if ($this->config['mapControlOnMouseOver'] == 1) {
+			$hideControlsOnMouseOut = 'map.hideControls();
+				GEvent.addListener(map, "mouseover", function(){
+				map.showControls();
+				});
+				GEvent.addListener(map, "mouseout", function(){
+				map.hideControls();
+				});';
+		}
+		if ($this->conf['enableDoubleClickZoom']== 1)	$settings .= 'map.enableDoubleClickZoom();';
+		if ($this->conf['enableContinuousZoom']== 1)	$settings .= 'map.enableContinuousZoom();';
+		if ($this->conf['enableScrollWheelZoom']== 1) $settings .= 'map.enableScrollWheelZoom();';
+		
+		
+		// urls
+		$xmlUrlConf = $this->conf['xmlURL.'];
+		$url = $this->cObj2->typolink('', $xmlUrlConf);
+		
+		$urlForIcons = t3lib_div::getIndpEnv('TYPO3_SITE_URL').'uploads/tx_rggooglemap/';
+		$urlExt = t3lib_div::getIndpEnv('TYPO3_SITE_URL').t3lib_extMgm::siteRelpath('rggooglemap');
+		
+		// records for the selected categories
+		if ($this->config['categoriesActive']!= '') {
+			$selectedCat = 'var cat = new Array();
+			cat["cb"] = new Object();';
+			$cats = explode(',',$this->config['categoriesActive']);
+			foreach ($cats as $key=>$value) {
+				$selectedCat .= 'cat["cb"]['.$value.'] = '.$value.';';			
+			}
+			$selectedCat.= ' tx_rggooglemap_pi1processCat(cat);';
+		} else {
+			$selectedCat.= ' tx_rggooglemap_pi1processCat("default");';
+		}
+		
+		// use cluster, default = 0
+		#$this->conf['activateCluster'] = 1;
+		$addMarker = ($this->conf['activateCluster']==1) ? 'clusterer.AddMarker(marker,title);' : 'map.addOverlay( marker );';
 
 		$markerArray['###HIDECONTROLSMOUSEOUT###'] = $hideControlsOnMouseOut;
 		$markerArray['###POI_ON_START###'] = $this->getPoiOnStart();
@@ -1414,12 +1411,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 
 		$jsTemplateCode = $this->cObj2->fileResource($this->conf['templateFileJS']);
-    $template['all'] = $this->cObj2->getSubpart($jsTemplateCode,'###ALL###');
+		$template['all'] = $this->cObj2->getSubpart($jsTemplateCode,'###ALL###');
 
 		$js.= $this->cObj2->substituteMarkerArrayCached($template['all'],$markerArray);
 
-    return $js;
-  }
+		return $js;
+	}
 
 
 	/**
@@ -1432,13 +1429,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
    * @return the content
 	 */
 	function getPoiOnStart() {
-    $showPOIonStart = '';
+		$showPOIonStart = '';
 
-    // pivars overrules flexform/ts
+		// pivars overrules flexform/ts
 		$defaultPOI = ($this->piVars['poi']!='') ? $this->piVars['poi'] : $this->config['mapShowOnDefault'];
 		$table = $this->conf['defaultTable']; // default table
 
-  	if ($defaultPOI!='') {
+		if ($defaultPOI!='') {
 			// split it up by using '-' to get a possible table
 			$split = explode('-', $defaultPOI);
 
