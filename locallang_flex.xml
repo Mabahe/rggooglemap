@@ -16,14 +16,6 @@
 			<label index="general.show.5">Searchbox</label>
 			<label index="general.show.6">Catmenu</label>
 			<label index="general.show.7">Directions</label>
-			<label index="general.startingpoint">Starting point</label>
-			<label index="general.recursive">Recursive</label>
-			<label index="general.recursive.0"></label>
-			<label index="general.recursive.1">1 level</label>
-			<label index="general.recursive.2">2 levels</label>
-			<label index="general.recursive.3">3 levels</label>
-			<label index="general.recursive.4">4 levels</label>
-			<label index="general.recursive.infinite">Infinite</label>
 			<label index="general.categories">Active categories</label>
 			<label index="general.categoriesselected">Available categories</label>
 			<label index="general.key">Googlemap Key</label>
@@ -60,7 +52,6 @@
 			<label index="sorting.poisort">POIs in POI view</label>
 			<label index="sorting.checkboxsort">Checkboxes in MAP view</label>
 			<label index="menu.sheetTitle">Menu settings</label>
-			<label index="menu.startingpoint">Starting point</label>
 			<label index="menu.categories">Categories</label>
 			<label index="menu.header">Include</label>
 			<label index="menu.header.0">Header of Category</label>
@@ -90,13 +81,6 @@
 			<label index="general.show.5">Suche</label>
 			<label index="general.show.6">Kategoriemenü</label>
 			<label index="general.show.7">Anfahrt</label>
-			<label index="general.startingpoint">Ausgangspunkt</label>
-			<label index="general.recursive">Rekursiv</label>
-			<label index="general.recursive.1">1 Ebene</label>
-			<label index="general.recursive.2">2 Ebenen</label>
-			<label index="general.recursive.3">3 Ebenen</label>
-			<label index="general.recursive.4">4 Ebenen</label>
-			<label index="general.recursive.infinite">Unendlich</label>
 			<label index="general.categories">Aktive Kategorien</label>
 			<label index="general.categoriesselected">Verfügbare Kategorien</label>
 			<label index="general.key">Googlemap Key</label>
@@ -132,7 +116,6 @@
 			<label index="sorting.poisort">POIs in POI-Ansicht</label>
 			<label index="sorting.checkboxsort">Checkoxen in Karten-Ansicht</label>
 			<label index="menu.sheetTitle">Menü</label>
-			<label index="menu.startingpoint">Ausgangspunkt</label>
 			<label index="menu.categories">Kategorien</label>
 			<label index="menu.header">Inklusive</label>
 			<label index="menu.header.0">Kategorietitel</label>
@@ -179,7 +162,6 @@
 			<label index="map.nav_controls.none">Aucun</label>
 			<label index="map.nav_controls.small">Petit</label>
 			<label index="map.nav_controls.large">Grand</label>
-			<label index="general.startingpoint">Point de départ</label>
 			<label index="general.recursive">Recursif</label>
 			<label index="general.recursive.0"></label>
 			<label index="general.recursive.1">1 niveau</label>
@@ -199,7 +181,6 @@
 			<label index="sorting.poisort">Vue des POIs dans POI</label>
 			<label index="sorting.checkboxsort">Case à cocher dans la vue &quot;Carte&quot;</label>
 			<label index="menu.title">Menu options</label>
-			<label index="menu.startingpoint">Point de départ</label>
 			<label index="menu.categories">Catégories</label>
 			<label index="menu.header">Insertion</label>
 			<label index="menu.header.0">Entête de la catégorie</label>
@@ -207,152 +188,6 @@
 			<label index="menu.map">Page contenant la carte</label>
 		</languageKey>
 	</data>
-	<orig_hash type="array">
-		<languageKey index="de" type="array">
-			<label index="general.sheetTitle" type="integer">256864370</label>
-			<label index="general.show" type="integer">77133724</label>
-			<label index="general.show.0" type="integer">74399392</label>
-			<label index="general.show.1" type="integer">188897611</label>
-			<label index="general.show.2" type="integer">190927890</label>
-			<label index="general.show.3" type="integer">156245194</label>
-			<label index="general.show.4" type="integer">194194822</label>
-			<label index="general.show.5" type="integer">136199813</label>
-			<label index="general.show.6" type="integer">85606182</label>
-			<label index="general.show.7" type="integer">159888327</label>
-			<label index="general.startingpoint" type="integer">24658494</label>
-			<label index="general.recursive" type="integer">89572317</label>
-			<label index="general.recursive.1" type="integer">200641290</label>
-			<label index="general.recursive.2" type="integer">228799796</label>
-			<label index="general.recursive.3" type="integer">195275893</label>
-			<label index="general.recursive.4" type="integer">97262614</label>
-			<label index="general.recursive.infinite" type="integer">185655876</label>
-			<label index="general.categories" type="integer">24168755</label>
-			<label index="general.categoriesselected" type="integer">188725366</label>
-			<label index="general.key" type="integer">158040861</label>
-			<label index="map.sheetTitle" type="integer">74399392</label>
-			<label index="map.width" type="integer">67777755</label>
-			<label index="map.height" type="integer">80296990</label>
-			<label index="map.lng" type="integer">247772683</label>
-			<label index="map.lat" type="integer">201213949</label>
-			<label index="map.zoom" type="integer">252555558</label>
-			<label index="map.type" type="integer">207073704</label>
-			<label index="map.type.map" type="integer">74399392</label>
-			<label index="map.type.satellite" type="integer">204168819</label>
-			<label index="map.type.hybrid" type="integer">263304930</label>
-			<label index="map.type.physical" type="integer">80543399</label>
-			<label index="map.type_controls" type="integer">128677895</label>
-			<label index="map.type_controls.1" type="integer">77133724</label>
-			<label index="map.type_controls.2" type="integer">103439945</label>
-			<label index="map.nav_controls" type="integer">110234729</label>
-			<label index="map.nav_controls.none" type="integer">112064895</label>
-			<label index="map.nav_controls.small" type="integer">40239204</label>
-			<label index="map.nav_controls.large" type="integer">61250356</label>
-			<label index="map.controlonmouseover" type="integer">146291309</label>
-			<label index="map.mapoverview" type="integer">176111347</label>
-			<label index="map.showondefault" type="integer">241280944</label>
-			<label index="map.loadDynamicList" type="integer">193115848</label>
-			<label index="sorting.sheetTitle" type="integer">41978420</label>
-			<label index="sorting.orderby.title" type="integer">226282536</label>
-			<label index="sorting.orderby.asc" type="integer">217316127</label>
-			<label index="sorting.orderby.desc" type="integer">238876076</label>
-			<label index="sorting.orderby.name" type="integer">77521672</label>
-			<label index="sorting.orderby.tstamp" type="integer">195978018</label>
-			<label index="sorting.catsort" type="integer">76368033</label>
-			<label index="sorting.poisort" type="integer">47657452</label>
-			<label index="sorting.checkboxsort" type="integer">188062596</label>
-			<label index="menu.sheetTitle" type="integer">55207302</label>
-			<label index="menu.startingpoint" type="integer">24658494</label>
-			<label index="menu.categories" type="integer">183613834</label>
-			<label index="menu.header" type="integer">256733862</label>
-			<label index="menu.header.0" type="integer">221827743</label>
-			<label index="menu.header.1" type="integer">177477652</label>
-			<label index="menu.map" type="integer">184577034</label>
-			<label index="menu.menucatsortorder" type="integer">14301501</label>
-			<label index="menu.menurecordsort" type="integer">143876517</label>
-			<label index="menu.menurecordsortorder" type="integer">118705737</label>
-			<label index="menu.usecategorytree" type="integer">189785237</label>
-			<label index="menu.usesearchbox" type="integer">206892047</label>
-			<label index="sorting.title" type="integer">192455458</label>
-			<label index="sorting.uid" type="integer">243081769</label>
-			<label index="sorting.tstamp" type="integer">32618383</label>
-			<label index="sorting.crdate" type="integer">41027391</label>
-			<label index="search.sheetTitle" type="integer">268236162</label>
-			<label index="search.defaultCountry" type="integer">110400550</label>
-			<label index="search.radiusSearch" type="integer">213628760</label>
-		</languageKey>
-	</orig_hash>
-	<orig_text type="array">
-		<languageKey index="de" type="array">
-			<label index="general.sheetTitle">Settings</label>
-			<label index="general.show">Show</label>
-			<label index="general.show.0">Map</label>
-			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menu</label>
-			<label index="general.show.3">Locationbox</label>
-			<label index="general.show.4">Active records</label>
-			<label index="general.show.5">Searchbox</label>
-			<label index="general.show.6">Catmenu</label>
-			<label index="general.show.7">Directions</label>
-			<label index="general.startingpoint">Starting point</label>
-			<label index="general.recursive">Recursive</label>
-			<label index="general.recursive.1">1 level</label>
-			<label index="general.recursive.2">2 levels</label>
-			<label index="general.recursive.3">3 levels</label>
-			<label index="general.recursive.4">4 levels</label>
-			<label index="general.recursive.infinite">Infinite</label>
-			<label index="general.categories">Active categories</label>
-			<label index="general.categoriesselected">Available categories</label>
-			<label index="general.key">Googlemap Key</label>
-			<label index="map.sheetTitle">Map</label>
-			<label index="map.width">Width of map</label>
-			<label index="map.height">Height of map</label>
-			<label index="map.lng">Start Longtidude</label>
-			<label index="map.lat">Start Latidude</label>
-			<label index="map.zoom">Start Zoom</label>
-			<label index="map.type">Type of map</label>
-			<label index="map.type.map">Map</label>
-			<label index="map.type.satellite">Satellite</label>
-			<label index="map.type.hybrid">Hybrid</label>
-			<label index="map.type.physical">Terrain</label>
-			<label index="map.type_controls">Show type controls</label>
-			<label index="map.type_controls.1">Show</label>
-			<label index="map.type_controls.2">Hide</label>
-			<label index="map.nav_controls">Navigation controls</label>
-			<label index="map.nav_controls.none">None</label>
-			<label index="map.nav_controls.small">Small</label>
-			<label index="map.nav_controls.large">Large</label>
-			<label index="map.controlonmouseover">Hide Controls on Mouseover</label>
-			<label index="map.mapoverview">Hide overview window</label>
-			<label index="map.showondefault">Default POI</label>
-			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
-			<label index="sorting.sheetTitle">Sorting</label>
-			<label index="sorting.orderby.title">...order by</label>
-			<label index="sorting.orderby.asc">Ascending</label>
-			<label index="sorting.orderby.desc">Descending</label>
-			<label index="sorting.orderby.name">Name</label>
-			<label index="sorting.orderby.tstamp">Tstamp</label>
-			<label index="sorting.catsort">Category in POI view</label>
-			<label index="sorting.poisort">POIs in POI view</label>
-			<label index="sorting.checkboxsort">Checkboxes in MAP view</label>
-			<label index="menu.sheetTitle">Menu settings</label>
-			<label index="menu.startingpoint">Starting point</label>
-			<label index="menu.categories">Categories</label>
-			<label index="menu.header">Include</label>
-			<label index="menu.header.0">Header of Category</label>
-			<label index="menu.header.1">Description of Category</label>
-			<label index="menu.map">Page with the map</label>
-			<label index="menu.menucatsortorder">Category ordering</label>
-			<label index="menu.menurecordsort">Records ordering</label>
-			<label index="menu.menurecordsortorder">asc/desc</label>
-			<label index="menu.usecategorytree">Use category tree in Menu</label>
-			<label index="menu.usesearchbox">Use searchbox in Menu</label>
-			<label index="sorting.title">Title</label>
-			<label index="sorting.uid">UID</label>
-			<label index="sorting.tstamp">Last modified (tstamp)</label>
-			<label index="sorting.crdate">Creation Date (crdate)</label>
-			<label index="search.sheetTitle">Search &amp; Directions</label>
-			<label index="search.defaultCountry">Default Country for Geocoding, use &quot;AT&quot; or &quot;Austria&quot; or &quot;Österreich&quot;</label>
-			<label index="search.radiusSearch">Enable Radius Search</label>
-		</languageKey>
-	</orig_text>
+
+
 </T3locallang>
