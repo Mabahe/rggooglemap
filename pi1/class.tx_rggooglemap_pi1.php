@@ -58,7 +58,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *  909:     function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)
  *  991:     function ajaxProcessCat($data)
  * 1093:     function ajaxProcessCatTree($data)
- * 1109:     function ajaxProcessSearchInMenu ($data)
  * 1157:     function ajaxGetResultSet($var)
  * 1249:     function displayCatMenu($id=0)
  * 1308:     function getJs ()
@@ -809,7 +808,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->registerFunction(array('tab', &$this, 'ajaxGetPoiTab'));
 		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
 		$this->xajax->registerFunction(array('processCatTree', &$this, 'ajaxProcessCatTree'));
-		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'ajaxProcessSearchInMenu'));
 		$this->xajax->registerFunction(array('getDynamicList', &$this, 'ajaxGetDynamicList'));
 		
 		$this->xajax->processRequests();
@@ -993,55 +991,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('rggooglemap-menu', 'innerHTML',$content);
 
-		return $objResponse->getXML();
-  }
-
-
-	/**
-	 * Modifies the menu output with including the search box
-	 *
-	 * @param	array	$data: selected uids
-	 * @return	where clause for search
-	 */
-	function ajaxProcessSearchInMenu ($data)	{
-
-	  $searchExpression = $data['rggmsearchValue'];
-
-    // minimum characters needed, default = 3
-    if (strlen($searchExpression) >= $this->conf['search.']['minChars']) {
-      // escaping the search-value
-      $delete = array("'", "\"", "\\", "/", "");
-      $searchExpression = trim(str_replace($delete, '', $searchExpression));
-
-      // query for the search
-      // todo > check what tt_adderws does here 
-      $searchField = explode(',',$this->conf['search.']['tt_address']);
-      foreach ($searchField as $key=>$value) {
-        $where2.= " $value LIKE '%$searchExpression%' OR";
-      }
-      $where = ' AND ( '.substr($where2,0,-3).' ) ';
-
-      // search only within the map area
-      if ($data['rggmOnMap']=='on') {
-          $areaArr=split('%2C%20',$searchForm['rggmBound']);
-          $where.= 'AND tx_rggooglemap_lng between '.$areaArr[1].' AND '.$areaArr[3].'
-                    AND	tx_rggooglemap_lat between '.$areaArr[0].' AND '.$areaArr[2];
-      }
-    }
-
-    // Adds hook for processing of extra search expressions
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchInMenuHook'])) {
-			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchInMenuHook'] as $_classRef) {
-				$_procObj = & t3lib_div::getUserObj($_classRef);
-				$where = $_procObj->extraSearchProcessor($where, $data, $this->config, $this);
-			}
-		}
-
-#	$where.=t3lib_div::view_array($data);
-	  $content.= $this->showMenu('', $where);
-
-		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-		$objResponse->addAssign('rggm-menu', 'innerHTML',$content);
 		return $objResponse->getXML();
   }
   
