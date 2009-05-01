@@ -51,7 +51,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *  447:     function showSearch ()
  *  472:     function showCatMenu()
  *  487:     function showDirections()
- *  539:     function geoCodeAddress($address='', $zip='', $city='', $country='')
+ *  539:     function helperGeocodeAddress($address='', $zip='', $city='', $country='')
  *   
  *  594:     function ajaxSearch($searchForm)
  *  825:     function ajaxGetActiveRecords($area, $cat)
@@ -145,38 +145,38 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 
 		$this->config['show'] 							= $this->helperGetFlexform('sDEF', 'show', 'show'); // show
-		$this->config['categories'] 				= $this->helperGetFlexform('sDEF', 'categoriesselected', 'mapAvailableCats');		// loaded POI categories
-		$this->config['categoriesActive'] 	= $this->helperGetFlexform('sDEF', 'categories', 'mapActiveCats'); 		// active POI categories
+		$this->config['categories'] 				= $this->helperGetFlexform('sDEF', 'categoriesselected', 'mapAvailableCats'); // loaded POI categories
+		$this->config['categoriesActive'] 	= $this->helperGetFlexform('sDEF', 'categories', 'mapActiveCats');  // active POI categories
 		$this->config['mapDiv'] 						= $this->conf['mapDiv']; 		// map div id
-		$this->config['mapWidth'] 					= $this->helperGetFlexform('map', 'width', 'mapWidth');		// width
-		$this->config['mapHeight'] 					= $this->helperGetFlexform('map', 'height', 'mapHeight');		// height
-		$this->config['mapLng'] 						= $this->helperGetFlexform('map', 'lng', 'mapLng');		// lng
-		$this->config['mapLat'] 						= $this->helperGetFlexform('map', 'lat', 'mapLat');		// lat
-		$this->config['mapZoom'] 						= $this->helperGetFlexform('map', 'zoom', 'mapZoom');		// zoom
+		$this->config['mapWidth'] 					= $this->helperGetFlexform('map', 'width', 'mapWidth'); // width
+		$this->config['mapHeight'] 					= $this->helperGetFlexform('map', 'height', 'mapHeight'); // height
+		$this->config['mapLng'] 						= $this->helperGetFlexform('map', 'lng', 'mapLng'); // lng
+		$this->config['mapLat'] 						= $this->helperGetFlexform('map', 'lat', 'mapLat'); // lat
+		$this->config['mapZoom'] 						= $this->helperGetFlexform('map', 'zoom', 'mapZoom'); // zoom
 		$key = $this->helperGetFlexform('sDEF', 'key', 'mapKey');		// google map key
 		$this->config['mapKey'] 						= ($key!='') ? $key : $this->confArr['googleKey'];
 
-		$this->config['mapType'] 						= $this->helperGetFlexform('map', 'type', 'mapType');		// map control
+		$this->config['mapType'] 						= $this->helperGetFlexform('map', 'type', 'mapType'); // map control
 		$this->config['mapTypeControl'] 		= $this->helperGetFlexform('map', 'type_controls', 'mapControl');
 		$this->config['mapNavControl'] 			= $this->helperGetFlexform('map', 'nav_controls', 'mapNavigation');
 		$this->config['mapControlOnMouseOver'] = $this->helperGetFlexform('map', 'controlonmouseouver', 'mapNavigationOnMouseOver');
 		$this->config['mapOverview'] 				= $this->helperGetFlexform('map', 'mapoverview', 'mapOverview');
 
-		$this->config['mapShowOnDefault'] 	= $this->helperGetFlexform('map', 'showondefault', 'showOnDefault');		// default POI to show on begin
+		$this->config['mapShowOnDefault'] 	= $this->helperGetFlexform('map', 'showondefault', 'showOnDefault'); // default POI to show on begin
 		$this->config['loadDynamicList'] 	= $this->helperGetFlexform('map', 'loadDynamicList', 'loadDynamicList');
 
 		/*
 		* 3rd sheet: Config for Menu-output
 		*/
 		$this->config['menu-cat']						= $this->helperGetFlexform('menu', 'categories');
-		$this->config['menu-include'] 			= $this->helperGetFlexform('menu', 'include');		// Checkbox to include header + description
-		$this->config['menu-map'] 					= $this->helperGetFlexform('menu', 'map');		// ID of the map page
-		$this->config['menu-catSort'] 			= $this->helperGetFlexform('menu', 'menucatsortorder', 'menu.catOrder');	// orderBy of categories and records
+		$this->config['menu-include'] 			= $this->helperGetFlexform('menu', 'include'); // Checkbox to include header + description
+		$this->config['menu-map'] 					= $this->helperGetFlexform('menu', 'map'); // ID of the map page
+		$this->config['menu-catSort'] 			= $this->helperGetFlexform('menu', 'menucatsortorder', 'menu.catOrder'); // orderBy of categories and records
 		$this->config['menu-catSortBy'] 		= $this->helperGetFlexform('menu', 'menucatsortorderby', 'menu.catOrderBy');
 		$this->config['menu-recordSort'] 		= $this->helperGetFlexform('menu', 'menurecordsort', 'menu.recordsOrder');
 		$this->config['menu-recordSortBy'] 	= $this->helperGetFlexform('menu', 'menurecordsortby', 'menu.recordsOrderBy');
-		$this->config['menu-categorytree'] 	= $this->helperGetFlexform('menu', 'usecategorytree');	// Use category-tree in menu view
-		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox');	// Use searchbbox in menu view
+		$this->config['menu-categorytree'] 	= $this->helperGetFlexform('menu', 'usecategorytree'); // Use category-tree in menu view
+		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox'); // Use searchbbox in menu view
 
 		// search tab
 		$this->config['defaultCountry'] 	= $this->helperGetFlexform('search', 'defaultCountry', 'defaultCountry');
@@ -216,7 +216,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 		}		
 
-  }
+	}
 
 
 	/**
@@ -478,7 +478,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	/**
 	 * Show the directions to some records
 	 *
-   * @return directions
+	 * @return directions
 	 */	
 	function showDirections() {
 		$smallConf = $this->conf['directions.'];
@@ -521,65 +521,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
 		return $content;
 	}
-
-
-	/**
-	 * Geocode an adress string, which needs already to be in the correct order
-	 *
-	 * @param	string		$address: address
-	 * @param	string	  $zip: zip
-	 * @param	string	  $city: city
-	 * @param	string	  $country: country
-	 * @return	array with the status
-	 */
-	function geoCodeAddress($address='', $zip='', $city='', $country='') {
-		$geocode	= array();
-		$coords		= array();
-		$search		= false;
-		
-		if ($address!='') {
-			$geocode[] = $address;
-			$search = true;
-		}
-		if ($zip!='') {
-			$geocode[] = $zip;
-			$search = true;
-		}
-		if ($city!='') {
-			$geocode[] = $city;
-			$search = true;
-		}
-		if ($country!='')  {
-			$geocode[] = $country;
-		}  else {
-			$geocode[] = $this->config['defaultCountry'];
-		}
-		
-		// just if there are some values additional to the country
-		if ($search) {
-			$geocode = implode(',', $geocode);
-			
-			// call google service
-			$url = 'http://maps.google.com/maps/geo?q='.urlencode($geocode).'&output=csv&key='.$this->config['mapKey'];
-			$response=stripslashes(t3lib_div::getURL($url));
-			
-			// determain the result
-			$response = explode(',',$response);
-			
-			// if there is a result
-			$coords['status'] 	= $response[0];
-			$coords['accuracy']	= $response[1];
-			$coords['lat']			= $response[2];
-			$coords['lng']			= $response[3];
-			return $coords; // lat,lng
-
-		} else {
-				$coords['status']	= 601;
-		}
-		
-		return $coords;
-  }
-
+	
 
 	/**
 	* Function for the ajax search results
@@ -644,7 +586,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 						
 						// avoid multiple geocoding calls, just 1 is necessary
 						if (count($coordinatesSaved) == 0) {
-							$coordinates = $this->geoCodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
+							$coordinates = $this->helperGeocodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
 							$coordinatesSaved = $coordinates;
 						} else {
 							$coordinates = $coordinatesSaved;
@@ -876,11 +818,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
 		$this->xajax->registerFunction(array('processCatTree', &$this, 'ajaxProcessCatTree'));
 		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'ajaxProcessSearchInMenu'));
-  	$this->xajax->processRequests(); 		// Else create javascript and add it to the header output
+		$this->xajax->processRequests(); 		// Else create javascript and add it to the header output
 
 
 		// additional output using a template
-    $template['total'] = $this->cObj2->getSubpart($this->templateCode,'###HEADER###');
+		$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###HEADER###');
 		$markerArray = array();
 		$markerArray['###PATH###'] = t3lib_extMgm::siteRelpath('rggooglemap');
 		$markerArray['###MAP_KEY###'] = $this->config['mapKey'];
@@ -898,53 +840,24 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 *
 	 * @param	string	$uid: id of reocord
 	 * @param	string	$table: table of record
-	 * @param int     $prefix: Prefix for tabs in info window
+	 * @param int	$prefix: Prefix for tabs in info window
 	 * @return	The content of the info window
 	 */
-  function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)	{
-
-    $template['infobox'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_INFOBOX_'.$tmplPrefix.'###');
-
-    // query for single record
-    $field = '*';
-    $where = 'uid = '.intval($uid);
-
-
-    $res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-    $row=array_shift($res);
-
-
-
-    $markerArray = $this->getMarker($row,'popup.');
-
-
-    // query for categories of a single record
-    if ($row['rggmcat']) {
-      $template['item'] = $this->cObj->getSubpart( $template['infobox'],'###SINGLE###');
-      $field = '*';
-      $where = 'uid IN ('.$row['rggmcat'].')';
-      $table = 'tx_rggooglemap_cat';
-      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy='',$limit='');
-  		if ($res) {
-        while($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-          foreach ($row2 as $key=>$value) {
-          	$markerArray['###CAT_'.strtoupper($key).'###'] = $row2[$key];
-          }
-    			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
-    		}
-    		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-  		}
-
-  	} else {
-      $content_item = '';
-    }
-		$subpartArray['###CONTENT###'] = $content_item;
-
-    $content.= $this->cObj->substituteMarkerArrayCached($template['infobox'],$markerArray, $subpartArray,$wrappedSubpartArray);
-
+	function ajaxGetInfomsg($uid, $table, $tmplPrefix=1)	{
+		$template['infobox'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_INFOBOX_'.$tmplPrefix.'###');
+		
+		// query for single record
+		$field = '*';
+		$where = 'uid = '.intval($uid);
+		$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
+		$row=array_shift($res);
+		
+		$markerArray = $this->getMarker($row,'popup.');		
+		$content.= $this->cObj->substituteMarkerArrayCached($template['infobox'], $markerArray);
+		
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('infobox', 'innerHTML', $content);
-
+		
 		return $objResponse->getXML();
 	}
 
@@ -1658,6 +1571,64 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $catArr;
 	}
 
+
+	/**
+	 * Geocode an adress string, which needs already to be in the correct order
+	 *
+	 * @param	string		$address: address
+	 * @param	string	  $zip: zip
+	 * @param	string	  $city: city
+	 * @param	string	  $country: country
+	 * @return	array with the status
+	 */
+	function helperGeocodeAddress($address='', $zip='', $city='', $country='') {
+		$geocode	= array();
+		$coords		= array();
+		$search		= false;
+		
+		if ($address!='') {
+			$geocode[] = $address;
+			$search = true;
+		}
+		if ($zip!='') {
+			$geocode[] = $zip;
+			$search = true;
+		}
+		if ($city!='') {
+			$geocode[] = $city;
+			$search = true;
+		}
+		if ($country!='')  {
+			$geocode[] = $country;
+		}  else {
+			$geocode[] = $this->config['defaultCountry'];
+		}
+		
+		// just if there are some values additional to the country
+		if ($search) {
+			$geocode = implode(',', $geocode);
+			
+			// call google service
+			$url = 'http://maps.google.com/maps/geo?q='.urlencode($geocode).'&output=csv&key='.$this->config['mapKey'];
+			$response=stripslashes(t3lib_div::getURL($url));
+			
+			// determain the result
+			$response = explode(',',$response);
+			
+			// if there is a result
+			$coords['status'] 	= $response[0];
+			$coords['accuracy']	= $response[1];
+			$coords['lat']			= $response[2];
+			$coords['lng']			= $response[3];
+			return $coords; // lat,lng
+
+		} else {
+				$coords['status']	= 601;
+		}
+		
+		return $coords;
+  }
+  
 
 	/**
 	 * Get specific language markers
