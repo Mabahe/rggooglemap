@@ -126,7 +126,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		* 1st sheet: Map settings
 		*/
 
-		$pid_list =  $this->helperGetFlexform('sDEF', 'startingpoint', 'pidList');
+		$pid_list = $this->helperGetFlexform('sDEF', 'startingpoint', 'pidList');
 		if (intval($this->piVars['pidList'])!=0) {
 			$pid_list = intval($this->piVars['pidList']);
 		}
@@ -146,7 +146,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		$this->config['show'] 							= $this->helperGetFlexform('sDEF', 'show', 'show'); // show
 		$this->config['categories'] 				= $this->helperGetFlexform('sDEF', 'categoriesselected', 'mapAvailableCats'); // loaded POI categories
-		$this->config['categoriesActive'] 	= $this->helperGetFlexform('sDEF', 'categories', 'mapActiveCats');  // active POI categories
+		$this->config['categoriesActive'] 	= $this->helperGetFlexform('sDEF', 'categories', 'mapActiveCats'); // active POI categories
 		$this->config['mapDiv'] 						= $this->conf['mapDiv']; 		// map div id
 		$this->config['mapWidth'] 					= $this->helperGetFlexform('map', 'width', 'mapWidth'); // width
 		$this->config['mapHeight'] 					= $this->helperGetFlexform('map', 'height', 'mapHeight'); // height
@@ -849,7 +849,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// query for single record
 		$field = '*';
 		$where = 'uid = '.intval($uid);
-		$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
+		$res = $this->generic->exec_SELECTquery($field,$table,$where);
 		$row=array_shift($res);
 		
 		$markerArray = $this->getMarker($row,'popup.');		
@@ -875,9 +875,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$records=$this->generic->exec_COUNTquery($table,$where);
 		$pages=ceil($records/$this->conf['recordsPerPage']);
 		
-		$max = ($this->conf['recordsPerPage']>= $records) ? $records :  ($offset*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
+		$max = ($this->conf['recordsPerPage']>= $records) ? $records : ($offset*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
 		
-		$content['text'] =  	sprintf(
+		$content['text'] = sprintf(
 			$this->pi_getLL('pagebrowser'),
 			$offset*$this->conf['recordsPerPage']+1,
 			$max,
@@ -898,98 +898,91 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function ajaxProcessCat($data)	{
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-
+		
 		if (is_Array($data['cb'])){
-      $objResponse->addAssign('mapcatlist', 'innerHTML',implode(',',$data['cb']));
-    } else {
-      $objResponse->addAssign('mapcatlist', 'innerHTML','9999');
-    }
-
+			$objResponse->addAssign('mapcatlist', 'innerHTML',implode(',',$data['cb']));
+		} else {
+			$objResponse->addAssign('mapcatlist', 'innerHTML','9999');
+		}
+		
+		// if the dynamic List is not needed, this ajax request is still needed to change the categories
 		if ($this->config['loadDynamicList'] != 1) {
 			return $objResponse->getXML();
 		}
-
+		
 		$markerArray=Array();
-		$where = '';
 		$field='';$table='';$where;$orderBy='';
-
-
+		
+		
 		// save selected categories into session
+		// todo: check if needed?
 		$GLOBALS['TSFE']->fe_user->setKey('ses', 'data2',  $data['cb']);
 		$GLOBALS['TSFE']->fe_user->storeSessionData();
-
+		
 		// if at least one checkbox is activated
-    if (count($data['cb']) > 0 || $data =='default') {
-      if($data!='default') {
-        $test = implode(',',$data['cb']);
-        foreach ($data['cb'] as $key=>$value) {
-          $where2.= ' FIND_IN_SET('.$key.',rggmcat) OR';
-        }
-        $where2 = ' AND ( '.substr($where2,0,-3).' ) ';
-      }
-
-      #$where2 = "AND  rggmcat REGEXP   '(,|^)<$test>(,|$)' ";
-
-      // template
-		  $template['resultSet'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST_FIRST###');
-      $template['item'] = $this->cObj2->getSubpart( $template['resultSet'],'###SINGLE###');
-
-  		// db query
-      $i = 0;
-      $table = $this->config['tables'];
-      $field = '*';
-      $where = '1=1 '.$this->config['pid_list'] ;
-
-		  $where.=' AND lng!=0 AND lat !=0  '.$where2;
-  		$GLOBALS['TSFE']->fe_user->setKey('ses', 'where',  $where);
-  		$GLOBALS['TSFE']->fe_user->storeSessionData();
-
-      $res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,'0,'.$this->conf['recordsPerPage']);
-      while($row=array_shift($res)) {
-        $x++;
-
-        $markerArray = $this->getMarker($row,'recordlist.');
-
-        $markerArray['###ZEBRA###'] = ($i%2==0) ? '' : 'alt';
-        $i++;
-
-        $wrappedSubpartArray = $tmp['wrappedSubpartArray'];
-  			$content_item .= $this->cObj2->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
-      }
-      $subpartArray['###CONTENT###'] = $content_item;
-
-      // initalize pagebrowser
-      $pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);
-		  $text = $pagebrowser['text'];
-		  $pages = $pagebrowser['pages'];
-		  $offset = $pagebrowser['offset'];
-
-      // Pagebrower statistic
-      $markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
-
-  		// next link
-      if ($offset +1 < $pages) {
-  		  $new = $offset+1;
-  		  $pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
-        /*$markerArray['###PB_NEXT###'] = 	sprintf(
-          $this->pi_getLL('pagebrowser_next'),
-          $pb,
-          $offset+2
-        );*/
-        $wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-      } else {
-        $wrappedSubpartArray['###PB_NEXT###'] = '';
-      }
-
-      $content.= $this->cObj2->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
-
-      $objResponse->addAssign('formResult', 'innerHTML',$content);
-
-    } // checkboxes selected
-
-
+		if (count($data['cb']) > 0 || $data =='default') {
+			if($data!='default') {
+				$test = implode(',',$data['cb']);
+				foreach ($data['cb'] as $key=>$value) {
+					$where2.= ' FIND_IN_SET('.$key.',rggmcat) OR';
+				}
+				$where2 = ' AND ( '.substr($where2,0,-3).' ) ';
+			}
+			
+			
+			// template
+			$template['resultSet'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST_FIRST###');
+			$template['item'] = $this->cObj2->getSubpart( $template['resultSet'],'###SINGLE###');
+			
+			// db query
+			$i = 0;
+			$table = $this->config['tables'];
+			
+			$where.='lng!=0 AND lat !=0  '.$where2.$this->config['pid_list'];
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'where',  $where);
+			$GLOBALS['TSFE']->fe_user->storeSessionData();
+			
+			$res = $this->generic->exec_SELECTquery('*',$table,$where,$groupBy,$orderBy,'0,'.$this->conf['recordsPerPage']);
+			while($row=array_shift($res)) {
+				$x++;
+				
+				$markerArray = $this->getMarker($row,'recordlist.');
+				
+				$markerArray['###ZEBRA###'] = ($i%2==0) ? '' : 'alt';
+				$i++;
+				
+				$wrappedSubpartArray = $tmp['wrappedSubpartArray'];
+				$content_item .= $this->cObj2->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+			}
+			$subpartArray['###CONTENT###'] = $content_item;
+			
+			// initalize pagebrowser
+			$pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);
+			$text = $pagebrowser['text'];
+			$pages = $pagebrowser['pages'];
+			$offset = $pagebrowser['offset'];
+			
+			// Pagebrower statistic
+			$markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
+			
+			// next link
+			if ($offset +1 < $pages) {
+				$new = $offset+1;
+				$pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
+				$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+			} else {
+				$wrappedSubpartArray['###PB_NEXT###'] = '';
+			}
+			
+			$content.= $this->cObj2->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
+			
+			$objResponse->addAssign('formResult', 'innerHTML',$content);
+			
+		} // checkboxes selected
+		
+		
 		return $objResponse->getXML();
-  }
+	}
 
 
 	/**
@@ -999,7 +992,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @return	Result records
 	 */
 	function ajaxProcessCatTree($data)	{
-	  $content.= $this->showMenu($data['cb']);
+		$content.= $this->showMenu($data['cb']);
 
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('rggooglemap-menu', 'innerHTML',$content);
