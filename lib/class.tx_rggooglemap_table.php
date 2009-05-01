@@ -135,12 +135,7 @@ class tx_rggooglemap_table {
       $whereFields = $this->myService->mergeFields($where);
       $debugOut[$singleTable]['where'] = $whereFields;     
 
-      // offset
-      if ($offset!='') {
-        $tmp = explode(',',$offset);
-        $offsetBegin = $tmp{0};
-        $offsetEnd   = $tmp{0}+$tmp{1};
-      }
+
       if ($debug==0) {
       
         // allfields
@@ -158,8 +153,8 @@ class tx_rggooglemap_table {
     		while($row = $TYPO3_DB->sql_fetch_assoc($res)) {
   
           // get the correct offset. time consuming? we will see
-          if (!$offset || $tableCount==1 || ($count>= $offsetBegin && $count < $offsetEnd)) {
-            $out[$singleTable.'#'.$row['uid']] = $row;
+    #      if (!$offset || $tableCount==1 || ($count>= $offsetBegin && $count < $offsetEnd)) {
+       #     $out[$singleTable.'#'.$row['uid']] = $row;
             
             // mapping
             foreach ($allFields as $key=>$value) {
@@ -173,7 +168,7 @@ class tx_rggooglemap_table {
              
             // additional information
             $out[$singleTable.'#'.$row['uid']] ['table'] = $singleTable;  	 	
-          }
+    #      }
   
           // count for the offset needed
           $count++;     		
@@ -206,6 +201,16 @@ class tx_rggooglemap_table {
           array_multisort($sortArray, SORT_ASC, SORT_REGULAR, $out); # unsorted > sorted      
         }
       }
+      
+      // offset
+      if ($offset!='') {
+        $split = t3lib_div::trimExplode(',',$offset);
+        if (count($split) == 1) {
+					$out = array_slice($out, 0, $split[0]);
+				} else {
+					$out = array_slice($out, $split[0], $split[1]);
+				}
+      }      
 
     } # end tableCount
 
