@@ -1040,6 +1040,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$markerArray['###RECURSIVE###'] = $this->displayCatMenu($row['uid']);
 			
 			if ($markerArray['###RECURSIVE###'] != '') {
+				// todo
 	#			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NOCHECKBOX###');
 			}
 			
@@ -1119,7 +1120,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 		
 		// use cluster, default = 0
-		#$this->conf['activateCluster'] = 1;
 		$addMarker = ($this->conf['activateCluster']==1) ? 'clusterer.AddMarker(marker,title);' : 'map.addOverlay( marker );';
 
 		$markerArray['###HIDECONTROLSMOUSEOUT###'] = $hideControlsOnMouseOut;
