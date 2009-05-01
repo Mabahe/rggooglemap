@@ -43,6 +43,7 @@ $TCA["tx_rggooglemap_cat"] = Array (
             "config" => Array (
                 "type" => "input",
 		         	"size" => "30",
+		         	"eval" => "trim",
             )
         ),
 /*

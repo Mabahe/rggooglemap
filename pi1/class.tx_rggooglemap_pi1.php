@@ -1460,6 +1460,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$resPrefix = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tabprefix','tx_rggooglemap_cat','uid = '.$catIds[0]);
 			$rowPrefix = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resPrefix);
 			$GLOBALS['TYPO3_DB']->sql_free_result($resPrefix);
+			$rowPrefix['tabprefix'] = str_replace(' ', '', $rowPrefix['tabprefix']); // avoid any blanks
 			$markerArray['###TABPREFIX###'] = ($rowPrefix['tabprefix']) ? '_'.$rowPrefix['tabprefix'] : '';
 		} else {
 			$markerArray['###TABPREFIX###'] = '';
