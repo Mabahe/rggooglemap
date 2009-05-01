@@ -57,7 +57,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *  825:     function ajaxGetActiveRecords($area, $cat)
  *  863:     function initMap()
  *  909:     function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)
- *  966:     function pageBrowserStatistic($offset=0, $table, $field, $where)
  *  991:     function ajaxProcessCat($data)
  * 1093:     function ajaxProcessCatTree($data)
  * 1109:     function ajaxProcessSearchInMenu ($data)
@@ -864,35 +863,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 
 	/**
-	 * Creates the "Show record 1 to 9 of 9"
-	 *
-	 * @param	string	$offset: offset value
-	 * @param	string	$table: table of query
-	 * @param	string	$field: $field of query
-	 * @param	string	$where: $where of query
-	 * @return	Array with information for the page browser
-	 */
-	function pageBrowserStatistic($offset=0, $table, $field, $where) {
-		$records=$this->generic->exec_COUNTquery($table,$where);
-		$pages=ceil($records/$this->conf['recordsPerPage']);
-		
-		$max = ($this->conf['recordsPerPage']>= $records) ? $records : ($offset*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
-		
-		$content['text'] = sprintf(
-			$this->pi_getLL('pagebrowser'),
-			$offset*$this->conf['recordsPerPage']+1,
-			$max,
-			$records
-		);
-		
-		$content['pages'] = $pages;
-		$content['offset'] = $offset;
-		
-		return $content;
-	}
-
-
-	/**
 	 * Creates the result records
 	 *
 	 * @param	string	$catList: list of categories
@@ -901,8 +871,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */	
 	function getDynamicList($catList, $currentPage) {
 		$content			= '';
-		$currentPage	= intval($currentPage);
-		
+		$smallConf		= $this->conf['recordList.'];
+		$currentPage	= intval($currentPage);		
 		
 		// no result if no categories selected
 		if ($catList=='') {
@@ -912,38 +882,39 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// template
 		$template['all']	= $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST###');
 		$template['item']	= $this->cObj->getSubpart( $template['all'],'###SINGLE###');
+		$markerArray = $subpartArray = $wrappedSubpartArray = array();
 		
 		// general query parts
 		$field = '*';
 		$table = $this->config['tables'];
 		$where = $this->helperGetAvailableRecords($catList);
-		$limit = ($currentPage*$this->conf['recordsPerPage']).','.$this->conf['recordsPerPage'];
+		$limit = ($currentPage*$smallConf['limit']).','.$smallConf['limit'];
 				
 		// count
 		$maxRecords	= $this->generic->exec_COUNTquery($table,$where);
-		$maxPages		= ceil($maxRecords/$this->conf['recordsPerPage']);
-		$max				= ($this->conf['recordsPerPage']>= $maxRecords) ? $maxRecords : ($currentPage*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
+		$maxPages		= ceil($maxRecords/$smallConf['limit']);
+		$max				= ($this->conf['recordsPerPage']>= $maxRecords) ? $maxRecords : ($currentPage*$smallConf['limit'] + $smallConf['limit']);
 		
 
 		// query for the results
 		$i=0;
-		$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $orderBy, $limit);
+		$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $smallConf['orderBy'], $limit);
 		while($row=array_shift($res)) {
-			$markerArray = $this->getMarker($row,'recordlist.', $i);
+			$markerArray = $this->getMarker($row,'recordList.', $i);
 			$i++;
 			
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);			
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);
 		}
 		$subpartArray['###CONTENT###'] = $content_item;
-		
-		
+		$markerArray = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'recordlist');		
+
 		/*
 		 * Pagebrowser 
 		 */
 		// general text (Record x - y from z)		 
 		$markerArray['###PB_STATISTIC###'] = sprintf(
 			$this->pi_getLL('pagebrowser'),
-			$currentPage*$this->conf['recordsPerPage']+1,
+			$currentPage*$smallConf['limit']+1,
 			$max,
 			$maxRecords
 		);
@@ -959,7 +930,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($currentPage-1).')" ';
 			$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
 		} else {
-			$subpartArray['###PB_PREV###'] = '';
+			$subpartArray['###HIDE_PREV###'] = ' ';
 		}
 		
 		// next page
@@ -968,10 +939,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($new).')" ';
 			$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
 		} else {
-			$subpartArray['###PB_NEXT###'] = '';
+			$subpartArray['###HIDE_NEXT###'] = 'x';
 		}
 		
-
 		$content.= $this->cObj->substituteMarkerArrayCached($template['all'], $markerArray, $subpartArray, $wrappedSubpartArray);
 
 		return $content;
@@ -1000,6 +970,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $objResponse->getXML();
 	}
 	
+	
 	/**
 	 * Ajax wrapper function which calles the "real" list function
 	 *
@@ -1014,8 +985,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$objResponse->addAssign('formResult', 'innerHTML', $content);
 		//$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');		
 		return $objResponse->getXML();	
-	}
-		
+	}		
 
 
 	/**

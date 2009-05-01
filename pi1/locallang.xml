@@ -26,6 +26,8 @@
 			<label index="general_exampleaddress">Gosau, Austria</label>
 			<label index="map_remove-directions">Remove directions</label>
 			<label index="map_loading">Loading</label>
+			<label index="recordlist_prev">Previous page</label>
+			<label index="recordlist_next">Next page</label>
 			<label index="location_description">Enter the location with the syntax: &lt;i&gt;Street, City, Country or City, Country&lt;/i&gt;.</label>
 			<label index="location_search">Go to this location</label>
 			<label index="location_zoomlevel_5">Far away</label>
@@ -82,6 +84,8 @@
 			<label index="general_exampleaddress">Gosau, Austria</label>
 			<label index="map_remove-directions">Anfahrt entfernen</label>
 			<label index="map_loading">wird geladen</label>
+			<label index="recordlist_prev">vorige Seite</label>
+			<label index="recordlist_next">nächste Seite</label>
 			<label index="location_description">Geben Sie einen Ort in folgender Syntax ein: &lt;i&gt;Straße, Ort, Land oder Ort,Land&lt;/i&gt;.</label>
 			<label index="location_search">Zu diesem Ort</label>
 			<label index="location_zoomlevel_5">weit weg</label>
@@ -198,6 +202,8 @@
 			<label index="general_exampleaddress">Gosau, Austria</label>
 			<label index="map_remove-directions">Remove directions</label>
 			<label index="map_loading">Loading</label>
+			<label index="recordlist_prev">vorige Seite</label>
+			<label index="recordlist_next">nächste Seite</label>
 			<label index="location_description">Enter the location with the syntax: &lt;i&gt;Street, City, Country or City, Country&lt;/i&gt;.</label>
 			<label index="location_search">Go to this location</label>
 			<label index="location_zoomlevel_5">Far away</label>

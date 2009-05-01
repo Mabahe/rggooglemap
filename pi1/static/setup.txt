@@ -80,6 +80,13 @@ plugin.tx_rggooglemap_pi1 {
 		#limit = 0,5
 	}
 	
+	# Dynamic record list
+	recordList {
+		LL = prev,next
+		orderBy = rggmtitle ASC
+		limit = 15
+	}
+	
 	
   # view MENU
   menu {
