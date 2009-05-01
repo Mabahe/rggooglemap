@@ -142,10 +142,6 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			$this->content.=$this->doc->section("",$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,"SET[function]",$this->MOD_SETTINGS["function"],$this->MOD_MENU["function"])));
 			$this->content.=$this->doc->divider(5);
 
-      require_once(t3lib_extMgm::extPath('rggooglemap').'/mod1/class.tx_rggooglemap_table_service.php');
-  	  $this->table_service = t3lib_div::makeInstance('tx_rggooglemap_table_service');
-  	  $this->tableList = 'tt_address';
-  	  
   	  
       // include generic table access
       require_once(t3lib_extMgm::extPath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
