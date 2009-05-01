@@ -189,7 +189,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		} 
 		
 		// get the generic select functions
-		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'res/class.tx_rggooglemap_table.php');
+		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
 		$this->generic = t3lib_div::makeInstance('tx_rggooglemap_table');
 
 		// CSS file

@@ -148,7 +148,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
   	  
   	  
       // include generic table access
-      require_once(t3lib_extMgm::extPath('rggooglemap').'res/class.tx_rggooglemap_table.php');
+      require_once(t3lib_extMgm::extPath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
   	  $this->generic = t3lib_div::makeInstance('tx_rggooglemap_table');
 
 
