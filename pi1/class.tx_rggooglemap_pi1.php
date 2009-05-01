@@ -166,15 +166,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		/*
 		* 3rd sheet: Config for Menu-output
 		*/
-		$this->config['menu-cat']						= $this->helperGetFlexform('menu', 'categories');
-		$this->config['menu-include'] 			= $this->helperGetFlexform('menu', 'include'); // Checkbox to include header + description
 		$this->config['menu-map'] 					= $this->helperGetFlexform('menu', 'map'); // ID of the map page
 		$this->config['menu-catSort'] 			= $this->helperGetFlexform('menu', 'menucatsortorder', 'menu.catOrder'); // orderBy of categories and records
 		$this->config['menu-catSortBy'] 		= $this->helperGetFlexform('menu', 'menucatsortorderby', 'menu.catOrderBy');
 		$this->config['menu-recordSort'] 		= $this->helperGetFlexform('menu', 'menurecordsort', 'menu.recordsOrder');
 		$this->config['menu-recordSortBy'] 	= $this->helperGetFlexform('menu', 'menurecordsortby', 'menu.recordsOrderBy');
 		$this->config['menu-categorytree'] 	= $this->helperGetFlexform('menu', 'usecategorytree'); // Use category-tree in menu view
-		$this->config['menu-searchbox'] 		= $this->helperGetFlexform('menu', 'usesearchbox'); // Use searchbbox in menu view
 
 		// search tab
 		$this->config['defaultCountry'] 	= $this->helperGetFlexform('search', 'defaultCountry', 'defaultCountry');

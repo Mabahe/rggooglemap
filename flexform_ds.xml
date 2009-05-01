@@ -1,16 +1,15 @@
 <T3DataStructure>
-  <meta>
-    <langDisable>1</langDisable>
-  </meta>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
 	<sheets>
 		<sDEF>
 			<ROOT>
 				<TCEforms>
-				<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:general.sheetTitle</sheetTitle>
+					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:general.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
-
 					<show>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.show</label>
@@ -52,7 +51,7 @@
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.7</numIndex>
 										<numIndex index="1">DIRECTIONS</numIndex>
 									</numIndex>	
-                </items>
+								</items>
 							</config>
 						</TCEforms>
 					</show>
@@ -66,8 +65,6 @@
 							</config>
 						</TCEforms>
 					</key>
-          	      	
-
 
 					<categoriesselected>
 						<TCEforms>
@@ -97,11 +94,8 @@
 								<show_thumbs>1</show_thumbs>
 							</config>
 						</TCEforms>
-					</categories>					
+					</categories>
 
-					
-            
-            
 					<startingpoint>
 						<TCEforms>
 							<label>LLL:EXT:lang/locallang_general.xml:LGL.startingpoint</label>
@@ -154,11 +148,10 @@
 							</config>
 						</TCEforms>
 					</recursive>
-  
-		
-	    </el>
-	  </ROOT>
-    </sDEF>
+
+				</el>
+			</ROOT>
+		</sDEF>
 
 		<map>
 			<ROOT>
@@ -275,13 +268,12 @@
 									<numIndex index="14" type="array">
 										<numIndex index="0">15</numIndex>
 										<numIndex index="1">15</numIndex>
-									</numIndex>																											
+									</numIndex>	
 								</items>
 							</config>
 						</TCEforms>
 					</zoom>
 
-               					
 					<type>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.type</label>
@@ -289,7 +281,7 @@
 								<type>select</type>
 								<maxitems>4</maxitems>
 								<minitems>0</minitems>
-								<size>4</size>								
+								<size>4</size>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.map</numIndex>
@@ -308,11 +300,10 @@
 										<numIndex index="1">G_PHYSICAL_MAP</numIndex>
 									</numIndex>
 								</items>
-								
 							</config>
 						</TCEforms>
 					</type>
-   
+
 					<type_controls>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.type_controls</label>
@@ -393,15 +384,15 @@
 						</TCEforms>
 					</showondefault>					 
 					
-	    	</el>
-	  	</ROOT>
-    </map>
+				</el>
+			</ROOT>
+		</map>
 
-<!-- ====  2 n d   s h e e t  : sorting settings ======================================================= -->    			   
+<!-- ====  2 n d   s h e e t  : sorting settings ======================================================= -->
 		<sorting>
 			<ROOT>
 				<TCEforms>
-				<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.sheetTitle</sheetTitle>
+					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
@@ -409,130 +400,129 @@
 					<catsort>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.catsort</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
-      							<numIndex index="1">name</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
-      							<numIndex index="1">tstamp</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
+										<numIndex index="1">name</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
+										<numIndex index="1">tstamp</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</catsort>
 
 					<catsortorder>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.title</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
-      							<numIndex index="1">4</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
-      							<numIndex index="1">3</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>	
 					</catsortorder>
 
 					<poisort>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.poisort</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
-      							<numIndex index="1">name</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
-      							<numIndex index="1">tstamp</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
+										<numIndex index="1">name</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
+										<numIndex index="1">tstamp</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</poisort>
 
 					<poisortorder>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.title</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
-      							<numIndex index="1">4</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
-      							<numIndex index="1">3</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</poisortorder>
 
 					<checkboxsort>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.checkboxsort</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
-      							<numIndex index="1">name</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
-      							<numIndex index="1">tstamp</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.name</numIndex>
+										<numIndex index="1">name</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.tstamp</numIndex>
+										<numIndex index="1">tstamp</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</checkboxsort>
 
 					<checkboxsortorder>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.title</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
-      							<numIndex index="1">4</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
-      							<numIndex index="1">3</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</checkboxsortorder>
-
 	
-	    </el>
-	  </ROOT>
-    </sorting>  
-    
-<!-- ====  menu settings ======================================================= -->    			   
+	  	</el>
+		</ROOT>
+		</sorting>	
+		
+<!-- ====  menu settings ======================================================= -->
 		<search>
 			<ROOT>
 				<TCEforms>
-				<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:search.sheetTitle</sheetTitle>
+					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:search.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
-				<el>    
+				<el>
 
 					<defaultCountry>
 						<TCEforms>
@@ -553,68 +543,18 @@
 						</TCEforms>
 					</radiusSearch>
 
-	    </el>
-	  </ROOT>
-    </search>
+				</el>
+			</ROOT>
+		</search>
 
-<!-- ====  3 r d   s h e e t  : menu settings ======================================================= -->    			   
+<!-- ====  3 r d   s h e e t  : menu settings ======================================================= -->
 		<menu>
 			<ROOT>
 				<TCEforms>
-				<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:menu.sheetTitle</sheetTitle>
+					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:menu.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
-
-<!-- 					<startingpoint>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.startingpoint</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>3</size>
-								<maxitems>22</maxitems>
-								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
-							</config>
-						</TCEforms>
-					</startingpoint> -->
-
-
-					<categories>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.categories</label>
-							<config>
-							 <type>select</type>
-							 <foreign_table>tx_rggooglemap_cat</foreign_table>
-							 <foreign_table_where>ORDER BY tx_rggooglemap_cat.title</foreign_table_where>
-							 <size>6</size>
-							 <maxitems>20</maxitems>
-							 <minitems>0</minitems>
-							</config>
-						</TCEforms>					         
-					</categories>
-
-					<include>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.header</label>
-							<config>
-							 <type>check</type>
-							 <items>
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:menu.header.0</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:menu.header.1</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-							 
-							 </items>
-							</config>
-						</TCEforms>					         
-					</include>
 
 					<map>
 						<TCEforms>
@@ -634,99 +574,94 @@
 					<menucatsortorder>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menucatsortorder</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.title</numIndex>
-      							<numIndex index="1">title</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.uid</numIndex>
-      							<numIndex index="1">uid</numIndex>
-      						</numIndex>
-      						<numIndex index="2" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.tstamp</numIndex>
-      							<numIndex index="1">tstamp</numIndex>
-      						</numIndex>
-      						<numIndex index="3" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.crdate</numIndex>
-      							<numIndex index="1">crdate</numIndex>
-      						</numIndex>
-    						
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.title</numIndex>
+										<numIndex index="1">title</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.uid</numIndex>
+										<numIndex index="1">uid</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.tstamp</numIndex>
+										<numIndex index="1">tstamp</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.crdate</numIndex>
+										<numIndex index="1">crdate</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</menucatsortorder>	
 
 					<menucatsortorderby>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menurecordsortorder</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
-      							<numIndex index="1">asc</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
-      							<numIndex index="1">desc</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
+										<numIndex index="1">asc</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
+										<numIndex index="1">desc</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</menucatsortorderby>
 					
-					
-
 					<menurecordsort>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menurecordsort</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.title</numIndex>
-      							<numIndex index="1">rggmtitle</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.uid</numIndex>
-      							<numIndex index="1">uid</numIndex>
-      						</numIndex>
-      						<numIndex index="2" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.tstamp</numIndex>
-      							<numIndex index="1">tstamp</numIndex>
-      						</numIndex>
-      						<numIndex index="3" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.crdate</numIndex>
-      							<numIndex index="1">crdate</numIndex>
-      						</numIndex>
-    						
-      					</items>
-      				</config>
-						</TCEforms>					         
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.title</numIndex>
+										<numIndex index="1">rggmtitle</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.uid</numIndex>
+										<numIndex index="1">uid</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.tstamp</numIndex>
+										<numIndex index="1">tstamp</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.crdate</numIndex>
+										<numIndex index="1">crdate</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
 					</menurecordsort>	
 					
 					<menurecordsortby>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menurecordsortorder</label>
-      				<config>
-      					<type>select</type>
-      					<items type="array">
-      						<numIndex index="0" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
-      							<numIndex index="1">asc</numIndex>
-      						</numIndex>
-      						<numIndex index="1" type="array">
-      							<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
-      							<numIndex index="1">desc</numIndex>
-      						</numIndex>
-      					</items>
-      				</config>
-						</TCEforms>					         
-					</menurecordsortby>					
-
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.asc</numIndex>
+										<numIndex index="1">asc</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:sorting.orderby.desc</numIndex>
+										<numIndex index="1">desc</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</menurecordsortby>
 
 					<usecategorytree>
 						<TCEforms>
@@ -736,20 +671,10 @@
 							</config>
 						</TCEforms>
 					</usecategorytree>
-
-					<usesearchbox>
-						<TCEforms>
-							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.usesearchbox</label>
-							<config>
-							<type>check</type>
-							</config>
-						</TCEforms>
-					</usesearchbox>
-
 		
-	    </el>
-	  </ROOT>
-    </menu>  
-  
-  </sheets>
+				</el>
+			</ROOT>
+		</menu>
+	
+	</sheets>
 </T3DataStructure>

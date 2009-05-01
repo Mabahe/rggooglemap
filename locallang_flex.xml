@@ -52,16 +52,11 @@
 			<label index="sorting.poisort">POIs in POI view</label>
 			<label index="sorting.checkboxsort">Checkboxes in MAP view</label>
 			<label index="menu.sheetTitle">Menu settings</label>
-			<label index="menu.categories">Categories</label>
-			<label index="menu.header">Include</label>
-			<label index="menu.header.0">Header of Category</label>
-			<label index="menu.header.1">Description of Category</label>
 			<label index="menu.map">Page with the map</label>
 			<label index="menu.menucatsortorder">Category ordering</label>
 			<label index="menu.menurecordsort">Records ordering</label>
 			<label index="menu.menurecordsortorder">asc/desc</label>
 			<label index="menu.usecategorytree">Use category tree in Menu</label>
-			<label index="menu.usesearchbox">Use searchbox in Menu</label>
 			<label index="sorting.title">Title</label>
 			<label index="sorting.uid">UID</label>
 			<label index="sorting.tstamp">Last modified (tstamp)</label>
@@ -116,16 +111,11 @@
 			<label index="sorting.poisort">POIs in POI-Ansicht</label>
 			<label index="sorting.checkboxsort">Checkoxen in Karten-Ansicht</label>
 			<label index="menu.sheetTitle">Menü</label>
-			<label index="menu.categories">Kategorien</label>
-			<label index="menu.header">Inklusive</label>
-			<label index="menu.header.0">Kategorietitel</label>
-			<label index="menu.header.1">Kategoriebeschreibung</label>
 			<label index="menu.map">Seite mit Karte</label>
 			<label index="menu.menucatsortorder">Sortierung Kategeogrie</label>
 			<label index="menu.menurecordsort">Sortierung Datensätze</label>
 			<label index="menu.menurecordsortorder">aufsteigen/absteigend</label>
 			<label index="menu.usecategorytree">Kategoriebaum im Menü verwenden</label>
-			<label index="menu.usesearchbox">Suche im Menü verwenden</label>
 			<label index="sorting.title">Sortierung</label>
 			<label index="sorting.uid">UID</label>
 			<label index="sorting.tstamp">Letztes geändert (tstamp)</label>
@@ -181,10 +171,6 @@
 			<label index="sorting.poisort">Vue des POIs dans POI</label>
 			<label index="sorting.checkboxsort">Case à cocher dans la vue &quot;Carte&quot;</label>
 			<label index="menu.title">Menu options</label>
-			<label index="menu.categories">Catégories</label>
-			<label index="menu.header">Insertion</label>
-			<label index="menu.header.0">Entête de la catégorie</label>
-			<label index="menu.header.1">Description de la catégorie</label>
 			<label index="menu.map">Page contenant la carte</label>
 		</languageKey>
 	</data>
