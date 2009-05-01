@@ -13,9 +13,9 @@
 			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>
 			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>
 			<label index="errror_no-status">ERROR: No status selected!</label>
-			<label index="error_wrong-domains">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid urls for an ajax request! Your current domain: &quot;%s&quot;, the domain for the ajax requests: &quot;%s&quot;. Those need to be the same, e.g. use the 2nd domain!</label>			
+			<label index="error_wrong-domains">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid urls for an ajax request! Your current domain: &quot;%s&quot;, the domain for the ajax requests: &quot;%s&quot;. Those need to be the same, e.g. use the 2nd domain!</label>
 			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No template subpart is defined for &lt;br /&gt;%s &lt;br /&gt;inside the template!</label>
-			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>			
+			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>
 			<label index="general_show">Show on map</label>
 			<label index="general_search">Search</label>
 			<label index="general_directions">Directions</label>
@@ -61,9 +61,177 @@
 			<label index="directions_search">Get there!</label>
 			<label index="directions_remove-directions">Remove directions</label>
 		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pagebrowser">Datensatz %s-%s von %s</label>
+			<label index="pagebrowser_prev">&lt;a %s&gt;vorige Seite (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_next">&lt;a %s&gt;nächste Seite (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_act">Seite %s</label>
+			<label index="searchNoResult">&lt;i&gt;Kein Ergebnis&lt;/i&gt;</label>
+			<label index="searchMinChars">&lt;i&gt;Mindestlänge von %s Buchstaben&lt;/i&gt;</label>
+			<label index="errror_no-status">FEHLER: Kein Status ausgewählt!</label>
+			<label index="error_wrong-domains">&lt;strong&gt;FEHLER!&lt;/strong&gt;&lt;br /&gt; Keine gültige URL für einen AJAX-Aufruf! Die aktuelle Domain: &quot;%s&quot; weicht von der für den Aufruf &quot;%s&quot; ab. Diese müssen ident sein, benützen Sie z.B. die 2. Domain</label>
+			<label index="error_poi-no-template">&lt;strong&gt;FEHLER!&lt;/strong&gt;&lt;br /&gt;Kein Template-Subpart wurde definiert für &lt;br /&gt;%s &lt;br /&gt;innerhalb des G</label>
+			<label index="error_poi-no-valid-params">&lt;strong&gt;FEHLER!&lt;/strong&gt;&lt;br /&gt;Keine gültigen Parameter für Tabelle &quot;%s&quot;, uid &quot;%s&quot; und Tab &quot;%s&quot;!</label>
+			<label index="general_show">Zeige auf der Karte</label>
+			<label index="general_search">Suche</label>
+			<label index="general_directions">Anfahrt</label>
+			<label index="general_more">Mehr Informationen</label>
+			<label index="general_back">Zurück</label>
+			<label index="general_lat">Breitengrad</label>
+			<label index="general_lng">Längengrad</label>
+			<label index="general_exampleaddress">Gosau, Austria</label>
+			<label index="map_remove-directions">Anfahrt entfernen</label>
+			<label index="map_loading">wird geladen</label>
+			<label index="location_description">Geben Sie einen Ort in folgender Syntax ein: &lt;i&gt;Straße, Ort, Land oder Ort,Land&lt;/i&gt;.</label>
+			<label index="location_search">Zu diesem Ort</label>
+			<label index="location_zoomlevel_5">weit weg</label>
+			<label index="location_zoomlevel_9">nahe</label>
+			<label index="location_zoomlevel_14">sehr nahe</label>
+			<label index="location_label_address">Adresse</label>
+			<label index="location_label_zoomlevel">Zoomstufe</label>
+			<label index="search_description">Suche nach einem Datensatz, z.B.  &lt;i&gt;&quot;Hotel&quot;&lt;/i&gt;.</label>
+			<label index="search_label_cat">Kategorie</label>
+			<label index="search_label_radius">Radius</label>
+			<label index="search_label_zip">Ort oder PLZ</label>
+			<label index="search_label_activateradius">Umkreissuche aktivieren</label>
+			<label index="search_label_name">Suchausdruck</label>
+			<label index="search_label_maponly">Suche auf den</label>
+			<label index="search_clearsearch">Suche zurücksetzen</label>
+			<label index="search_error-header">Folgende Fehler sind aufgetreten</label>
+			<label index="search_error_geocode-accuracy">Die errechnete Position war nicht genau genug</label>
+			<label index="search_error_geocode-status-500">Für die angegebene Adresse konnte aus unbestimmten Gründen keine Position gefunden werden.</label>
+			<label index="search_error_geocode-status-601">Es wurde keine Adresse übermittelt.</label>
+			<label index="search_error_geocode-status-602">Für die angegebene Adresse konnte keine Position ermittelt werden. Möglicherweise ist die Adresse falsch oder zu neu.</label>
+			<label index="search_error_geocode-status-603">Für die angegebene Adresse konnte aufgrund von rechtlichen Gründen keine Antwort ermittelt werden.</label>
+			<label index="search_error_geocode-status-610">Der angegebene Schlüssel ist ungültig oder passt nicht zur aktuellen Domain.</label>
+			<label index="search_error_geocode-status-620">Mit dem angegebenen Schlüssel wurden in den letzten 24 Stunden oder in der letzten Zeit zuviele Anfragen abgesetzt.</label>
+			<label index="recordsonmap_description">Datensätze, die sich gerade auf der Karte befinden</label>
+			<label index="recordsonmap_wait">Bitte um einen Moment Geduld.</label>
+			<label index="poi_directions_header">Ihre Anfahrt</label>
+			<label index="poi_directions_description">Geben Sie die Adresse in diesem Format ein:&lt;i&gt;Straße, Ort, Land&lt;/i&gt;.</label>
+			<label index="directions_title">Anfahrt berechnen</label>
+			<label index="directions_description">Geben Sie Ihre Adresse ein, um die Anfahrt zu berechnen.</label>
+			<label index="directions_label_address">Ihre Adresse</label>
+			<label index="directions_label_country">Ihr Land</label>
+			<label index="directions_label_record">Anfahrt zu</label>
+			<label index="directions_search">Berechnen</label>
+			<label index="directions_remove-directions">Anfahrt entfernen</label>
+		</languageKey>
 	</data>
 	<orig_hash type="array">
+		<languageKey index="de" type="array">
+			<label index="pagebrowser" type="integer">248054815</label>
+			<label index="pagebrowser_prev" type="integer">44637136</label>
+			<label index="pagebrowser_next" type="integer">67890459</label>
+			<label index="pagebrowser_act" type="integer">247654823</label>
+			<label index="searchNoResult" type="integer">204092465</label>
+			<label index="searchMinChars" type="integer">122316944</label>
+			<label index="errror_no-status" type="integer">173935752</label>
+			<label index="error_wrong-domains" type="integer">115853022</label>
+			<label index="error_poi-no-template" type="integer">64586032</label>
+			<label index="error_poi-no-valid-params" type="integer">11123004</label>
+			<label index="general_show" type="integer">142219659</label>
+			<label index="general_search" type="integer">20138052</label>
+			<label index="general_directions" type="integer">159888327</label>
+			<label index="general_more" type="integer">179332787</label>
+			<label index="general_back" type="integer">5603241</label>
+			<label index="general_lat" type="integer">61926260</label>
+			<label index="general_lng" type="integer">162847420</label>
+			<label index="general_exampleaddress" type="integer">139284473</label>
+			<label index="map_remove-directions" type="integer">214962335</label>
+			<label index="map_loading" type="integer">23854073</label>
+			<label index="location_description" type="integer">29448155</label>
+			<label index="location_search" type="integer">192418984</label>
+			<label index="location_zoomlevel_5" type="integer">77082403</label>
+			<label index="location_zoomlevel_9" type="integer">173233937</label>
+			<label index="location_zoomlevel_14" type="integer">65810745</label>
+			<label index="location_label_address" type="integer">232242979</label>
+			<label index="location_label_zoomlevel" type="integer">53436633</label>
+			<label index="search_description" type="integer">158040657</label>
+			<label index="search_label_cat" type="integer">61717939</label>
+			<label index="search_label_radius" type="integer">219219660</label>
+			<label index="search_label_zip" type="integer">26134009</label>
+			<label index="search_label_activateradius" type="integer">141958519</label>
+			<label index="search_label_name" type="integer">50512629</label>
+			<label index="search_label_maponly" type="integer">28299853</label>
+			<label index="search_clearsearch" type="integer">160969601</label>
+			<label index="search_error-header" type="integer">159015412</label>
+			<label index="search_error_geocode-accuracy" type="integer">103722324</label>
+			<label index="search_error_geocode-status-500" type="integer">150806564</label>
+			<label index="search_error_geocode-status-601" type="integer">86470741</label>
+			<label index="search_error_geocode-status-602" type="integer">199379518</label>
+			<label index="search_error_geocode-status-603" type="integer">228555236</label>
+			<label index="search_error_geocode-status-610" type="integer">17004013</label>
+			<label index="search_error_geocode-status-620" type="integer">106053003</label>
+			<label index="recordsonmap_description" type="integer">118266425</label>
+			<label index="recordsonmap_wait" type="integer">125798006</label>
+			<label index="poi_directions_header" type="integer">208607678</label>
+			<label index="poi_directions_description" type="integer">225806627</label>
+			<label index="directions_title" type="integer">235467291</label>
+			<label index="directions_description" type="integer">1517937</label>
+			<label index="directions_label_address" type="integer">244168151</label>
+			<label index="directions_label_country" type="integer">139476532</label>
+			<label index="directions_label_record" type="integer">156934115</label>
+			<label index="directions_search" type="integer">253628445</label>
+			<label index="directions_remove-directions" type="integer">214962335</label>
+		</languageKey>
 	</orig_hash>
 	<orig_text type="array">
+		<languageKey index="de" type="array">
+			<label index="pagebrowser">Record %s-%s of %s total</label>
+			<label index="pagebrowser_prev">&lt;a %s&gt;previous Page (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_next">&lt;a %s&gt;next Page (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_act">Page %s</label>
+			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>
+			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>
+			<label index="errror_no-status">ERROR: No status selected!</label>
+			<label index="error_wrong-domains">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid urls for an ajax request! Your current domain: &quot;%s&quot;, the domain for the ajax requests: &quot;%s&quot;. Those need to be the same, e.g. use the 2nd domain!</label>
+			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No template subpart is defined for &lt;br /&gt;%s &lt;br /&gt;inside the template!</label>
+			<label index="error_poi-no-valid-params">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid params for table &quot;%s&quot;, uid &quot;%s&quot; and tab &quot;%s&quot;!</label>
+			<label index="general_show">Show on map</label>
+			<label index="general_search">Search</label>
+			<label index="general_directions">Directions</label>
+			<label index="general_more">More information</label>
+			<label index="general_back">Back</label>
+			<label index="general_lat">Latitude</label>
+			<label index="general_lng">Longitude</label>
+			<label index="general_exampleaddress">Gosau, Austria</label>
+			<label index="map_remove-directions">Remove directions</label>
+			<label index="map_loading">Loading</label>
+			<label index="location_description">Enter the location with the syntax: &lt;i&gt;Street, City, Country or City, Country&lt;/i&gt;.</label>
+			<label index="location_search">Go to this location</label>
+			<label index="location_zoomlevel_5">Far away</label>
+			<label index="location_zoomlevel_9">Near</label>
+			<label index="location_zoomlevel_14">Closeup</label>
+			<label index="location_label_address">Address</label>
+			<label index="location_label_zoomlevel">Zoomlevel</label>
+			<label index="search_description">Search for a record, e.g. &lt;i&gt;&quot;Hotel&quot;&lt;/i&gt;.</label>
+			<label index="search_label_cat">Category</label>
+			<label index="search_label_radius">Radius</label>
+			<label index="search_label_zip">City or ZIP code</label>
+			<label index="search_label_activateradius">Activate Radius Search</label>
+			<label index="search_label_name">Search expression</label>
+			<label index="search_label_maponly">Search only in selected map area</label>
+			<label index="search_clearsearch">Clear search</label>
+			<label index="search_error-header">There haven been the following error(s)</label>
+			<label index="search_error_geocode-accuracy">Your calculated position was not accurate enough.</label>
+			<label index="search_error_geocode-status-500">A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is unknown.</label>
+			<label index="search_error_geocode-status-601">An empty address was specified in the HTTP q parameter.</label>
+			<label index="search_error_geocode-status-602">No corresponding geographic location could be found for the specified address, possibly because the address is relatively new, or because it may be incorrect.</label>
+			<label index="search_error_geocode-status-603">The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.</label>
+			<label index="search_error_geocode-status-610">The given key is either invalid or does not match the domain for which it was given.</label>
+			<label index="search_error_geocode-status-620">The given key has gone over the requests limit in the 24 hour period or has submitted too many requests in too short a period of time.</label>
+			<label index="recordsonmap_description">Records which are currently shown on the map</label>
+			<label index="recordsonmap_wait">Please wait for a short moment.</label>
+			<label index="poi_directions_header">Get your directions</label>
+			<label index="poi_directions_description">Add your address in the &lt;i&gt;format Street, City, Country&lt;/i&gt;.</label>
+			<label index="directions_title">Get the directions</label>
+			<label index="directions_description">Insert your address and you will know how do get there</label>
+			<label index="directions_label_address">Your Address</label>
+			<label index="directions_label_country">Your Country</label>
+			<label index="directions_label_record">Directions to</label>
+			<label index="directions_search">Get there!</label>
+			<label index="directions_remove-directions">Remove directions</label>
+		</languageKey>
 	</orig_text>
 </T3locallang>

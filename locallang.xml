@@ -6,35 +6,32 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<!-- Insert plugin -->
-      <label index="pi1_title">Google Map (rggooglemap)</label>
+			<label index="pi1_title">Google Map (rggooglemap)</label>
 			<label index="pi1_plus_wiz_description">Inserts a google map based on tt_address</label>
-			<!-- BE Module (Menu) -->
 			<label index="mlang_tabs_tab">Google-Map</label>
 			<label index="mlang_labels_tabdescr">Find an interesting point via BE in the google map</label>
 			<label index="mlang_labels_tablabel">Google map POI finder</label>
-		  <label index="title">Module for extension rggooglemap</label>
-			<!-- BE Module (Plugin) -->			
-      <label index="function1">1. Map &amp; saving a point</label>
+			<label index="title">Module for extension rggooglemap</label>
+			<label index="function1">1. Map &amp; saving a point</label>
 			<label index="function2">2. Showing all Records</label>
 			<label index="function3">3. Mass Geo-Coding</label>
-			<label index="headerChoosePOI">1.) Drag the marker around » Choose a point » Click "Save"</label>		
+			<label index="headerChoosePOI">1.) Drag the marker around » Choose a point » Click &quot;Save&quot;</label>
 			<label index="headerSave">2.) Save the coordinates ...</label>
 			<label index="headerSavePOI">b) ... to an existing record</label>
-			<label index="headerSavePOINew">a) ... to a new record</label>			
+			<label index="headerSavePOINew">a) ... to a new record</label>
 			<label index="headerGeocode">Geocoding: Search for an address</label>
-			<label index="headerloadPOI">Load POI with long. + lat.</label>		
-			<label index="headerloadRecord">Search + Load existing POI, just type the name</label>           	
-			<label index="loadPOILink">Insert longtitude + latitude in the fields and press the link</label>    	
+			<label index="headerloadPOI">Load POI with long. + lat.</label>
+			<label index="headerloadRecord">Search + Load existing POI, just type the name</label>
+			<label index="loadPOILink">Insert longtitude + latitude in the fields and press the link</label>
 			<label index="geocodeButton">Search</label>
 			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
 			<label index="headerGetPoi">Load a record into the map</label>
 			<label index="clickHere">Click here</label>
-      <label index="headerList">List of records</label>
-      <label index="headerListSave">Save changes</label>
-			<label index="firstEntryInDropdown">...save to...</label>	
-  		<label index="noRecordsFound">No existing t	t_address-records found. Make a new one or choose an sys-folder with existing records.</label>
-  		<label index="noPageChosen">No page/sys-folder chosen. Please choose one and proceed.</label>
+			<label index="headerList">List of records</label>
+			<label index="headerListSave">Save changes</label>
+			<label index="firstEntryInDropdown">...save to...</label>
+			<label index="noRecordsFound">No existing t	t_address-records found. Make a new one or choose an sys-folder with existing records.</label>
+			<label index="noPageChosen">No page/sys-folder chosen. Please choose one and proceed.</label>
 			<label index="createNewRecord">Create a new record with this coordinates</label>
 			<label index="createNewRecordPlain">Create a plain new record</label>
 			<label index="save">Save</label>
@@ -48,264 +45,100 @@
 			<label index="map">Map</label>
 			<label index="mapLink">show</label>
 			<label index="table">Table</label>
-			<label index="saveErrorCheckbox">Error: Select Checkbox to save!</label> 
+			<label index="saveErrorCheckbox">Error: Select Checkbox to save!</label>
 			<label index="saveErrorDropdown">Error: Choose a record to save the POI to!</label>
-			<label index="saveSamePosition">Error: The record "%s" has got the exact same position! Choose another location and press "Save" again!</label>
+			<label index="saveSamePosition">Error: The record &quot;%s&quot; has got the exact same position! Choose another location and press &quot;Save&quot; again!</label>
 			<label index="saveSuccss">Saving was successfull</label>
 			<label index="saveDisplay">Changes were successfull saved!</label>
 			<label index="confirmation">Sure?</label>
 			<label index="showHideMap">Show/hide map</label>
 			<label index="showHideOptions">Show/hide options</label>
 			<label index="loadgeodata">Load Geodata</label>
-			<label index="save">Save</label>
 			<label index="save_and_close">Save and Close</label>
 			<label index="close">Close</label>
 			<label index="depth">Tree-Depth</label>
-                   
-        <!-- Flexforms  -->
-			<label index="general.sheetTitle">Settings</label>
-			<label index="general.show">Show</label>
-			<label index="general.show.0">Map</label>
-			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menu</label>
-			<label index="general.show.3">Locationbox</label>
-			<label index="general.show.4">Active records</label>
-			<label index="general.show.5">Searchbox</label>			
-			
-			<label index="general.startingpoint">Starting point</label>
-			<label index="general.recursive">Recursive</label>
-			<label index="general.recursive.0"></label>
-			<label index="general.recursive.1">1 level</label>
-			<label index="general.recursive.2">2 levels</label>
-			<label index="general.recursive.3">3 levels</label>
-			<label index="general.recursive.4">4 levels</label>
-			<label index="general.recursive.infinite">Infinite</label>
-			<label index="general.categories">Active categories</label>
-			<label index="general.categoriesselected">Available categories</label>			
-			<label index="general.key">Googlemap Key</label>			
-
-        <!-- Flexforms  map sheet -->
-			<label index="map.sheetTitle">Map</label>
-      <label index="map.width">Width of map</label>
-			<label index="map.height">Height of map</label>
-			<label index="map.lng">Start Longtidude</label>
-			<label index="map.lat">Start Latidude</label>
-			<label index="map.zoom">Start Zoom</label>
-			<label index="map.type">Type of map</label>
-			<label index="map.type.map">Map</label>
-			<label index="map.type.satellite">Satellite</label>
-			<label index="map.type.hybrid">Hybrid</label>
-			<label index="map.type.physical">Terrain</label>			
-			<label index="map.type_controls">Show type controls</label>
-			<label index="map.type_controls.0"></label>
-			<label index="map.type_controls.1">Show</label>
-			<label index="map.type_controls.2">Hide</label>
-			<label index="map.nav_controls">Navigation controls</label>
-			<label index="map.nav_controls.none">None</label>
-			<label index="map.nav_controls.small">Small</label>
-			<label index="map.nav_controls.large">Large</label>
-			<label index="map.controlonmouseover">Hide Controls on Mouseover</label>			
-			<label index="map.mapoverview">Hide overview window</label>			
-			<label index="map.showondefault">Default POI</label>
-			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
-
-
-        <!-- Flexforms  sorting sheet -->
-			<label index="sorting.sheetTitle">Sorting</label>
-			<label index="sorting.orderby.title">...order by</label>			
-      <label index="sorting.orderby.asc">Ascending</label>			
-			<label index="sorting.orderby.desc">Descending</label>
-			<label index="sorting.orderby.name">Name</label>
-			<label index="sorting.orderby.tstamp">Tstamp</label>
-
-      <label index="sorting.catsort">Category in POI view</label>
-      <label index="sorting.poisort">POIs in POI view</label>
-      <label index="sorting.checkboxsort">Checkboxes in MAP view</label>
-
-        <!-- Flexforms  menu sheet -->
-			<label index="menu.sheetTitle">Menu settings</label>
-			<label index="menu.startingpoint">Starting point</label>
-			<label index="menu.categories">Categories</label>
-			<label index="menu.header">Include</label>
-			<label index="menu.header.0">Header of Category</label>
-			<label index="menu.header.1">Description of Category</label>
-			<label index="menu.map">Page with the map</label>
-			<label index="menu.menucatsortorder">Category ordering</label>			
-			<label index="menu.menurecordsort">Records ordering</label>
-			<label index="menu.menurecordsortorder">asc/desc</label>			
-			<label index="menu.usecategorytree">Use category tree in Menu</label>      
-			<label index="menu.usesearchbox">Use searchbox in Menu</label> 
-
-			<label index="sorting.title">Title</label>
-			<label index="sorting.uid">UID</label>
-			<label index="sorting.tstamp">Last modified (tstamp)</label>
-			<label index="sorting.crdate">Creation Date (crdate)</label>
-			
-        <!-- Flexforms  sheet search -->			
-			<label index="search.sheetTitle">Search</label>
-			<label index="search.defaultCountry">Default Country for Geocoding, use "AT" or "Austria" or "Österreich"</label>
-			<label index="search.radiusSearch">Use Radius Search</label>
-			
-			
-        <!-- general -->
-			<label index="tt_address">Address</label>        
+			<label index="tt_address">Address</label>
 			<label index="fe_users">FE-User</label>
 			<label index="tt_news">News</label>
 		</languageKey>
-
-
 		<languageKey index="de" type="array">
-			<!-- Insert plugin -->			
-      <label index="pi1_title">Google Map (rggooglemap)</label>
-      <label index="pi1_plus_wiz_description">Google map, basierend auf tt_address</label>
-			<!-- BE Module (Menu) -->
+			<label index="pi1_title">Google Map (rggooglemap)</label>
+			<label index="pi1_plus_wiz_description">Google map, basierend auf tt_address</label>
 			<label index="mlang_labels_tabdescr">Finde einen interessanten Punkt auf der google map und ordne ihn einem Datensatz zu</label>
 			<label index="mlang_labels_tablabel">Google map POI-Suche</label>
-		  <label index="title">Modul für die Extension rggooglemap</label>
-			<!-- BE Module (Plugin) -->
-
+			<label index="title">Modul für die Extension rggooglemap</label>
 			<label index="function1">1.) Karte &amp; Punkt speichern</label>
 			<label index="function2">2.) Alle Datensätze zeigen</label>
-			<label index="headerChoosePOI">1.) Wähle mit dem Marker einen Punkt » Drücke "Speichern"</label>
+			<label index="function3">3.) Massen-Geokodierung</label>
+			<label index="headerChoosePOI">1.) Wähle mit dem Marker einen Punkt » Drücke &quot;Speichern&quot;</label>
 			<label index="headerSave">2.) Speichern der Koordinaten ...</label>
 			<label index="headerSavePOI">b) ... für einen existierenden Datensatz</label>
 			<label index="headerSavePOINew">a) ... für einen neuen Datensatz</label>
 			<label index="headerGeocode">Geocoding: Suche eine Adresse</label>
-			<label index="headerloadPOI">POI anhand Koordinaten laden</label>			
-			<label index="headerloadRecord">Suchen + Laden eines POI</label>			
-			<label index="loadPOILink">Koordinaten in Felder einfügen und hier klicken</label>    	
+			<label index="headerloadPOI">POI anhand Koordinaten laden</label>
+			<label index="headerloadRecord">Suchen + Laden eines POI</label>
+			<label index="loadPOILink">Koordinaten in Felder einfügen und hier klicken</label>
 			<label index="geocodeButton">Suchen</label>
 			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
 			<label index="headerGetPoi">Existierenden POI laden</label>
 			<label index="clickHere">hier klicken</label>
 			<label index="headerList">Liste mit tt_address-Datensätzen</label>
-      <label index="headerListSave">Änderungen speichern</label>
+			<label index="headerListSave">Änderungen speichern</label>
 			<label index="firstEntryInDropdown">...speichern für...</label>
 			<label index="noRecordsFound">Keine tt_address-Datensätze gefunden. Legen Sie einen an oder erstellen Sie einen neuen.</label>
-  		<label index="noPageChosen">Keine Seite/sys-folder ausgewählt!</label>
+			<label index="noPageChosen">Keine Seite/sys-folder ausgewählt!</label>
 			<label index="createNewRecord">Neuen Datensatz mit diesen Koordinaten erstellen</label>
 			<label index="createNewRecordPlain">Neuen (leeren) Datensatz erstellen</label>
 			<label index="save">Speichern</label>
 			<label index="saveError">Fehler: Keine Koordinaten ausgewählt!</label>
 			<label index="latitude">Breitengrad</label>
 			<label index="longitude">Längegrad</label>
-			<label index="name">Name</label>
 			<label index="uid">Id</label>
+			<label index="name">Name</label>
 			<label index="category">Kategorie</label>
 			<label index="display">Anzeigen</label>
 			<label index="map">Karte</label>
-			<label index="table">Tabelle</label>
 			<label index="mapLink">show</label>
-			<label index="saveErrorCheckbox">Fehler: Aktivieren Sie die Checkbox, um Änderungen zu speichern!</label> 
+			<label index="table">Tabelle</label>
+			<label index="saveErrorCheckbox">Fehler: Aktivieren Sie die Checkbox, um Änderungen zu speichern!</label>
 			<label index="saveErrorDropdown">Wählen Sie einen Datensatz aus, um Änderungen zu speichern!</label>
-			<label index="saveSamePosition">Fehler: Der Datensatz "%s" hat die genau gleiche Position. Wählen Sie eine andere Position!</label>
+			<label index="saveSamePosition">Fehler: Der Datensatz &quot;%s&quot; hat die genau gleiche Position. Wählen Sie eine andere Position!</label>
 			<label index="saveSuccss">POI wurde erfolgreich gespeichert!</label>
 			<label index="saveDisplay">Änderungen wurde erfolgreich gespeichert!</label>
 			<label index="confirmation">Sicher?</label>
 			<label index="showHideMap">Karte verbergen/anzeigen</label>
 			<label index="showHideOptions">Optionen verbergen/anzeigen</label>
 			<label index="loadgeodata">Geodaten laden</label>
-
-        <!-- Flexforms  -->
-			<label index="general.title">Allgemein</label>
-			<label index="general.show">Anzeige von</label>
-			<label index="general.show.0">Karte</label>
-			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menü</label>			
-			<label index="general.show.3">Ortsuche</label>
-			<label index="general.show.4">Aktive Datensätze</label>
-			<label index="general.show.5">Suche</label>			
-      <label index="template.template_file">Template</label>
-			<label index="general.key">Googlemap Key</label>      
-			<label index="map.width">Breite der Karte</label>
-			<label index="map.height">Höhe der Karte</label>
-			<label index="map.lng">Längengrad</label>
-			<label index="map.lat">Breitengrad</label>
-			<label index="map.zoom">Zoom</label>
-			<label index="map.type">Kartentyp</label>
-			<label index="map.type.map">Karte</label>
-			<label index="map.type.satellite">Satellit</label>
-			<label index="map.type.hybrid">Hybrid (Karte + Satellit)</label>
-			<label index="map.type_controls">Umschalter für Kartentyp anzeigen</label>
-			<label index="map.type_controls.0"></label>
-			<label index="map.type_controls.1">Anzeigen</label>
-			<label index="map.type_controls.2">Verstecken</label>
-			<label index="map.nav_controls">Navigationsschalter anzeigen</label>
-			<label index="map.nav_controls.none">Keine</label>
-			<label index="map.nav_controls.small">Klein</label>
-			<label index="map.nav_controls.large">Groß</label>
-			<label index="general.startingpoint">Ausgangspunkt</label>
-			<label index="general.recursive">Rekursiv</label>
-			<label index="general.recursive.0"></label>
-			<label index="general.recursive.1">1 Ebene</label>
-			<label index="general.recursive.2">2 Ebenen</label>
-			<label index="general.recursive.3">3 Ebenen</label>
-			<label index="general.recursive.4">4 Ebenen</label>
-			<label index="general.recursive.infinite">Unendlich</label>
-			<label index="general.categories">Aktive Kategorien</label>
-			<label index="general.categoriesselected">Verfügbare Kategorien</label>			
-
-			<label index="map.showondefault">Standard POI</label>
-			
-      <!-- Flexforms  2nd sheet -->
-			<label index="sorting.title">Sortierung</label>
-			<label index="sorting.orderby.title">...sortiert nach</label>			
-      <label index="sorting.orderby.asc">austeigend</label>			
-			<label index="sorting.orderby.desc">abgsteigend</label>
-			<label index="sorting.orderby.name">Name</label>
-			<label index="sorting.orderby.tstamp">Tstamp</label>
-
-      <label index="sorting.catsort">Kategorie in POI-Ansicht</label>
-      <label index="sorting.poisort">POIs in POI-Ansicht</label>
-      <label index="sorting.checkboxsort">Checkoxen in Karten-Ansicht</label>
-
-
-        <!-- Flexforms  3rd sheet -->
-			<label index="menu.title">Menü-Einstellugen</label>
-			<label index="menu.startingpoint">Ausgangspunkt</label>
-			<label index="menu.categories">Kategorien</label>
-			<label index="menu.header">Inklusive</label>
-			<label index="menu.header.0">Kategorietitel</label>
-			<label index="menu.header.1">Kategoriebeschreibung</label>
-			<label index="menu.map">Seite mit Karte</label>
-			<label index="menu.usecategorytree">Kategoriebaum im Menü verwenden</label>			
-			<label index="menu.usesearchbox">Suche im Menü verwenden</label>
-
-
-        <!-- general -->
-			<label index="tt_address">Addresse</label>        
+			<label index="save_and_close">Speichern und schließen</label>
+			<label index="close">Schließen</label>
+			<label index="depth">Tiefe</label>
+			<label index="tt_address">Addresse</label>
 			<label index="fe_users">FE-User</label>
-
 		</languageKey>
-
-		<!-- FRENCH, thx to zatmania -->
 		<languageKey index="fr" type="array">
-			<!-- Insert plugin -->
 			<label index="pi1_title">Google Map (rggooglemap)</label>
 			<label index="pi1_plus_wiz_description">Insère une google map basée avec l'aide de l'extension tt_address</label>
-			<!-- BE Module (Menu) -->
 			<label index="mlang_tabs_tab">Google-Map</label>
 			<label index="mlang_labels_tabdescr">Positionner un point sur la map google via le BE</label>
 			<label index="mlang_labels_tablabel">Trouver un POI Google map</label>
 			<label index="title">Module de l'extension rggooglemap</label>
-			<!-- BE Module (Plugin) -->			
 			<label index="function1">Carte &amp; sauvegarder un point</label>
 			<label index="function2">Voir tous les enregistrements</label>
 			<label index="function3">Options</label>
-			<label index="headerChoosePOI">1.) Positionnez le pointeur sur la carte » Choisissez un point » Cliquez sur "Sauvegarder"</label>		
+			<label index="headerChoosePOI">1.) Positionnez le pointeur sur la carte » Choisissez un point » Cliquez sur &quot;Sauvegarder&quot;</label>
 			<label index="headerSave">2.) Sauvegardez les coordonnées...</label>
 			<label index="headerSavePOI">b) ... dans un enregistrement existant</label>
-			<label index="headerSavePOINew">a) ... comme nouvel enregistrement</label>			
+			<label index="headerSavePOINew">a) ... comme nouvel enregistrement</label>
 			<label index="headerGeocode">Geocoding: recherche d'une adresse</label>
-			<label index="headerloadPOI">Chargement du  POI et de la long. + la lat.</label>			
-			<label index="loadPOILink">Insérer la longtitude + la latitude au niveau des champs et cliquez sur le lien</label>    	
+			<label index="headerloadPOI">Chargement du  POI et de la long. + la lat.</label>
+			<label index="loadPOILink">Insérer la longtitude + la latitude au niveau des champs et cliquez sur le lien</label>
 			<label index="geocodeButton">Recherche</label>
 			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
 			<label index="headerGetPoi">Charger un enregistrement au niveau de la carte</label>
 			<label index="clickHere">Cliquer ici</label>
 			<label index="headerList">Liste des enregiistrements tt_address-records</label>
 			<label index="headerListSave">Sauvegarder les changements</label>
-			<label index="firstEntryInDropdown">...Enregistrer sous...</label>	
+			<label index="firstEntryInDropdown">...Enregistrer sous...</label>
 			<label index="noRecordsFound">Pas de tt_address-records trouvé. Créez-en un nouveau ou choisissez un sys-folder contenant des enregistrements.</label>
 			<label index="noPageChosen">Pas de page ou de sys-folder selectionné. Merci d'en choisir un et recommencez.</label>
 			<label index="createNewRecord">Créer un nouvel enregistrement avec ces coordonnées.</label>
@@ -320,76 +153,128 @@
 			<label index="display">Affichage</label>
 			<label index="map">Map</label>
 			<label index="mapLink">voir</label>
-			<label index="saveErrorCheckbox">Cocher une case pour sauvegarder !</label> 
+			<label index="saveErrorCheckbox">Cocher une case pour sauvegarder !</label>
 			<label index="saveErrorDropdown">Choisissez un enregistrement pour sauvegarder le POI également!</label>
 			<label index="saveSuccss">Enregistrement réussi</label>
 			<label index="saveDisplay">Changements effectués avec succès !</label>
 			<label index="confirmation">Sûr?</label>
 			<label index="showHideMap">Voir/Cacher la carte</label>
 			<label index="showHideOptions">Voir/Cacher les options</label>
-             
-        <!-- Flexforms  -->
-			<label index="general.title">Général</label>
-			<label index="general.show">Voir</label>
-			<label index="general.show.0">Carte</label>
-			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menu</label>
-			<label index="template.template_file">Fichier Template</label>
-			<label index="map.width">Largeur de la carte</label>
-			<label index="map.height">Hauteur de la carte</label>
-			<label index="map.lng">Longtidude</label>
-			<label index="map.lat">Latidude</label>
-			<label index="map.zoom">Zoom</label>
-			<label index="map.key">Clé Googlemap</label>
-			<label index="map.type">Type de carte</label>
-			<label index="map.type.map">Carte</label>
-			<label index="map.type.satellite">Satellite</label>
-			<label index="map.type.hybrid">Hybrid</label>
-			<label index="map.type_controls">Montrer les commandes type</label>
-			<label index="map.type_controls.0"></label>
-			<label index="map.type_controls.1">Voir</label>
-			<label index="map.type_controls.2">Cacher</label>
-			<label index="map.nav_controls">Commandes de Navigation</label>
-			<label index="map.nav_controls.none">Aucun</label>
-			<label index="map.nav_controls.small">Petit</label>
-			<label index="map.nav_controls.large">Grand</label>
-			<label index="general.startingpoint">Point de départ</label>
-			<label index="general.recursive">Recursif</label>
-			<label index="general.recursive.0"></label>
-			<label index="general.recursive.1">1 niveau</label>
-			<label index="general.recursive.2">2 niveaux</label>
-			<label index="general.recursive.3">3 niveaux</label>
-			<label index="general.recursive.4">4 niveaux</label>
-			<label index="general.recursive.infinite">Infini</label>
-			<label index="general.type.map.alternativeUrl">URL Alternative</label>
-			<label index="map.showondefault">FR: Default POI</label>
-        <!-- Flexforms  2nd sheet -->
-			<label index="sorting.title">Classement</label>
-			<label index="sorting.orderby.title">...trié par</label>			
-      <label index="sorting.orderby.asc">Croissant</label>			
-			<label index="sorting.orderby.desc">Décroissant</label>
-			<label index="sorting.orderby.name">Nom</label>
-			<label index="sorting.orderby.tstamp">Date</label>
-
-      <label index="sorting.catsort">Catégories dans la vue POI</label>
-      <label index="sorting.poisort">Vue des POIs dans POI</label>
-      <label index="sorting.checkboxsort">Case à cocher dans la vue "Carte"</label>
-
-        <!-- Flexforms  3rd sheet -->
-			<label index="menu.title">Menu options</label>
-			<label index="menu.startingpoint">Point de départ</label>
-			<label index="menu.categories">Catégories</label>
-			<label index="menu.header">Insertion</label>
-			<label index="menu.header.0">Entête de la catégorie</label>
-			<label index="menu.header.1">Description de la catégorie</label>
-			<label index="menu.map">Page contenant la carte</label>
-
-        <!-- general -->
-			<label index="tt_address">Addresse</label>        
+			<label index="tt_address">Addresse</label>
 			<label index="fe_users">FE-User</label>
 			<label index="tt_news">News</label>
-			
 		</languageKey>
-
 	</data>
+	<orig_hash type="array">
+		<languageKey index="de" type="array">
+			<label index="pi1_title" type="integer">135896869</label>
+			<label index="pi1_plus_wiz_description" type="integer">262524804</label>
+			<label index="mlang_labels_tabdescr" type="integer">67253461</label>
+			<label index="mlang_labels_tablabel" type="integer">109688101</label>
+			<label index="title" type="integer">1482335</label>
+			<label index="function1" type="integer">113920454</label>
+			<label index="function2" type="integer">257089927</label>
+			<label index="function3" type="integer">193936274</label>
+			<label index="headerChoosePOI" type="integer">253553018</label>
+			<label index="headerSave" type="integer">107027370</label>
+			<label index="headerSavePOI" type="integer">10186372</label>
+			<label index="headerSavePOINew" type="integer">129791296</label>
+			<label index="headerGeocode" type="integer">47076024</label>
+			<label index="headerloadPOI" type="integer">237059341</label>
+			<label index="headerloadRecord" type="integer">219961862</label>
+			<label index="loadPOILink" type="integer">182540369</label>
+			<label index="geocodeButton" type="integer">20138052</label>
+			<label index="geocodeSearchValue" type="integer">151132192</label>
+			<label index="headerGetPoi" type="integer">239689337</label>
+			<label index="clickHere" type="integer">154586331</label>
+			<label index="headerList" type="integer">106029173</label>
+			<label index="headerListSave" type="integer">229272392</label>
+			<label index="firstEntryInDropdown" type="integer">142152547</label>
+			<label index="noRecordsFound" type="integer">241296951</label>
+			<label index="noPageChosen" type="integer">70479747</label>
+			<label index="createNewRecord" type="integer">259705004</label>
+			<label index="createNewRecordPlain" type="integer">93416288</label>
+			<label index="save" type="integer">211601612</label>
+			<label index="saveError" type="integer">179639447</label>
+			<label index="latitude" type="integer">61926260</label>
+			<label index="longitude" type="integer">162847420</label>
+			<label index="uid" type="integer">76589678</label>
+			<label index="name" type="integer">77521672</label>
+			<label index="category" type="integer">61717939</label>
+			<label index="display" type="integer">194611106</label>
+			<label index="map" type="integer">74399392</label>
+			<label index="mapLink" type="integer">176017707</label>
+			<label index="table" type="integer">85738935</label>
+			<label index="saveErrorCheckbox" type="integer">150683945</label>
+			<label index="saveErrorDropdown" type="integer">33690424</label>
+			<label index="saveSamePosition" type="integer">101497194</label>
+			<label index="saveSuccss" type="integer">212718243</label>
+			<label index="saveDisplay" type="integer">79171165</label>
+			<label index="confirmation" type="integer">187752179</label>
+			<label index="showHideMap" type="integer">223727852</label>
+			<label index="showHideOptions" type="integer">198986806</label>
+			<label index="loadgeodata" type="integer">77922174</label>
+			<label index="save_and_close" type="integer">253538544</label>
+			<label index="close" type="integer">222113377</label>
+			<label index="depth" type="integer">233698083</label>
+			<label index="tt_address" type="integer">232242979</label>
+			<label index="fe_users" type="integer">60089502</label>
+		</languageKey>
+	</orig_hash>
+	<orig_text type="array">
+		<languageKey index="de" type="array">
+			<label index="pi1_title">Google Map (rggooglemap)</label>
+			<label index="pi1_plus_wiz_description">Inserts a google map based on tt_address</label>
+			<label index="mlang_labels_tabdescr">Find an interesting point via BE in the google map</label>
+			<label index="mlang_labels_tablabel">Google map POI finder</label>
+			<label index="title">Module for extension rggooglemap</label>
+			<label index="function1">1. Map &amp; saving a point</label>
+			<label index="function2">2. Showing all Records</label>
+			<label index="function3">3. Mass Geo-Coding</label>
+			<label index="headerChoosePOI">1.) Drag the marker around » Choose a point » Click &quot;Save&quot;</label>
+			<label index="headerSave">2.) Save the coordinates ...</label>
+			<label index="headerSavePOI">b) ... to an existing record</label>
+			<label index="headerSavePOINew">a) ... to a new record</label>
+			<label index="headerGeocode">Geocoding: Search for an address</label>
+			<label index="headerloadPOI">Load POI with long. + lat.</label>
+			<label index="headerloadRecord">Search + Load existing POI, just type the name</label>
+			<label index="loadPOILink">Insert longtitude + latitude in the fields and press the link</label>
+			<label index="geocodeButton">Search</label>
+			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
+			<label index="headerGetPoi">Load a record into the map</label>
+			<label index="clickHere">Click here</label>
+			<label index="headerList">List of records</label>
+			<label index="headerListSave">Save changes</label>
+			<label index="firstEntryInDropdown">...save to...</label>
+			<label index="noRecordsFound">No existing t	t_address-records found. Make a new one or choose an sys-folder with existing records.</label>
+			<label index="noPageChosen">No page/sys-folder chosen. Please choose one and proceed.</label>
+			<label index="createNewRecord">Create a new record with this coordinates</label>
+			<label index="createNewRecordPlain">Create a plain new record</label>
+			<label index="save">Save</label>
+			<label index="saveError">Error: No position chosen!</label>
+			<label index="latitude">Latitude</label>
+			<label index="longitude">Longitude</label>
+			<label index="uid">Id</label>
+			<label index="name">Name</label>
+			<label index="category">Category</label>
+			<label index="display">Display</label>
+			<label index="map">Map</label>
+			<label index="mapLink">show</label>
+			<label index="table">Table</label>
+			<label index="saveErrorCheckbox">Error: Select Checkbox to save!</label>
+			<label index="saveErrorDropdown">Error: Choose a record to save the POI to!</label>
+			<label index="saveSamePosition">Error: The record &quot;%s&quot; has got the exact same position! Choose another location and press &quot;Save&quot; again!</label>
+			<label index="saveSuccss">Saving was successfull</label>
+			<label index="saveDisplay">Changes were successfull saved!</label>
+			<label index="confirmation">Sure?</label>
+			<label index="showHideMap">Show/hide map</label>
+			<label index="showHideOptions">Show/hide options</label>
+			<label index="loadgeodata">Load Geodata</label>
+			<label index="save_and_close">Save and Close</label>
+			<label index="close">Close</label>
+			<label index="depth">Tree-Depth</label>
+			<label index="tt_address">Address</label>
+			<label index="fe_users">FE-User</label>
+		</languageKey>
+	</orig_text>
 </T3locallang>
