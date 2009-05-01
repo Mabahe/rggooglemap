@@ -811,11 +811,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->registerFunction(array('infomsg', &$this, 'ajaxGetInfomsg'));
 		$this->xajax->registerFunction(array('activeRecords', &$this, 'ajaxGetActiveRecords'));
 		$this->xajax->registerFunction(array('processCat', &$this, 'ajaxProcessCat'));
-		$this->xajax->registerFunction(array('resultSet', &$this, 'ajaxGetResultSet'));
+		//$this->xajax->registerFunction(array('resultSet', &$this, 'ajaxGetResultSet'));
 		$this->xajax->registerFunction(array('tab', &$this, 'ajaxGetPoiTab'));
 		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
 		$this->xajax->registerFunction(array('processCatTree', &$this, 'ajaxProcessCatTree'));
 		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'ajaxProcessSearchInMenu'));
+		$this->xajax->registerFunction(array('getDynamicList', &$this, 'ajaxGetDynamicList'));
+		
+		
 		$this->xajax->processRequests(); 		// Else create javascript and add it to the header output
 
 
@@ -888,13 +891,99 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $content;
 	}
 
+
+	/**
+	 * Creates the result records
+	 *
+	 * @param	string	$catList: list of categories
+	 * @param	string	$page: page to display
+	 * @return	Html $currentPage List
+	 */	
+	function getDynamicList($catList, $currentPage) {
+		$content			= '';
+		$currentPage	= intval($currentPage);
+		
+		
+		// no result if no categories selected
+		if ($catList=='') {
+			return $content;
+		}
+		
+		// template
+		$template['all']	= $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST###');
+		$template['item']	= $this->cObj->getSubpart( $template['all'],'###SINGLE###');
+		
+		// general query parts
+		$field = '*';
+		$table = $this->config['tables'];
+		$where = $this->helperGetAvailableRecords($catList);
+		$limit = ($currentPage*$this->conf['recordsPerPage']).','.$this->conf['recordsPerPage'];
+				
+		// count
+		$maxRecords	= $this->generic->exec_COUNTquery($table,$where);
+		$maxPages		= ceil($maxRecords/$this->conf['recordsPerPage']);
+		$max				= ($this->conf['recordsPerPage']>= $maxRecords) ? $maxRecords : ($currentPage*$this->conf['recordsPerPage']+$this->conf['recordsPerPage']);
+		
+
+		// query for the results
+		$i=0;
+		$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $orderBy, $limit);
+		while($row=array_shift($res)) {
+			$markerArray = $this->getMarker($row,'recordlist.', $i);
+			$i++;
+			
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);			
+		}
+		$subpartArray['###CONTENT###'] = $content_item;
+		
+		
+		/*
+		 * Pagebrowser 
+		 */
+		// general text (Record x - y from z)		 
+		$markerArray['###PB_STATISTIC###'] = sprintf(
+			$this->pi_getLL('pagebrowser'),
+			$currentPage*$this->conf['recordsPerPage']+1,
+			$max,
+			$maxRecords
+		);
+		
+		// current page (Page x)
+		$markerArray['###PB_ACT###'] = sprintf(
+			$this->pi_getLL('pagebrowser_act'),
+			$currentPage+1
+		);
+		
+		// previous page
+		if ($currentPage > 0) {
+			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($currentPage-1).')" ';
+			$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+		} else {
+			$subpartArray['###PB_PREV###'] = '';
+		}
+		
+		// next page
+		if ($currentPage +1 < $maxPages) {
+			$new = $currentPage+1;
+			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($new).')" ';
+			$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+		} else {
+			$subpartArray['###PB_NEXT###'] = '';
+		}
+		
+
+		$content.= $this->cObj->substituteMarkerArrayCached($template['all'], $markerArray, $subpartArray, $wrappedSubpartArray);
+
+		return $content;
+	}
+
 	/**
 	 * Creates the result records for the first page
 	 *
 	 * @param	array	$data: selected checboxes
 	 * @return	Result records including the pagebrowser for the 1st result page
 	 */
-	function ajaxProcessCat($data)	{
+	function ajaxProcessCat($data, $page=1)	{
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		
 		if (is_Array($data['cb'])){
@@ -903,82 +992,30 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$objResponse->addAssign('mapcatlist', 'innerHTML','9999');
 		}
 		
-		// if the dynamic List is not needed, this ajax request is still needed to change the categories
-		if ($this->config['loadDynamicList'] != 1) {
-			return $objResponse->getXML();
+		// if the dynamic List is needed
+		if ($this->config['loadDynamicList'] == 1) {
+			$objResponse->addAssign('formResult', 'innerHTML',$this->getDynamicList(implode(',',$data['cb']), 0));
 		}
-		
-		$markerArray=Array();
-		$field='';$table='';$where;$orderBy='';
-		
-		
-		// save selected categories into session
-		// todo: check if needed?
-		$GLOBALS['TSFE']->fe_user->setKey('ses', 'data2',  $data['cb']);
-		$GLOBALS['TSFE']->fe_user->storeSessionData();
-		
-		// if at least one checkbox is activated
-		if (count($data['cb']) > 0 || $data =='default') {
-			if($data!='default') {
-				$test = implode(',',$data['cb']);
-				foreach ($data['cb'] as $key=>$value) {
-					$where2.= ' FIND_IN_SET('.$key.',rggmcat) OR';
-				}
-				$where2 = ' AND ( '.substr($where2,0,-3).' ) ';
-			}
-			
-			
-			// template
-			$template['resultSet'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST_FIRST###');
-			$template['item'] = $this->cObj2->getSubpart( $template['resultSet'],'###SINGLE###');
-			
-			// db query
-			$i = 0;
-			$table = $this->config['tables'];
-			
-			$where.='lng!=0 AND lat !=0  '.$where2.$this->config['pid_list'];
-			$GLOBALS['TSFE']->fe_user->setKey('ses', 'where',  $where);
-			$GLOBALS['TSFE']->fe_user->storeSessionData();
-			
-			$res = $this->generic->exec_SELECTquery('*',$table,$where,$groupBy,$orderBy,'0,'.$this->conf['recordsPerPage']);
-			while($row=array_shift($res)) {
-				$x++;
-				
-				$markerArray = $this->getMarker($row,'recordlist.', $i);
-				$i++;
-				
-				$wrappedSubpartArray = $tmp['wrappedSubpartArray'];
-				$content_item .= $this->cObj2->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
-			}
-			$subpartArray['###CONTENT###'] = $content_item;
-			
-			// initalize pagebrowser
-			$pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);
-			$text = $pagebrowser['text'];
-			$pages = $pagebrowser['pages'];
-			$offset = $pagebrowser['offset'];
-			
-			// Pagebrower statistic
-			$markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
-			
-			// next link
-			if ($offset +1 < $pages) {
-				$new = $offset+1;
-				$pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
-				$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-			} else {
-				$wrappedSubpartArray['###PB_NEXT###'] = '';
-			}
-			
-			$content.= $this->cObj2->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
-			
-			$objResponse->addAssign('formResult', 'innerHTML',$content);
-			
-		} // checkboxes selected
-		
 		
 		return $objResponse->getXML();
 	}
+	
+	/**
+	 * Ajax wrapper function which calles the "real" list function
+	 *
+	 * @param	string	$catList: list of categories
+	 * @param	string	$page: page to display
+	 * @return	Html Dynamix List
+	 */	
+	function ajaxGetDynamicList($catList, $page) {
+		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
+		$content.= $this->getDynamicList($catList, $page);
+
+		$objResponse->addAssign('formResult', 'innerHTML', $content);
+		//$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');		
+		return $objResponse->getXML();	
+	}
+		
 
 
 	/**
@@ -1044,81 +1081,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$objResponse->addAssign('rggm-menu', 'innerHTML',$content);
 		return $objResponse->getXML();
   }
-
-	/**
-	 * Creates the result records from 2nd page to last page
-	 *
-	 * @param	string	$offset: offset value
-	 * @return	Result records including the pagebrowser
-	 */
-	function ajaxGetResultSet($var) {
-		$offset = intval($var);
-		
-		// template
-		$template['resultSet'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST###');
-		$template['item'] = $this->cObj->getSubpart( $template['resultSet'],'###SINGLE###');
-		
-		// pagebrowser (prev <> next)
-		$table = $this->config['tables'];
-		$field = '*';
-		$where = $GLOBALS['TSFE']->fe_user->getKey('ses','where');
-
-		$pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);		
-		$offset = $pagebrowser['offset'];
-		$pages = $pagebrowser['pages'];
-		$begin = intval($var)*$this->conf['recordsPerPage'];
-		
-		
-		// query for the results
-		$limit= $begin.','.$this->conf['recordsPerPage'];
-		$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
-		$i=0;
-		while($row=array_shift($res)) {
-			$markerArray = $this->getMarker($row,'recordlist.', $i);
-			$i++;
-			
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);			
-		}
-		
-		
-		// Pagebrower statistic    
-		$markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
-		
-		
-		// actual page
-		$markerArray['###PB_ACT###'] = sprintf(
-		$this->pi_getLL('pagebrowser_act'),
-		$offset+1
-		);
-		
-		// previous link
-		if ($offset > 0) {
-		$pb = ' onClick="'.$this->prefixId.'resultSet('.($offset-1).')" ';
-		$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-		} else {
-		$subpartArray['###PB_PREV###'] = '';
-		}
-		
-		// next link
-		if ($offset +1 < $pages) {
-		$new = $offset+1;
-		$pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
-		$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-		} else {
-		$subpartArray['###PB_NEXT###'] = '';
-		}
-		
-		$subpartArray['###CONTENT###'] = $content_item;
-		$content.= $this->cObj->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
-		
-		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-		
-		$objResponse->addAssign('resultdiv', 'innerHTML', $content);
-		//$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');
-		
-		return $objResponse->getXML();
-	}
-
+  
 
 	/**
 	 * Creates the categorymenu
