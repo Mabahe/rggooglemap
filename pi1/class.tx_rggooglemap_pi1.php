@@ -33,55 +33,64 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * -	 recordsPerPage is used as global TS, split it + maybe flexforms too
 	 * - check flexform, especially menu
 	 * - group pois
-	 * - json?	 	 	 	 	 
+	 * - json
+	 */	 	 	 	 	 
 
-   /**
+	/**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
  *
- *   87: class tx_rggooglemap_pi1 extends tslib_pibase
- *   98:     function init($conf)
- *  197:     function main($content,$conf)
- *  258:     function showMap()
- *  283:     function showRecordsOnMap ()
- *  297:     function showLocationBox ()
- *  318:     function showMenu ($additionalCat='', $additionalWhere='')
- *  430:     function showSearch ()
- *  459:     function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 )
- *  490:     function showCatMenu()
- *  508:     function geoCodeAddress($address='', $zip='', $city='', $country='')
- *  555:     function ajaxSearch($searchForm)
- *  744:     function ajaxGetActiveRecords($area, $cat)
- *  800:     function helperGetLLMarkers($markerArray, $conf, $prefix)
- *  830:     function initMap()
- *  878:     function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)
- *  932:     function pageBrowserStatistic($offset=0, $table, $field, $where)
- *  957:     function ajaxProcessCat($data)
- * 1058:     function ajaxProcessCatTree($data)
- * 1073:     function ajaxProcessSearchInMenu ($data)
- * 1120:     function ajaxGetResultSet($var)
- * 1212:     function displayCatMenu($id=0)
- * 1270:     function getJs ()
- * 1395:     function getPoiOnStart()
- * 1437:     function ajaxGetPoiTab($id,$tab,$table)
- * 1452:     function getPoiContent($id,$tab,$table)
- * 1496:     function getMarker($row, $prefix)
- * 1547:     function helperGetFlexform($sheet, $key, $confOverride='')
- * 1576:     function xmlFunc($content,$conf)
- * 1714:     function xmlAddRecord($table, $row,$conf, $img,$test)
- * 1737:     function xmlGetRowInXML($row,$conf)
- * 1752:     function xmlNewLevel($name,$beginEndFlag=0,$params=array())
- * 1777:     function xmlGetResult()
- * 1788:     function xmlOutput($content)
- * 1820:     function xmlFieldWrap($field,$value)
- * 1825:     function xmlTopLevelName()
- * 1830:     function xmlRenderHeader()
- * 1834:     function xmlRenderFooter()
+ *   98: class tx_rggooglemap_pi1 extends tslib_pibase
+ *  109:     function init($conf)
+ *  226:     function main($content,$conf)
+ *  297:     function showMap()
+ *  322:     function showRecordsOnMap ()
+ *  336:     function showLocationBox ()
+ *  355:     function showMenu ($additionalCat='', $additionalWhere='')
+ *  447:     function showSearch ()
+ *  472:     function showCatMenu()
+ *  487:     function showDirections()
+ *  539:     function geoCodeAddress($address='', $zip='', $city='', $country='')
+ *   
+ *  594:     function ajaxSearch($searchForm)
+ *  825:     function ajaxGetActiveRecords($area, $cat)
+ *  863:     function initMap()
+ *  909:     function ajaxGetInfomsg($uid, $table,$tmplPrefix=1)
+ *  966:     function pageBrowserStatistic($offset=0, $table, $field, $where)
+ *  991:     function ajaxProcessCat($data)
+ * 1093:     function ajaxProcessCatTree($data)
+ * 1109:     function ajaxProcessSearchInMenu ($data)
+ * 1157:     function ajaxGetResultSet($var)
+ * 1249:     function displayCatMenu($id=0)
+ * 1308:     function getJs ()
+ * 1440:     function getPoiOnStart()
+ * 1488:     function ajaxGetPoiTab($id,$tab,$table)
+ * 1505:     function getPoiContent($id,$tab,$table)
+ * 1549:     function getMarker($row, $prefix)
+ *  
+ * 1612:     function helperGetAvailableRecords($catList='', $areaSearch='')
+ * 1646:     function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 )
+ * 1677:     function helperGetLLMarkers($markerArray, $conf, $prefix)
+ * 1707:     function helperCheckForWrongUrl()
+ * 1730:     function helperGetFlexform($sheet, $key, $confOverride='')
+ * 1762:     function helperGetCategoryImage($catImg, $parent=0)
+ *  
+ * 1791:     function xmlFunc($content,$conf)
+ * 1889:     function xmlAddRecord($table, $row,$conf, $img, $test)
+ * 1911:     function xmlGetRowInXML($row,$conf)
+ * 1926:     function xmlNewLevel($name,$beginEndFlag=0,$params=array())
+ * 1949:     function xmlGetResult()
+ * 1961:     function xmlFieldWrap($field,$value)
+ * 1966:     function xmlTopLevelName()
+ * 1971:     function xmlRenderHeader()
+ * 1975:     function xmlRenderFooter()
  *
- * TOTAL FUNCTIONS: 38
+ * TOTAL FUNCTIONS: 40
  * (This index is automatically created/updated by the extension "extdeveval")
  *
+ */
+
 
 
 /**
