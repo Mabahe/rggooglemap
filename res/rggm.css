@@ -1,8 +1,6 @@
-/* new */
 /* tooltip at POI on map */
-.markerTooltip {
+.markerTooltip div{
 	font-weight:bold;
-	background: #3C581D;
   color:#fff;
   padding: 3px 6px;
   white-space: nowrap;
