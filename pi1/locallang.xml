@@ -95,7 +95,7 @@
 			<label index="search_label_zip">Ort oder PLZ</label>
 			<label index="search_label_activateradius">Umkreissuche aktivieren</label>
 			<label index="search_label_name">Suchausdruck</label>
-			<label index="search_label_maponly">Suche auf den</label>
+			<label index="search_label_maponly">Suche auf den Kartenausschnitt begrenzen</label>
 			<label index="search_clearsearch">Suche zurücksetzen</label>
 			<label index="search_error-header">Folgende Fehler sind aufgetreten</label>
 			<label index="search_error_geocode-accuracy">Die errechnete Position war nicht genau genug</label>
