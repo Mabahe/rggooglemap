@@ -67,7 +67,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1440:     function getPoiOnStart()
  * 1488:     function ajaxGetPoiTab($id,$tab,$table)
  * 1505:     function getPoiContent($id,$tab,$table)
- * 1549:     function getMarker($row, $prefix)
+ * 1549:     function getMarker($row, $prefix, $i)
  *  
  * 1612:     function helperGetAvailableRecords($catList='', $areaSearch='')
  * 1646:     function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 )
@@ -407,8 +407,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			while($row2=array_shift($res2)) {
 				$i++;
 				
-				$markerArray2 = $this->getMarker($row2, 'menu.');
-				$markerArray2['###ZEBRA###'] = ($i%2==0) ? 'odd' : 'even'; // odd/even
+				$markerArray2 = $this->getMarker($row2, 'menu.', $i);
 				
 				// no page ID for map > suggesting plugin is on the same page => javascript links
 				if ($this->config['menu-map']!='') {
@@ -663,10 +662,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					}
 	
 	
-					$markerArray = $this->getMarker($row,'search.');
+					$markerArray = $this->getMarker($row,'search.', $i);
 	
 	
-					$markerArray['###ODDEVEN###'] = ($i % 2==0) ? 'odd' : 'even';
 					$markerArray['###SEARCHID###'] = $i+1;
 	
 					// set the title right
@@ -777,7 +775,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$res 			= $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
 
 		while($row=array_shift($res)) {
-			$markerArray = $this->getMarker($row, 'recordsOnMap.');
+			$markerArray = $this->getMarker($row, 'recordsOnMap.', $i);
 			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
 		}
 		
@@ -946,9 +944,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			while($row=array_shift($res)) {
 				$x++;
 				
-				$markerArray = $this->getMarker($row,'recordlist.');
-				
-				$markerArray['###ZEBRA###'] = ($i%2==0) ? '' : 'alt';
+				$markerArray = $this->getMarker($row,'recordlist.', $i);
 				$i++;
 				
 				$wrappedSubpartArray = $tmp['wrappedSubpartArray'];
@@ -1055,90 +1051,73 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	$offset: offset value
 	 * @return	Result records including the pagebrowser
 	 */
-  function ajaxGetResultSet($var) {
+	function ajaxGetResultSet($var) {
 		$offset = intval($var);
-
+		
 		// template
 		$template['resultSet'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST###');
-    $template['item'] = $this->cObj->getSubpart( $template['resultSet'],'###SINGLE###');
+		$template['item'] = $this->cObj->getSubpart( $template['resultSet'],'###SINGLE###');
+		
+		// pagebrowser (prev <> next)
+		$table = $this->config['tables'];
+		$field = '*';
+		$where = $GLOBALS['TSFE']->fe_user->getKey('ses','where');
 
-    // pagebrowser (prev <> next)
-    $table = $this->config['tables'];
-    $field = '*';
-    $where = $GLOBALS['TSFE']->fe_user->getKey('ses','where');
-    $pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);
+		$pagebrowser = $this->pageBrowserStatistic($offset, $table, $field, $where);		
 		$offset = $pagebrowser['offset'];
 		$pages = $pagebrowser['pages'];
-    $begin = intval($var)*$this->conf['recordsPerPage'];
-
-
-    // query for the results
-    $limit= $begin.','.$this->conf['recordsPerPage'];
-    $res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
-    $i=0;
-    while($row=array_shift($res)) {
-      foreach ($row as $key=>$value) {
-      	#$markerArray['###'.strtoupper($key).'###'] = $this->cObj->stdWrap($value,$this->conf['recordlist.'][$key.'.']);
-      }
-
-      $markerArray = $this->getMarker($row,'recordlist.');
-
-        // odd/even
-        $markerArray['###ZEBRA###'] = ($i%2==0) ? '' : 'alt';
-        $i++;
-
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
-
-    }
-
-
-    // Pagebrower statistic
-    $markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
-
-
-    // actual page
-    $markerArray['###PB_ACT###'] = sprintf(
-        $this->pi_getLL('pagebrowser_act'),
-        $offset+1
-    );
-
-    // previous link
+		$begin = intval($var)*$this->conf['recordsPerPage'];
+		
+		
+		// query for the results
+		$limit= $begin.','.$this->conf['recordsPerPage'];
+		$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
+		$i=0;
+		while($row=array_shift($res)) {
+			$markerArray = $this->getMarker($row,'recordlist.', $i);
+			$i++;
+			
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);			
+		}
+		
+		
+		// Pagebrower statistic    
+		$markerArray['###PB_STATISTIC###'] = $pagebrowser['text'];
+		
+		
+		// actual page
+		$markerArray['###PB_ACT###'] = sprintf(
+		$this->pi_getLL('pagebrowser_act'),
+		$offset+1
+		);
+		
+		// previous link
 		if ($offset > 0) {
-      $pb = ' onClick="'.$this->prefixId.'resultSet('.($offset-1).')" ';
-      /*$markerArray['###PB_PREV###'] = 	sprintf(
-        $this->pi_getLL('pagebrowser_prev'),
-        $pb,
-        $offset
-      );*/
-      $wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-    } else {
-      $subpartArray['###PB_PREV###'] = '';
-    }
-
+		$pb = ' onClick="'.$this->prefixId.'resultSet('.($offset-1).')" ';
+		$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+		} else {
+		$subpartArray['###PB_PREV###'] = '';
+		}
+		
 		// next link
-    if ($offset +1 < $pages) {
-		  $new = $offset+1;
-		  $pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
-      /*$markerArray['###PB_NEXT###'] = 	sprintf(
-        $this->pi_getLL('pagebrowser_next'),
-        $pb,
-        $offset+2
-      );*/
-      $wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
-    } else {
-      $subpartArray['###PB_NEXT###'] = '';
-    }
-
-    $subpartArray['###CONTENT###'] = $content_item;
-    $content.= $this->cObj->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
-
-    $objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-
-    $objResponse->addAssign('resultdiv', 'innerHTML', $content);
-    //$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');
-
-    return $objResponse->getXML();
-  }
+		if ($offset +1 < $pages) {
+		$new = $offset+1;
+		$pb = ' onClick="'.$this->prefixId.'resultSet('.$new.')" ';
+		$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+		} else {
+		$subpartArray['###PB_NEXT###'] = '';
+		}
+		
+		$subpartArray['###CONTENT###'] = $content_item;
+		$content.= $this->cObj->substituteMarkerArrayCached($template['resultSet'],$markerArray, $subpartArray,$wrappedSubpartArray);
+		
+		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
+		
+		$objResponse->addAssign('resultdiv', 'innerHTML', $content);
+		//$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');
+		
+		return $objResponse->getXML();
+	}
 
 
 	/**
@@ -1176,7 +1155,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
         $imgTSConfig['file'] = 'uploads/tx_rggooglemap/'.$row['image'];
 
 
-        $markerArray = $this->getMarker($row,'cattree.');
+        $markerArray = $this->getMarker($row,'cattree.', $i);
 
 
         $markerArray['###CHECKED###'] = (in_array($row['uid'],$checkedBox)) ? ' checked ="checked" ' : '';
@@ -1444,9 +1423,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 *
 	 * @param	Array		$row: row of the db query
 	 * @param	string	$prefix: prefix needed for the stdwrap functions
+	 * @param	integer		$oddEven: item number to set a odd/even class
 	 * @return the marker array
 	 */
-  function getMarker($row, $prefix) {
+  function getMarker($row, $prefix, $oddEven=0) {
 		$prefiWithOutDot = trim($prefix, '.');
 		
 		// language setting
@@ -1464,6 +1444,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		$markerArray['###POPUP###'] = ' onClick=\' show("infobox"); ' . $this->prefixId . 'infomsg('.$row['uid'].', "'.$row['table'].'"); \'  ';
 		$markerArray['###PREFIX###'] = $prefix;
+		
+		// general odd/even  to avoid this in every function
+		if ($oddEven != 0) {
+			$markerArray['###ODD_EVEN###'] = ($oddEven%2 == 0) ? 'odd' : 'even';
+		} else {
+			$markerArray['###ODD_EVEN###'] = '';
+		}
 		
 		
 		// get the prefix from the 1st category record for the record
