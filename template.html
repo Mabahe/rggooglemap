@@ -119,30 +119,31 @@ Available markers:
 Template for the records which are selected via the checkboxes
 
 <!-- ###TEMPLATE_RECORDLIST### -->
-<div class="rggooglemap-pb">
-
-	<div class="rggooglemap-stat">###PB_STATISTIC###</div>
-	<div class="rggooglemap-links">
-		<div class="rggooglemap-prev"><!-- ###HIDE_PREV### --> <!-- ###PB_PREV### --> ###LL_PREV### <!-- ###PB_PREV### --> <!-- ###HIDE_PREV### --></div>
-		<div class="rggooglemap-act">###PB_ACT###</div>
-		<div class="rggooglemap-next"><!-- ###HIDE_NEXT### --> <!-- ###PB_NEXT### --> ###LL_NEXT### <!-- ###PB_NEXT### --> <!-- ###HIDE_NEXT### --></div>
-
-		<div class="rggooglemap-clr"></div>
+<div class="rggooglemap-results">
+	<div class="rggooglemap-pb">
+	
+		<div class="rggooglemap-stat">###PB_STATISTIC###</div>
+		<div class="rggooglemap-links">
+			<div class="rggooglemap-prev"><!-- ###HIDE_PREV### --> <!-- ###PB_PREV### --> ###LL_PREV### <!-- ###PB_PREV### --> <!-- ###HIDE_PREV### --></div>
+			<div class="rggooglemap-act">###PB_ACT###</div>
+			<div class="rggooglemap-next"><!-- ###HIDE_NEXT### --> <!-- ###PB_NEXT### --> ###LL_NEXT### <!-- ###PB_NEXT### --> <!-- ###HIDE_NEXT### --></div>
+	
+			<div class="rggooglemap-clr"></div>
+		</div>
+		
+	
 	</div>
 	
-
+	<ul>
+		<!-- ###CONTENT### -->
+		 <!-- ###SINGLE### -->
+	    <li style>
+	      <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >###TITLE###</a>  
+	    </li>
+		 <!-- ###SINGLE### -->
+	  <!-- ###CONTENT### -->
+	</ul>
 </div>
-
-<ul>
-	<!-- ###CONTENT### -->
-	 <!-- ###SINGLE### -->
-    <li style>
-      <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >###TITLE###</a>  
-    </li>
-	 <!-- ###SINGLE### -->
-  <!-- ###CONTENT### -->
-</ul>
-
  <!-- ###TEMPLATE_RECORDLIST### -->
 
  

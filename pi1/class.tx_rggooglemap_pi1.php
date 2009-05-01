@@ -30,7 +30,6 @@
 require_once(PATH_tslib.'class.tslib_pibase.php');
 	/*
 	 * ToDO :
-	 * -	 recordsPerPage is used as global TS, split it + maybe flexforms too
 	 * - check flexform, especially menu
 	 * - group pois
 	 * - json
@@ -810,16 +809,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xajax->registerFunction(array('infomsg', &$this, 'ajaxGetInfomsg'));
 		$this->xajax->registerFunction(array('activeRecords', &$this, 'ajaxGetActiveRecords'));
 		$this->xajax->registerFunction(array('processCat', &$this, 'ajaxProcessCat'));
-		//$this->xajax->registerFunction(array('resultSet', &$this, 'ajaxGetResultSet'));
 		$this->xajax->registerFunction(array('tab', &$this, 'ajaxGetPoiTab'));
 		$this->xajax->registerFunction(array('search', &$this, 'ajaxSearch'));
 		$this->xajax->registerFunction(array('processCatTree', &$this, 'ajaxProcessCatTree'));
 		$this->xajax->registerFunction(array('processSearchInMenu', &$this, 'ajaxProcessSearchInMenu'));
 		$this->xajax->registerFunction(array('getDynamicList', &$this, 'ajaxGetDynamicList'));
 		
-		
-		$this->xajax->processRequests(); 		// Else create javascript and add it to the header output
-
+		$this->xajax->processRequests();
 
 		// additional output using a template
 		$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###HEADER###');
@@ -893,7 +889,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// count
 		$maxRecords	= $this->generic->exec_COUNTquery($table,$where);
 		$maxPages		= ceil($maxRecords/$smallConf['limit']);
-		$max				= ($this->conf['recordsPerPage']>= $maxRecords) ? $maxRecords : ($currentPage*$smallConf['limit'] + $smallConf['limit']);
+		$max				= ($smallConf['limit']>= $maxRecords) ? $maxRecords : ($currentPage*$smallConf['limit'] + $smallConf['limit']);
 		
 
 		// query for the results
