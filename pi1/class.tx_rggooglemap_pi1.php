@@ -32,7 +32,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
 	 * ToDO :
 	 * -	 recordsPerPage is used as global TS, split it + maybe flexforms too
 	 * - check flexform, especially menu
-	 * - search: add some ts vars to manipulate js for search, before after,...
 	 * - group pois
 	 * - json?	 	 	 	 	 
 
@@ -582,6 +581,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function ajaxSearch($searchForm)	{
 		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH_RESULTS###');
 		$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
+		$smallConf = $this->conf['search.'];
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 
 		$test		= '';
@@ -770,11 +770,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$content = t3lib_div::view_array($debug).$content;
 			}
 			
-
-
-
-			#$objResponse->addAssign('searchFormError', 'innerHTML','');
-
 		// minimum character length not reached
 		} else {
 			$error['minChars'] = sprintf($this->pi_getLL('searchMinChars'), $this->conf['search.']['minChars']);
@@ -798,9 +793,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			
 		}
 		
-		$objResponse->addScript($jsResultDelete);
+		$objResponse->addScript($this->cObj->stdWrap($jsResultDelete, $smallConf['modify.']['deleteJS']));
 		$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
-		$objResponse->addScript($jsResultUpdate);
+		$objResponse->addScript($this->cObj->stdWrap($jsResultUpdate, $smallConf['modify.']['updateJS']));
 
 
 		return $objResponse->getXML();

@@ -35,6 +35,14 @@ plugin.tx_rggooglemap_pi1 {
 			# http://code.google.com/intl/de-DE/apis/maps/documentation/geocoding/#CSV bottom
 			minAccuracy = 4
 		}
+		
+		# modify the js which is sent at a search
+		modify {
+			deleteJS {
+			}
+			updateJS {
+			}
+		}
     
   }
 	
