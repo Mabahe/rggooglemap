@@ -1,3 +1,0 @@
-plugin.tx_rggooglemap_pi1 {
-test = juhu
-}
