@@ -39,8 +39,10 @@ plugin.tx_rggooglemap_pi1 {
 		# modify the js which is sent at a search
 		modify {
 			deleteJS {
+			
 			}
 			updateJS {
+			
 			}
 		}
     

@@ -154,8 +154,8 @@ class tx_rggooglemap_table {
   
           // get the correct offset. time consuming? we will see
     #      if (!$offset || $tableCount==1 || ($count>= $offsetBegin && $count < $offsetEnd)) {
-       #     $out[$singleTable.'#'.$row['uid']] = $row;
-            
+            $out[$singleTable.'#'.$row['uid']] = $row;
+                
             // mapping
             foreach ($allFields as $key=>$value) {
               if (strpos($queryFields, $key) || $queryFields == '*') {
@@ -165,6 +165,8 @@ class tx_rggooglemap_table {
               }  	
               $out[$singleTable.'#'.$row['uid']][$key] = $row[$value];
             }     
+            
+
              
             // additional information
             $out[$singleTable.'#'.$row['uid']] ['table'] = $singleTable;  	 	
@@ -215,7 +217,7 @@ class tx_rggooglemap_table {
     } # end tableCount
 
     if ($debug==1) return $debugOut;
-    
+
 		return $out; 
   
   }
