@@ -560,21 +560,35 @@ Template for the search results
 These 2 templates are used for the category tree menu. 1st for the menu next to the map, the 2nd one for the menu view
 
 <!-- ###TEMPLATE_CATMENU### -->
+
+<ul ###FIRST_LEVEL### class="level###LEVEL###">
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+
     <li>
-<div>
-			<input ###CHECKED### type="checkbox" id="rggm-cat-###UID###" name="cb[###UID###]" value="###UID###" onclick="tx_rggooglemap_pi1processCat(xajax.getFormValues('xajax_cat'));clearCat(); " />
-  		<label for="rggm-cat-###UID###">###ICON### ###TITLE###</label>
-			###DESCR### ###RECURSIVE###
-		
-</div>
+			<div>
+				<input ###CHECKED### type="checkbox" id="rggm-cat-###UID###" name="cb[###UID###]" value="###UID###" onclick="tx_rggooglemap_pi1processCat(xajax.getFormValues('xajax_cat'));clearCat(); " />
+	  		<label for="rggm-cat-###UID###">###ICON### ###TITLE###</label>
+				###DESCR### ###RECURSIVE###	
+			</div>
     </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
 <!-- ###TEMPLATE_CATMENU### -->
 
+
 <!-- ###TEMPLATE_CATMENU_TREE### -->
+<ul ###FIRST_LEVEL### class="level###LEVEL###">
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
 
     <li>
       <input ###CHECKED### type="checkbox" id="rggm-cat-###UID###" name="cb[###UID###]" value="###UID###" id="rggmcb-###UID###" /> ###ICON### <label for="rggmcb-###UID###">###TITLE###</label>
     </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
 
 <!-- ###TEMPLATE_CATMENU_TREE### -->
 
@@ -584,29 +598,28 @@ These 2 templates are used for the category tree menu. 1st for the menu next to 
 The template for the catmenu for the menu view
 
 <!-- ###TEMPLATE_CATMENU_MENU### -->
-<div class="mapcat">
+<!--
+ <div class="mapcat">
   <form action="" onsubmit="return false;" id="xajax_cat">
   <div>###CAT_MENU###
   <input type="submit"  onclick="rggmTree(xajax.getFormValues('xajax_cat'));" value="Aktualisieren"/>
   </div>
   </form>
 </div>
+-->
 <!-- ###TEMPLATE_CATMENU_MENU### -->
 
-<!-- ###TEMPLATE_CATMENU_NEW### -->
 
+
+<!-- ###TEMPLATE_CATMENU_MAIN### -->
   <div class="rggooglemap-cat">
     <form action="" onsubmit="return false;" name="xajax_cat" id="xajax_cat">
-  <fieldset>
-      ###ITEMS###
-	</fieldset>    
-      
-
-      
+		  <fieldset>
+		      ###ITEMS###
+			</fieldset>    
     </form>
   </div>
-
-<!-- ###TEMPLATE_CATMENU_NEW### -->
+<!-- ###TEMPLATE_CATMENU_MAIN### -->
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

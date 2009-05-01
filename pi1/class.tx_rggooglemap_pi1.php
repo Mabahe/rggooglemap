@@ -295,9 +295,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->initMap();
 
 		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###MAP###');
-		if ($this->config['menu-categorytree'] == 1 ) {
-			$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_MENU###');
-	}
 
 		// title, text - markers
 		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['map.']['LL'], 'map');
@@ -458,8 +455,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 
+	/**
+	 * Show the category menu
+	 *
+	 * @return directions
+	 */	
 	function showCatMenu() {
-		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NEW###');
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_MAIN###');
 		$markerArray = array();		
 		$markerArray['###ITEMS###'] = $this->displayCatMenu();
 		
@@ -1001,55 +1003,64 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	int	$id: parent_id for the recursive function
 	 * @return	categorymenu with parent_id = $id
 	 */
-	function displayCatMenu($id=0) {
+	function displayCatMenu($id=0, $level=0) {
+		$level++;
+		$i = 0;
+		
+		// actived checkbox for selected category
+		$checkedBox = explode(',',$this->config['categoriesActive']);
+
 		// template
-    if ($this->config['menu-categorytree'] == 0) {
-      $template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU###');
-    } else {
-      $template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_TREE###');
-    }
+		if ($this->config['menu-categorytree'] == 0) {
+			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU###');
+		} else {
+			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_TREE###');
+		}
+		$template['item']	= $this->cObj2->getSubpart($template['total'],'###SINGLE###');
+		
+		// query
+		$table = 'tx_rggooglemap_cat';
+		$field = '*';
+		$where = 'hidden= 0 AND deleted = 0 AND parent_uid = '.$id;
+		$where.= ($this->config['categories']!='') ? ' AND uid IN('.$this->config['categories'].')' : '';
+	
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
+		
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$i++;
+							
+			$markerArray = $this->getMarker($row,'cattree.', $i);
+			
+			// category image
+			$imgTSConfig = $this->conf['catMenu.']['icon.'];
+			$imgTSConfig['file'] = 'uploads/tx_rggooglemap/'.$row['image'];
+			$markerArray['###ICON###'] = $this->cObj2->IMAGE($imgTSConfig);
+			
+			$markerArray['###CHECKED###'] = (in_array($row['uid'],$checkedBox)) ? ' checked ="checked" ' : '';
+			$markerArray['###RECURSIVE###'] = $this->displayCatMenu($row['uid']);
+			
+			if ($markerArray['###RECURSIVE###'] != '') {
+	#			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NOCHECKBOX###');
+			}
+			
+			$content_item .= $this->cObj2->substituteMarkerArrayCached($template['item'], $markerArray);
+		}
+		
+		$subpartArray['###CONTENT###'] = $content_item;
+		
+		// general markers
+		$markerArray['###LEVEL###'] = $level;
+		$markerArray['###FIRST_LEVEL###'] = ($id == 0) ? ' id="rggmmenulvl1" ' : '';
+		
+		
+		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		
 
-    $table = 'tx_rggooglemap_cat';
-    $field = '*';
-    $where = 'hidden= 0 AND deleted = 0 AND parent_uid = '.$id;
-    $where.= ($this->config['categories']!='') ? ' AND uid IN('.$this->config['categories'].')' : '';
-
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-
-    // actived checkbox for selected category
-    $checkedBox = explode(',',$this->config['categoriesActive']);
-
-    if ($res) {
-      $i = 0;
-
-      $first = ($id == 0) ? '<ul id="treemenu1" class="pde">' : '<ul >';
-      while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-        $i++;
-        // Category Image > TS catIcon
-        $imgTSConfig = $this->conf['catMenu.']['icon.'];
-        $imgTSConfig['file'] = 'uploads/tx_rggooglemap/'.$row['image'];
-
-
-        $markerArray = $this->getMarker($row,'cattree.', $i);
-
-
-        $markerArray['###CHECKED###'] = (in_array($row['uid'],$checkedBox)) ? ' checked ="checked" ' : '';
-        $markerArray['###ICON###'] = $this->cObj2->IMAGE($imgTSConfig);
-        $markerArray['###RECURSIVE###'] = $this->displayCatMenu($row['uid']);
-        if ($markerArray['###RECURSIVE###'] != '') {
-          $template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NOCHECKBOX###');
-        }
-
-        $record.= $this->cObj2->substituteMarkerArrayCached($template['total'],$markerArray, $subpartArray,$wrappedSubpartArray);
-      }
-      $GLOBALS['TYPO3_DB']->sql_free_result($res);
-
-      $last= '</ul>';
-      if ($i > 0) {
-      	$out.= $first.$record.$last;
-      }
-    }
-    $content.= $out;
+		if ($i > 0) {
+			$content.= $this->cObj->substituteMarkerArrayCached($template['total'], $markerArray, $subpartArray);
+		} else {
+			$content = '';
+		}
 
 		return $content;
 	}
