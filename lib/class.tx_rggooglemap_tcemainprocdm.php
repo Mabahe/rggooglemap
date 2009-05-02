@@ -91,5 +91,11 @@ class tx_rggooglemap_tcemainprocdm {
     
     return $fieldArray;
   }
-} 
+}
+
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/lib/class.tx_rggooglemap_tcemainprocdm.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/lib/class.tx_rggooglemap_tcemainprocdm.php']);
+}
+
 ?>
