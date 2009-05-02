@@ -68,7 +68,7 @@ class tx_rggooglemap_sv1 extends t3lib_svbase {
         function getTable($field='') {
             $tbl['lng'] = 'tx_rggooglemap_lng';
             $tbl['lat'] = 'tx_rggooglemap_lat';  
-            $tbl['rggmcat'] = 'tx_rggooglemap_cat2';            
+            $tbl['rggmcat'] = 'tx_rggooglemap_cat';            
             $tbl['rggmtitle'] = 'name';
        
             if ($field) return ($tbl[$field]) ? $tbl[$field] : $field;
