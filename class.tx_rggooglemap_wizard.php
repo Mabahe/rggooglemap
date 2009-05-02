@@ -184,7 +184,7 @@ loadMaps["'.$params['table'].'_'.$params['uid'].'_'.$params['wConf']['lat_field'
     lngFields["map'.$this->modObj->mapIdx.'"][2] = frm["data['.$this->confArr['table'].']['.$this->confArr['recordUid'].']['.$this->confArr['lng_field'].']_hr"];
 		', $this->doc->JScodeArray['rggooglemap_wizard_loadfunc']);
 
-		$item .= $this->modObj->showMap();
+		$item .= $this->modObj->viewMap();
 
 		$item .= $this->modObj->genPostJScode();
 
