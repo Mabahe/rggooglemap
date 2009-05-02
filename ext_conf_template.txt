@@ -1,7 +1,7 @@
 # cat=basic; type=string;label=Google Maps API key: Key need to get a working map. Get it at http://www.google.com/apis/maps/signup.html
 googleKey = ABCDEFG
 
-	# cat=basic; settings=width:850px,height:50px; type=user[EXT:constantsextended/class.tx_constantsextended.php:&tx_constantsextended->textarea];label=Keys for multidomain-environment:Use the extension constantsextended to enable this feature! Syntax: Each line is for one domain like http://www.domain.com/=ABCDEFG, next line: http://www.domain.at/=HIJKLMNO. Important: With and without www is essential! Trailing slash (/) needed!
+	# cat=basic; settings=formName:tsStyleConfigForm,width:850px,height:50px; type=user[EXT:constantsextended/class.tx_constantsextended.php:&tx_constantsextended->textarea];label=Keys for multidomain-environment:Use the extension constantsextended to enable this feature! Syntax: Each line is for one domain like http://www.domain.com/=ABCDEFG, next line: http://www.domain.at/=HIJKLMNO. Important: With and without www is essential! Trailing slash (/) needed!
 googleKey2 =
 
 
@@ -48,12 +48,11 @@ autoSuggest = on
 # cat=basic; type=boolean; label=Wizards: Enable wizards
 wizards = 1 
 
-
 # cat=basic; type=string; label=Supportet tables, be careful!
 tables = tt_address
 
 # cat=basic; type=boolean; label=Auto Insert of lng+lat for new records: If a new record is saved, it is tried to get its coordinates.
-autoSearch = 1 
+autoGeocode = 1 
 
-# cat=basic; type=boolean; label=Auto Category records in page module: Don't show the category records in the page module
+# cat=basic; type=boolean; label=No Category records in page module: Don't show the category records in the page module
 hideInPageModule = 0

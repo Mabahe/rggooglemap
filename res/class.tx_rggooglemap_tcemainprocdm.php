@@ -43,7 +43,7 @@ class tx_rggooglemap_tcemainprocdm {
     $serviceObj = t3lib_div::makeInstanceService('rggmData',$table);
 
     // if autosearch is enabled and there is a service for that table    
-    if ($tmp_confArr['autoSearch']!=1 || !is_object($serviceObj)) {
+    if ($tmp_confArr['autoGeocode']!=1 || !is_object($serviceObj)) {
       return $fieldArray;
     }
 

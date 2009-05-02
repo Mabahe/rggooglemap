@@ -72,10 +72,12 @@ t3lib_extMgm::addService($_EXTKEY,  'rggmData' /* sv type */,  'tx_rggooglemap_s
         )
     );
 
-# automatic lng+lat if activated
- $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:rggooglemap/res/class.tx_rggooglemap_tcemainprocdm.php:tx_rggooglemap_tcemainprocdm';
+// automatic lng+lat if activated
+if ($confArr['autoGeocode'] == 1) {
+	$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:rggooglemap/res/class.tx_rggooglemap_tcemainprocdm.php:tx_rggooglemap_tcemainprocdm';
+}
 
-
+// hide category records in page module if not allowed in EM settings
 if ($confArr['hideInPageModule']!=1) {
 	$TYPO3_CONF_VARS['EXTCONF']['cms']['db_layout']['addTables']['tx_rggooglemap_cat'][0] = array(
 		'fList' => 'title,image,tabprefix',
@@ -84,5 +86,4 @@ if ($confArr['hideInPageModule']!=1) {
 }
 
 
-    
 ?>
