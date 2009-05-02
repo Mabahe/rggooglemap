@@ -241,7 +241,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$key = strtoupper($key);
 			switch ($key) {
 				case 'MAP':
-					$content.= $this->showMap();
+					$content .= $this->showMap();
 					break;
 				case 'LOCATION':
 					$content .= $this->showLocationBox();
