@@ -38,20 +38,14 @@ class tx_rggooglemap_sv1 extends t3lib_svbase {
 	var $extKey = 'rggooglemap'; // The extension key.	
 	
 	/**
-	* [Put your description here]
+	* Initialization of the class, not needed in this case
 	*
-	* @return	[type]		...
 	*/
 	function init()	{
 		$available = parent::init();
-		
-		// Here you can initialize your class.
-		
-		// The class have to do a strict check if the service is available.
-		// The needed external programs are already checked in the parent class.
-		
 		return $available;
 	}
+	
 	
 	/**
 	 * Get the translated fields. This is needed to perform queries without knowing
