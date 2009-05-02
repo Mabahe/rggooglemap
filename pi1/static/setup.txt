@@ -1,3 +1,6 @@
+# Allow the tags
+lib.parseFunc_RTE.allowTags := addToList(map)
+lib.parseFunc.allowTags := addToList(map)
 
 plugin.tx_rggooglemap_pi1 {
 
@@ -443,7 +446,7 @@ plugin.tx_rggooglemap_pi1 {
   mapOverview = 0
   mapActiveCats = 
   mapAvailableCats = 
-
+  activateCluster = 0
 
   enableDoubleClickZoom = 1
   enableContinuousZoom = 1
@@ -454,13 +457,6 @@ plugin.tx_rggooglemap_pi1 {
 	defaultTable = tt_address
 
 
-  # stdWrap for all markers in the info bubble
-  poi {
-    name.wrap = 
-  }
-
-
-  
   
   
   # stdWrap for all markers in the popup window
@@ -468,16 +464,6 @@ plugin.tx_rggooglemap_pi1 {
   
   }  
   
-  
-
-  
-
-  
-  activateCluster = 0
-  
-
-
-
 }
 # end pi1
 
@@ -511,7 +497,7 @@ plugin.tx_rggooglemap_pi3 {
 } 
 
 
-## Set up page/type number:
+## Extra type for the ajax requests
 export_xml >
 export_xml = PAGE
 export_xml {
@@ -549,5 +535,5 @@ export_xml {
 
 
 [globalString = IENV:HTTP_HOST=wandern.projekt.cyberhouse.at]
-plugin.tx_rggooglemap_pi1.mapKey = ABQIAAAA70kOcaqPF5-fTHiOW_eQ-xQkMvUeiai_pYOhlmPXBiaMLz8m_xTh8O6dWss9pswLSzWvGfUjF7sEzg
+	plugin.tx_rggooglemap_pi1.mapKey = ABQIAAAA70kOcaqPF5-fTHiOW_eQ-xQkMvUeiai_pYOhlmPXBiaMLz8m_xTh8O6dWss9pswLSzWvGfUjF7sEzg
 [global]
