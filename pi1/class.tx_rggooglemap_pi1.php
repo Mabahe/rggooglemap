@@ -1648,7 +1648,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$catImg = $this->helperGetCategoryImage(array()); // category images
 						
 			$table =  $this->config['tables'];
-			$field = '*';
+			
+			// smaller and faster query, use smaller select, otherwise fetch all
+			if ($this->conf['title.']['useRggmTitle'] == 1)
+				$field = 'uid,rggmcat,rggmtitle,lat,lng';
+			else {
+				$field = '*';
+			}
 			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
 			
 			if (strlen($postvars['area'])>5) {
@@ -1739,7 +1745,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	*/
 	function xmlGetRowInXML($row,$conf) {
 		$table = $row['table'];
-		$title = $this->cObj2->stdWrap($row[$this->conf['title.'][$table]], $this->conf['title.'][$table.'.']);
+
+		// if useRggmTitle > title field is hardcoded
+		$field = ($this->conf['title.']['useRggmTitle'] == 1) ? 'rggmtitle' : $this->conf['title.'][$table];
+		
+		$title = $this->cObj2->stdWrap($row[$field], $this->conf['title.'][$table.'.']);
 		$content = '<![CDATA[ '.$title.' ]]>';
 		$this->xmlLines[]=$this->xmlIcode.$this->xmlFieldWrap('t',(($content)));
 	}

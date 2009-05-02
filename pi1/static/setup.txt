@@ -128,16 +128,21 @@ plugin.tx_rggooglemap_pi1 {
 	# Title which is displayed when hovering a POI icon on the map
 	# choose the field which is used + stdWrap for it 
 	title {
-		tx_staticregion_region = title
-		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: ||</div>		
-		tt_address = name
-		tx_housing_record = title
-		tx_housing_record.noTrimWrap = |<div class="housing"><u>Unterkunft</u>: ||</div>
-		tx_city_record = title
-		tx_city_record.noTrimWrap = |<div class="city"><u>Ort</u>: ||</div>
-		tx_tour_record = title
-		tx_tour_record.noTrimWrap = |<div class="tour"><u>Wanderung</u>: ||</div>
+		# makes it faster because queries are smaller
+		useRggmTitle = 1
 		
+		# otherwise specify the title field
+		tt_address = name
+		tx_staticregion_region = title
+		tx_housing_record = title
+		tx_city_record = title
+		tx_tour_record = title
+		
+		# stdWrap for all fields, syntax is table.<stWrap>
+		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: ||</div>		
+		tx_housing_record.noTrimWrap = |<div class="housing"><u>Unterkunft</u>: ||</div>
+		tx_city_record.noTrimWrap = |<div class="city"><u>Ort</u>: ||</div>
+		tx_tour_record.noTrimWrap = |<div class="tour"><u>Wanderung</u>: ||</div>	
 		searchresult.noTrimWrap = |<div class=searchresult><u>Treffer</u>: ||</div>
 	}
 	
