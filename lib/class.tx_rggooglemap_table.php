@@ -56,52 +56,7 @@ class tx_rggooglemap_table {
     return '';
   }
 
-	/**
-	 * Get the right table information
-	 * @param	string	Table
-	 * @return	Array with table information
-	 */
-  function table2($table, $field='') {
-      global $TYPO3_DB;
-    $neu2 = Array();
-    $neu['fe_users']['lng'] = 'zip';
-    $neu['fe_users']['lat'] = 'www';
-      
-    $neu['tt_address']['lng'] = 'tx_rggooglemap_lng';
-    $neu['tt_address']['lat'] = 'tx_rggooglemap_lat';  
-    $neu['tt_address']['rggmcat'] = 'tx_rggooglemap_cat2';
-    $neu['tt_address']['name'] = 'name'; 
 
-    $neu['tx_veguestbook_entries']['lng'] = 'tx_rggmveguestbook_lng';
-    $neu['tx_veguestbook_entries']['lat'] = 'tx_rggmveguestbook_lat';  
-    $neu['tx_veguestbook_entries']['rggmcat'] = 'tx_rggmveguestbook_cat';  
-    $neu['tx_veguestbook_entries']['name'] = 'firstname';  
-
-    $neu['tt_news']['lng'] = 'tx_rggmttnews_lng';
-    $neu['tt_news']['lat'] = 'tx_rggmttnews_lat';  
-    $neu['tt_news']['name'] = 'title';  
-    $neu['tt_news']['rggmcat'] = 'tx_rggmttnews_cat';
-    
-    $neu['sys_domain']['lng'] = 'tx_rggmdomain_lng';
-    $neu['sys_domain']['lat'] = 'tx_rggmdomain_lat';  
-    $neu['sys_domain']['rggmcat'] = 'tx_rggmdomain_cat';  
-
-    $neu['tx_city_record']['name'] = 'title';
-
-     
-    if ($field) return ($neu[$table][$field]) ? $neu[$table][$field] : $field;
-    else return   $neu[$table];
-
-  
-  
-  }
-  
-    function mergeFields2($table,$string) {
-      $whereFields = $this->table($table);
-      $whereOld = array_keys($whereFields);
-      $whereNew = array_values($whereFields);
-      return str_replace($whereOld, $whereNew, $string);
-  }
 
   /*
   * selectquery

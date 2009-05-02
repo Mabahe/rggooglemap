@@ -33,66 +33,83 @@ require_once(PATH_t3lib.'class.t3lib_svbase.php');
  * @subpackage    tx_rggooglemap
  */
 class tx_rggooglemap_sv1 extends t3lib_svbase {
-                var $prefixId = 'tx_rggooglemap_sv1';        // Same as class name
-                var $scriptRelPath = 'sv1/class.tx_rggooglemap_sv1.php';    // Path to this script relative to the extension dir.
-                var $extKey = 'rggooglemap';    // The extension key.	
-				/**
-	 
-   
-   * [Put your description here]
+	var $prefixId = 'tx_rggooglemap_sv1'; // Same as class name
+	var $scriptRelPath = 'sv1/class.tx_rggooglemap_sv1.php'; // Path to this script relative to the extension dir.
+	var $extKey = 'rggooglemap'; // The extension key.	
+	
+	/**
+	* [Put your description here]
+	*
+	* @return	[type]		...
+	*/
+	function init()	{
+		$available = parent::init();
+		
+		// Here you can initialize your class.
+		
+		// The class have to do a strict check if the service is available.
+		// The needed external programs are already checked in the parent class.
+		
+		return $available;
+	}
+	
+	/**
+	 * Get the translated fields. This is needed to perform queries without knowing
+	 * the exact field names. "Translate" every field by setting the key to the 
+	 * name you want and the field to the original field name		
 	 *
-	 * @return	[type]		...
+	 * @param	string		$field: Give a fieldname to get the translated one
+	 * @return	mixed	With a given field return the translated fieldname, otherwise
+	 * 	all translated fields as a table	
 	 */
-				function init()	{
-					$available = parent::init();
-	
-					// Here you can initialize your class.
-	
-					// The class have to do a strict check if the service is available.
-					// The needed external programs are already checked in the parent class.
-	
-					// If there's no reason for initialization you can remove this function.
-					return $available;
-				}
-	
-				/**
-	 * [Put your description here]
-	 * performs the service processing
+	function getTable($field='') {
+		$tbl['lng'] = 'tx_rggooglemap_lng';
+		$tbl['lat'] = 'tx_rggooglemap_lat';  
+		$tbl['rggmcat'] = 'tx_rggooglemap_cat';            
+		$tbl['rggmtitle'] = 'name';
+		
+		if ($field) {
+			return ($tbl[$field]) ? $tbl[$field] : $field;
+		} else {
+			return $tbl;
+		}
+	}    
+
+
+	/**
+	 * Replace original fields with the new ones
 	 *
-	 * @param	string		Content which should be processed.
-	 * @param	string		Content type
-	 * @param	array		Configuration array
-	 * @return	boolean
-	 */
+	 * @param	string		$string: A lies of fields
+	 * @return	string translated fields
+	 */	
+	function mergeFields($string) {
+		$whereFields = $this->getTable();
+		$whereOld = array_keys($whereFields);
+		$whereNew = array_values($whereFields);
+		return str_replace($whereOld, $whereNew, $string);
+	}
 
-        function getTable($field='') {
-            $tbl['lng'] = 'tx_rggooglemap_lng';
-            $tbl['lat'] = 'tx_rggooglemap_lat';  
-            $tbl['rggmcat'] = 'tx_rggooglemap_cat';            
-            $tbl['rggmtitle'] = 'name';
-       
-            if ($field) return ($tbl[$field]) ? $tbl[$field] : $field;
-            else return   $tbl;
-        }    
-        
-        function mergeFields($string) {
-          $whereFields = $this->getTable();
-          $whereOld = array_keys($whereFields);
-          $whereNew = array_values($whereFields);
-          return str_replace($whereOld, $whereNew, $string);
-        }
-        
-        function addressFields() {
-          $address = 'address,city,zip,country';
 
-          return $address;
-        }
+	/**
+	 * Set the addressFields of a table, this is needed for automatic geocoding 
+	 * of the table. Order is important, needs to be like Steet,City,Country	
+	 * 
+	 * If the table doesn't represent an address (e.g. mountains), return ''!
+	 * 	 	
+	 *
+	 * @return	string List of fields which represent an address
+	 */	
+	function addressFields() {
+		$address = 'address,city,zip,country';
+		
+		return $address;
+	}
 }
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggmsvttaddress/sv1/class.tx_rggmsvttaddress_sv1.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggmsvttaddress/sv1/class.tx_rggmsvttaddress_sv1.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/sv1/class.tx_rggooglemap_sv1.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/sv1/class.tx_rggooglemap_sv1.php']);
 }
 
 ?>
