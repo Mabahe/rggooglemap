@@ -31,19 +31,23 @@ t3lib_extMgm::addPItoST43($_EXTKEY,'pi3/class.tx_rggooglemap_pi3.php','_pi3','',
 
 $PATH_rggm = t3lib_extMgm::extPath('rggooglemap');
 // for hook
+/*
 if (TYPO3_MODE == 'FE')    {
     require_once($PATH_rggm.'class.tx_rggm_fe.php');
 }
 
+
 // register hooks for ve_guestbook
-#$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
-#$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['preEntryInsertHook'][]    = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['preEntryInsertHook'][]    = 'tx_rggm_fe';
 
-#$TYPO3_CONF_VARS['EXTCONF']['th_mailformplus']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['th_mailformplus']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
 
-#$TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
-#$TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraGlobalMarkerHook'][]   = 'tx_rggm_fe';
-#$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['postEntryInsertedHook'][] = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraItemMarkerHook'][]   = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraGlobalMarkerHook'][]   = 'tx_rggm_fe';
+$TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['postEntryInsertedHook'][] = 'tx_rggm_fe';
+
+*/
 
 #$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:myextension/class.myextension_tcemainprocdm.php:tx_myextension_tcemainprocdm';
 
