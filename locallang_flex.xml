@@ -10,11 +10,11 @@
 			<label index="general.show">Show</label>
 			<label index="general.show.0">Map</label>
 			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menu</label>
+			<label index="general.show.2">POI Menu</label>
 			<label index="general.show.3">Locationbox</label>
 			<label index="general.show.4">Active records</label>
-			<label index="general.show.5">Searchbox</label>
-			<label index="general.show.6">Catmenu</label>
+			<label index="general.show.5">Search</label>
+			<label index="general.show.6">Category Menu</label>
 			<label index="general.show.7">Directions</label>
 			<label index="general.categories">Active categories</label>
 			<label index="general.categoriesselected">Available categories</label>
@@ -70,7 +70,7 @@
 			<label index="general.show">Anzeige von</label>
 			<label index="general.show.0">Karte</label>
 			<label index="general.show.1">POIs</label>
-			<label index="general.show.2">Menü</label>
+			<label index="general.show.2">POI Menü</label>
 			<label index="general.show.3">Ortsuche</label>
 			<label index="general.show.4">Aktive Datensätze</label>
 			<label index="general.show.5">Suche</label>

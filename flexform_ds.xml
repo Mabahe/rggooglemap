@@ -24,13 +24,13 @@
 								
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.6</numIndex>
-										<numIndex index="1">CATMENU</numIndex>
-									</numIndex>	
-									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.0</numIndex>
 										<numIndex index="1">MAP</numIndex>
 									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.6</numIndex>
+										<numIndex index="1">CATMENU</numIndex>
+									</numIndex>	
 									<numIndex index="2" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.2</numIndex>
 										<numIndex index="1">MENU</numIndex>

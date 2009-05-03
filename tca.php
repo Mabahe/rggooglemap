@@ -23,8 +23,8 @@ $TCA["tx_rggooglemap_cat"] = Array (
 								"type" => "input",
 							"size" => "30",
 							"required" => "1",
-
-					 )
+						 	"eval" => "trim, required",
+					 ),
 				),
 			 
 			 "descr" => Array (

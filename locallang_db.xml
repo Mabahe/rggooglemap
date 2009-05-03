@@ -10,13 +10,13 @@
             <label index="tt_address.tx_rggooglemap_lng">Longtitude</label>
             <label index="tt_address.tx_rggooglemap_lat">Latidude</label>
             <label index="tt_address.tx_rggooglemap_display">Show</label>
-            <label index="tt_address.tx_rggooglemap_cat">Category</label>
+            <label index="tt_address.tx_rggooglemap_cat">Parent category</label>
             <label index="tt_address.tx_rggooglemap_tab">Count of tabs</label>
             <label index="tt_address.tx_rggooglemap_tab.I.0">1</label>            
             <label index="tt_address.tx_rggooglemap_tab.I.1">2</label>
             <label index="tt_address.tx_rggooglemap_tab.I.2">3</label>
             <label index="tt_address.tx_rggooglemap_tab.I.3">4</label>                        
-            <label index="tt_address.tx_rggooglemap_image">Image</label>
+            <label index="tt_address.tx_rggooglemap_image">Icon</label>
             <label index="tt_address.tx_rggooglemap_ce">Connected CEs</label>
 
             <label index="tx_rggooglemap_cat">POI Category</label>
@@ -36,13 +36,13 @@
             <label index="tt_address.tx_rggooglemap_lng">Längengrad</label>
             <label index="tt_address.tx_rggooglemap_lat">Breitengrad</label>
             <label index="tt_address.tx_rggooglemap_display">anzeigen</label>
-            <label index="tt_address.tx_rggooglemap_cat">Kategorie</label>
+            <label index="tt_address.tx_rggooglemap_cat">Über-Kategorie</label>
             <label index="tt_address.tx_rggooglemap_tab">Anzahl Reiter</label>
             <label index="tt_address.tx_rggooglemap_tab.I.0">1</label>            
             <label index="tt_address.tx_rggooglemap_tab.I.1">2</label>
             <label index="tt_address.tx_rggooglemap_tab.I.2">3</label>
             <label index="tt_address.tx_rggooglemap_tab.I.3">4</label>                        
-            <label index="tt_address.tx_rggooglemap_image">Bild</label>
+            <label index="tt_address.tx_rggooglemap_image">Icon</label>
             <label index="tt_address.tx_rggooglemap_ce">Inkludierte CEs</label>
 
             <label index="tx_rggooglemap_cat">POI Kategorien</label>

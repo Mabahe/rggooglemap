@@ -1583,6 +1583,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
+
 	/**
 	 * Get the image of the categories
 	 * todo: create a real recursive function	 
@@ -1713,7 +1714,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 
-
 	/**
 	 * adds a single record to the xml file
 	 *
@@ -1754,6 +1754,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->xmlLines[]=$this->xmlIcode.$this->xmlFieldWrap('t',(($content)));
 	}
 
+
 	/**
 	*  filling the marker of the template with values of the records. Image processing and so on
 	*
@@ -1779,24 +1780,30 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
+
 	function xmlGetResult() {
 		$content = implode(chr(10),$this->xmlLines);
 		return $content;
 	}
 
+
 	function xmlFieldWrap($field,$value) {
 		return '<'.$field.'>'.$value.'</'.$field.'>';
 	}
+
 
 	// just returns the top level name
 	function xmlTopLevelName() {
 		return 'markers';
 	}
 
+
 	// rendering header
 	function xmlRenderHeader() {
 		$this->xmlNewLevel($this->xmlTopLevelName(),1);
 	}
+	
+	
 	// rendering footer
 	function xmlRenderFooter() {
 		$this->xmlNewLevel($this->xmlTopLevelName(),0);
