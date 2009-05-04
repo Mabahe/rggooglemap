@@ -130,7 +130,10 @@ function getDirections() {
 }    
 
 function getDirectionsLong(to, FromCountry,FromAddr, showDir) {
-	var daddr = FromAddr+', '+ FromCountry;
+	var daddr = FromAddr;
+	if (FromCountry != '') {
+		daddr = FromAddr+', '+ FromCountry;
+	}
 	gdir2.load('from: '+daddr+' to: '+to);
 	show(showDir);
 } 
