@@ -560,7 +560,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$searchClause['general'] = 'lng!=0 AND lat!=0 '.$this->config['pid_list'];
 
 				// just search the tables where search fields are specified
-				if ($this->conf['search.'][$table]) {
+				if ($this->conf['search.']['fields.'][$table]) {
 					$select = '*';
 					$searchField = explode(',',$this->conf['search.'][$table]);
 					$where2 = '';
@@ -1029,7 +1029,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$i++;
 							
-			$markerArray = $this->getMarker($row,'cattree.', $i);
+			$markerArray = $this->getMarker($row,'catMenu.', $i);
 			
 			// category image
 			$imgTSConfig = $this->conf['catMenu.']['icon.'];
@@ -1080,9 +1080,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$markerArray['###MAP_TYPES###'] = '{mapTypes:['.$this->config['mapType'].']}';
 		}
 		
-		if ($this->config['mapNavControl'] == 'large') $settings .= 'map.addControl(new GLargeMapControl());';
-		elseif ($this->config['mapNavControl'] == 'small') $settings .= 'map.addControl(new GSmallMapControl());';
-		elseif ($this->config['mapTypeControl'] == 'show') $settings .= 'map.addControl(new GMapTypeControl());';
+		if ($this->config['mapNavControl'] == 'large' || $this->config['mapNavControl'] == 2) $settings .= 'map.addControl(new GLargeMapControl());';
+		elseif ($this->config['mapNavControl'] == 'small' || $this->config['mapNavControl'] == 1) $settings .= 'map.addControl(new GSmallMapControl());';
+		elseif ($this->config['mapTypeControl'] == 'show' || $this->config['mapTypeControl'] == '1') $settings .= 'map.addControl(new GMapTypeControl());';
 		if ($this->config['mapOverview'] == 1) $settings .= 'map.addControl(new GOverviewMapControl());';
 		
 		if ($this->config['mapControlOnMouseOver'] == 1) {

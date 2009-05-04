@@ -3,32 +3,96 @@ lib.parseFunc_RTE.allowTags := addToList(map)
 lib.parseFunc.allowTags := addToList(map)
 
 plugin.tx_rggooglemap_pi1 {
+  templateFile = EXT:rggooglemap/template.html
+  templateFileJS = EXT:rggooglemap/templateJS.js  
+  cssFile = EXT:rggooglemap/res/rggm.css
+  pidList = 
+  recursive = 
+  mapDiv = map  
+  mapWidth = 769
+  mapHeight = 450
+  mapLng = 13.537216186523438
+  mapLat = 47.585673399138294
+  mapZoom = 11
+  mapKey = 
+  mapType = G_NORMAL_MAP
+  mapControl = 1
+  mapNavigation = 1
+  mapNavigationOnMouseOver = 0
+  mapOverview = 0
 
-	##################################
-	############### new ##############
-	
+  enableDoubleClickZoom = 1
+  enableContinuousZoom = 1
+  enableScrollWheelZoom = 1
+
+  mapAvailableCats =
+  mapActiveCats =  
+  activateCluster = 0
+  
+	defaultCountry = Austria
+	defaultTable = tt_address	
 	generalLL = show,search,directions,more,back,lng,lat,exampleaddress
 	
 	# not yet finished
 	getRecordOverlay = 0
-	
-	# Directions
-	directions {
-		LL = title,description,label_country,label_record,label_address,search,remove-directions
+
+	##################
+	# View MAP 
+	##################
+	map {
+		LL = loading,remove-directions
 		
-		orderBy = rggmtitle ASC
-		limit = 0,50
+		defaultIcon = typo3conf/ext/rggooglemap/res/dot.png
+		
+		# Icon sizes if it can be fetched from the image
+		iconSize {
+			# default as fallback
+			default {
+				width		= 16
+				height	= 16
+			}
+		
+			# use the category uid to set the sizes for each category seperatly
+			999 {
+				width		= 32
+				height 	= 32
+			}
+		}
+	}
+	
+	##################
+	# Category Menu
+	##################
+	catMenu {
+		# Icon
+		icon {
+			file.maxW = 11
+			file.maxH = 11
+		}	
 	}
 
-  # search settings
+	##################
+	# Dynamic record list
+	##################
+	recordList {
+		LL = prev,next
+		orderBy = rggmtitle ASC
+		limit = 15
+	}
+
+	##################
+	# Search
+	##################
   search {
     minChars = 3
-    tt_address = title,description,name 
-    fe_users = comments,name,first_name,last_name,company
-    tx_tour_record = title,description,teasertext,waydescriptiontext
-    tx_housing_record = title,description,keywords,text
-    tx_city_record = title,subtitle,description
-    tx_staticregion_region = title
+    fields {
+			tt_address = title,description,name 
+    	fe_users = comments,name,first_name,last_name,company
+    	tx_tour_record = title,description,teasertext,waydescriptiontext
+    	tx_housing_record = title,description,keywords,text
+    	tx_city_record = title,subtitle,description
+    	tx_staticregion_region = title
+    }
     
     LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
 		radiusSearch = 0
@@ -51,33 +115,18 @@ plugin.tx_rggooglemap_pi1 {
     
   }
 	
-	# locationbox
+	##################
+	# Locationbox
+	##################
 	location {
 		LL = description,search,exampleaddress,zoomlevel_5,zoomlevel_9,zoomlevel_14,label_address,label_zoomlevel
 	}
 	
-	map {
-		LL = loading,remove-directions
-		
-		defaultIcon = typo3conf/ext/rggooglemap/res/dot.png
-		
-		# Icon sizes if it can be fetched from the image
-		iconSize {
-			# default as fallback
-			default {
-				width		= 16
-				height	= 16
-			}
-		
-			# use the category uid to set the sizes for each category seperatly
-			999 {
-				width		= 32
-				height 	= 32
-			}
-		}
-	}
+
 	
-	# Records current on the map
+	##################
+	# Active records
+	##################
 	recordsOnMap {
 		LL = description,wait
 		
@@ -85,15 +134,12 @@ plugin.tx_rggooglemap_pi1 {
 		#limit = 0,5
 	}
 	
-	# Dynamic record list
-	recordList {
-		LL = prev,next
-		orderBy = rggmtitle ASC
-		limit = 15
-	}
+
 	
 	
-  # view MENU
+	##################
+	# POI menu
+	##################
   menu {
     catOrder = title
     recordsOrder = rggmtitle
@@ -121,7 +167,6 @@ plugin.tx_rggooglemap_pi1 {
 			
 			20 = TEXT
 		}
-		
 	}
 	
 	
@@ -139,6 +184,7 @@ plugin.tx_rggooglemap_pi1 {
 		tx_tour_record = title
 		
 		# stdWrap for all fields, syntax is table.<stWrap>
+		tt_address.noTrimWrap = |<div class="region"><u>Address</u>: ||</div>
 		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: ||</div>		
 		tx_housing_record.noTrimWrap = |<div class="housing"><u>Unterkunft</u>: ||</div>
 		tx_city_record.noTrimWrap = |<div class="city"><u>Ort</u>: ||</div>
@@ -146,18 +192,21 @@ plugin.tx_rggooglemap_pi1 {
 		searchresult.noTrimWrap = |<div class=searchresult><u>Treffer</u>: ||</div>
 	}
 	
-	## Category Menu
-	catMenu {
-		# Icon
-		icon {
-			file.maxW = 11
-			file.maxH = 11
-		}
-	
+
+
+	##################
+	# View Directions 
+	##################
+	directions {
+		LL = title,description,label_country,label_record,label_address,search,remove-directions
+		
+		orderBy = rggmtitle ASC
+		limit = 0,50
 	}
 
-	### stdWrap for all fields
-	### using the syntax poi.<tablename>
+	##################
+	# POI
+	##################
 	poi {
 		LL = directions_header,directions_description
 
@@ -428,42 +477,7 @@ plugin.tx_rggooglemap_pi1 {
 	}
 	
 
-	
-	############### new ##############
 
-
-  templateFile = EXT:rggooglemap/template.html
-  templateFileJS = EXT:rggooglemap/templateJS.js  
-  cssFile = EXT:rggooglemap/res/rggm.css
-  pidList = 
-  recursive = 
-  mapDiv = map  
-  mapWidth = 769
-  mapHeight = 450
-  mapLng = 13.537216186523438
-  mapLat = 47.585673399138294
-  mapZoom = 11
-  mapKey = 
-  mapType = G_NORMAL_MAP
-  mapControl = show
-  mapNavigation = small
-  mapNavigationOnMouseOver = 0
-  mapOverview = 0
-  mapActiveCats = 
-  mapAvailableCats = 
-  activateCluster = 0
-
-  enableDoubleClickZoom = 1
-  enableContinuousZoom = 1
-  enableScrollWheelZoom = 1
-  
-  recordsPerPage = 30
-	defaultCountry = Austria
-	defaultTable = tt_address
-
-
-  
-  
   # stdWrap for all markers in the popup window
   popup {
   
