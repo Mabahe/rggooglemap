@@ -854,8 +854,15 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     
     // 1) inserts POI to a new record
     $table = 'tt_address';
-    $content.='<h4>'.$LANG->getLL("headerSavePOINew").'</h4>';
-    $content.=$this->getNewRecord($table,$this->id, $arg['centerlongitude'], $arg['centerlatitude']);
+    $content.='<h4>'.$LANG->getLL("headerSavePOINew").'</h4><ul>';
+    
+    $tableList = t3lib_div::trimExplode(',', $this->confArr['tables']);
+    foreach ($tableList as $key) {
+
+					$content.=$this->getNewRecord($key,$this->id, $arg['centerlongitude'], $arg['centerlatitude']);		
+		}
+		
+		$content.= '</ul>';
     
     $content.='<h4>'.$LANG->getLL("headerSavePOI").'</h4>';
     
@@ -1165,12 +1172,24 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 	/**
 	 * Returns onClick for link to new record with the coordinates
 	 */	  
-  function getNewRecord ($table,$pid, $long, $lat) {
+  function getNewRecord ($table,$pid, $lngVal, $latVal) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
-    $params = '&edit['.$table.']['.$pid.']=new';
-    $params.='&defVals['.$table.'][tx_rggooglemap_lng]='.$long;
-    $params.='&defVals['.$table.'][tx_rggooglemap_lat]='.$lat;
-    $out = '<a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params,$GLOBALS['BACK_PATH'])).'">'.'<b>'.$LANG->getLL("clickHere").'</b></a><br/>';
+		$out = $latField = $lngField = '';
+		while (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData', $table, $serviceChain))) {
+			$serviceChain.=','.$serviceObj->getServiceKey();    
+			if ($tempuser=$serviceObj->init()) {
+					$latField = $serviceObj->getTable('lat');
+					$lngField = $serviceObj->getTable('lng');
+			}
+		}
+		
+		// just create the link if the service object found a translation
+		if ($latField != '' && $lngField != '') {
+	    $params = '&edit['.$table.']['.$pid.']=new';
+	    $params.='&defVals['.$table.']['.$lngField.']='.$lngVal;
+	    $params.='&defVals['.$table.']['.$latField.']='.$latVal;
+	    $out = '<li><a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params,$GLOBALS['BACK_PATH'])).'">'.'<b>'.$table.'</b>: '.$LANG->getLL("clickHere").'</a></li>';
+		}
 
     return $out;
   } # end getNewRecord
