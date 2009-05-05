@@ -12,6 +12,7 @@
 			<label index="pagebrowser_act">Page %s</label>
 			<label index="searchNoResult">&lt;i&gt;Sorry nothing found&lt;/i&gt;</label>
 			<label index="searchMinChars">&lt;i&gt;Minimum lenght of %s characters&lt;/i&gt;</label>
+			<label index="error_no-static-ts">ERROR: You have forgotten to include the static TS. Please take a look at the manual again.</label>
 			<label index="errror_no-status">ERROR: No status selected!</label>
 			<label index="error_wrong-domains">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No valid urls for an ajax request! Your current domain: &quot;%s&quot;, the domain for the ajax requests: &quot;%s&quot;. Those need to be the same, e.g. use the 2nd domain!</label>
 			<label index="error_poi-no-template">&lt;strong&gt;ERROR!&lt;/strong&gt;&lt;br /&gt; No template subpart is defined for &lt;br /&gt;%s &lt;br /&gt;inside the template!</label>
@@ -70,6 +71,7 @@
 			<label index="pagebrowser_act">Seite %s</label>
 			<label index="searchNoResult">&lt;i&gt;Kein Ergebnis&lt;/i&gt;</label>
 			<label index="searchMinChars">&lt;i&gt;Mindestlänge von %s Buchstaben&lt;/i&gt;</label>
+			<label index="error_no-static-ts">Fehler: Das TS der Extension wurde nicht inkludiert! Bitte sehen Sie im Manual nach!</label>			
 			<label index="errror_no-status">FEHLER: Kein Status ausgewählt!</label>
 			<label index="error_wrong-domains">&lt;strong&gt;FEHLER!&lt;/strong&gt;&lt;br /&gt; Keine gültige URL für einen AJAX-Aufruf! Die aktuelle Domain: &quot;%s&quot; weicht von der für den Aufruf &quot;%s&quot; ab. Diese müssen ident sein, benützen Sie z.B. die 2. Domain</label>
 			<label index="error_poi-no-template">&lt;strong&gt;FEHLER!&lt;/strong&gt;&lt;br /&gt;Kein Template-Subpart wurde definiert für &lt;br /&gt;%s &lt;br /&gt;innerhalb des G</label>

@@ -228,6 +228,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
 		
+		// check if the static TS is loaded.
+		if (count($this->conf) <= 3) {
+			return $this->pi_getLL('error_no-static-ts');
+		}
+		
 		// check if this is the correct domain (no cross domain scripts for ajax requests
 		$check = $this->helperCheckForWrongUrl();
 		if (count($check)> 0) {
