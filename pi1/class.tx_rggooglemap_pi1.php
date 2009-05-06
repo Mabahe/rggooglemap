@@ -119,9 +119,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// Template code
 		$this->templateCode = $this->cObj2->fileResource($this->conf['templateFile']);
 
-		/*
-		* 1st sheet: Map settings
-		*/
+		// pidList & recursive function
 		$pid_list = $this->helperGetFlexform('sDEF', 'startingpoint', 'pidList');
 		if (intval($this->piVars['pidList'])!=0) {
 			$pid_list = intval($this->piVars['pidList']);
@@ -139,12 +137,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$this->config['pid_list'] = ' AND deleted=0 AND hidden=0 ';
 		}
 
-
-
+		// 1st: General settings
 		$this->config['show'] 							= $this->helperGetFlexform('sDEF', 'show', 'show'); // show
 		$this->config['categories'] 				= $this->helperGetFlexform('sDEF', 'categoriesselected', 'mapAvailableCats'); // loaded POI categories
 		$this->config['categoriesActive'] 	= $this->helperGetFlexform('sDEF', 'categories', 'mapActiveCats'); // active POI categories
 		$this->config['mapDiv'] 						= $this->conf['mapDiv']; 		// map div id
+
+		// 2nd:  Map settings
 		$this->config['mapWidth'] 					= $this->helperGetFlexform('map', 'width', 'mapWidth'); // width
 		$this->config['mapHeight'] 					= $this->helperGetFlexform('map', 'height', 'mapHeight'); // height
 		$this->config['mapLng'] 						= $this->helperGetFlexform('map', 'lng', 'mapLng'); // lng

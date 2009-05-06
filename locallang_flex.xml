@@ -42,15 +42,6 @@
 			<label index="map.mapoverview">Hide overview window</label>
 			<label index="map.showondefault">Default POI</label>
 			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
-			<label index="sorting.sheetTitle">Sorting</label>
-			<label index="sorting.orderby.title">...order by</label>
-			<label index="sorting.orderby.asc">Ascending</label>
-			<label index="sorting.orderby.desc">Descending</label>
-			<label index="sorting.orderby.name">Name</label>
-			<label index="sorting.orderby.tstamp">Tstamp</label>
-			<label index="sorting.catsort">Category in POI view</label>
-			<label index="sorting.poisort">POIs in POI view</label>
-			<label index="sorting.checkboxsort">Checkboxes in MAP view</label>
 			<label index="menu.sheetTitle">Menu settings</label>
 			<label index="menu.map">Page with the map</label>
 			<label index="menu.menucatsortorder">Category ordering</label>
@@ -101,15 +92,6 @@
 			<label index="map.mapoverview">Übersichtskarte verbergen</label>
 			<label index="map.showondefault">Standard POI</label>
 			<label index="map.loadDynamicList">Dynamische Liste der POis laden</label>
-			<label index="sorting.sheetTitle">Sortierung</label>
-			<label index="sorting.orderby.title">...sortiert nach</label>
-			<label index="sorting.orderby.asc">austeigend</label>
-			<label index="sorting.orderby.desc">abgsteigend</label>
-			<label index="sorting.orderby.name">Name</label>
-			<label index="sorting.orderby.tstamp">Tstamp</label>
-			<label index="sorting.catsort">Kategorie in POI-Ansicht</label>
-			<label index="sorting.poisort">POIs in POI-Ansicht</label>
-			<label index="sorting.checkboxsort">Checkoxen in Karten-Ansicht</label>
 			<label index="menu.sheetTitle">Menü</label>
 			<label index="menu.map">Seite mit Karte</label>
 			<label index="menu.menucatsortorder">Sortierung Kategeogrie</label>
@@ -161,15 +143,6 @@
 			<label index="general.recursive.infinite">Infini</label>
 			<label index="general.type.map.alternativeUrl">URL Alternative</label>
 			<label index="map.showondefault">FR: Default POI</label>
-			<label index="sorting.title">Classement</label>
-			<label index="sorting.orderby.title">...trié par</label>
-			<label index="sorting.orderby.asc">Croissant</label>
-			<label index="sorting.orderby.desc">Décroissant</label>
-			<label index="sorting.orderby.name">Nom</label>
-			<label index="sorting.orderby.tstamp">Date</label>
-			<label index="sorting.catsort">Catégories dans la vue POI</label>
-			<label index="sorting.poisort">Vue des POIs dans POI</label>
-			<label index="sorting.checkboxsort">Case à cocher dans la vue &quot;Carte&quot;</label>
 			<label index="menu.title">Menu options</label>
 			<label index="menu.map">Page contenant la carte</label>
 		</languageKey>
