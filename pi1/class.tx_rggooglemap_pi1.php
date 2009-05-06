@@ -122,7 +122,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		/*
 		* 1st sheet: Map settings
 		*/
-
 		$pid_list = $this->helperGetFlexform('sDEF', 'startingpoint', 'pidList');
 		if (intval($this->piVars['pidList'])!=0) {
 			$pid_list = intval($this->piVars['pidList']);
@@ -139,6 +138,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		} else {
 			$this->config['pid_list'] = ' AND deleted=0 AND hidden=0 ';
 		}
+
 
 
 		$this->config['show'] 							= $this->helperGetFlexform('sDEF', 'show', 'show'); // show
@@ -1543,13 +1543,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 	function helperCheckForWrongUrl() {
 		$status = array();
-		
-		$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
-		$linkDomain = $this->pi_getPageLink($GLOBALS['TSFE']->id);
-		
-		if (strpos($linkDomain, $currentDomain) === false) {
-			$status['current']	= $currentDomain;
-			$status['link']			= $linkDomain;
+
+		if ($GLOBALS['TSFE']->config['config']['baseURL'] != '' || $GLOBALS['TSFE']->config['config']['absRefPrefix']) {
+			$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
+			$linkDomain = $this->pi_getPageLink($GLOBALS['TSFE']->id);
+			
+			if ($linkDomain != '' && strpos($linkDomain, $currentDomain) === false) {
+				$status['current']	= $currentDomain;
+				$status['link']			= $linkDomain;
+			}
 		}
 		
 		return $status;
@@ -1700,17 +1702,19 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				}
 			}
 			
-			
+			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
+			
 			while($row=array_shift($res)) {
 				$test = '';
-				
+				$count++;
 				$catList = explode(',', $row['rggmcat']);
 				$img = $catImg[$catList[0]];	
 				$img = $catList[0];
 				
 				$this->xmlAddRecord($table, $row,$conf, $img, $test);
 			}
+			#echo $count;
 		}
 		$this->xmlRenderFooter();
 		
