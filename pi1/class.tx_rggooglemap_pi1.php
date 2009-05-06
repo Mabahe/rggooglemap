@@ -150,6 +150,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->config['mapZoom'] 						= $this->helperGetFlexform('map', 'zoom', 'mapZoom'); // zoom
 		$key = $this->helperGetFlexform('sDEF', 'key', 'mapKey');		// google map key
 		$this->config['mapKey'] 						= ($key!='') ? $key : $this->confArr['googleKey'];
+		$this->config['mapKey']							= $this->helperGetMultiDomainKey($this->config['mapKey'], $this->confArr['googleKey2']);
 
 		$this->config['mapType'] 						= $this->helperGetFlexform('map', 'type', 'mapType'); // map control
 		$this->config['mapTypeControl'] 		= $this->helperGetFlexform('map', 'type_controls', 'mapControl');
@@ -1540,7 +1541,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 	function helperCheckForWrongUrl() {
 		$status = array();
-
+		
 		if ($GLOBALS['TSFE']->config['config']['baseURL'] != '' || $GLOBALS['TSFE']->config['config']['absRefPrefix']) {
 			$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
 			$linkDomain = $this->pi_getPageLink($GLOBALS['TSFE']->id);
@@ -1554,37 +1555,36 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $status;
 	}
 	
-
+	
 	/**
-	 * Get the value out of the flexforms and if empty, take if from TS
+	 * Get the correct Google Maps API key if multidomains are used and key 
+	 * for the current domain is found 
 	 *
-	 * @param	string		$sheet: The sheed of the flexforms
-	 * @param	string		$key: the name of the flexform field
-	 * @param	string		$confOverride: The value of TS for an override
-	 * @return	string	The value of the locallang.xml
+	 * @param	string		$defaultKey: The default key
+	 * @param	string		$multiKey: Setting of the EM holding all domains and the keys
+	 * @return string the key for the current domain
 	 */
-	function helperGetFlexform($sheet, $key, $confOverride='') {
-		// Default sheet is sDEF
-		$sheet = ($sheet=='') ? $sheet = 'sDEF' : $sheet;
-		$flexform = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], $key, $sheet);
+	function helperGetMultiDomainKey($defaultKey, $multiKey) {
+		$finalKey = $defaultKey;
+		$multiKey = trim($multiKey);
 
-		// possible override through TS
-		if ($confOverride=='') {
-			return $flexform;
-		} else {
-
-			// hack to work with multiple TS arrays
-			$tsparts = explode('.', $confOverride);
-			if (count($tsparts)==1) { // default with no .
-				$value = $flexform ? $flexform : $this->conf[$confOverride];
-				$value = $this->cObj->stdWrap($value,$this->conf[$confOverride.'.']);
-			} elseif (count($tsparts)==2) { // 1 sub array
-				$value = $flexform ? $flexform : $this->conf[$tsparts[0].'.'][$tsparts[1]];
-				$value = $this->cObj->stdWrap($value,$this->conf[$tsparts[0].'.'][$tsparts[1].'.']);
+		// if any multidomain key is found
+		if (trim($multiKey) != '') {
+			$keyListTmp = explode('#####', $multiKey); // split by #### because EXT constantsextended uses that
+			$keyList = array();
+			foreach($keyListTmp as $key) {
+				$split = explode('=', $key);
+				$keyList[$split[0]] = $split[1];
 			}
 
-			return $value;
+			// get current domain and check if there is a API for it
+			$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
+			if ($keyList[$currentDomain] != '') {
+				$finalKey = $keyList[$currentDomain];
+			}
 		}
+		
+		return $finalKey;
 	}
 
 
@@ -1620,6 +1620,38 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 
+	/**
+	 * Get the value out of the flexforms and if empty, take if from TS
+	 *
+	 * @param	string		$sheet: The sheed of the flexforms
+	 * @param	string		$key: the name of the flexform field
+	 * @param	string		$confOverride: The value of TS for an override
+	 * @return	string	The value of the locallang.xml
+	 */
+	function helperGetFlexform($sheet, $key, $confOverride='') {
+		// Default sheet is sDEF
+		$sheet = ($sheet=='') ? $sheet = 'sDEF' : $sheet;
+		$flexform = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], $key, $sheet);
+
+		// possible override through TS
+		if ($confOverride=='') {
+			return $flexform;
+		} else {
+
+			// hack to work with multiple TS arrays
+			$tsparts = explode('.', $confOverride);
+			if (count($tsparts)==1) { // default with no .
+				$value = $flexform ? $flexform : $this->conf[$confOverride];
+				$value = $this->cObj->stdWrap($value,$this->conf[$confOverride.'.']);
+			} elseif (count($tsparts)==2) { // 1 sub array
+				$value = $flexform ? $flexform : $this->conf[$tsparts[0].'.'][$tsparts[1]];
+				$value = $this->cObj->stdWrap($value,$this->conf[$tsparts[0].'.'][$tsparts[1].'.']);
+			}
+
+			return $value;
+		}
+	}
+	
 	/*
 	* **********************************
 	* ********** X M L *****************

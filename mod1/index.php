@@ -115,6 +115,21 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			
 			$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 			
+			// get the key if multidomain is used
+			if (trim($this->confArr['googleKey2']) != '') {
+				$keyListTmp = explode('#####', $this->confArr['googleKey2']);
+				$keyList = array();
+				foreach($keyListTmp as $key) {
+					$split = explode('=', $key);
+					$keyList[$split[0]] = $split[1];
+				}
+
+				$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
+				if ($keyList[$currentDomain] != '') {
+					$this->confArr['googleKey'] = $keyList[$currentDomain];
+				}
+			}
+			
 			// some settings from Extension Manager (map control, ..)
 			$settings = '';
       if ($this->confArr['mapNavigation'] == 'large') {

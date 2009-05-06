@@ -550,9 +550,3 @@ export_xml {
     }
   }  
 }
-
-
-
-[globalString = IENV:HTTP_HOST=wandern.projekt.cyberhouse.at]
-	plugin.tx_rggooglemap_pi1.mapKey = ABQIAAAA70kOcaqPF5-fTHiOW_eQ-xQkMvUeiai_pYOhlmPXBiaMLz8m_xTh8O6dWss9pswLSzWvGfUjF7sEzg
-[global]
