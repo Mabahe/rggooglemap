@@ -30,7 +30,6 @@
 require_once(PATH_tslib.'class.tslib_pibase.php');
 	/*
 	 * ToDO :
-	 * - check flexform, especially menu
 	 * - group pois
 	 * - json
 	 */	 	 	 	 	 
@@ -109,10 +108,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	function init($conf) {
 		require_once (PATH_tslib.'/class.tslib_content.php');
 		$this->cObj2 = t3lib_div::makeInstance('tslib_cObj'); // Local cObj.
-		$this->conf = $conf; // Storing configuration as a member var
-		$this->pi_loadLL(); // Loading language-labels
-		$this->pi_setPiVarDefaults(); // Set default piVars from TS
-		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
+		$this->conf = $conf;
+		$this->pi_loadLL();
+		$this->pi_setPiVarDefaults();
+		$this->pi_initPIflexForm();
 
 		$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 
@@ -234,7 +233,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		// check if this is the correct domain (no cross domain scripts for ajax requests
 		$check = $this->helperCheckForWrongUrl();
-		if (count($check)> 0) {
+		if (count($check) > 0) {
 			return sprintf($this->pi_getLL('error_wrong-domains'), $check['current'], $check['link']);
 		}
 
@@ -265,7 +264,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				case 'DIRECTIONS':
 					$content .= $this->showDirections();
 					break;
-
 				default:
 					// Adds hook for processing of extra codes
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraCodesHook'])) {
@@ -283,7 +281,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if ($content =='') {
 			$content .= $this->pi_getLL('errror_no-status');
 		} else {
-			$content = $this->pi_wrapInBaseClass($content);
+			$content	= $this->pi_wrapInBaseClass($content);
 		}
 
 		return $content;
