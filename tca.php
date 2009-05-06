@@ -1,25 +1,25 @@
 <?php
 if (!defined ('TYPO3_MODE'))     die ('Access denied.');
 
-$TCA["tx_rggooglemap_cat"] = Array (
+$TCA["tx_rggooglemap_cat"] = array (
 		"ctrl" => $TCA["tx_rggooglemap_cat"]["ctrl"],
-		"interface" => Array (
+		"interface" => array (
 				"showRecordFieldList" => "hidden,title,parent_uid"
 		),
 		"feInterface" => $TCA["tx_rggooglemap_cat"]["feInterface"],
-		"columns" => Array (
-				"hidden" => Array (
+		"columns" => array (
+				"hidden" => array (
 						"exclude" => 1,
 						"label" => "LLL:EXT:lang/locallang_general.xml:LGL.hidden",
-						"config" => Array (
+						"config" => array (
 								"type" => "check",
 								"default" => "0"
 						)
 				),
-			 "title" => Array (
+			 "title" => array (
 					 "exclude" => 1,
 						"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat.title",
-						"config" => Array (
+						"config" => array (
 								"type" => "input",
 							"size" => "30",
 							"required" => "1",
@@ -27,20 +27,20 @@ $TCA["tx_rggooglemap_cat"] = Array (
 					 ),
 				),
 			 
-			 "descr" => Array (
+			 "descr" => array (
 						"exclude" => 1,
 						"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat.descr",
-						"config" => Array (
+						"config" => array (
 								"type" => "text",
 								"cols" => "30",
 								"rows" => "5",
 						)
 				),
 				
-			 "tabprefix" => Array (
+			 "tabprefix" => array (
 						"exclude" => 1,
 						"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat.tabprefix",
-						"config" => Array (
+						"config" => array (
 								"type" => "input",
 						 	"size" => "30",
 						 	"eval" => "trim",
@@ -48,10 +48,10 @@ $TCA["tx_rggooglemap_cat"] = Array (
 				),
 
 
-			"parent_uid" => Array (		
+			"parent_uid" => array (		
 				'exclude' => 1,
 				'label' => 'LLL:EXT:rggooglemap/locallang_db.xml:tt_address.tx_rggooglemap_cat',
-				'config' => Array (
+				'config' => array (
 					'type' => 'select',
 					'form_type' => 'user',
 					'userFunc' => 'tx_rggm_treeview->displayCategoryTree',
@@ -67,10 +67,10 @@ $TCA["tx_rggooglemap_cat"] = Array (
 				)
 			),
 
-			'image' => Array (
+			'image' => array (
 				'exclude' => 1,
 				'label' => 'LLL:EXT:rggooglemap/locallang_db.xml:tt_address.tx_rggooglemap_image',
-				'config' => Array (
+				'config' => array (
 					'type' => 'group',
 					'internal_type' => 'file',
 					'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
@@ -84,11 +84,11 @@ $TCA["tx_rggooglemap_cat"] = Array (
 			),
 
 		),
-		"types" => Array (
-				"0" => Array("showitem" => "hidden;;1;;1-1-1, title, descr, parent_uid, image,tabprefix")
+		"types" => array (
+				"0" => array("showitem" => "hidden;;1;;1-1-1, title, descr, parent_uid, image,tabprefix")
 		),
-		"palettes" => Array (
-				"1" => Array("showitem" => "")
+		"palettes" => array (
+				"1" => array("showitem" => "")
 		)
 );
 

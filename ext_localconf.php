@@ -2,7 +2,7 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 
-  # pi1 > plugin
+	# pi1 > plugin
 t3lib_extMgm::addTypoScript($_EXTKEY,'editorcfg','
 	tt_content.CSS_editor.ch.tx_rggooglemap_pi1 = < plugin.tx_rggooglemap_pi1.CSS_editor
 ',43);
@@ -10,7 +10,7 @@ t3lib_extMgm::addTypoScript($_EXTKEY,'editorcfg','
 t3lib_extMgm::addPItoST43($_EXTKEY,'pi1/class.tx_rggooglemap_pi1.php','_pi1','list_type',0);
 
 
-  # pi2 > set up userdefined tag <MAP>
+	# pi2 > set up userdefined tag <MAP>
 t3lib_extMgm::addTypoScript($_EXTKEY,'setup','
 	tt_content.text.20.parseFunc.tags.map = < plugin.'.t3lib_extMgm::getCN($_EXTKEY).'_pi2
 ',43);
@@ -18,7 +18,7 @@ t3lib_extMgm::addTypoScript($_EXTKEY,'setup','
 t3lib_extMgm::addPItoST43($_EXTKEY,'pi2/class.tx_rggooglemap_pi2.php','_pi2','',1);
 
 
-  # pi3 > set up userdefined tag <MAPCAT>
+	# pi3 > set up userdefined tag <MAPCAT>
 t3lib_extMgm::addTypoScript($_EXTKEY,'setup','
 	tt_content.text.20.parseFunc.tags.mapcat = < plugin.'.t3lib_extMgm::getCN($_EXTKEY).'_pi3
 ',43);
