@@ -159,7 +159,7 @@ plugin.tx_rggooglemap_pi1 {
   # 20.value is filled, so don't use that!
 	xmlURL {
 		returnLast = url
-		parameter.data = page:uid
+		parameter.dataWrap = {page:uid},500
 		additionalParams.stdWrap.cObject = COA
 		additionalParams.stdWrap.cObject {
 			10 = TEXT

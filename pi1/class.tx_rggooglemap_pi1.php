@@ -565,7 +565,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				// just search the tables where search fields are specified
 				if ($this->conf['search.']['fields.'][$table]) {
 					$select = '*';
-					$searchField = explode(',',$this->conf['search.'][$table]);
+					$searchField = explode(',',$this->conf['search.']['fields.'][$table]);
 					$where2 = '';
 					foreach ($searchField as $key=>$value) {
 						$where2.= " $value LIKE '%$searchExpression%' OR";
