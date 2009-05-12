@@ -60,6 +60,21 @@
 			<label index="tt_address">Address</label>
 			<label index="fe_users">FE-User</label>
 			<label index="tt_news">News</label>
+			
+			<!-- UPDATE -->
+			<label index="update.text.intro">Update script!</label>
+			<label index="update.text.intro2">Use this form to perform some tasks</label>
+			<label index="update.button.update">Go</label>
+			<label index="update.text.updated">Update has started...</label>
+			<label index="update.copymarkers">Copy the icons which are used for the searchresult</label>
+			<label index="update.copycategories">Copy the related categories from the field tx_rggooglemap_cat2 to tx_rggooglemap_cat. For tt_address only, EVERYTHING WILL BE OVERRIDDEN!</label>
+			<label index="update.msg.error">Error!</label>
+			<label index="update.msg.success">Success!</label>
+			<label index="update.msg.notify">Notificatio!</label>
+			<label index="update.msg.copy.file">File %s was copied!</label>
+			<label index="update.msg.copy.file.error">File %s was not copied!</label>
+			<label index="update.msg.copy.category">The category assignment has been copied!</label>
+
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="pi1_title">Google Map (rggooglemap)</label>
@@ -114,6 +129,21 @@
 			<label index="depth">Tiefe</label>
 			<label index="tt_address">Addresse</label>
 			<label index="fe_users">FE-User</label>
+			
+			<!-- UPDATE -->
+			<label index="update.text.intro">Update script!</label>
+			<label index="update.text.intro2">Benütze das Formular für einige Update-Mechanismen.</label>
+			<label index="update.button.update">Go</label>
+			<label index="update.text.updated">Update wurde gestartet..</label>
+			<label index="update.copymarkers">Kopiere die Icons nach uploads/tx_rggooglemap/, die für das Suchergebnis benötigt werden</label>
+			<label index="update.copycategories">Kopiere die Kategoriezuordnung vom Feld tx_rggooglemap_cat2 nach tx_rggooglemap_cat. Nur für tt_address, ZUORDNUNG WIRD ÜBERSCHRIEBEN!</label>
+			<label index="update.msg.error">Fehler!</label>
+			<label index="update.msg.success">Erfolg!</label>
+			<label index="update.msg.notify">Achtung!</label>
+			<label index="update.msg.copy.file">Datei %s wurde kopiert!</label>
+			<label index="update.msg.copy.file.error">Datei %s wurde nicht kopiert!</label>
+			<label index="update.msg.copy.category">Die Kategoriezuordnung wurde aktualisiert!</label>
+			
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="pi1_title">Google Map (rggooglemap)</label>
