@@ -447,9 +447,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$subpartArray['###HIDE_RADIUSSEARCH###'] = '';
 		}
 
-		// set the default country
-		$markerArray['##DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
-
+		
+		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry']; // set the default country
+		$markerArray['###DEFAULT_ZIP###'] = $this->piVars['zip'];
+		
 		// fetch the allowed categories as option list
 		$markerArray['###CATEGORY###'] = $this->helperGetRecursiveCat($this->config['categories']);
 
@@ -622,7 +623,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'])) {
 						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'] as $_classRef) {
 							$_procObj = & t3lib_div::getUserObj($_classRef);
-							$searchClause = $_procObj->extraSearchProcessor($table,$searchClause,$orderBy, $limit, $error, $this);
+							$searchClause = $_procObj->extraSearchProcessor($table, $searchClause, $orderBy, $limit, $error, $this);
 						}
 					}
 
