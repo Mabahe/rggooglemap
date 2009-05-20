@@ -30,6 +30,8 @@
 			<label index="map.type.satellite">Satellite</label>
 			<label index="map.type.hybrid">Hybrid</label>
 			<label index="map.type.physical">Terrain</label>
+			<label index="map.type.mapnik">Mapnik</label>
+			<label index="map.type.tah">Tiles@Home</label>
 			<label index="map.type_controls">Show type controls</label>
 			<label index="map.type_controls.0"></label>
 			<label index="map.type_controls.1">Show</label>
@@ -82,6 +84,8 @@
 			<label index="map.type.satellite">Satellit</label>
 			<label index="map.type.hybrid">Hybrid (Karte + Satellit)</label>
 			<label index="map.type.physical">Gelände</label>
+			<label index="map.type.mapnik">Mapnik</label>
+			<label index="map.type.tah">Tiles@Home</label>
 			<label index="map.type_controls">Umschalter für Kartentyp anzeigen</label>
 			<label index="map.type_controls.1">Anzeigen</label>
 			<label index="map.type_controls.2">Verstecken</label>

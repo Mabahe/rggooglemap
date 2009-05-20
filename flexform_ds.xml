@@ -290,7 +290,7 @@
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.type</label>
 							<config>
 								<type>select</type>
-								<maxitems>4</maxitems>
+								<maxitems>6</maxitems>
 								<minitems>0</minitems>
 								<size>4</size>
 								<items type="array">
@@ -310,6 +310,15 @@
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.physical</numIndex>
 										<numIndex index="1">G_PHYSICAL_MAP</numIndex>
 									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.mapnik</numIndex>
+										<numIndex index="1">MAPNIK</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.tah</numIndex>
+										<numIndex index="1">TAH</numIndex>
+									</numIndex>
+
 								</items>
 							</config>
 						</TCEforms>

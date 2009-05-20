@@ -236,7 +236,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// check if this is the correct domain (no cross domain scripts for ajax requests
 		$check = $this->helperCheckForWrongUrl();
 		if (count($check) > 0) {
-			return sprintf($this->pi_getLL('error_wrong-domains'), $check['current'], $check['link']);
+			$link = '<a href="'.$check['link'].'">'.$check['link'].'</a>';
+			return sprintf($this->pi_getLL('error_wrong-domains'), $check['current'], $link);
 		}
 
 
@@ -1079,15 +1080,33 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function getJs () {
     // some settings for controlling
-
+#$this->config['mapType'] = 'G_SATELLITE_MAP,G_HYBRID_MAP,MAPNIK';
 		// map type
+		$markerArray['###MAP_TYPE_MAPNIK###'] = $markerArray['###MAP_TYPE_TAH###'] = 0;
 		if ($this->config['mapType']!='') {
-			$markerArray['###MAP_TYPES###'] = '{mapTypes:['.$this->config['mapType'].']}';
+			// mapnik typoe
+			if (strpos($this->config['mapType'], 'MAPNIK') !== false) {
+				$this->config['mapType'] = t3lib_div::rmFromList('MAPNIK', $this->config['mapType']);
+				$markerArray['###MAP_TYPE_MAPNIK###'] = 1;
+			}
+			// tiles@home typoe
+			if (strpos($this->config['mapType'], 'TAH') !== false) {
+				$this->config['mapType'] = t3lib_div::rmFromList('TAH', $this->config['mapType']);
+				$markerArray['###MAP_TYPE_TAH###'] = 1;
+			}
+
+			// check again because could be that mapnik / TAH are the only one selected 
+			if ($this->config['mapType'] == '') {
+				$this->config['mapType'] = 'G_NORMAL_MAP';
+			}
+			
+			$markerArray['###MAP_TYPES###'] = ',{mapTypes:['.$this->config['mapType'].']}';
+
 		}
 		
 		if ($this->config['mapNavControl'] == 'large' || $this->config['mapNavControl'] == 2) $settings .= 'map.addControl(new GLargeMapControl());';
 		elseif ($this->config['mapNavControl'] == 'small' || $this->config['mapNavControl'] == 1) $settings .= 'map.addControl(new GSmallMapControl());';
-		elseif ($this->config['mapTypeControl'] == 'show' || $this->config['mapTypeControl'] == '1') $settings .= 'map.addControl(new GMapTypeControl());';
+		if ($this->config['mapTypeControl'] == 'show' || $this->config['mapTypeControl'] == '1') $settings .= 'map.addControl(new GMapTypeControl());';
 		if ($this->config['mapOverview'] == 1) $settings .= 'map.addControl(new GOverviewMapControl());';
 		
 		if ($this->config['mapControlOnMouseOver'] == 1) {

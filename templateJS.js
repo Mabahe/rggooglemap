@@ -6,13 +6,14 @@ var gicons=[];
 ###GICONS###
 
 
+ 
 function makeMap() {
   if (GBrowserIsCompatible()) {
 
 		###SELECTED_CAT###
 		
 		//map = new GMap2(document.getElementById("###MAP_DIV###"));
-		map = new GMap2(document.getElementById("map"),###MAP_TYPES###);		
+		map = new GMap2(document.getElementById("map") ###MAP_TYPES###);		
 		gdir=new GDirections(map, document.getElementById('getdirections'));
 		gdir2=new GDirections(map, document.getElementById('getdirections2'));		    
 		geocoder = new GClientGeocoder();
@@ -26,7 +27,12 @@ function makeMap() {
 		###SETTINGS###
 		//map.addControl(new GOverviewMapControl(new GSize(200,200)));
 		//setTimeout("positionOverview(10,60)",10);
-		
+
+
+		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik(); }
+		if (###MAP_TYPE_TAH### == 1)    { loadMap_tah(); }
+
+
 		//###__MAKEMAP### 
 		
 		getXMLData(1);
@@ -136,7 +142,7 @@ clusterer.RemoveMarker( marker );
       	hide('rggooglemapload');
 
 			// general bound for the 1st call only
-			if (firstCall==0) {
+			if (firstCall==0 && ###BOUNDS###==1) {
 				var zoom=map.getBoundsZoomLevel(boundsgeneral);
 				var centerLat = (boundsgeneral.getNorthEast().lat() + boundsgeneral.getSouthWest().lat()) /2;
 				var centerLng = (boundsgeneral.getNorthEast().lng() + boundsgeneral.getSouthWest().lng()) /2;
