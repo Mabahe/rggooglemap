@@ -41,6 +41,7 @@
 			<label index="map.controlonmouseover">Hide Controls on Mouseover</label>
 			<label index="map.mapoverview">Hide overview window</label>
 			<label index="map.showondefault">Default POI</label>
+			<label index="map.useBoundsOnStart">Use bounds for the first load</label>
 			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
 			<label index="menu.sheetTitle">Menu settings</label>
 			<label index="menu.map">Page with the map</label>
@@ -91,6 +92,7 @@
 			<label index="map.controlonmouseover">Bedienung bei Mouseover verbergen</label>
 			<label index="map.mapoverview">Übersichtskarte verbergen</label>
 			<label index="map.showondefault">Standard POI</label>
+			<label index="map.useBoundsOnStart">Optimierte Kartenpositionierung beim 1. Laden</label>			
 			<label index="map.loadDynamicList">Dynamische Liste der POis laden</label>
 			<label index="menu.sheetTitle">Menü</label>
 			<label index="menu.map">Seite mit Karte</label>

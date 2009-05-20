@@ -157,6 +157,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->config['mapNavControl'] 			= $this->helperGetFlexform('map', 'nav_controls', 'mapNavigation');
 		$this->config['mapControlOnMouseOver'] = $this->helperGetFlexform('map', 'controlonmouseouver', 'mapNavigationOnMouseOver');
 		$this->config['mapOverview'] 				= $this->helperGetFlexform('map', 'mapoverview', 'mapOverview');
+		$this->config['useBoundsOnStart'] 	= $this->helperGetFlexform('map', 'useBoundsOnStart', 'useBoundsOnStart');
 
 		$this->config['mapShowOnDefault'] 	= $this->helperGetFlexform('map', 'showondefault', 'showOnDefault'); // default POI to show on begin
 		$this->config['loadDynamicList'] 	= $this->helperGetFlexform('map', 'loadDynamicList', 'loadDynamicList');
@@ -1137,6 +1138,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###ADD_MARKER###'] = $addMarker;
 		$markerArray['###URL_ICONS###'] = $urlForIcons;
 		$markerArray['###URL###'] = $url;
+		$markerArray['###BOUNDS###'] = intval($this->config['useBoundsOnStart']);
 
 		// create the gicons JS, needed for valid sizes, don't trust JS on that...
 		$gicon = '';

@@ -374,7 +374,16 @@
 							</config>
 						</TCEforms>
 					</mapoverview>
-
+					
+					<useBoundsOnStart>
+						<TCEforms>
+							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.useBoundsOnStart</label>
+							<config>
+							<type>check</type>
+							</config>
+						</TCEforms>
+					</useBoundsOnStart>
+					
 					<loadDynamicList>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.loadDynamicList</label>
