@@ -199,6 +199,20 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	}
 	function genJScode($settings, $onload, $scripttags = true)	{
+			// get the key if multidomain is used
+			if (trim($this->confArr['googleKey2']) != '') {
+				$keyListTmp = explode('#####', $this->confArr['googleKey2']);
+				$keyList = array();
+				foreach($keyListTmp as $key) {
+					$split = explode('=', $key);
+					$keyList[$split[0]] = $split[1];
+				}
+
+				$currentDomain = t3lib_div::getIndpEnv('TYPO3_HOST_ONLY');
+				if ($keyList[$currentDomain] != '') {
+					$this->confArr['googleKey'] = $keyList[$currentDomain];
+				}
+			}	
 		$content = chr(10).($scripttags?'<script language="javascript" type="text/javascript">':'').'
 					script_ended = 0;
 					function jumpToUrl(URL)	{
