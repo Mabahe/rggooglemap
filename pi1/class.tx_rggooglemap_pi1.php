@@ -1089,11 +1089,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			if (strpos($this->config['mapType'], 'MAPNIK') !== false) {
 				$this->config['mapType'] = t3lib_div::rmFromList('MAPNIK', $this->config['mapType']);
 				$markerArray['###MAP_TYPE_MAPNIK###'] = 1;
+				$markerArray['###MAP_TYPE_MAPNIK_TITLE###'] = $this->conf['map.']['mapnik_title'];
 			}
 			// tiles@home typoe
 			if (strpos($this->config['mapType'], 'TAH') !== false) {
 				$this->config['mapType'] = t3lib_div::rmFromList('TAH', $this->config['mapType']);
 				$markerArray['###MAP_TYPE_TAH###'] = 1;
+				$markerArray['###MAP_TYPE_TAH_TITLE###'] = $this->conf['map.']['tah_title'];
 			}
 
 			// check again because could be that mapnik / TAH are the only one selected 

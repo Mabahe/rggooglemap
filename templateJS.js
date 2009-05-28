@@ -29,8 +29,8 @@ function makeMap() {
 		//setTimeout("positionOverview(10,60)",10);
 
 
-		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik(); }
-		if (###MAP_TYPE_TAH### == 1)    { loadMap_tah(); }
+		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik("###MAP_TYPE_MAPNIK_TITLE###"); }
+		if (###MAP_TYPE_TAH### == 1)    { loadMap_tah("###MAP_TYPE_TAH_TITLE###"); }
 
 
 		//###__MAKEMAP### 
@@ -72,7 +72,7 @@ function getXMLData(clearOverlay) {
 
 //	GLog.write('URL: '+myXmlVar,'blue');
 
-
+        	var markersList= [];
   var request = GXmlHttp.create();
   request.open("GET", myXmlVar, true);
   request.onreadystatechange = function() {
@@ -124,19 +124,21 @@ function getXMLData(clearOverlay) {
         
         
         	boundsgeneral.extend(point);
+
         marker = createMarker(point, id, img, title, table);
 clusterer.RemoveMarker( marker );
-
+          markersList[i] = marker;
         if (!gmarkers[id2] ) {
         	count++
           gmarkers[id2] = 1;     
 					//GLog.write('mid: '+title+'    '+count,'black');           
           //clusterer.AddMarker(marker,title);
-          
+
           ###ADD_MARKER###
         } 
         
-      }     
+      }
+//			var markerCluster = new MarkerClusterer(map, markersList);     
        //GLog.write('end: '+gmarkers.length,'red');      
         
       	hide('rggooglemapload');

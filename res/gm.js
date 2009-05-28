@@ -165,7 +165,7 @@ function getCopyright() {
 		return copyrightCollection;
 }
 
-function loadMap_mapnik() {
+function loadMap_mapnik(title) {
 	copyrightCollection = getCopyright();
 
     var tilelayers_mapnik = new Array();
@@ -174,12 +174,12 @@ function loadMap_mapnik() {
     tilelayers_mapnik[0].isPng = function () { return true; };
     tilelayers_mapnik[0].getOpacity = function () { return 1.0; };
     var mapnik_map = new GMapType(tilelayers_mapnik,
-        new GMercatorProjection(19), "Mapnik",
+        new GMercatorProjection(19), title,
         { urlArg: 'mapnik', linkColor: '#000000' });
     map.addMapType(mapnik_map);
 }
 
-function loadMap_tah() {
+function loadMap_tah(title) {
 	copyrightCollection = getCopyright();
     var tilelayers_tah = new Array();
     tilelayers_tah[0] = new GTileLayer(copyrightCollection, 0, 17);
@@ -187,7 +187,7 @@ function loadMap_tah() {
     tilelayers_tah[0].isPng = function () { return true; };
     tilelayers_tah[0].getOpacity = function () { return 1.0; };
     var tah_map = new GMapType(tilelayers_tah,
-        new GMercatorProjection(19), "T@H",
+        new GMercatorProjection(19), title,
         { urlArg: 'tah', linkColor: '#000000' });
     map.addMapType(tah_map);
 
