@@ -20,7 +20,11 @@ function makeMap() {
 		new GKeyboardHandler(map);
 		boundsgeneral = new GLatLngBounds();
 
-		
+		if (###MAP_CLUSTER###==1) {
+		var clusterer = new Clusterer(map);
+		}
+
+
 
 		map.setCenter(new GLatLng(###MAP_LAT###, ###MAP_LNG###), ###MAP_ZOOM###);
 
@@ -72,6 +76,7 @@ function getXMLData(clearOverlay) {
 
 //	GLog.write('URL: '+myXmlVar,'blue');
 
+
         	var markersList= [];
   var request = GXmlHttp.create();
   request.open("GET", myXmlVar, true);
@@ -82,7 +87,7 @@ function getXMLData(clearOverlay) {
       
       // obtain the array of markers and loop through it
       var markers = xmlDoc.documentElement.getElementsByTagName("marker");
-      var clusterer = new Clusterer(map);
+
 
 
       if (clearOverlay ==12) {
@@ -106,6 +111,10 @@ function getXMLData(clearOverlay) {
        var count=0;
        var length = gmarkers.length;
 
+			if (###MAP_CLUSTER###==2) {
+  			gmarkers = [];
+  			map.clearOverlays();
+  		}
        
      //x  document.getElementById('coordinfo').innerHTML= markers.length + " ---- "+test+"<a href=\" "+myXmlVar+"\">XML<&#47;a>";
       for (var i = 0; i < markers.length; i++) {
@@ -121,12 +130,12 @@ function getXMLData(clearOverlay) {
         
         var id2 = id;
 
-        
+
         
         	boundsgeneral.extend(point);
 
         marker = createMarker(point, id, img, title, table);
-clusterer.RemoveMarker( marker );
+
           markersList[i] = marker;
         if (!gmarkers[id2] ) {
         	count++
@@ -138,7 +147,13 @@ clusterer.RemoveMarker( marker );
         } 
         
       }
-//			var markerCluster = new MarkerClusterer(map, markersList);     
+
+			if (###MAP_CLUSTER###==2) {
+				var markerCluster = new MarkerClusterer(map, markersList);
+			}
+
+			
+			     
        //GLog.write('end: '+gmarkers.length,'red');      
         
       	hide('rggooglemapload');

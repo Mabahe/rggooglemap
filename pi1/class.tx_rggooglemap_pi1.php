@@ -823,13 +823,23 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		// additional output using a template
 		$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###HEADER###');
-		$markerArray = array();
+		$markerArray = $subpartArray = array();
 		$markerArray['###PATH###'] = t3lib_extMgm::siteRelpath('rggooglemap');
 		$markerArray['###MAP_KEY###'] = $this->config['mapKey'];
 		$markerArray['###DYNAMIC_JS###'] = $this->getJs();
 
-		$totalJS = $this->cObj2->substituteMarkerArrayCached($template['total'],$markerArray);
+		// load spefic files if needed for clustering
+		if ($this->conf['map.']['activateCluster']==1) { // gxmarkers
+			$subpartArray['###CLUSTER_2###'] = '';
 
+		} elseif ($this->conf['map.']['activateCluster']==2) { // markerclusterer
+			$subpartArray['###CLUSTER_1###'] = '';
+
+		} else { // no clustering
+			$subpartArray['###CLUSTER_1###'] = $subpartArray['###CLUSTER_2###'] = '';
+		}
+
+		$totalJS = $this->cObj2->substituteMarkerArrayCached($template['total'],$markerArray, $subpartArray);
 		$GLOBALS['TSFE']->additionalHeaderData['rggooglemap_xajax'] = $this->xajax->getJavascript(t3lib_extMgm::siteRelPath('xajax'));
 		$GLOBALS['TSFE']->additionalHeaderData['rggooglemap_js'] = $totalJS;
 	}
@@ -1147,7 +1157,21 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 		
 		// use cluster, default = 0
-		$addMarker = ($this->conf['activateCluster']==1) ? 'clusterer.AddMarker(marker,title);' : 'map.addOverlay( marker );';
+		switch($this->conf['map.']['activateCluster']) {
+			case 1:
+				$addMarker = 'clusterer.AddMarker(marker,title);';
+				$markerArray['###MAP_CLUSTER###'] = 1;
+				break;
+			case 2:
+				$addMarker = 'map.addOverlay( marker );';
+				$markerArray['###MAP_CLUSTER###'] = 2;				
+				break;
+			default:
+				$addMarker = 'map.addOverlay( marker );';
+				$markerArray['###MAP_CLUSTER###'] = 0;				
+				break;
+		}
+
 
 		$markerArray['###HIDECONTROLSMOUSEOUT###'] = $hideControlsOnMouseOut;
 		$markerArray['###POI_ON_START###'] = $this->getPoiOnStart();

@@ -27,7 +27,6 @@ plugin.tx_rggooglemap_pi1 {
 
   mapAvailableCats =
   mapActiveCats =  
-  activateCluster = 0
   
 	defaultCountry = Austria
 	defaultTable = tt_address	
@@ -62,6 +61,9 @@ plugin.tx_rggooglemap_pi1 {
 		# title of alternative maps
 		tah_title = T@H
 		mapnik_title = Mapnik
+		
+		# cluster function
+  	activateCluster = 0		
 	}
 	
 	##################
