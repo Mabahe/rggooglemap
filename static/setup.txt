@@ -58,6 +58,10 @@ plugin.tx_rggooglemap_pi1 {
 				height 	= 32
 			}
 		}
+
+		# title of alternative maps
+		tah_title = T@H
+		mapnik_title = Mapnik
 	}
 	
 	##################
