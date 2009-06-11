@@ -28,23 +28,23 @@ t3lib_extMgm::addPItoST43($_EXTKEY,'pi3/class.tx_rggooglemap_pi3.php','_pi3','',
 
 
 // add the service
-t3lib_extMgm::addService($_EXTKEY,  'rggmData' /* sv type */,  'tx_rggooglemap_sv1' /* sv key */,
-		array(
-			'title' => 'tt_address for rggooglemap ',
-			'description' => 'Gets the needed data out of tt_address',
-			'subtype' => 'tt_address', // table 
-			
-			'available' => true,
-			'priority' => 50,
-			'quality' => 50,
-			
-			'os' => '',
-			'exec' => '',
-			
-			'classFile' => t3lib_extMgm::extPath($_EXTKEY).'sv1/class.tx_rggooglemap_sv1.php',
-			'className' => 'tx_rggooglemap_sv1',
-		)
-	);
+t3lib_extMgm::addService($_EXTKEY, 'rggmData', 'tx_rggooglemap_sv1',
+	array(
+		'title' => 'tt_address for rggooglemap ',
+		'description' => 'Gets the needed data out of tt_address',
+		'subtype' => 'tt_address',
+		
+		'available' => true,
+		'priority' => 50,
+		'quality' => 50,
+		
+		'os' => '',
+		'exec' => '',
+		
+		'classFile' => t3lib_extMgm::extPath($_EXTKEY).'sv1/class.tx_rggooglemap_sv1.php',
+		'className' => 'tx_rggooglemap_sv1',
+	)
+);
 
 // settings of extension manager
 $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
