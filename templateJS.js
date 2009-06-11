@@ -5,6 +5,10 @@
 var gicons=[];
 ###GICONS###
 
+gicons[91919199]= new GIcon(baseIcon);
+gicons[91919199].image = "http://p107891.typo3server.info/typo3conf/ext/rggooglemap/res/icons/cluster-m2.png";
+gicons[91919199].iconSize = new GSize(56, 55);
+gicons[91919199].infoWindowAnchor = new GPoint(28, 28);
 
  
 function makeMap() {
@@ -21,7 +25,7 @@ function makeMap() {
 		boundsgeneral = new GLatLngBounds();
 
 		if (###MAP_CLUSTER###==1) {
-		var clusterer = new Clusterer(map);
+			var clusterer = new Clusterer(map);
 		}
 
 
@@ -29,8 +33,6 @@ function makeMap() {
 		map.setCenter(new GLatLng(###MAP_LAT###, ###MAP_LNG###), ###MAP_ZOOM###);
 
 		###SETTINGS###
-		//map.addControl(new GOverviewMapControl(new GSize(200,200)));
-		//setTimeout("positionOverview(10,60)",10);
 
 
 		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik("###MAP_TYPE_MAPNIK_TITLE###"); }
@@ -45,9 +47,11 @@ function makeMap() {
 		cat =   document.getElementById("mapcatlist").innerHTML;
 		
 		GEvent.addListener(map, 'moveend', function() {
+
 			
 			myXmlVar="###URL###&tx_rggooglemap_pi1[cat]="+cat+"&tx_rggooglemap_pi1[area]=" + getBound() + "&tx_rggooglemap_pi1[zoom]="+map.getZoom()+"&r=" + Math.random();
-						
+				
+		
 			if(!stopReload) {
 				getXMLData(123);
 			}
@@ -65,7 +69,12 @@ function makeMap() {
   }
 }
 
+
+
 function getXMLData(clearOverlay) {
+//GLog.write(getBound(),'blue');
+
+
 
       if (clearOverlay !=123) {
 	show('rggooglemapload');
@@ -74,7 +83,13 @@ function getXMLData(clearOverlay) {
   cat =   document.getElementById("mapcatlist").innerHTML;
   myXmlVar="###URL###&tx_rggooglemap_pi1[cat]="+cat+"&tx_rggooglemap_pi1[area]=" + getBound() + "&tx_rggooglemap_pi1[zoom]="+map.getZoom()+"&r=" + Math.random();
 
-//	GLog.write('URL: '+myXmlVar,'blue');
+	###DEBUG###GLog.writeUrl(myXmlVar);
+	
+	// clear clusterts
+	for (var i=0;i < rggmclustermarkers.length; i++) {
+		map.removeOverlay(rggmclustermarkers[i]); 
+	}
+	//rggmclustermarkers = [];
 
 
         	var markersList= [];
@@ -115,6 +130,7 @@ function getXMLData(clearOverlay) {
   			gmarkers = [];
   			map.clearOverlays();
   		}
+  		var rggmclustermarkerscount =0 ;
        
      //x  document.getElementById('coordinfo').innerHTML= markers.length + " ---- "+test+"<a href=\" "+myXmlVar+"\">XML<&#47;a>";
       for (var i = 0; i < markers.length; i++) {
@@ -127,35 +143,45 @@ function getXMLData(clearOverlay) {
         var id = parseFloat(markers[i].getAttribute("uid"));
         var table = markers[i].getAttribute("table");
         var img = markers[i].getAttribute("img");
-        
-        var id2 = id;
-
-
+        var id2 = parseFloat(markers[i].getAttribute("uid2"));
         
         	boundsgeneral.extend(point);
 
         marker = createMarker(point, id, img, title, table);
 
           markersList[i] = marker;
-        if (!gmarkers[id2] ) {
-        	count++
-          gmarkers[id2] = 1;     
-					//GLog.write('mid: '+title+'    '+count,'black');           
-          //clusterer.AddMarker(marker,title);
+          
+          if (table == 'rggmcluster') {
+							 	rggmclustermarkers[rggmclustermarkerscount] = marker;
+							 	rggmclustermarkerscount++;
+							 	###ADD_MARKER###					
+					
+					} else {
+		        if (gmarkers[id2]!=1 ) {
+							//GLog.write('mid: '+title+'    '+count,'black');           
+		          //clusterer.AddMarker(marker,title);
 
-          ###ADD_MARKER###
-        } 
+		        	count++
+		          gmarkers[id2] = 1;     
+	
+		          ###ADD_MARKER###						
+	
+							
+							
+		
+	
+		        } 
+	        }
         
       }
+      
+      ###DEBUG###GLog.write('POIs added : '+count);          
 
 			if (###MAP_CLUSTER###==2) {
 				var markerCluster = new MarkerClusterer(map, markersList);
 			}
 
-			
-			     
-       //GLog.write('end: '+gmarkers.length,'red');      
-        
+			       
       	hide('rggooglemapload');
 
 			// general bound for the 1st call only
@@ -176,10 +202,9 @@ function getXMLData(clearOverlay) {
   
 }
 
-function createMarker(point, id, img, title,table, searchIons) {   
-//GLog.write('point: '+point+' id '+id+' img '+img+' title' +title+ ' table '+table,'blue');
-//alert('point: '+point+' id '+id+' img '+img+' title' +title+ ' table '+table);
 
+
+function createMarker(point, id, img, title,table, searchIons) {   
 	
 	if(searchIons==1) {
 		icon = searchIcon;
@@ -192,24 +217,34 @@ function createMarker(point, id, img, title,table, searchIons) {
 //	
 	
 	// var marker = new GxMarker( point, icon, ""+ title, { "offset": new GSize(10, -20), "isStatic": false } );
-	var marker = new GxMarker( point, icon, ""+title );
-	//var marker = new GMarker (point);
+	//
+	if (table == 'rggmcluster') {
+		var marker = new GMarker (point, icon);
+	} else {
+		var marker = new GxMarker( point, icon, ""+title );
+	}
 	
 	// var marker = new GxMarker( point, "http://www.rggooglemap.com/uploads/tx_rggooglemap/VirtError_02.gif", ""+title );
 	var url = "###URL###&no_cache=1&tx_rggooglemap_pi1[detail]="+id+"&tx_rggooglemap_pi1[table]="+table;
 
-	GEvent.addListener(marker, "click", function() {
-		
-		var req = GXmlHttp.create();
-		req.open("GET", url, true );
-		req.onreadystatechange = function() {
-			if ( req.readyState == 4 ) {
-				marker.openInfoWindowHtml( req.responseText );
+
+		GEvent.addListener(marker, "click", function() {
+	if (table == 'rggmcluster') {
+				map.zoomIn();
+				
+	} else {
+ 			var req = GXmlHttp.create();
+			req.open("GET", url, true );
+			req.onreadystatechange = function() {
+				if ( req.readyState == 4 ) {
+					marker.openInfoWindowHtml( req.responseText );
+				}
+			};
+			req.send(null);
+
 			}
-		};
-		req.send(null);
-		
-	});
+		});
+
 	return marker;
 }  
 
@@ -218,7 +253,8 @@ function myclick(i, lng, lat, table,showMarker) {
 	
 	var req = GXmlHttp.create();
 	var url = "###URL###&type=500&no_cache=1&tx_rggooglemap_pi1[detail]="+i+"&tx_rggooglemap_pi1[table]="+table;
-	
+
+	//GLog.writeHtml('Clicked POI: '+i +' (uid), '+table +' (table), '+lng+' (lng) '+lat+' (lat), <a href="'+url+'" target="_blank">url</a>');	
 	req.open("GET", url, true);
 	var t=this;
 	req.onreadystatechange = function() {

@@ -1185,6 +1185,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###URL_ICONS###'] = $urlForIcons;
 		$markerArray['###URL###'] = $url;
 		$markerArray['###BOUNDS###'] = intval($this->config['useBoundsOnStart']);
+		$this->conf['map.']['debug'] = 0;
+		$markerArray['###DEBUG###'] = ($this->conf['map.']['debug']==1) ? '' : '//';
 
 		// create the gicons JS, needed for valid sizes, don't trust JS on that...
 		$gicon = '';
@@ -1700,6 +1702,105 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			return $value;
 		}
 	}
+
+
+	/**
+	 * Generate a unique integer key despite of the table name as string
+	 *
+	 * @param	string		$table: name of the table
+	 * @param	int		$id: uid of the record
+	 * @return integer unique key
+	 */	
+	function helperJsKey($table, $id) {
+		$key = substr(hexdec(substr (md5($table) , 0 , 7)), 0, 3).$id;
+		return $key;
+	}
+	
+
+	/**
+	 * Cluster all records by grouping them into different areas
+	 *
+	 * @param	array		$list: all records
+	 * @param	array		$areaArr: the current area of the map
+	 * @return array the clustered list of records
+	 */		
+	function helperClusterRecords($list, $areaArr) {
+		$clusterCount = 1;
+		
+		//limit to 30 markers
+		$limit = 30;
+		$gridSize = 0;
+		$listRemove = array();
+		
+		while(count($list)>$limit) {
+			//grid size in pixels. if the first pass fails to reduce the
+			//number of markers below the limit, the grid will increase
+			//again and redo the loop.
+			$gridSize += ($areaArr[3]-$areaArr[1])/30;
+			$clustered = array();
+			reset($list);
+			
+			//loop through the $list and put each one in agrid square
+			foreach ($list as $k=>$v) {
+				//calculate the y position based on the latitude: $v[0]
+				$y = floor(($v['lat']-$areaArr[0])/$gridSize);
+				//calculate the x position based on the longitude: $v[1]
+				$x = floor(($v['lng']-$areaArr[1])/$gridSize);
+				
+				//use the x and y values as the key for the array and append
+				//the points key to the clustered array
+				$clustered["{$x},{$y}"][] = $k;
+			}
+
+			//check if we're below the limit and if not loop again
+			if (count($clustered)>$limit) {
+				continue;
+			}
+			
+			//reformat the list array
+			$listRemove = array();
+			
+			foreach ($clustered as $k=>$v) {
+				
+				//only merge if there is more than one marker in acell
+				if(count($v)>1) {
+					
+					//create alist of the merged markers
+					$listRemove = array_merge($listRemove,$v);
+					
+					//add acluster marker to the list
+					$clusterLat = $list[$v[0]]['lat'];
+					$clusterLng = $list[$v[0]]['lng'];
+					
+					// add a clustered record to the list
+					$list[] = array(
+						'lat'=> $clusterLat,
+						'lng' => $clusterLng,
+						'rggmcluster' => 1,
+						'rggmtitle' => 'cluster - '.count($v),
+						'uid' => $this->helperJsKey('rggmcluster', $clusterCount),
+						'table' => 'rggmcluster',
+						'rggmcat' => 91919199
+					);
+					
+					$clusterCount++;
+				}
+			}
+			
+			//unset all the merged pins, reverse to start with highest key
+			rsort($listRemove);
+			while(list($k,$v) = each($listRemove)) {
+				unset($list[$v]);
+			}
+			
+			//we're done!
+			break;
+		}
+		
+		reset($list);
+		#print_r($list);
+		return $list;
+	}
 	
 	/*
 	* **********************************
@@ -1711,10 +1812,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
 		
 		$postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
+		$areaArr=split(', ', $postvars['area']);
 		
 		// fetch the content of a single poi
 		if ($postvars['detail']!='') {
 			$content = $this->getPoiContent($postvars['detail'],1,$postvars['table']);
+
 			return $content;
 		}
 			
@@ -1743,9 +1846,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
 			
-			if (strlen($postvars['area'])>5) {
-				$areaArr=array();
-				$areaArr=split(', ',$postvars['area']);
+
+			if (count($areaArr)>1) {
 				$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
 									 AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
 			}
@@ -1783,6 +1885,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
 			
+			if ($this->conf['map.']['cluster']==1 || 1==2) {
+				$res = $this->helperClusterRecords($res, $areaArr);			
+			}
+
+			
 			while($row=array_shift($res)) {
 				$test = '';
 				$count++;
@@ -1814,14 +1921,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($table, $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
+		$uid2 = $this->helperJsKey($row['table'], $row['uid']);
 
-		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'"  >';
+		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid2="'.$uid2.'" uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'"  >';
 
 
 		$this->xmlGetRowInXML($row,$conf);
 		$this->xmlLines[]=$this->xmlIcode.'</marker>';
 	}
-
 
 	/**
 	*  inserts the element/node "html" for every record => the content of every POI
