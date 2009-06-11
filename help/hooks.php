@@ -4,6 +4,7 @@
 
 // for hook
 
+/*
 if (TYPO3_MODE == 'FE')    {
     require_once(t3lib_extMgm::extPath('rggooglemap').'class.tx_rggm_fe.php');
 }
@@ -19,6 +20,7 @@ $TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraItemMarkerHook'][]   = 'tx_rggm_fe'
 $TYPO3_CONF_VARS['EXTCONF']['tt_news']['extraGlobalMarkerHook'][]   = 'tx_rggm_fe';
 $TYPO3_CONF_VARS['EXTCONF']['ve_guestbook']['postEntryInsertedHook'][] = 'tx_rggm_fe';
 
+*/
 
 
 ?>
