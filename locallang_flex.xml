@@ -55,6 +55,8 @@
 			<label index="sorting.uid">UID</label>
 			<label index="sorting.tstamp">Last modified (tstamp)</label>
 			<label index="sorting.crdate">Creation Date (crdate)</label>
+			<label index="sorting.orderby.asc">Ascending</label>
+			<label index="sorting.orderby.desc">Descending</label>
 			<label index="search.sheetTitle">Search &amp; Directions</label>
 			<label index="search.defaultCountry">Default Country for Geocoding, use &quot;AT&quot; or &quot;Austria&quot; or &quot;Österreich&quot;</label>
 			<label index="search.radiusSearch">Enable Radius Search</label>
@@ -109,6 +111,8 @@
 			<label index="sorting.tstamp">Letztes geändert (tstamp)</label>
 			<label index="sorting.crdate">Erstellt (crdate)</label>
 			<label index="search.sheetTitle">Suche &amp; Anfahrt</label>
+			<label index="sorting.orderby.asc">aufsteigend</label>
+			<label index="sorting.orderby.desc">absteigend</label>
 			<label index="search.defaultCountry">Standard Land für Geocodierung, Bsp &quot;AT&quot;, &quot;Austria&quot;, &quot;Österreich&quot;</label>
 			<label index="search.radiusSearch">Umkreissuche aktivieren</label>
 			<label index="general.title">Allgemein</label>
