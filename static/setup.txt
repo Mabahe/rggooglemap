@@ -61,9 +61,20 @@ plugin.tx_rggooglemap_pi1 {
 		# title of alternative maps
 		tah_title = T@H
 		mapnik_title = Mapnik
-		
+  	debug = 0		
+
 		# cluster function
-  	activateCluster = 0		
+  	activateCluster = 0
+  	
+  	activateCluster.3 {
+			icon (
+				gicons[91919199]= new GIcon(baseIcon);
+				gicons[91919199].image = "###CURRENT_URL###typo3conf/ext/rggooglemap/res/icons/cluster-m2.png";
+				gicons[91919199].iconSize = new GSize(56, 55);
+				gicons[91919199].infoWindowAnchor = new GPoint(28, 28);
+			)
+		}
+
 	}
 	
 	##################

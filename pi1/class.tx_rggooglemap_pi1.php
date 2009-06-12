@@ -1185,7 +1185,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###URL_ICONS###'] = $urlForIcons;
 		$markerArray['###URL###'] = $url;
 		$markerArray['###BOUNDS###'] = intval($this->config['useBoundsOnStart']);
-		$this->conf['map.']['debug'] = 0;
 		$markerArray['###DEBUG###'] = ($this->conf['map.']['debug']==1) ? '' : '//';
 
 		// create the gicons JS, needed for valid sizes, don't trust JS on that...
@@ -1228,6 +1227,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 
 		$markerArray['###GICONS###'] = $gicon;
+		
+		if ($this->conf['map.']['activateCluster'] == 3) {
+			echo $icon = str_replace('###CURRENT_URL###', t3lib_div::getIndpEnv('TYPO3_SITE_URL'), $this->conf['map.']['activateCluster.']['3.']['icon']);
+			$markerArray['###GICONS###'].= $icon;
+		}
 
 
     // Adds hook for processing of extra javascript
@@ -1885,7 +1889,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
 			
-			if ($this->conf['map.']['cluster']==1 || 1==2) {
+			if ($this->conf['map.']['activateCluster']==3 || 1==2) {
 				$res = $this->helperClusterRecords($res, $areaArr);			
 			}
 

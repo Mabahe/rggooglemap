@@ -5,10 +5,7 @@
 var gicons=[];
 ###GICONS###
 
-gicons[91919199]= new GIcon(baseIcon);
-gicons[91919199].image = "http://p107891.typo3server.info/typo3conf/ext/rggooglemap/res/icons/cluster-m2.png";
-gicons[91919199].iconSize = new GSize(56, 55);
-gicons[91919199].infoWindowAnchor = new GPoint(28, 28);
+
 
  
 function makeMap() {
