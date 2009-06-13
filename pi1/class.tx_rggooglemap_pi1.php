@@ -1229,7 +1229,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###GICONS###'] = $gicon;
 		
 		if ($this->conf['map.']['activateCluster'] == 3) {
-			echo $icon = str_replace('###CURRENT_URL###', t3lib_div::getIndpEnv('TYPO3_SITE_URL'), $this->conf['map.']['activateCluster.']['3.']['icon']);
+			$icon = str_replace('###CURRENT_URL###', t3lib_div::getIndpEnv('TYPO3_SITE_URL'), $this->conf['map.']['activateCluster.']['3.']['icon']);
 			$markerArray['###GICONS###'].= $icon;
 		}
 
