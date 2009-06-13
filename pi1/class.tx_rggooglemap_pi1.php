@@ -1772,10 +1772,16 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					//create alist of the merged markers
 					$listRemove = array_merge($listRemove,$v);
 					
-					//add acluster marker to the list
-					$clusterLat = $list[$v[0]]['lat'];
-					$clusterLng = $list[$v[0]]['lng'];
-					
+					// add acluster marker to the list
+					// get the middle of all clustered records
+					$clusterLat = $clusterLng = 0;
+					foreach ($list as $record) {
+						$clusterLat += $record['lat'];
+						$clusterLng += $record['lng'];
+					}
+					$clusterLat = $clusterLat / count($list);
+					$clusterLng = $clusterLng / count($list);
+									
 					// add a clustered record to the list
 					$list[] = array(
 						'lat'=> $clusterLat,
