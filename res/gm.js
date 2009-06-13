@@ -1,6 +1,7 @@
 var stopReload=false;
 var map;
 var gmarkers = [];
+var rggmclustermarkers = [];
 var searchresultmarkers = [];
 var clusterer;
 var test = false;
