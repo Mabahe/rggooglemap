@@ -148,27 +148,24 @@ function getXMLData(clearOverlay) {
 
           markersList[i] = marker;
           
-          if (table == 'rggmcluster') {
-							 	rggmclustermarkers[rggmclustermarkerscount] = marker;
-							 	rggmclustermarkerscount++;
-							 	###ADD_MARKER###					
-					
-					} else {
-		        if (gmarkers[id2]!=1 ) {
-							//GLog.write('mid: '+title+'    '+count,'black');           
-		          //clusterer.AddMarker(marker,title);
-
-		        	count++
-		          gmarkers[id2] = 1;     
+          if (###MAP_CLUSTER###!=2) {
+	          if (table == 'rggmcluster') {
+								 	rggmclustermarkers[rggmclustermarkerscount] = marker;
+								 	rggmclustermarkerscount++;
+								 	###ADD_MARKER###					
+						
+						} else {
+			        if (gmarkers[id2]!=1 ) {
+								//GLog.write('mid: '+title+'    '+count,'black');           
+			          //clusterer.AddMarker(marker,title);
 	
-		          ###ADD_MARKER###						
-	
-							
-							
+			        	count++
+			          gmarkers[id2] = 1;     
 		
-	
-		        } 
-	        }
+			          ###ADD_MARKER###						
+			        } 
+		        }
+		      }
         
       }
       
