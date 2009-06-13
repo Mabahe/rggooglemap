@@ -22,7 +22,7 @@ function makeMap() {
 		boundsgeneral = new GLatLngBounds();
 
 		if (###MAP_CLUSTER###==1) {
-			var clusterer = new Clusterer(map);
+			clusterer = new Clusterer(map);
 		}
 
 
