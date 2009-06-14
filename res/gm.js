@@ -14,25 +14,25 @@ function d(id){return document.getElementById(id);}
 
 // Show Info Box of POI-List (rgpopup)
 function show(id) {
-  obj = document.getElementById(id);
-  obj.style.display = "block";
+	obj = document.getElementById(id);
+	obj.style.display = "block";
 }
 
 
 // Hide Info Box of POI-List (rgpopup)
 function hide(id) {
 	obj = document.getElementById(id);
-  obj.style.display = "none";
-  return false;
+	obj.style.display = "none";
+	return false;
 }
 
 function getBound() {
-  var myXmlVar=String(map.getBounds());
-  myXmlVar=myXmlVar.replace(/\(/g ,"");
-  myXmlVar=myXmlVar.replace(/\)/g ,"");
-  myXmlVar=escape(myXmlVar);
-  //alert(myXmlVar);
-  return myXmlVar;
+	var myXmlVar=String(map.getBounds());
+	myXmlVar=myXmlVar.replace(/\(/g ,"");
+	myXmlVar=myXmlVar.replace(/\)/g ,"");
+	myXmlVar=escape(myXmlVar);
+	//alert(myXmlVar);
+	return myXmlVar;
 }
 
 var baseIcon = new GIcon();
@@ -46,54 +46,46 @@ searchIcon.iconSize = new GSize(20, 34);
 searchIcon.iconAnchor = new GPoint(10, 34);
 searchIcon.infoWindowAnchor = new GPoint(10, 17);
 
-//baseIcon.infoShadowAnchor = new GPoint(80, 25);
-//baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
-//baseIcon.shadowSize = new GSize(37, 34);
-//baseIcon.iconAnchor = new GPoint(5, 8);
-
 
 // openPic from typo3 core function 
 function openPic(url,winName,winParams) {  
-  var theWindow = window.open(url,winName,winParams); 
-  if (theWindow) {theWindow.focus();} 
+	var theWindow = window.open(url,winName,winParams); 
+	if (theWindow) {theWindow.focus();} 
 }
 
 // geocoding for searchbox
 function showAddress(address, zoom) {
-
-  if (geocoder) {
-    geocoder.getLatLng(
-      address,
-      function(point) {
-        if (!point) {
-          alert(address + " not found");
-        } else {
-
-          map.setCenter(point, parseInt(zoom));
-        }
-      }
-    );
-  }
+	if (geocoder) {
+		geocoder.getLatLng(
+			address,
+			function(point) {
+				if (!point) {
+					alert(address + " not found");
+				} else {
+					map.setCenter(point, parseInt(zoom));
+				}
+			}
+		);
+	}
 }
 
 // catTreemneu
 function rggmTree(data) {
-  tx_rggooglemap_pi1processCatTree(data);
-  setTimeout("fdTableSort.init()", 1000);
+	tx_rggooglemap_pi1processCatTree(data);
+	setTimeout("fdTableSort.init()", 1000);
 }
 
 // catTreemneu
 function rggmSearchMenu(data) {
-  tx_rggooglemap_pi1processSearchInMenu(data);
-  setTimeout("fdTableSort.init()", 1000);
+	tx_rggooglemap_pi1processSearchInMenu(data);
+	setTimeout("fdTableSort.init()", 1000);
 }
 
 function deleteSearchResult() {
-  document.getElementById("searchFormResult").innerHTML = '';
-  for (var i = 0; i < searchresultmarkers.length; i++) {
-  map.removeOverlay(searchresultmarkers[i]);
-  
-  }
+	document.getElementById("searchFormResult").innerHTML = '';
+	for (var i = 0; i < searchresultmarkers.length; i++) {
+		map.removeOverlay(searchresultmarkers[i]);
+	}
 }
 
 function checkall(id) {
@@ -149,14 +141,9 @@ function callSearchWithResults() {
 
 }
 
-function GetTileUrl_Mapnik(a, z) {
-	return "http://tile.openstreetmap.org/" + z + "/" + a.x + "/" + a.y + ".png";
-}
 
-function GetTileUrl_TaH(a, z) {
-	return "http://tah.openstreetmap.org/Tiles/tile/" + z + "/" + a.x + "/" + a.y + ".png";
-}
 
+// copyright information for the additonal layers
 function getCopyright() {
 		var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90,-180), new GLatLng(90,180)), 0, 
 			'(<a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>)');
@@ -166,30 +153,42 @@ function getCopyright() {
 		return copyrightCollection;
 }
 
+// Mapnik map
 function loadMap_mapnik(title) {
 	copyrightCollection = getCopyright();
+	
+	var tilelayers_mapnik = new Array();
+	tilelayers_mapnik[0] = new GTileLayer(copyrightCollection, 0, 18);
+	tilelayers_mapnik[0].getTileUrl = loadMap_mapnik_url;
+	tilelayers_mapnik[0].isPng = function () { return true; };
+	tilelayers_mapnik[0].getOpacity = function () { return 1.0; };
 
-    var tilelayers_mapnik = new Array();
-    tilelayers_mapnik[0] = new GTileLayer(copyrightCollection, 0, 18);
-    tilelayers_mapnik[0].getTileUrl = GetTileUrl_Mapnik;
-    tilelayers_mapnik[0].isPng = function () { return true; };
-    tilelayers_mapnik[0].getOpacity = function () { return 1.0; };
-    var mapnik_map = new GMapType(tilelayers_mapnik,
-        new GMercatorProjection(19), title,
-        { urlArg: 'mapnik', linkColor: '#000000' });
-    map.addMapType(mapnik_map);
+	var mapnik_map = new GMapType(tilelayers_mapnik,
+		new GMercatorProjection(19), title,
+		{ urlArg: 'mapnik', linkColor: '#000000' }
+	);
+	map.addMapType(mapnik_map);
 }
 
+// Mapnik map URL
+function loadMap_mapnik_url(a, z) { return "http://tile.openstreetmap.org/" + z + "/" + a.x + "/" + a.y + ".png"; }
+
+// T@H map
 function loadMap_tah(title) {
 	copyrightCollection = getCopyright();
-    var tilelayers_tah = new Array();
-    tilelayers_tah[0] = new GTileLayer(copyrightCollection, 0, 17);
-    tilelayers_tah[0].getTileUrl = GetTileUrl_TaH;
-    tilelayers_tah[0].isPng = function () { return true; };
-    tilelayers_tah[0].getOpacity = function () { return 1.0; };
-    var tah_map = new GMapType(tilelayers_tah,
-        new GMercatorProjection(19), title,
-        { urlArg: 'tah', linkColor: '#000000' });
-    map.addMapType(tah_map);
-
+	
+	var tilelayers_tah = new Array();
+	tilelayers_tah[0] = new GTileLayer(copyrightCollection, 0, 17);
+	tilelayers_tah[0].getTileUrl = loadMap_tah_url;
+	tilelayers_tah[0].isPng = function () { return true; };
+	tilelayers_tah[0].getOpacity = function () { return 1.0; };
+	
+	var tah_map = new GMapType(tilelayers_tah,
+		new GMercatorProjection(19), title,
+		{ urlArg: 'tah', linkColor: '#000000' }
+	);
+	map.addMapType(tah_map);
 }
+
+// T@H map url
+function loadMap_tah_url(a, z) { return "http://tah.openstreetmap.org/Tiles/tile/" + z + "/" + a.x + "/" + a.y + ".png"; }
