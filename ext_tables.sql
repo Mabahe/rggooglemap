@@ -4,7 +4,7 @@
 CREATE TABLE tt_address (
     tx_rggooglemap_lng tinytext NOT NULL,
     tx_rggooglemap_lat tinytext NOT NULL,
-    tx_rggooglemap_cat int(11) DEFAULT '0' NOT NULL,
+    tx_rggooglemap_cat tinytext NOT NULL,
 );
 
 
