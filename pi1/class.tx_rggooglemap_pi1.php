@@ -826,6 +826,16 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray = $subpartArray = array();
 		$markerArray['###PATH###'] = t3lib_extMgm::siteRelpath('rggooglemap');
 		$markerArray['###MAP_KEY###'] = $this->config['mapKey'];
+		
+		if ($this->conf['map.']['addLanguage'] == 1) {
+			if ($this->conf['map.']['addLanguage.']['override'] != '') {
+				$markerArray['###MAP_KEY###'] .= '&hl=' . $this->conf['map.']['addLanguage.']['override'];
+			} elseif ($GLOBALS['TSFE']->lang != '') {
+				$markerArray['###MAP_KEY###'] .= '&hl=' . $GLOBALS['TSFE']->lang;
+			}
+		}
+
+
 		$markerArray['###DYNAMIC_JS###'] = $this->getJs();
 
 		// load spefic files if needed for clustering

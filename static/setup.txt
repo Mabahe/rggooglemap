@@ -3,30 +3,30 @@ lib.parseFunc_RTE.allowTags := addToList(map)
 lib.parseFunc.allowTags := addToList(map)
 
 plugin.tx_rggooglemap_pi1 {
-  templateFile = EXT:rggooglemap/template.html
-  templateFileJS = EXT:rggooglemap/templateJS.js  
-  cssFile = EXT:rggooglemap/res/rggm.css
-  pidList = 
-  recursive = 
-  mapDiv = map  
-  mapWidth = 769
-  mapHeight = 450
-  mapLng = 13.537216186523438
-  mapLat = 47.585673399138294
-  mapZoom = 11
-  mapKey = 
-  mapType = G_NORMAL_MAP
-  mapControl = 1
-  mapNavigation = 1
-  mapNavigationOnMouseOver = 0
-  mapOverview = 0
-
-  enableDoubleClickZoom = 1
-  enableContinuousZoom = 1
-  enableScrollWheelZoom = 1
-
-  mapAvailableCats =
-  mapActiveCats =  
+	templateFile = EXT:rggooglemap/template.html
+	templateFileJS = EXT:rggooglemap/templateJS.js  
+	cssFile = EXT:rggooglemap/res/rggm.css
+	pidList = 
+	recursive = 
+	mapDiv = map  
+	mapWidth = 769
+	mapHeight = 450
+	mapLng = 13.537216186523438
+	mapLat = 47.585673399138294
+	mapZoom = 11
+	mapKey = 
+	mapType = G_NORMAL_MAP
+	mapControl = 1
+	mapNavigation = 1
+	mapNavigationOnMouseOver = 0
+	mapOverview = 0
+	
+	enableDoubleClickZoom = 1
+	enableContinuousZoom = 1
+	enableScrollWheelZoom = 1
+	
+	mapAvailableCats =
+	mapActiveCats =  
   
 	defaultCountry = Austria
 	defaultTable = tt_address	
@@ -61,12 +61,16 @@ plugin.tx_rggooglemap_pi1 {
 		# title of alternative maps
 		tah_title = T@H
 		mapnik_title = Mapnik
-  	debug = 0		
+		debug = 0
+		
+		# language of the map
+		addLanguage = 1
+		addLanguage.override = 
 
 		# cluster function
-  	activateCluster = 0
-  	
-  	activateCluster.3 {
+		activateCluster = 0
+		
+		activateCluster.3 {
 			icon (
 				gicons[91919199]= new GIcon(baseIcon);
 				gicons[91919199].image = "###CURRENT_URL###typo3conf/ext/rggooglemap/res/icons/cluster-m2.png";
