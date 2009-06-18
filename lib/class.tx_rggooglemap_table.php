@@ -44,7 +44,7 @@ class tx_rggooglemap_table {
 		
 		$serviceChain='';
 		while (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData', $table, $serviceChain))) {
-			$serviceChain.=','.$serviceObj->getServiceKey();    
+			$serviceChain.=','.$serviceObj->getServiceKey();
 			if ($tempuser=$serviceObj->init()) {
 				// service found, just stop to search for more
 				$this->myService =  $serviceObj;
@@ -86,7 +86,7 @@ class tx_rggooglemap_table {
 			$debugOut[$singleTable]['fields'] = $queryFields;
 			// where
 			$whereFields = $this->myService->mergeFields($where);
-			$debugOut[$singleTable]['where'] = $whereFields;     
+			$debugOut[$singleTable]['where'] = $whereFields;
 			
 			
 			if ($debug==0) {			
@@ -108,14 +108,14 @@ class tx_rggooglemap_table {
 					
 					// mapping
 					foreach ($allFields as $key=>$value) {
-						if (strpos($queryFields, $key) || $queryFields == '*') {  
+						if (strpos($queryFields, $key) || $queryFields == '*') {
 							$out[$singleTable.'#'.$row['uid']][$key] = $row[$value];
 						}  	
 							$out[$singleTable.'#'.$row['uid']][$key] = $row[$value];
 					}     
 					
 					// additional information
-					$out[$singleTable.'#'.$row['uid']] ['table'] = $singleTable;  	 	
+					$out[$singleTable.'#'.$row['uid']] ['table'] = $singleTable;
 					
 					// count for the offset needed
 					$count++;     		
@@ -143,9 +143,9 @@ class tx_rggooglemap_table {
 				
 				// sorting process
 				if ($direction) {
-					array_multisort($sortArray, SORT_DESC, SORT_REGULAR, $out); # unsorted > sorted     
+					array_multisort($sortArray, SORT_DESC, SORT_REGULAR, $out); # unsorted > sorted
 				} else {
-					array_multisort($sortArray, SORT_ASC, SORT_REGULAR, $out); # unsorted > sorted      
+					array_multisort($sortArray, SORT_ASC, SORT_REGULAR, $out); # unsorted > sorted
 				}
 			}
 			
@@ -157,7 +157,7 @@ class tx_rggooglemap_table {
 				} else {
 					$out = array_slice($out, $split[0], $split[1]);
 				}
-			}      
+			}
 		
 		} # end tableCount
 		
