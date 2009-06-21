@@ -60,6 +60,24 @@
 			<label index="search.sheetTitle">Search &amp; Directions</label>
 			<label index="search.defaultCountry">Default Country for Geocoding, use &quot;AT&quot; or &quot;Austria&quot; or &quot;Österreich&quot;</label>
 			<label index="search.radiusSearch">Enable Radius Search</label>
+
+			<label index="usermap.sheetTitle">Add a record</label>			
+			<label index="usermap.wait">Please wait</label>
+			<label index="usermap.geocode.legend">Geocode an address</label>
+			<label index="usermap.geocode.start">Start geocoding</label>
+			<label index="usermap.save.legend">Save a new record</label>
+			<label index="usermap.save.title">Title</label>
+			<label index="usermap.save.cat">Category</label>
+			<label index="usermap.save.table">Table</label>
+			<label index="usermap.save.pid">Pid</label>
+			<label index="usermap.save.start">Save</label>
+			<label index="usermap.save.currentpage">Current page</label>
+			<label index="usermap.response.success">The record was inserted!</label>
+			<label index="usermap.error.tablenotfound">The table is not found.</label>
+			<label index="usermap.error.latlngwrong">Coordinates are not allowed or wrong.</label>
+			<label index="usermap.error.notitle">Title is missing</label>
+			<label index="usermap.error.recordexists">The record exists already</label>
+						
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="general.sheetTitle">Einstellungen</label>
@@ -118,6 +136,24 @@
 			<label index="general.title">Allgemein</label>
 			<label index="template.template_file">Template</label>
 			<label index="menu.title">Menü-Einstellugen</label>
+		
+			<label index="usermap.sheetTitle">Neuen Datensatz erstellen</label>			
+			<label index="usermap.wait">Bitte warten</label>
+			<label index="usermap.geocode.legend">Geocodierung eines Datensatzes</label>
+			<label index="usermap.geocode.start">Geocodierung starten</label>
+			<label index="usermap.save.legend">Neuen Datensatz speichern</label>
+			<label index="usermap.save.title">Titel</label>
+			<label index="usermap.save.cat">Kategorie</label>
+			<label index="usermap.save.table">Tabelle</label>
+			<label index="usermap.save.pid">Pid</label>
+			<label index="usermap.save.start">Speichern</label>
+			<label index="usermap.save.currentpage">Aktuelle Seite</label>
+			<label index="usermap.response.success">Der Datensatz wurde erstellt!</label>
+			<label index="usermap.error.tablenotfound">Tabelle wurde nicht gefunden!</label>
+			<label index="usermap.error.latlngwrong">Koordinaten wurden nicht gefunden oder sind falsch!</label>
+			<label index="usermap.error.notitle">Ein Titel wurde nicht angegeben!</label>
+			<label index="usermap.error.recordexists">Der Datensatz existiert bereits</label>
+		
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="general.title">Général</label>
