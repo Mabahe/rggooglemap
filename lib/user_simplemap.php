@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Georg Ringer (just2b) <http://www.ringer.it>
+*  (c) 2009 Georg Ringer (just2b) <http://www.ringer.it>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,19 +23,16 @@
 ***************************************************************/
 
 /**
- * Userfunctions for the 'rgsimplegooglemaps' extension.
+ * Userfunctions for the 'rggooglemap' extension.
  *
  * @author	Georg Ringer (just2b) <http://www.ringer.it>
  * @package	TYPO3
- * @subpackage	tx_rgsimplegooglemaps
+ * @subpackage	tx_rggooglemap
  */
- 
-
- 
 class user_simplemap {
 
 	/**
-	 * Generate a googlemaps inside flexforms
+	 * Generate a Google Maps inside flexforms
 	 *
 	 * @param	array		$conf: configuration of the flexform element
 	 * @return	Googlemaps including geocoding
@@ -191,14 +188,18 @@ class user_simplemap {
 				setTimeout(" simpelMapLoad()",500);
 			</script>
 			
-			<div id="rggmresult">....</div>
-
+			<div id="rggmresult"> </div>
 			';
-
 
 		return $map;
 	}
-	
+
+	/**
+	 * Get a value from the language file, used as shortcut
+	 *
+	 * @param	string		$key: key in the language file
+	 * @return	string the translation
+	 */	
 	function ll($key) {
 		return $GLOBALS['LANG']->getLL('usermap.'.$key);
 	}
@@ -284,22 +285,6 @@ class user_simplemap {
 	
 		return $content;
 	}	
-
-
-	/**
-	 * Get the name of a field of the flexforms
-	 *
-	 * @param	integer		$uid: uid of the content element
-	 * @param	string		$flex: name of the tab
-	 * @param	string		$field: name of the field
-	 * @return	name tag
-	 */	
-	function getField($uid, $flex, $field) {
-		$name = 'data[tt_content]['.$uid.'][pi_flexform][data]['.$flex.'][lDEF]['.$field.'][vDEF]_hr';
-		return $name;
-	}
-
-
 
 }
 

@@ -1,7 +1,46 @@
 <?php
+/***************************************************************
+*  Copyright notice
+*
+*  (c) 2009 Georg Ringer (just2b) <http://www.ringer.it>
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
+/**
+ * Ajax request handler for the 'rggooglemap' extension.
+ *
+ * @author	Georg Ringer (just2b) <http://www.ringer.it>
+ * @package	TYPO3
+ * @subpackage	tx_rggooglemap
+ */
+ 
 require_once('init.php');
+
 class tx_rggooglemap_ajax {
+
+	/**
+	 * Handles the request for a new record
+	 *
+	 * @param	string		$params: Params of the request
+	 * @param	obj		$ajaxObj: Request object
+	 * @return	$ajaxObj with the result
+	 */
 	public function getJson($params, $ajaxObj) {
 
 		// return json
@@ -66,7 +105,6 @@ class tx_rggooglemap_ajax {
 				$GLOBALS['TYPO3_DB']->exec_INSERTquery($table, $insert);
 			}	
 		}
-	
 
 		// response
 		$GLOBALS['LANG']->includeLLFile('EXT:rggooglemap/locallang_flex.xml');
