@@ -78,6 +78,10 @@ plugin.tx_rggooglemap_pi1 {
 				gicons[91919199].infoWindowAnchor = new GPoint(28, 28);
 			)
 		}
+		
+		# use the feature of browsers like FF 3.5 to get the location of the user
+		useUserLocationForMapCenter = 0
+		useUserLocationForMapCenter.zoomLevel = 10
 
 	}
 	

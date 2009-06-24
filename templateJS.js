@@ -26,7 +26,7 @@ function makeMap() {
 		}
 
 		map.setCenter(new GLatLng(###MAP_LAT###, ###MAP_LNG###), ###MAP_ZOOM###);
-
+		userLocation("###USE_USER_LOCATION###", ###USE_USER_LOCATION_ZOOMLEVEL###);
 		###SETTINGS###
 
 		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik("###MAP_TYPE_MAPNIK_TITLE###"); }

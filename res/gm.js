@@ -171,7 +171,9 @@ function loadMap_mapnik(title) {
 }
 
 // Mapnik map URL
-function loadMap_mapnik_url(a, z) { return "http://tile.openstreetmap.org/" + z + "/" + a.x + "/" + a.y + ".png"; }
+function loadMap_mapnik_url(a, z) { 
+	return "http://tile.openstreetmap.org/" + z + "/" + a.x + "/" + a.y + ".png"; 
+}
 
 // T@H map
 function loadMap_tah(title) {
@@ -191,4 +193,23 @@ function loadMap_tah(title) {
 }
 
 // T@H map url
-function loadMap_tah_url(a, z) { return "http://tah.openstreetmap.org/Tiles/tile/" + z + "/" + a.x + "/" + a.y + ".png"; }
+function loadMap_tah_url(a, z) { 
+	return "http://tah.openstreetmap.org/Tiles/tile/" + z + "/" + a.x + "/" + a.y + ".png";
+}
+
+
+function userLocation(doIt, zoomLevel) {
+	if (navigator.geolocation) {   
+		navigator.geolocation.getCurrentPosition(function(position) {
+			callbackUserPos(position.coords.latitude, position.coords.longitude, zoomLevel);
+		});
+	}
+}
+
+function callbackUserPos(lat,lng, zoomLevel){
+	if (zoomLevel==0) {
+		zoomLevel = map.getZoom();
+	}
+	
+	map.setCenter(new GLatLng(lat, lng), zoomLevel);
+}

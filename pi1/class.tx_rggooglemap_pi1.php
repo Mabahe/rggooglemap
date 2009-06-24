@@ -1196,6 +1196,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###URL###'] = $url;
 		$markerArray['###BOUNDS###'] = intval($this->config['useBoundsOnStart']);
 		$markerArray['###DEBUG###'] = ($this->conf['map.']['debug']==1) ? '' : '//';
+		
+		// get coordinates from user's browser
+		$markerArray['###USE_USER_LOCATION###'] = intval($this->conf['map.']['useUserLocationForMapCenter']) == 1 ? 1 : 0;
+		$markerArray['###USE_USER_LOCATION_ZOOMLEVEL###'] = intval($this->conf['map.']['useUserLocationForMapCenter.']['zoomLevel']) == 0 ? 0 : intval($this->conf['map.']['useUserLocationForMapCenter.']['zoomLevel']);
 
 		// create the gicons JS, needed for valid sizes, don't trust JS on that...
 		$gicon = '';
