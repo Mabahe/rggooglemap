@@ -166,7 +166,7 @@ class user_simplemap {
 					<legend>'.$this->ll('save.legend').'</legend>
 					<input id="rggmlatlng" type="hidden" style="width:300px" value="'.$lat.','.$lng.'" />
 					<label for="rggmtitle" '.$labelStyles.'>'.$this->ll('save.title').'</label>
-						<input id="rggmtitle" type="text" value="title" style="width:177px" />
+						<input id="rggmtitle" type="text" value="" style="width:177px" />
 					<br />
 	
 					<label for="rggmcategory" '.$labelStyles.'>'.$this->ll('save.cat').'</label>
@@ -252,7 +252,7 @@ class user_simplemap {
 		
 		if (is_array($pidList) && count($pidList) > 0) {
 			foreach ($pidList as $key => $value) {
-				$content.= '<option value="'.$key.'">'.$value.' ('.$key.')</option>';
+				$content.= '<option value="'.$key.'">'.htmlspecialchars($value).' ('.$key.')</option>';
 			}
 		}
 		
