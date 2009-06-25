@@ -599,20 +599,20 @@
 					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:usermap.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
+				
 				<el>
-						<map>
+					<map>
 						<TCEforms>
-							<label>LLL:EXT:rgsimplegooglemaps/locallang_db.xml:flexform.sheets.general.map</label>
-							<config>
-								<type>user</type>
-								<userFunc>user_simplemap->map</userFunc>
-							</config>
+						<label></label>
+						<config>
+							<type>user</type>
+							<userFunc>EXT:rggooglemap/lib/user_simplemap.php:user_simplemap->map</userFunc>
+						</config>
 						</TCEforms>
 					</map>
 				</el>
 			</ROOT>
 		</wizardmap>
 
-	
 	</sheets>
 </T3DataStructure>

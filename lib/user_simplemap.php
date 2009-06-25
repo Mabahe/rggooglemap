@@ -116,7 +116,7 @@ class user_simplemap {
 		  function requestAjax() {
 		    new Ajax.Request("ajax.php", {
 					parameters: {
-						"ajaxID": "tx_rggooglemap_ajax::getJson", 
+						"ajaxID": "tx_rggooglemap_ajax::getMap", 
 						"rggm[table]"  : $("rggmtable").value,
 						"rggm[title]"  : $("rggmtitle").value,
 						"rggm[latlng]" : $("rggmlatlng").value,

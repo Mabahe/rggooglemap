@@ -62,7 +62,4 @@ if ($confArr['hideInPageModule']!=1) {
 	);
 }
 
-// userfunction in flexforms
-require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/user_simplemap.php');
-
 ?>

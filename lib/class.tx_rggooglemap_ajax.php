@@ -41,7 +41,7 @@ class tx_rggooglemap_ajax {
 	 * @param	obj		$ajaxObj: Request object
 	 * @return	$ajaxObj with the result
 	 */
-	public function getJson($params, $ajaxObj) {
+	public function getMap($params, $ajaxObj) {
 
 		// return json
 		$ajaxObj->setContentFormat('json');
