@@ -434,6 +434,7 @@
 			<ROOT>
 				<TCEforms>
 					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:search.sheetTitle</sheetTitle>
+					<cshFile>LLL:EXT:rggooglemap/locallang_csh.xml</cshFile>
 				</TCEforms>
 				<type>array</type>
 				<el>

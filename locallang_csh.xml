@@ -22,17 +22,24 @@
 				<label index="startingpoint.description">Define the pages on which the records are saved.</label>
 				<label index="recursive.description">Define the depth of the page tree which is used to get the records.</label>
 
+				<label index="width.description">Width &amp; Heiggt of the map</label>
 				<label index="lng.description">Longtidude &amp; Latidude for the map after loading</label>
 				<label index="zoom.alttitle">Zoom Level</label>
 				<label index="zoom.description">1 is far far away, 13 is very near</label>
 
 				<label index="type.alttitle">Map Types</label>
 				<label index="type.description">Select the map types you want to display. &lt;br /&gt;Use Mapnik and T@H for alternative map types which are open source and which you can extend yourself. More information at http://www.openstreetmap.org</label>
-
+				<label index="nav_controls.description">Let the user zoom in and out and navigate on the map</label>
 				<label index="type_controls.description">Let the user switch map types.</label>
+
+				<label index="useBoundsOnStart.description">If set, the map will display all available records by setting the correct position &amp; zoom level</label>
 				<label index="loadDynamicList.description">Show a dynmic list of records which are currently displayed on the map.</label>
 
 				<label index="showondefault.description">Enter the UID of the record you want to show on default. If you are using more than one table you need to add the tablename too like tt_news:123</label>
+
+
+				<label index="defaultCountry.description">If the users come from just 1 country, use this field to hardcode the country for the geocoding. Otherwise create a select or input field in the template to let the users pick their countries.</label>
+				<label index="radiusSearch.description">USe this option to let the user search in a specific area</label>
 
 
 			</languageKey>
