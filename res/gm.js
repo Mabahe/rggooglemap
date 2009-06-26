@@ -199,7 +199,7 @@ function loadMap_tah_url(a, z) {
 
 
 function userLocation(doIt, zoomLevel) {
-	if (navigator.geolocation) {   
+	if (doIt==1 && navigator.geolocation) {   
 		navigator.geolocation.getCurrentPosition(function(position) {
 			callbackUserPos(position.coords.latitude, position.coords.longitude, zoomLevel);
 		});
