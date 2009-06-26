@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>CSH for rggooglemap</description>
+        <type>CSH</type>
+        <csh_table></csh_table>
+        <fileId>EXT:rggooglemap/locallang_csh.xml</fileId>
+    </meta>
+    <data type="array">
+			<languageKey index="default" type="array">
+				<label index="show.alttitle">What to display</label>
+				<label index="show.description">Select the views you need</label>
+
+				<label index="key.alttitle">Google Maps Key</label>
+				<label index="key.description">You need to have a Google Maps Key. Put it into the Extension Manager if you just need one. It is domain specific and you get it at http://code.google.com/apis/maps/signup.html</label>
+
+				<label index="categoriesselected.alttitle">Available categories</label>
+				<label index="categoriesselected.description">Select all categories which are available in the frontend.</label>
+
+				<label index="categories.alttitle">Active categories</label>
+				<label index="categories.description">All POIs whose category is selected are displayed on the map.</label>
+				<label index="startingpoint.description">Define the pages on which the records are saved.</label>
+				<label index="recursive.description">Define the depth of the page tree which is used to get the records.</label>
+
+				<label index="lng.description">Longtidude &amp; Latidude for the map after loading</label>
+				<label index="zoom.alttitle">Zoom Level</label>
+				<label index="zoom.description">1 is far far away, 13 is very near</label>
+
+				<label index="type.alttitle">Map Types</label>
+				<label index="type.description">Select the map types you want to display. &lt;br /&gt;Use Mapnik and T@H for alternative map types which are open source and which you can extend yourself. More information at http://www.openstreetmap.org</label>
+
+				<label index="type_controls.description">Let the user switch map types.</label>
+				<label index="loadDynamicList.description">Show a dynmic list of records which are currently displayed on the map.</label>
+
+				<label index="showondefault.description">Enter the UID of the record you want to show on default. If you are using more than one table you need to add the tablename too like tt_news:123</label>
+
+
+			</languageKey>
+    </data>
+
+</T3locallang>

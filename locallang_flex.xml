@@ -77,7 +77,13 @@
 			<label index="usermap.error.latlngwrong">Coordinates are not allowed or wrong.</label>
 			<label index="usermap.error.notitle">Title is missing</label>
 			<label index="usermap.error.recordexists">The record exists already</label>
-						
+			<label index="usermap.help.title.title">Add a title</label>
+			<label index="usermap.help.title.descr">This is a required field!</label>
+			<label index="usermap.help.cat.descr">Select a category for the new record.</label>
+			<label index="usermap.help.table.descr">Select the table which is used for the new record. Add a new table by creating a new service extension.</label>
+			<label index="usermap.help.pid.title">Page on which record is saved</label>
+			<label index="usermap.help.pid.descr">Select the page which is used to save the reocrd. If you have defined a startingpoint in the 1st tab, all pages are visible here too. &lt;br /&gt;You can also use Page TsConfig to add additional options. Syntax is &lt;pre&gt; rggooglemap.pid.&lt;pid&gt; = Text&lt;/pre&gt;</label>
+
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="general.sheetTitle">Einstellungen</label>

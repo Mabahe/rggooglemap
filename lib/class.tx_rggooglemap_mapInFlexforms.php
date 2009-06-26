@@ -29,7 +29,7 @@
  * @package	TYPO3
  * @subpackage	tx_rggooglemap
  */
-class user_simplemap {
+class user_mapInFlexforms {
 
 	/**
 	 * Generate a Google Maps inside flexforms
@@ -45,7 +45,7 @@ class user_simplemap {
 
 			// error check, required for 4.2, if settings are saved in EM
 		if ($tmp_confArr['googleKey']=='') {
-			return 'Please go back to the Extension Manager, click on the ext rgsimplegooglemaps and press the "Update"-Button!';
+			return 'Please go back to the Extension Manager, click on the ext rggooglemap and press the "Update"-Button!';
 		}
 		
 			// get the default values, either from the flexforms or as fallback from EM settings
@@ -139,7 +139,6 @@ class user_simplemap {
 						alert(response.responseJSON.result);
 					}.bind(this)
 
-			
 		    });
 		  }
 		';
@@ -147,7 +146,7 @@ class user_simplemap {
 		// put the JS and the needed HTML together
 		$paddingTop = ($tmp_confArr['mapHeight'] / 2) - 20;
 		$mapHeight = $tmp_confArr['mapHeight'] - $paddingTop;
-		$labelStyles = ' style="display:block;float:left;width:70px;" ';
+		$labelStyles = ' style="display:block;float:left;width:90px;" ';
 		$fieldsetStyles = ' style="width:440px;" ';
 		$map = '
 			<div id="map" 
@@ -165,17 +164,18 @@ class user_simplemap {
 				<fieldset '.$fieldsetStyles.'>
 					<legend>'.$this->ll('save.legend').'</legend>
 					<input id="rggmlatlng" type="hidden" style="width:300px" value="'.$lat.','.$lng.'" />
-					<label for="rggmtitle" '.$labelStyles.'>'.$this->ll('save.title').'</label>
+					
+					<label for="rggmtitle" '.$labelStyles.'>'.$this->hoverHelpText('title').$this->ll('save.title').'</label>
 						<input id="rggmtitle" type="text" value="" style="width:177px" />
 					<br />
 	
-					<label for="rggmcategory" '.$labelStyles.'>'.$this->ll('save.cat').'</label>
+					<label for="rggmcategory" '.$labelStyles.'>'.$this->hoverHelpText('cat').$this->ll('save.cat').'</label>
 						'.$this->getCategoryRecords().'	
 					<br />
-					<label for="rggmtable" '.$labelStyles.'>'.$this->ll('save.table').'</label>
+					<label for="rggmtable" '.$labelStyles.'>'.$this->hoverHelpText('table').$this->ll('save.table').'</label>
 						'.$this->getTables($tmp_confArr['tables']).'
 					<br />
-					<label for="rggmpid" '.$labelStyles.'>'.$this->ll('save.pid').'</label>
+					<label for="rggmpid" '.$labelStyles.'>'.$this->hoverHelpText('pid').$this->ll('save.pid').'</label>
 						'.$this->getPidRecords($tmpDefault['startingpoint']['vDEF'], $conf['row']['pid']).'
 					<br />
 					<input type="button" value="'.$this->ll('save.start').'" onclick="requestAjax();" /><br />
@@ -202,6 +202,29 @@ class user_simplemap {
 	 */	
 	function ll($key) {
 		return $GLOBALS['LANG']->getLL('usermap.'.$key);
+	}
+	
+	function hoverHelpText($key) {
+		$title = $this->ll('help.'.$key.'.title');
+		if ($title != '') {
+			$title = '<span class="header">'.$title.'</span>';
+		}
+
+		$descr = $this->ll('help.'.$key.'.descr');
+		if ($descr != '') {
+			$descr = '<span class="paragraph">'.$descr.'</span>';
+		}
+
+		$content = '
+			<a href="#" class="typo3-csh-link">
+				<img hspace="2" height="16" border="0" width="16" alt="" style="cursor: help;" class="absmiddle" src="sysext/t3skin/icons/gfx/helpbubble.gif"/>
+				<span class="typo3-csh-inline">
+					'.$title.$descr.'
+				</span>
+			</a>
+		';
+		
+		return $content;
 	}
 
 	/**
