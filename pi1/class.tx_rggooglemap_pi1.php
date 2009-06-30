@@ -569,7 +569,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				// just search the tables where search fields are specified
 				if ($this->conf['search.']['fields.'][$table]) {
 					$select = '*';
-					$searchField = explode(',',$this->conf['search.']['fields.'][$table]);
+					$searchField = t3lib_div::trimExplode(',',$this->conf['search.']['fields.'][$table]);
 					$where2 = '';
 					foreach ($searchField as $key=>$value) {
 						$where2.= " $value LIKE '%$searchExpression%' OR";
@@ -614,7 +614,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 					// if a category is used, search for it
 					if ($searchForm['rggmCat']!='') {
-						foreach (explode(',',$searchForm['rggmCat']) as $key=>$value) {
+						$catList = $this->intExplode(',', $searchForm['rggmCat']);
+						foreach ($catList as $key=>$value) {
 							$whereCat.= ' FIND_IN_SET('.$value.',rggmcat) OR';
 						}
 						$searchClause['cat']= ' ( '.substr($whereCat,0,-3).' ) ';
@@ -1236,6 +1237,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$gicon .= $key.'= new GIcon(baseIcon);'.chr(10);
 			$gicon .= $key.'.image = "'.$iconPathJS.'";'.chr(10);
 			$gicon .= $key.'.iconSize = new GSize('.$width.', '.$height.');'.chr(10);
+			$gicon .= $key.'.iconAnchor = new GPoint('.($width/2).', '.($height/2).');'.chr(10);
 			$gicon .= $key.'.infoWindowAnchor = new GPoint('.($width/2).', '.($height/2).');'.chr(10).chr(10);
 		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
@@ -1284,7 +1286,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		if ($defaultPOI!='') {
 			// split it up by using '-' to get a possible table
-			$split = explode('-', $defaultPOI);
+			$split = t3lib_div::trimExplode('-', $defaultPOI);
 
 			if (count($split)==1) {
 				$uid		= $split[0];
@@ -1460,7 +1462,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		if (!empty($areaSearch)) {
 		// build the query
-		$areaArr=split('%2C%20',$areaSearch);
+		$areaArr= $this->intExplode('%2C%20',$areaSearch, 1);
 		$where .= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
 							AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
 		}
@@ -1470,7 +1472,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$where .= ' AND 1=2 ';
 		} elseif ($catList!='') {
 		
-			$catList = explode(',',$catList);
+			$catList = $this->intExplode(',', $catList);
 			foreach ($catList as $key=>$value) {
 				$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
 			}
@@ -1497,7 +1499,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		// recursive query
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			if (in_array($row['uid'], explode(',',$allowedCat))) {
+			if (in_array($row['uid'], explode(',', $allowedCat))) {
 				$catArr .= '<option class="searchlvl'.$level.'" value="'.$row['uid'].'">'.$row['title'].'</option>';
 				$recursiveCat =   $this->helperGetRecursiveCat($allowedCat,$row['uid'],$level);
 				if ($recursiveCat!='')  {
@@ -1642,7 +1644,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$keyListTmp = explode('#####', $multiKey); // split by #### because EXT constantsextended uses that
 			$keyList = array();
 			foreach($keyListTmp as $key) {
-				$split = explode('=', $key);
+				$split = t3lib_div::trimExplode('=', $key);
 				$keyList[$split[0]] = $split[1];
 			}
 
@@ -1819,6 +1821,63 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		#print_r($list);
 		return $list;
 	}
+
+	/**
+	 * Reverse geocoding of a location to get an address from coordinates
+	 *
+	 * @param	float		$lat: latitude
+	 * @param	float		$lng: longitude
+	 * @return array information about the address
+	 */		
+	function helperReverseGeocode($lat, $lng) {
+		$addressData = array();
+		$lng = floatval($lat);
+		$lng = floatval($lat);
+		
+		if ($key == '' || $lng == 0 || $lat == 0 ) {
+			return $addressData;
+		}
+		
+		$coords		= $lat.','.$lng;
+		$url			= 'http://maps.google.com/maps/geo?q='.$coords.'&output=json&oe=utf8&sensor=false&key='.$this->config['mapKey'];
+		$address	= json_decode(t3lib_div::getURL($url));
+		
+		// get the response
+		if ($address->Status->code == '200' && count($address->Placemark) > 0) {
+			$addressObj = $address->Placemark[0];
+			
+			$addressData['all']					= $addressObj->address;
+			$addressData['country']			= $addressObj->AddressDetails->Country->CountryName;
+			$addressData['countryshort']= $addressObj->AddressDetails->Country->CountryNameCode;
+			$addressData['region']			= $addressObj->AddressDetails->Country->AdministrativeArea->AdministrativeAreaName;
+			$addressData['subarea']			= $addressObj->AddressDetails->Country->AdministrativeArea->SubAdministrativeArea->SubAdministrativeAreaName;
+			$addressData['city']				= $addressObj->AddressDetails->Country->AdministrativeArea->SubAdministrativeArea->Locality->LocalityName;
+			$addressData['zip']					= $addressObj->AddressDetails->Country->AdministrativeArea->SubAdministrativeArea->Locality->PostalCode->PostalCodeNumber;
+			$addressData['address']			= $addressObj->AddressDetails->Country->AdministrativeArea->SubAdministrativeArea->Locality->Thoroughfare->ThoroughfareName;
+		}
+	
+		return $addressData;
+	}
+	
+	
+	/**
+	 * explode an array and make either intval or floatval to every value
+	 *
+	 * @param	char		$delim: delimiter 
+	 * @param	string		$string: string which gets exploded
+	 * @param	boolean		$float: if true, use floatval, otherwise intval
+	 * @return array exploded array
+	 */		
+	function intExplode($delim, $string, $float=false)  {
+	  $temp = explode($delim, $string);
+	  foreach ($temp as &$val) {
+			$val = ($float) ? floatval($val) : intval($val);
+	  }
+	  reset($temp);
+	  return $temp;
+	}
+	
+	
 	
 	/*
 	* **********************************
@@ -1830,7 +1889,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
 		
 		$postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
-		$areaArr=split(', ', $postvars['area']);
+		$areaArr = $this->intExplode(', ', $postvars['area'], 1);
 		
 		// fetch the content of a single poi
 		if ($postvars['detail']!='') {
@@ -1843,7 +1902,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$cat = $postvars['cat'];
 		if ($cat) { // cat selected
 			if ($cat!=9999) { // nothing selected
-				$catList = explode(',', $cat);
+				$catList = $this->intExplode(',', $cat);
 			}
 		} else { // nothing selected means 1st call!
 			$catList =  explode(',', $this->config['categoriesActive']);
@@ -1903,11 +1962,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
 			
-			if ($this->conf['map.']['activateCluster']==3 || 1==2) {
+			if ($this->conf['map.']['activateCluster']==3) {
 				$res = $this->helperClusterRecords($res, $areaArr);			
 			}
 
-			
 			while($row=array_shift($res)) {
 				$test = '';
 				$count++;
@@ -1917,7 +1975,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				
 				$this->xmlAddRecord($table, $row,$conf, $img, $test);
 			}
-			#echo $count;
+
 		}
 		$this->xmlRenderFooter();
 		
