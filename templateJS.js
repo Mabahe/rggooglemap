@@ -150,7 +150,7 @@ function getXMLData(clearOverlay) {
 			###DEBUG###GLog.write('POIs added : '+count);
 			
 			if (###MAP_CLUSTER###==2) {
-				var markerCluster = new MarkerClusterer(map, markersList);
+				var markerCluster = new MarkerClusterer(map, markersList, {maxZoom:12});
 			}
 			
 			hide('rggooglemapload');
