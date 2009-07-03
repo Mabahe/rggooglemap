@@ -272,7 +272,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraCodesHook'])) {
 						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraCodesHook'] as $_classRef) {
 							$_procObj = & t3lib_div::getUserObj($_classRef);
-							$content .= $_procObj->extraCodesProcessor($this);
+							$content .= $_procObj->extraCodesProcessor($this, $key);
 						}
 					}
 					break;

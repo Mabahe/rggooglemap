@@ -1,10 +1,12 @@
+
+
 .treeview ul{ /*CSS for Simple Tree Menu*/
 margin: 0;
 padding: 0;
 }
 
 .treeview li{ /*Style for LI elements in general (excludes an LI that contains sub lists)*/
-background: white url(list.gif) no-repeat left center;
+background: white url(minus.gif) ;
 list-style-type: none;
 padding-left: 22px;
 margin-bottom: 3px;
