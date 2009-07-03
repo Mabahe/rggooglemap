@@ -62,4 +62,7 @@ if ($confArr['hideInPageModule']!=1) {
 	);
 }
 
+// linkhandler
+$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['typolinkLinkHandler']['rggm'] = 'EXT:rggooglemap/lib/class.tx_rggooglemap_linkhandler.php:&tx_rggooglemap_linkhandler';
+
 ?>
