@@ -18,15 +18,6 @@ t3lib_extMgm::addTypoScript($_EXTKEY,'setup','
 t3lib_extMgm::addPItoST43($_EXTKEY,'pi2/class.tx_rggooglemap_pi2.php','_pi2','',1);
 
 
-	# pi3 > set up userdefined tag <MAPCAT>
-t3lib_extMgm::addTypoScript($_EXTKEY,'setup','
-	tt_content.text.20.parseFunc.tags.mapcat = < plugin.'.t3lib_extMgm::getCN($_EXTKEY).'_pi3
-',43);
-
-t3lib_extMgm::addPItoST43($_EXTKEY,'pi3/class.tx_rggooglemap_pi3.php','_pi3','',1);
-
-
-
 // add the service
 t3lib_extMgm::addService($_EXTKEY, 'rggmData', 'tx_rggooglemap_sv1',
 	array(

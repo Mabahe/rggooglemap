@@ -235,7 +235,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		// check if this is the correct domain (no cross domain scripts for ajax requests
 		$check = $this->helperCheckForWrongUrl();
-		if (count($check) > 0) {
+		if (count($check) > 0 && $GLOBALS['TSFE']->config['config']['absRefPrefix'] != '') {
 			$link = '<a href="'.$check['link'].'">'.$check['link'].'</a>';
 			return sprintf($this->pi_getLL('error_wrong-domains'), $check['current'], $link);
 		}
