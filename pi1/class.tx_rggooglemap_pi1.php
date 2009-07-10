@@ -1384,6 +1384,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($row['table'], $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
+
+		// Adds hook for processing of the single record
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraItemPreRowHook'])) {
+			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraItemPreRowHook'] as $_classRef) {
+				$_procObj = & t3lib_div::getUserObj($_classRef);
+				$row = $_procObj->extraItemPreRowProcessor($row, $this);
+			}
+		}
 		
 		// general stdWrap handling
 		$short = $this->conf[$prefix][$row['table'].'.'];
@@ -1435,6 +1443,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$markerArray = $_procObj->extraItemMarkerProcessor($markerArray, $row, $this->config, $this);
 			}
 		}
+
 
     return $markerArray;
   }
