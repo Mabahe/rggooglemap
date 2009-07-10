@@ -1377,7 +1377,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @return the marker array
 	 */
   function getMarker($row, $prefix, $oddEven=0) {
-		$prefiWithOutDot = trim($prefix, '.');
+		$prefixWithoutDot = trim($prefix, '.');
 		
 		// language setting
 		if ($GLOBALS['TSFE']->sys_language_content && $this->conf['getRecordOverlay'] == 1) {
@@ -1396,7 +1396,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// general stdWrap handling
 		$short = $this->conf[$prefix][$row['table'].'.'];
 		foreach ($row as $key=>$value) {
-			$this->cObj2->data[$key]=$value; // thanks tobi
+			$this->cObj2->data[$key]=$value;
 			$markerArray['###'.strtoupper($key).'###'] = $this->cObj2->stdWrap($value,$short[$key.'.']);
 		}
 		
@@ -1434,16 +1434,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		// language markers
-		$markerArray = $this->helperGetLLMarkers($markerArray, $this->conf[$prefix]['LL'], strtolower($prefiWithOutDot));
+		$markerArray = $this->helperGetLLMarkers($markerArray, $this->conf[$prefix]['LL'], strtolower($prefixWithoutDot));
 
 		// Adds hook for processing of extra item markers
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraItemMarkerHook'])) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraItemMarkerHook'] as $_classRef) {
 				$_procObj = & t3lib_div::getUserObj($_classRef);
-				$markerArray = $_procObj->extraItemMarkerProcessor($markerArray, $row, $this->config, $this);
+				$markerArray = $_procObj->extraItemMarkerProcessor($markerArray, $row, $this);
 			}
 		}
-
 
     return $markerArray;
   }
