@@ -75,42 +75,42 @@ class user_mapInFlexforms {
 					map.addControl(new GLargeMapControl());
 					map.addControl(new GMapTypeControl());
 
-				  
-				  geocoder = new GClientGeocoder();
+
+					geocoder = new GClientGeocoder();
 				
 					
-				  marker = new GMarker(point, {draggable: true});
-				  map.addOverlay(marker);
+					marker = new GMarker(point, {draggable: true});
+					map.addOverlay(marker);
 				
-				  GEvent.addListener(marker, "dragend", function() {
-				    document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
-				  });
-				  
-				  GEvent.addListener(map, "click", function(overlay, point) {
+					GEvent.addListener(marker, "dragend", function() {
+						document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
+					});
+					
+					GEvent.addListener(map, "click", function(overlay, point) {
 						if (point)	{
 							marker.setPoint(point);
-				    	document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();									}
-				  	}
-					);  
+						document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
+						}
+					);
 				}
 			}		
 			
 			function showAddress(address) {
 				var address = document.getElementById("geocodeaddress").value;
-			  if (geocoder) {
-			    geocoder.getLatLng(
-			      address,
-			      function(newpoint) {
-			        if (!newpoint) {
-			          alert(address + " not found");
-			        } else {
+				if (geocoder) {
+						geocoder.getLatLng(
+						address,
+						function(newpoint) {
+						if (!newpoint) {
+								alert(address + " not found");
+							} else {
 								marker.setPoint(newpoint);
 								map.setCenter(newpoint);
-								document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();	
-			        }
-			      }
-			    );
-			  }
+								document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
+							}
+						}
+				);
+			}
 			} 
 
 		  function requestAjax() {
@@ -121,7 +121,7 @@ class user_mapInFlexforms {
 						"rggm[title]"  : $("rggmtitle").value,
 						"rggm[latlng]" : $("rggmlatlng").value,
 						"rggm[pid]"    : $("rggmpid").value,
-						"rggm[cat]"    : $("rggmcategory").value						
+						"rggm[cat]"    : $("rggmcategory").value
 					},
 					onComplete: function(xhr) {
 						var response = xhr.responseText.evalJSON();
@@ -133,7 +133,7 @@ class user_mapInFlexforms {
 							 messages = response["result"];
 						}
 						document.getElementById("rggmresult").innerHTML = messages;
-									  
+
 					}.bind(this),
 					onT3Error: function(response) {
 						alert(response.responseJSON.result);
@@ -158,7 +158,7 @@ class user_mapInFlexforms {
 					<legend>'.$this->ll('geocode.legend').'</legend>
 					<input id="geocodeaddress" value="Gosau, Austria" style="width:300px;" /> 
 					<input type="button" value="'.$this->ll('geocode.start').'" onclick="showAddress();" />
-				</fieldset>						
+				</fieldset>
 				<br />
 				
 				<fieldset '.$fieldsetStyles.'>
