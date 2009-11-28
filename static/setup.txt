@@ -276,6 +276,7 @@ plugin.tx_rggooglemap_pi1 {
 			lat.crop=10
 			
 			logo {
+				htmlSpecialChars = 0
 				setContentToCurrent = 1
 				if.isTrue.current = 1
 				stdWrap.cObject = IMAGE
@@ -314,6 +315,7 @@ plugin.tx_rggooglemap_pi1 {
 			lat.crop=10
 			
 			image {
+				htmlSpecialChars = 0
 				setContentToCurrent = 1
 				if.isTrue.current = 1
 				stdWrap.cObject = IMAGE
@@ -351,6 +353,7 @@ plugin.tx_rggooglemap_pi1 {
 		tx_tour_record {
 
 			teaserimage {
+				htmlSpecialChars = 0
 				setContentToCurrent = 1
 				if.isTrue.current = 1
 				stdWrap.cObject = IMAGE
@@ -411,7 +414,7 @@ plugin.tx_rggooglemap_pi1 {
 
 		# Housing RECORDS
 		tx_housing_record {
-
+			htmlSpecialChars = 0
 			teaserimage {
 				setContentToCurrent = 1
 				if.isTrue.current = 1
@@ -459,6 +462,7 @@ plugin.tx_rggooglemap_pi1 {
 			generic {
 				link = TEXT
 				link {
+					htmlSpecialChars = 0
 					typolink {
 						parameter.field = pid
 						returnLast = url
