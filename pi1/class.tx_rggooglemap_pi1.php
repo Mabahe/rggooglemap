@@ -1397,7 +1397,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$short = $this->conf[$prefix][$row['table'].'.'];
 		foreach ($row as $key=>$value) {
 			$this->cObj2->data[$key]=$value;
-			$markerArray['###'.strtoupper($key).'###'] = $this->cObj2->stdWrap($value,$short[$key.'.']);
+			$output = $this->cObj2->stdWrap($value,$short[$key.'.']);
+			$markerArray['###'.strtoupper($key).'###'] = (!isset($short[$key.'.']['htmlSpecialChars'] || $short[$key.'.']['htmlSpecialChars'] != 0) ? htmlspecialchars($output) : $output;
 		}
 		
 		$markerArray['###POPUP###'] = ' onClick=\' show("infobox"); ' . $this->prefixId . 'infomsg('.$row['uid'].', "'.$row['table'].'"); \'  ';
