@@ -653,7 +653,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					$debug['count']++;
 	
 					// check if there is really no records with lng/lat = 0
-					if (intval($row['lat'])==0 || intval($row['lng'])==0) {
+					if (floatval($row['lat'])==0 || floatval($row['lng'])==0) {
 						continue;
 					}
 	
@@ -1297,7 +1297,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$res = $this->generic->exec_SELECTquery('uid, lng, lat',$table,$where,$groupBy,$orderBy,$offset);
 				$row=array_shift($res);
 
-				if (intval($row['lng'])!=0 && intval($row['lat'])!=0) {
+				if (floatval($row['lng'])!=0 && floatval($row['lat'])!=0) {
 					$showPOIonStart = 'myclick('.$row['uid'].','.$row['lng'].','.$row['lat'].',"'.$table.'");';
 				}
 			}
