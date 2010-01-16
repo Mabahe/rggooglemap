@@ -238,18 +238,21 @@ plugin.tx_rggooglemap_pi1 {
 		# TT_ADDRESS
 		tt_address {
 			phone {
-				stdWrap {
 					noTrimWrap = |t: | <br />|
 					required = 1
-				}
+					htmlSpecialChars = 0
 			}
 			fax {
-				stdWrap {
 					noTrimWrap = |f: | <br />|
 					required = 1
+					htmlSpecialChars = 0
 				}
+			image {
+				htmlSpecialChars = 0
+				
 			}
 			email {
+				htmlSpecialChars = 0
 				setContentToCurrent = 1
 				stdWrap {
 					noTrimWrap = |E-mail:| <br />|
@@ -259,6 +262,7 @@ plugin.tx_rggooglemap_pi1 {
 				
 			}		
 			www {
+				htmlSpecialChars = 0
 				setContentToCurrent = 1
 				stdWrap {
 					noTrimWrap = |www: | <br />|
