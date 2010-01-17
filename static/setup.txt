@@ -47,14 +47,14 @@ plugin.tx_rggooglemap_pi1 {
 		iconSize {
 			# default as fallback
 			default {
-				width		= 16
-				height	= 16
+				width  = 16
+				height = 16
 			}
 		
 			# use the category uid to set the sizes for each category seperatly
 			999 {
-				width		= 32
-				height 	= 32
+				width  = 32
+				height = 32
 			}
 		}
 
@@ -108,18 +108,18 @@ plugin.tx_rggooglemap_pi1 {
 	##################
 	# Search
 	##################
-  search {
-    minChars = 3
-    fields {
+	search {
+		minChars = 3
+		fields {
 			tt_address = title,description,name 
-    	fe_users = comments,name,first_name,last_name,company
-    	tx_tour_record = title,description,teasertext,waydescriptiontext
-    	tx_housing_record = title,description,keywords,text
-    	tx_city_record = title,subtitle,description
-    	tx_staticregion_region = title
-    }
-    
-    LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
+			fe_users = comments,name,first_name,last_name,company
+			tx_tour_record = title,description,teasertext,waydescriptiontext
+			tx_housing_record = title,description,keywords,text
+			tx_city_record = title,subtitle,description
+			tx_staticregion_region = title
+		}
+
+		LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
 		radiusSearch = 0
 		
 		radiusSearch {
@@ -137,8 +137,7 @@ plugin.tx_rggooglemap_pi1 {
 			
 			}
 		}
-    
-  }
+    }
 	
 	##################
 	# Locationbox
@@ -165,23 +164,21 @@ plugin.tx_rggooglemap_pi1 {
 	##################
 	# POI menu
 	##################
-  menu {
-    catOrder = title
-    recordsOrder = rggmtitle
-    recordsOrderBy = asc
+	menu {
+		catOrder = title
+		recordsOrder = rggmtitle
+		recordsOrderBy = asc
     
-    # stdWrap for all fields of the category
-    category {
+		# stdWrap for all fields of the category
+		category {
 			title {
 				htmlSpecialChars = 1	 
 			}
 		}
-    
-
-  }
+	}
   
-  # URL for the ajax request
-  # 20.value is filled, so don't use that!
+	# URL for the ajax request
+	# 20.value is filled, so don't use that!
 	xmlURL {
 		returnLast = url
 		parameter.dataWrap = {page:uid},500
@@ -508,28 +505,26 @@ plugin.tx_rggooglemap_pi1 {
 		}
 
 	}
-	
 
+	# stdWrap for all markers in the popup window
+	popup {
+		
+	}
 
-  # stdWrap for all markers in the popup window
-  popup {
-  
-  }  
-  
 }
 # end pi1
 
 # link tags
 plugin.tx_rggooglemap_pi2 {
-  # Target of the link
+	# Target of the link
 	mapId = 10851
 	# use stdWrap to get e.g. the current page
 	#mapId.data = page:uid
 
 	# table rewrites to make it easier for the editors
-  tables {
-  	address = tt_address
-  	user = fe_users
+	tables {
+  		address = tt_address
+  		user = fe_users
 		city = tx_city_record
 		house = tx_housing_record
 	}
@@ -541,45 +536,45 @@ plugin.tx_rggooglemap_pi2 {
 	link {
 		useCacheHash = 1
 	}
-} 
+}
 
 # category tags
 plugin.tx_rggooglemap_pi3 {
-  mapId < plugin.tx_rggooglemap_pi1.mapId
-} 
+	mapId < plugin.tx_rggooglemap_pi1.mapId
+}
 
 
 ## Extra type for the ajax requests
 export_xml >
 export_xml = PAGE
 export_xml {
-  typeNum=500
-  config.disableAllHeaderCode = 1
-  config.metaCharset = utf-8
-  config.additionalHeaders = Content-Type:text/xml;charset=utf-8
-  config.xhtml_cleaning = 0
-  config.admPanel = 0
-  config.sendNoCacheHeaders = 1
-  config.no_cache = 1
-  
-  ## Includes the lib:
-  #includeLibs.export_xml = EXT:rggooglemap/pi1/class.tx_rgooglemap_pi1.php
-  
-  ## Inserting the USER cObject for XML rendering
-  10 = CONTENT
-  10 {
-    table = tt_content
-    select {
-      pidInList = this   
-      max = 1
-      andWhere = list_type='rggooglemap_pi1'
-    #  languageField = sys_language_uid
-    }
+	typeNum=500
+	config.disableAllHeaderCode = 1
+	config.metaCharset = utf-8
+	config.additionalHeaders = Content-Type:text/xml;charset=utf-8
+	config.xhtml_cleaning = 0
+	config.admPanel = 0
+	config.sendNoCacheHeaders = 1
+	config.no_cache = 1
 
-    renderObj = COA
-    renderObj {
-      10 < plugin.tx_rggooglemap_pi1
-      10.userFunc = tx_rggooglemap_pi1->xmlFunc
-    }
-  }  
+	## Includes the lib:
+	#includeLibs.export_xml = EXT:rggooglemap/pi1/class.tx_rgooglemap_pi1.php
+  
+	## Inserting the USER cObject for XML rendering
+	10 = CONTENT
+	10 {
+		table = tt_content
+		select {
+			pidInList = this   
+			max = 1
+			andWhere = list_type='rggooglemap_pi1'
+			#  languageField = sys_language_uid
+		}
+
+		renderObj = COA
+		renderObj {
+			10 < plugin.tx_rggooglemap_pi1
+			10.userFunc = tx_rggooglemap_pi1->xmlFunc
+		}
+	}
 }
