@@ -21,8 +21,16 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
- * Service to get the Geo Codes from Google
+ * Service to get the Geo Codes from Google.
+ *
+ * @category    Service
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
 class tx_rggooglemap_geocode_service {
 	/**

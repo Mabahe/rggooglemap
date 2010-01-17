@@ -26,25 +26,19 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
- * Function for adding new display items to rggooglemap in the backend
+ * 'itemsProcFunc' for the 'rggooglemap' extension.
  *
- *
- * @author	Mathias Bolt Lesniak <mathias@lilio.com>
- * @author Rupert Germann <rupi@gmx.li>
- * @author Georg Ringer <www.ringer.it>
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @author      Mathias Bolt Lesniak <mathias@lilio.com>
+ * @author      Rupert Germann <rupi@gmx.li>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
-
-
- /**
-  * 'itemsProcFunc' for the 'rggooglemap' extension.
-  *
-  * @author	Mathias Bolt Lesniak <mathias@lilio.com>
-  * @author Rupert Germann <rupi@gmx.li>
-	* @author Georg Ringer <www.ringer.it>   
-  * @package TYPO3
-  * @subpackage rggooglemap
-  */
 class tx_rggooglemap_itemsProcFunc {
 
 /**

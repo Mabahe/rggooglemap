@@ -22,16 +22,18 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+require_once('init.php');
+
 /**
  * Ajax request handler for the 'rggooglemap' extension.
  *
- * @author	Georg Ringer (just2b) <http://www.ringer.it>
- * @package	TYPO3
- * @subpackage	tx_rggooglemap
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
- 
-require_once('init.php');
-
 class tx_rggooglemap_ajax {
 
 	/**

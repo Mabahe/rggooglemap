@@ -21,15 +21,19 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-/**
- * Plugin '' for the 'rggooglemap' extension.
- *
- * @author	Georg Ringer <typo3@ringerge.org>
- */
-
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
 
+/**
+ * Plugin '' for the 'rggooglemap' extension.
+ *
+ * @category    Plugin
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
+ */
 class tx_rggooglemap_pi2 extends tslib_pibase {
 	var $prefixId = 'tx_rggooglemap_pi1';		// Same as class name
 	var $scriptRelPath = 'pi2/class.tx_rggooglemap_pi2.php';	// Path to this script relative to the extension dir.

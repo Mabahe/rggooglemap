@@ -23,11 +23,14 @@
 ***************************************************************/
 
 /**
- * Userfunctions for the 'rggooglemap' extension.
+ * Mapping in FlexForms user function for the 'rggooglemap' extension.
  *
- * @author	Georg Ringer (just2b) <http://www.ringer.it>
- * @package	TYPO3
- * @subpackage	tx_rggooglemap
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
 class user_mapInFlexforms {
 

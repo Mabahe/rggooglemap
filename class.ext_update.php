@@ -1,34 +1,38 @@
 <?php
-	/***************************************************************
-	*  Copyright notice
-	*
-	*  (c) 2009 Georg Ringer <www.ringer.it>
-	*  All rights reserved
-	*
-	*  This script is part of the TYPO3 project. The TYPO3 project is
-	*  free software; you can redistribute it and/or modify
-	*  it under the terms of the GNU General Public License as published by
-	*  the Free Software Foundation; either version 2 of the License, or
-	*  (at your option) any later version.
-	*
-	*  The GNU General Public License can be found at
-	*  http://www.gnu.org/copyleft/gpl.html.
-	*
-	*  This script is distributed in the hope that it will be useful,
-	*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-	*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	*  GNU General Public License for more details.
-	*
-	*  This copyright notice MUST APPEAR in all copies of the script!
-	***************************************************************/
-
+/***************************************************************
+*  Copyright notice
+*
+*  (c) 2009 Georg Ringer <www.ringer.it>
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
 /**
- * Class for updating the db
+ * Class for updating the database.
  *
- * @author	 Georg Ringer <www.ringer.it>
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
-class ext_update  {
+class ext_update {
 
 	/**
 	 * Main function, returning the HTML content of the module
@@ -185,7 +189,7 @@ class ext_update  {
 }
 
 // Include extension?
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/class.ext_update.php'])	{
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/class.ext_update.php']);
-	}
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/class.ext_update.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/class.ext_update.php']);
+}
 ?>

@@ -22,12 +22,17 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
-require_once(PATH_t3lib.'class.t3lib_treeview.php');
+require_once(PATH_t3lib . 'class.t3lib_treeview.php');
 
 /**
- * extend class t3lib_treeview to change function wrapTitle().
+ * Extends class t3lib_treeview to chnage function wrapTitle().
  *
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
 class tx_rggm_tceFunc_selectTreeView extends t3lib_treeview {
 

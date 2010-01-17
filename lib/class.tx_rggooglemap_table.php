@@ -21,13 +21,17 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
- * Service to get the Geo Codes from Google
+ * TODO: Add description.
+ *
+ * @category    Library
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
-#require_once(PATH_tslib.'class.tslib_pibase.php');
-#require_once(PATH_t3lib.'class.t3lib_tcemain.php');
-
-
 class tx_rggooglemap_table {
 	var $prefixId 		= 'tx_rggooglemap_table';		// Same as class name
 	var $scriptRelPath 	= 'res/class.tx_rggooglemap_table.php';	// Path to this script relative to the extension dir.

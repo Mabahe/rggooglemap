@@ -26,11 +26,14 @@ require_once(PATH_t3lib.'class.t3lib_svbase.php');
 
 
 /**
- * Service "tt_address for rggooglemap " for the "rggooglemap" extension.
+ * Service "tt_address for rggooglemap" for the 'rggooglemap' extension.
  *
- * @author    Georg Ringer <typo3@ringerge.org>
- * @package    TYPO3
- * @subpackage    tx_rggooglemap
+ * @category    Service
+ * @package     TYPO3
+ * @subpackage  tx_rggooglemap
+ * @author      Georg Ringer (just2b) <http://www.ringer.it>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
 class tx_rggooglemap_sv1 extends t3lib_svbase {
 	var $prefixId = 'tx_rggooglemap_sv1'; // Same as class name
