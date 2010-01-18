@@ -41,7 +41,7 @@
 			<label index="map.nav_controls.small">Small</label>
 			<label index="map.nav_controls.large">Large</label>
 			<label index="map.controlonmouseover">Hide Controls on Mouseover</label>
-			<label index="map.mapoverview">Hide overview window</label>
+			<label index="map.mapoverview">Show overview map</label>
 			<label index="map.showondefault">Default POI</label>
 			<label index="map.useBoundsOnStart">Use bounds for the first load</label>
 			<label index="map.loadDynamicList">Load dynamic list of POIs</label>
@@ -120,7 +120,7 @@
 			<label index="map.nav_controls.small">Klein</label>
 			<label index="map.nav_controls.large">Groß</label>
 			<label index="map.controlonmouseover">Bedienung bei Mouseover verbergen</label>
-			<label index="map.mapoverview">Übersichtskarte verbergen</label>
+			<label index="map.mapoverview">Übersichtskarte zeigen</label>
 			<label index="map.showondefault">Standard POI</label>
 			<label index="map.useBoundsOnStart">Optimierte Kartenpositionierung beim 1. Laden</label>			
 			<label index="map.loadDynamicList">Dynamische Liste der POis laden</label>
