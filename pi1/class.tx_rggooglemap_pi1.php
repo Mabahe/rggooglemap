@@ -966,7 +966,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		
 		if (is_Array($data['cb'])){
-			$objResponse->addAssign('mapcatlist', 'innerHTML', $this->intExplode(',', $data['cb']));
+			$objResponse->addAssign('mapcatlist', 'innerHTML', implode(',', $data['cb']));
 		} else {
 			$objResponse->addAssign('mapcatlist', 'innerHTML','9999');
 		}
