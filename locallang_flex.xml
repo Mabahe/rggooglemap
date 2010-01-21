@@ -22,8 +22,8 @@
 			<label index="map.sheetTitle">Map</label>
 			<label index="map.width">Width of map</label>
 			<label index="map.height">Height of map</label>
-			<label index="map.lng">Start Longtidude</label>
-			<label index="map.lat">Start Latidude</label>
+			<label index="map.lng">Start Longitude</label>
+			<label index="map.lat">Start Latitude</label>
 			<label index="map.zoom">Start Zoom</label>
 			<label index="map.type">Type of map</label>
 			<label index="map.type.map">Map</label>
@@ -167,22 +167,22 @@
 			<label index="general.show.0">Carte</label>
 			<label index="general.show.1">POIs</label>
 			<label index="general.show.2">Menu</label>
-			<label index="template.template_file">Fichier Template</label>
+			<label index="template.template_file">Fichier template</label>
 			<label index="map.width">Largeur de la carte</label>
 			<label index="map.height">Hauteur de la carte</label>
-			<label index="map.lng">Longtidude</label>
-			<label index="map.lat">Latidude</label>
+			<label index="map.lng">Longitude</label>
+			<label index="map.lat">Latitude</label>
 			<label index="map.zoom">Zoom</label>
 			<label index="map.key">Clé Googlemap</label>
 			<label index="map.type">Type de carte</label>
 			<label index="map.type.map">Carte</label>
 			<label index="map.type.satellite">Satellite</label>
-			<label index="map.type.hybrid">Hybrid</label>
+			<label index="map.type.hybrid">Hybride</label>
 			<label index="map.type_controls">Montrer les commandes type</label>
 			<label index="map.type_controls.0"></label>
 			<label index="map.type_controls.1">Voir</label>
 			<label index="map.type_controls.2">Cacher</label>
-			<label index="map.nav_controls">Commandes de Navigation</label>
+			<label index="map.nav_controls">Commandes de navigation</label>
 			<label index="map.nav_controls.none">Aucun</label>
 			<label index="map.nav_controls.small">Petit</label>
 			<label index="map.nav_controls.large">Grand</label>
@@ -194,7 +194,7 @@
 			<label index="general.recursive.4">4 niveaux</label>
 			<label index="general.recursive.infinite">Infini</label>
 			<label index="general.type.map.alternativeUrl">URL Alternative</label>
-			<label index="map.showondefault">FR: Default POI</label>
+			<label index="map.showondefault">Point d'intérêt par défaut :</label>
 			<label index="menu.title">Menu options</label>
 			<label index="menu.map">Page contenant la carte</label>
 		</languageKey>

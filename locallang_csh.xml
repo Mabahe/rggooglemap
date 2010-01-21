@@ -22,8 +22,8 @@
 				<label index="startingpoint.description">Define the pages on which the records are saved.</label>
 				<label index="recursive.description">Define the depth of the page tree which is used to get the records.</label>
 
-				<label index="width.description">Width &amp; Heiggt of the map</label>
-				<label index="lng.description">Longtidude &amp; Latidude for the map after loading</label>
+				<label index="width.description">Width &amp; Height of the map</label>
+				<label index="lng.description">Longitude &amp; Latitude for the map after loading</label>
 				<label index="zoom.alttitle">Zoom Level</label>
 				<label index="zoom.description">1 is far far away, 13 is very near</label>
 
