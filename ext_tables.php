@@ -53,7 +53,7 @@ if (strpos($tmp_confArr['tables'], 'tt_address') !== false) {
 	$value = 'tt_address';
 	t3lib_div::loadTCA($value);
 	t3lib_extMgm::addTCAcolumns($value,$tempColumns,1);
-	t3lib_extMgm::addToAllTCAtypes($value,"tx_rggooglemap_lng;;;;1-1-1, tx_rggooglemap_lat, tx_rggooglemap_cat");
+	t3lib_extMgm::addToAllTCAtypes($value,"tx_rggooglemap_lat;;;;1-1-1, tx_rggooglemap_lng, tx_rggooglemap_cat");
 }
 
 /*
