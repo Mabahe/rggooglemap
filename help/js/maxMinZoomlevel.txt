@@ -1,0 +1,16 @@
+Use something like
+
+G_PHYSICAL_MAP.getMaximumResolution = function () { return 15 };
+G_NORMAL_MAP.getMaximumResolution = function () { return 15 };
+G_SATELLITE_MAP.getMaximumResolution = function () { return 15 };
+G_HYBRID_MAP.getMaximumResolution = function () { return 15 }; 
+
+
+or 
+
+G_PHYSICAL_MAP.getMinimumResolution = function () { return 6 };
+G_NORMAL_MAP.getMinimumResolution = function () { return 6 };
+G_SATELLITE_MAP.getMinimumResolution = function () { return 6 };
+G_HYBRID_MAP.getMinimumResolution = function () { return 6 }; 
+
+to set a max / min level
