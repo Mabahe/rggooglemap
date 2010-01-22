@@ -443,7 +443,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		$markerArray['###DEFAULT_COUNTRY###']	= $this->config['defaultCountry']; // set the default country
-		$markerArray['###DEFAULT_ZIP###']			= $this->piVars['zip'];
+		$markerArray['###DEFAULT_ZIP###']			= htmlspecialchars($this->piVars['zip']);
 		$markerArray['###AUTOSUBMIT###']			= ($this->piVars['zip'] == '') ? '//' : ''; 
 		
 		// fetch the allowed categories as option list
