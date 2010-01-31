@@ -1231,7 +1231,19 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$markerArray['###GICONS###'].= $icon;
 		}
 
-	    // Adds hook for processing of extra javascript
+			// Hook for adding client-processing code for the additional datasets which were generated within method getJs()
+		$markerArray['###PROCESS_DATASETS###'] = '';
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'])) {
+			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'] as $_classRef) {
+				$_procObj = & t3lib_div::getUserObj($_classRef);
+					// Test if method exists as it might make sense not creating it for each corresponding hook entry
+				if (method_exists($_procObj, 'getDatasetJSProcessing')) {
+					$markerArray['###PROCESS_DATASETS###'] .= $_procObj->getDatasetJSProcessing($this);
+				}
+			}
+		}
+
+			// Hook for processing of extra javascript
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraGetJsHook'])) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraGetJsHook'] as $_classRef) {
 				$_procObj = & t3lib_div::getUserObj($_classRef);
@@ -1240,7 +1252,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		$jsTemplateCode = $this->cObj2->fileResource($this->conf['templateFileJS']);
-		$template['all'] = $this->cObj2->getSubpart($jsTemplateCode,'###ALL###');
+		$template['all'] = $this->cObj2->getSubpart($jsTemplateCode, '###ALL###');
 
 		$js .= $this->cObj2->substituteMarkerArrayCached($template['all'], $markerArray);
 
@@ -1953,7 +1965,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 			$this->xmlEndLevel('markers');
 
-				// Hook for returning additional dataset
+				// Hook for returning additional datasets
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'] as $_classRef) {
 					$_procObj = & t3lib_div::getUserObj($_classRef);

@@ -144,7 +144,10 @@ function getXMLData(clearOverlay) {
 			if (###MAP_CLUSTER###==2) {
 				var markerCluster = new MarkerClusterer(map, markersList, {maxZoom:12});
 			}
-			
+
+			###DEBUG###GLog.write('Processing of additional datasets');
+			###PROCESS_DATASETS###
+
 			hide('rggooglemapload');
 			
 			// general bound for the 1st call only
