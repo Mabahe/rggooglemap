@@ -1366,7 +1366,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	integer		$oddEven: item number to set a odd/even class
 	 * @return the marker array
 	 */
-  function getMarker($row, $prefix, $oddEven=0) {
+	function getMarker($row, $prefix, $oddEven=0) {
 		$prefixWithoutDot = trim($prefix, '.');
 		
 		// language setting
@@ -1435,9 +1435,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 		}
 
-    return $markerArray;
-  }
-
+		return $markerArray;
+	}
 
 	/**
 	 * Predefine the where clause
@@ -1446,7 +1445,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	string	$areaSearch: Coordinates of the map holding the corner points
 	 * @return the marker array
 	 */  
-  function helperGetAvailableRecords($catList='', $areaSearch='') {
+	function helperGetAvailableRecords($catList='', $areaSearch='') {
 		$where = ' lng!=0 AND lat!=0 '.$this->config['pid_list'];
 
 		if (!empty($areaSearch)) {
@@ -1477,7 +1476,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 *
 	 * @param	string		$allowedCat: the allowed categories
 	 * @param	int	  $parentId: Parent id of the record
-   * @return	array with all allowed categories
+	 * @return	array with all allowed categories
 	 */
 	function helperGetRecursiveCat($allowedCat, $parentId=0,$level=0 ) {
 		#  $catArr = array();
@@ -1500,7 +1499,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		return $catArr;
 	}
-
 
 	/**
 	 * Geocode an adress string, which needs already to be in the correct order
@@ -1555,8 +1553,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 		
 		return $coords;
-  }
-  
+	}
 
 	/**
 	 * Get specific language markers
@@ -1613,7 +1610,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		return $status;
 	}
 	
-	
 	/**
 	 * Get the correct Google Maps API key if multidomains are used and key 
 	 * for the current domain is found 
@@ -1644,7 +1640,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		
 		return $finalKey;
 	}
-
 
 	/**
 	 * Get the image of the categories
@@ -1710,7 +1705,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 	}
 
-
 	/**
 	 * Generate a unique integer key despite of the table name as string
 	 *
@@ -1722,7 +1716,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$key = substr(hexdec(substr (md5($table) , 0 , 7)), 0, 3).$id;
 		return $key;
 	}
-	
 
 	/**
 	 * Cluster all records by grouping them into different areas
@@ -1910,47 +1903,47 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
 			
-
-			if (count($areaArr)>1) {
-				$where.= ' AND lng between '.$areaArr[1].' AND '.$areaArr[3].'
-									 AND	lat between '.$areaArr[0].' AND '.$areaArr[2];
+			if (count($areaArr) > 1) {
+				$where .= ' AND lng between ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
+					AND	lat BETWEEN ' . $areaArr[0] . ' AND ' . $areaArr[2];
 			}
 			
 			// category selection
-			$catTmp = false;
+			$catTmp = FALSE;
 			foreach ($catList as $key=>$value) {
 				if ($value) {
-					$catTmp=true;
-					$where2.= ' FIND_IN_SET('.$value.',rggmcat) OR';
+					$catTmp = TRUE;
+					$where2 .= ' FIND_IN_SET(' . $value . ',rggmcat) OR';
 				}
 			}
-			$where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
-			
+			$where .= ($catTmp) ? ' AND ( ' . substr($where2, 0, -3) . ' ) ' : '';
+
 			$limit = '';
-			
-			if ($this->conf['extraquery']==1) {
-				$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses','rggmttnews2'));
-				if ($extraquery!= '') {
-					$where.= ' AND uid IN ('.$extraquery.') ';
+
+			if ($this->conf['extraquery'] == 1) {
+				$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses', 'rggmttnews2'));
+				if ($extraquery != '') {
+					$where .= ' AND uid IN (' . $extraquery . ') ';
 				}
 			}
 			
 				// Adds hook for processing of the xml func
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
 				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
-					$_procObj	= & t3lib_div::getUserObj($_classRef);
-					$where		= $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
+					$_procObj = & t3lib_div::getUserObj($_classRef);
+					$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
 				}
 			}
 			
 			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
 			
-			if ($this->conf['map.']['activateCluster']==3) {
+			if ($this->conf['map.']['activateCluster'] == 3) {
 				$res = $this->helperClusterRecords($res, $areaArr);			
 			}
 
-			while($row=array_shift($res)) {
+			$this->xmlNewLevel('markers', TRUE);
+			while ($row = array_shift($res)) {
 				$test = '';
 				$count++;
 				$catList = explode(',', $row['rggmcat']);
@@ -1959,14 +1952,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				
 				$this->xmlAddRecord($table, $row,$conf, $img, $test);
 			}
-
+			$this->xmlNewLevel('markers', FALSE);
 		}
 		$this->xmlRenderFooter();
 		
 		$result = $this->xmlGetResult();
 		return $result;
 	}
-
 
 	/**
 	 * adds a single record to the xml file
@@ -1994,8 +1986,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			'table' => $row['table'],
 		);
 		$this->xmlNewLevel('marker', TRUE, $attributes);
-		$this->xmlGetRowInXML($row,$conf);
-		$this->xmlNewLevel('marker');
+		$this->xmlGetRowInXML($row, $conf);
+		$this->xmlNewLevel('marker', FALSE);
 	}
 
 	/**
@@ -2055,23 +2047,23 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 	function xmlFieldWrap($field,$value) {
-		return '<'.$field.'>'.$value.'</'.$field.'>';
+		return '<' . $field . '>' . $value . '</' . $field . '>';
 	}
 
 	// just returns the top level name
 	function xmlTopLevelName() {
-		return 'markers';
+		return 'dataset';
 	}
 
 	// rendering header
 	function xmlRenderHeader() {
-		$this->xmlNewLevel($this->xmlTopLevelName(),1);
+		$this->xmlNewLevel($this->xmlTopLevelName(), TRUE);
 	}
 	
 	
 	// rendering footer
 	function xmlRenderFooter() {
-		$this->xmlNewLevel($this->xmlTopLevelName(),0);
+		$this->xmlNewLevel($this->xmlTopLevelName(), FALSE);
 	}
 
 } // class tx_rggooglemap
