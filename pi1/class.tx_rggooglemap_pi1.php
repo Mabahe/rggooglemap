@@ -1973,30 +1973,38 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 *
 	 * @param	array		$row: all fields of one record
 	 * @param	array		$conf: The PlugIn configuration
+	 * @param	string		$img: the image to show
 	 * @return single line @ xml
 	 */
-	function xmlAddRecord($table, $row,$conf, $img, $test) {
+	function xmlAddRecord($table, $row, $conf, $img) {
 		// language setting
-		if ($GLOBALS['TSFE']->sys_language_content && $this->conf['getRecordOverlay'] == 1 ) {
+		if ($GLOBALS['TSFE']->sys_language_content && $this->conf['getRecordOverlay'] == 1) {
 			$OLmode = ($this->sys_language_mode == 'strict'?'hideNonTranslated':'');
 			$row = $GLOBALS['TSFE']->sys_page->getRecordOverlay($table, $row, $GLOBALS['TSFE']->sys_language_content, $OLmode);
 		}
 		$uid2 = $this->helperJsKey($row['table'], $row['uid']);
 
-		$this->xmlLines[]=$this->xmlIcode.'<marker cat="'.$row['rggmcat'].'"  uid2="'.$uid2.'" uid="'.$row['uid'].'" lng="'.$row['lng'].'" lat="'.$row['lat'].'"  img="'.$img.'" table="'.$row['table'].'"  >';
-
-
+		$attributes = array(
+			'cat'   => $row['rggmcat'],
+			'uid2'  => $uid2,
+			'uid'   => $row['uid'],
+			'lng'   => $row['lng'],
+			'lat'   => $row['lat'],
+			'img'   => $img,
+			'table' => $row['table'],
+		);
+		$this->xmlNewLevel('marker', TRUE, $attributes);
 		$this->xmlGetRowInXML($row,$conf);
-		$this->xmlLines[]=$this->xmlIcode.'</marker>';
+		$this->xmlNewLevel('marker');
 	}
 
 	/**
-	*  inserts the element/node "html" for every record => the content of every POI
-	*
-	* @param	array		$row: all fields of one record
-	* @param	array		$conf: The PlugIn configuration
-	* @return element "html" @ xml
-	*/
+	 * inserts the element/node "html" for every record => the content of every POI
+	 *
+	 * @param	array		$row: all fields of one record
+	 * @param	array		$conf: The PlugIn configuration
+	 * @return element "html" @ xml
+	 */
 	function xmlGetRowInXML($row,$conf) {
 		$table = $row['table'];
 
@@ -2004,53 +2012,56 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$field = ($this->conf['title.']['useRggmTitle'] == 1) ? 'rggmtitle' : $this->conf['title.'][$table];
 		
 		$title = $this->cObj2->stdWrap($row[$field], $this->conf['title.'][$table.'.']);
-		$content = '<![CDATA[ '.$title.' ]]>';
-		$this->xmlLines[]=$this->xmlIcode.$this->xmlFieldWrap('t',(($content)));
+		$content = '<![CDATA[ ' . $title . ' ]]>';
+		$this->xmlLines[] = $this->xmlIcode . $this->xmlFieldWrap('t', (($content)));
 	}
 
-
 	/**
-	*  filling the marker of the template with values of the records. Image processing and so on
-	*
-	* @param	array		$row: all fields of one record
-	* @param	array		$conf: The PlugIn configuration
-	* @return element "html" @ xml
-	*/
-	function xmlNewLevel($name,$beginEndFlag=0,$params=array()) {
-		if ($beginEndFlag){
-			$pList='';
-			if (count($params)) {
-				$par=array();
-				reset($params);
-				while(list($key,$val)=each($params)) {
-					$par[]=$key.'="'.htmlspecialchars($val).'"';
-				}
-				$pList=' '.implode(' ',$par);
-			}
-
-			$this->xmlLines[]=$this->xmlIcode.'<'.$name.$pList.'>';
+	 * Filling the marker of the template with values of the records. Image processing and so on
+	 *
+	 * @param	array		$row: all fields of one record
+	 * @param	array		$conf: The PlugIn configuration
+	 * @return element "html" @ xml
+	 */
+	function xmlNewLevel($name, $beginEndFlag = FALSE, $params = array()) {
+		if ($beginEndFlag) {
+			$this->xmlLines[] = $this->xmlIcode . $this->getXmlStartTag($name, $params);
 		} else {
-			$this->xmlLines[]=$this->xmlIcode.'</'.$name.'>';
+			$this->xmlLines[] = $this->xmlIcode . '</' . $name . '>';
 		}
 	}
 
-
+	/**
+	 * Returns an XML starting tag.
+	 * 
+	 * @param	string		$name
+	 * @param	array		$attributes
+	 * @return	string
+	 */
+	protected function getXmlStartTag($name, $attributes = array()) {
+		$tag = '<' . $name;
+		if (count($attributes)) {
+			foreach ($attributes as $key => $val) {
+				$tag .= ' ' . $key . '="' . htmlspecialchars($val) . '"';
+			}
+		}
+		$tag .= '>';
+		return $tag;
+	}
+	
 	function xmlGetResult() {
 		$content = implode(chr(10),$this->xmlLines);
 		return $content;
 	}
 
-
 	function xmlFieldWrap($field,$value) {
 		return '<'.$field.'>'.$value.'</'.$field.'>';
 	}
-
 
 	// just returns the top level name
 	function xmlTopLevelName() {
 		return 'markers';
 	}
-
 
 	// rendering header
 	function xmlRenderHeader() {
