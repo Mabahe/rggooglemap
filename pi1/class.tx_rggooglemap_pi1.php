@@ -1971,6 +1971,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					$_procObj = & t3lib_div::getUserObj($_classRef);
 					$params = array(
 						'categories' => $catList,
+						'zoom' => $postvars['zoom'],
 					);
 					if (count($areaArr) > 1) {
 						$params['area'] = array(
