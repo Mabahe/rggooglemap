@@ -337,16 +337,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	/**
 	 * View "MENU": Show all records of the selected categories and starting point, linking to the map on a different page
 	 *
-
 	 * $param array $additional: Function can be called by ajaxProcessCatTree to change used categories dynamically
 	 * @return	The plugin content
 	 */
-	function showMenu ($additionalCat='', $additionalWhere='') {
+	function showMenu ($additionalCat = '', $additionalWhere = '') {
 		$confSmall = $this->conf['menu.'];
 		
-		$template['total']	= $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_MENU###');
-		$template['item']		= $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE###');
-		$template['item2']	= $this->cObj->getSubpart($template['total'],'###ITEM_SINGLE2###');
+		$template['total'] = $this->cObj->getSubpart($this->templateCode, '###TEMPLATE_MENU###');
+		$template['item']  = $this->cObj->getSubpart($template['total'], '###ITEM_SINGLE###');
+		$template['item2'] = $this->cObj->getSubpart($template['total'], '###ITEM_SINGLE2###');
 		
 		// query for the categories
 		$table = 'tx_rggooglemap_cat';
@@ -355,21 +354,21 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if ($additionalCat != '') {
 			$menuCatList.= ' AND uid IN (' . implode(',', $additionalCat) . ') ';
 		} else {
-			$menuCatList = (($this->config['categories']!='') ? ' AND uid IN (' . $this->config['categories'] . ') ' : '');
+			$menuCatList = (($this->config['categories'] != '') ? ' AND uid IN (' . $this->config['categories'] . ') ' : '');
 		}
 		
 		$where = '1=1 ' . $this->cObj->enableFields($table) . $menuCatList;
 		$orderBy = $this->config['menu-catSort'] . ' ' . $this->config['menu-catSortBy'];
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*',$table,$where,$groupBy='',$orderBy,$limit='');
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, $where, $groupBy = '', $orderBy, $limit = '');
 		
 		$i = 0;
 		$count = array();
 		
 		// List of the Categories
-		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			// stdwrap for the categories
 			foreach ($row as $key=>$value) {
-				$markerArray['###'.strtoupper($key).'###'] = $this->cObj->stdWrap($value,$confSmall['category.'][$key.'.']);
+				$markerArray['###' . strtoupper($key) . '###'] = $this->cObj->stdWrap($value, $confSmall['category.'][$key . '.']);
 			}
 			
 			// query for single records in category
@@ -378,51 +377,52 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$where2 = ' rggmcat = ' . $firstCategory{0} . ' AND lat!=0 AND lng!=0 AND lng != \'\' AND lat != \'\' ' . $this->config['pid_list'];
 			
 			// search mode
-			if ($additionalWhere!= '') {
+			if ($additionalWhere != '') {
 				$where2 .= $additionalWhere;
 			}
 			
 			// orderBy
 			if ($this->config['menu-recordSort']) {
-				$orderByRecords = $this->config['menu-recordSort'].' '.$this->config['menu-recordSortBy'];
+				$orderByRecords = $this->config['menu-recordSort'] . ' ' . $this->config['menu-recordSortBy'];
 			}
 			
-			$res2 = $this->generic->exec_SELECTquery('*',$this->config['tables'],$where2,$groupBy='',$orderByRecords,$limit='');
+			$res2 = $this->generic->exec_SELECTquery('*', $this->config['tables'], $where2, $groupBy = '', $orderByRecords, $limit = '');
 			
 			// List of single records
 			$content_item2 = '';
 			
 			// run through the reocrds of the category
-			while($row2=array_shift($res2)) {
+			while ($row2 = array_shift($res2)) {
 				$i++;
 				
 				$markerArray2 = $this->getMarker($row2, 'menu.', $i);
 				
 				// no page ID for map > suggesting plugin is on the same page => javascript links
-				if ($this->config['menu-map']!='') {
+				if ($this->config['menu-map'] != '') {
 					$vars['poi'] = $row2['uid'];
 					
 					if ($row2['table'] != $this->conf['defaultTable']) {
 						$vars['table'] = $row2['table'];
 					}
 					
-					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', $this->pi_linkTP_keepPIvars('|', $vars, 1,1,$this->config['menu-map']));
+					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', $this->pi_linkTP_keepPIvars('|', $vars, 1, 1, $this->config['menu-map']));
 				} else {
-					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', '<a onclick="myclick('.$row2['uid'].','.$row2['lng'].','.$row2['lat'].', \''.$row2['table'].'\')" href="javascript:void(0)">|</a>');
+					$wrappedSubpartArray['###LINK_ITEM###'] = explode('|', '<a onclick="myclick(' . $row2['uid'] . ',' . $row2['lng'] . ',' . $row2['lat'] . ', \'' . $row2['table'] . '\')" href="javascript:void(0)">|</a>');
 				}
 				
-				$content_item2 .=$this->cObj->substituteMarkerArrayCached($template['item2'],$markerArray2, $subpartArray,$wrappedSubpartArray );
+				$content_item2 .= $this->cObj->substituteMarkerArrayCached($template['item2'], $markerArray2, $subpartArray, $wrappedSubpartArray);
 			}
 			
-			
-			$subpartArray['###CONTENT2###'] = $content_item2 ;
-			$content_item .=($i>0) ? $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, $subpartArray,$wrappedSubpartArray ) :'';
-			
+			$subpartArray['###CONTENT2###'] = $content_item2;
+			if ($i > 0) {
+				$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray, $subpartArray,$wrappedSubpartArray);
+			}			
 		}
+
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-		$subpartArray['###CONTENT###'] =($i>0) ? $content_item : '';
+		$subpartArray['###CONTENT###'] = ($i > 0) ? $content_item : '';
 		
-		$content.= $this->cObj->substituteMarkerArrayCached($template['total'],$markerArray, $subpartArray,$wrappedSubpartArray);
+		$content .= $this->cObj->substituteMarkerArrayCached($template['total'], $markerArray, $subpartArray, $wrappedSubpartArray);
 		return $content;
 	}
 
@@ -434,25 +434,24 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function showSearch () {
 		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH###');
-		$subpartArray 		= array();
-		$markerArray 			= $this->helperGetLLMarkers(array(), $this->conf['search.']['LL'], 'search');
+		$subpartArray     = array();
+		$markerArray      = $this->helperGetLLMarkers(array(), $this->conf['search.']['LL'], 'search');
 
 		// hide the radisus search by using a subpart
-		if ($this->config['search']['radiusSearch']!=1) {
+		if ($this->config['search']['radiusSearch'] != 1) {
 			$subpartArray['###HIDE_RADIUSSEARCH###'] = '';
 		}
 
-		$markerArray['###DEFAULT_COUNTRY###']	= $this->config['defaultCountry']; // set the default country
-		$markerArray['###DEFAULT_ZIP###']			= htmlspecialchars($this->piVars['zip']);
-		$markerArray['###AUTOSUBMIT###']			= ($this->piVars['zip'] == '') ? '//' : ''; 
+		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry']; // set the default country
+		$markerArray['###DEFAULT_ZIP###']     = htmlspecialchars($this->piVars['zip']);
+		$markerArray['###AUTOSUBMIT###']      = ($this->piVars['zip'] == '') ? '//' : ''; 
 		
 		// fetch the allowed categories as option list
 		$markerArray['###CATEGORY###'] = $this->helperGetRecursiveCat($this->config['categories']);
 
-		$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
+		$content.= $this->cObj->substituteMarkerArrayCached($template['list'], $markerArray, $subpartArray);
 		return $content;
 	}
-
 
 	/**
 	 * Show the category menu
@@ -461,13 +460,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */	
 	function showCatMenu() {
 		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_MAIN###');
-		$markerArray 	= array();		
+		$markerArray      = array();		
 		$markerArray['###ITEMS###'] = $this->displayCatMenu();
 		
-		$content = $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray);
+		$content = $this->cObj2->substituteMarkerArrayCached($template['list'], $markerArray);
 		return $content;
 	}
-	
 	
 	/**
 	 * Show the directions to some records
@@ -480,14 +478,13 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$subpartArray = array();
 		$markerArray = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'directions');
  
-
 		// query
-		$table		= $this->config['tables'];
-		$field		= '*';
-		$where		= $this->helperGetAvailableRecords($this->config['categories']);
-		$orderBy	= $smallConf['orderBy'];
-		$limit		= $smallConf['limit'];
-		$res			= $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
+		$table   = $this->config['tables'];
+		$field   = '*';
+		$where   = $this->helperGetAvailableRecords($this->config['categories']);
+		$orderBy = $smallConf['orderBy'];
+		$limit   = $smallConf['limit'];
+		$res     = $this->generic->exec_SELECTquery($field, $table, $where, '', $orderBy, $limit);
 
 		// if just 1 result, render a different subpart
 		if (count($res) == 1) {
@@ -498,39 +495,38 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$subpartArray['###HIDE_SINGLESELECTION###'] = '';
 		}
 		
-		$template['list'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_DIRECTIONS###');
-		$template['item'] = $this->cObj2->getSubpart($template['list'],'###SINGLE'.$suffix.'###');
+		$template['list'] = $this->cObj2->getSubpart($this->templateCode, '###TEMPLATE_DIRECTIONS###');
+		$template['item'] = $this->cObj2->getSubpart($template['list'], '###SINGLE' . $suffix . '###');
 
-		while($row=array_shift($res)) {
+		while ($row=array_shift($res)) {
 			$markerArray = $this->getMarker($row, 'directions.');
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray, array(), $wrappedSubpartArray);
 		}
-		
-		$subpartArray['###CONTENT'.$suffix.'###'] = $content_item;
-		
+
+		$subpartArray['###CONTENT' . $suffix . '###'] = $content_item;
+
 		$markerArray['###DEFAULT_COUNTRY###'] = $this->config['defaultCountry'];
 
-		$content.= $this->cObj2->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
+		$content .= $this->cObj2->substituteMarkerArrayCached($template['list'], $markerArray, $subpartArray);
 		return $content;
 	}
-	
 
 	/**
-	* Function for the ajax search results
-	*
-	* @param	string		$searchFields: The search fiels (search word & search on map only)
-	* @return	Records found with search value
-	*/
-	function ajaxSearch($searchForm)	{
-		$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH_RESULTS###');
-		$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
+	 * Function for the ajax search results
+	 *
+	 * @param	string		$searchFields: The search fiels (search word & search on map only)
+	 * @return	Records found with search value
+	 */
+	function ajaxSearch($searchForm) {
+		$template['list'] = $this->cObj->getSubpart($this->templateCode, '###TEMPLATE_SEARCH_RESULTS###');
+		$template['item'] = $this->cObj->getSubpart( $template['list'], '###SINGLE###');
 		$smallConf = $this->conf['search.'];
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 
-		$test		= '';
-		$debug	= array();
-		$error	= array();
-		
+		$test  = '';
+		$debug = array();
+		$error = array();
+
 		$jsResultDelete = 'deleteSearchResult();';		
 		$markerArray = $this->helperGetLLMarkers(array(), $this->conf['search.']['LL'], 'search');		
 
@@ -549,8 +545,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$searchExpression = $searchForm['rggmsearchValue'];
 			$searchExpression = str_replace($delete, '', $searchExpression);
 
-
-			$tablelist = explode(',',$this->config['tables']);
+			$tablelist = explode(',', $this->config['tables']);
 
 			foreach ($tablelist as $key => $table) {
 				$searchClause = array();
@@ -561,24 +556,24 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					$select = '*';
 					$searchField = t3lib_div::trimExplode(',',$this->conf['search.']['fields.'][$table]);
 					$where2 = '';
-					foreach ($searchField as $key=>$value) {
+					foreach ($searchField as $key => $value) {
 						$where2.= " $value LIKE '%$searchExpression%' OR";
 					}
-					$searchClause['text'] = ' ( ' . substr($where2,0,-3) . ' ) ';
+					$searchClause['text'] = ' ( ' . substr($where2, 0, -3) . ' ) ';
 
 					// search only within the map area
-					if ($searchForm['rggmOnMap']=='on') {
+					if ($searchForm['rggmOnMap'] == 'on') {
 						$areaArr = $this->intExplode('%2C%20', $searchForm['rggmBound'], 1);
 						$searchClause['maparea'] = ' lng between ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
 							AND	lat between ' . $areaArr[0] . ' AND ' . $areaArr[2];
 					}
 
 					// radius search (umkreissuche)
-					if ($searchForm['rggmActivateRadius']=='on') {
+					if ($searchForm['rggmActivateRadius'] == 'on') {
 						
 						// avoid multiple geocoding calls, just 1 is necessary
 						if (count($coordinatesSaved) == 0) {
-							$coordinates = $this->helperGeocodeAddress('',$searchForm['rggmZip'], '', $searchForm['rggmCountry']);
+							$coordinates = $this->helperGeocodeAddress('', $searchForm['rggmZip'], '', $searchForm['rggmCountry']);
 							$coordinatesSaved = $coordinates;
 						} else {
 							$coordinates = $coordinatesSaved;
@@ -591,24 +586,23 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 							$orderBy = 'distance';
 						} else {
 							$searchClause['errorWithRadiusSearch'] = '1=2';
-							
-							// if status is ok, the accuracy failed
-							if ($coordinates['status']==200) {
-								$error['accuracy']	= $this->pi_getLL('search_error_geocode-accuracy');
-							} else {
-								$error['status'] 		= $this->pi_getLL('search_error_geocode-status-'.$coordinates['status']);
-							}
 
+							// if status is ok, the accuracy failed
+							if ($coordinates['status'] == 200) {
+								$error['accuracy'] = $this->pi_getLL('search_error_geocode-accuracy');
+							} else {
+								$error['status'] = $this->pi_getLL('search_error_geocode-status-' . $coordinates['status']);
+							}
 						}
 					}
 
 					// if a category is used, search for it
 					if ($searchForm['rggmCat'] != '') {
 						$catList = $this->intExplode(',', $searchForm['rggmCat']);
-						foreach ($catList as $key=>$value) {
-							$whereCat.= ' FIND_IN_SET('.$value.',rggmcat) OR';
+						foreach ($catList as $key => $value) {
+							$whereCat .= ' FIND_IN_SET(' . $value . ',rggmcat) OR';
 						}
-						$searchClause['cat']= ' ( ' . substr($whereCat,0,-3) . ' ) ';
+						$searchClause['cat'] = ' ( ' . substr($whereCat, 0, -3) . ' ) ';
 					}
 
 					$limit = ''; // no limit, because this is done afterwards from the whole list
@@ -616,27 +610,25 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					// Adds hook for processing of extra search expressions
 					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'])) {
 						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraSearchHook'] as $_classRef) {
-							$_procObj 		= & t3lib_div::getUserObj($_classRef);
-							$searchClause	= $_procObj->extraSearchProcessor($table, $searchClause, $orderBy, $limit, $error, $this);
+							$_procObj = & t3lib_div::getUserObj($_classRef);
+							$searchClause = $_procObj->extraSearchProcessor($table, $searchClause, $orderBy, $limit, $error, $this);
 						}
 					}
 
 					$where = implode(' AND ', $searchClause);
 
 					if (count($error) == 0) {
-						$res += $this->generic->exec_SELECTquery($select,$table,$where,$groupBy,$orderBy, $limit);
+						$res += $this->generic->exec_SELECTquery($select, $table, $where, $groupBy, $orderBy, $limit);
 					}
 				}
 
 				$debug[$table]['where'] = $where;
 			}
 
-
 			if (count($error) == 0) {
 				// todo Limit
-				$res = array_slice($res, 0,99);
-	
-	
+				$res = array_slice($res, 0, 99);
+		
 				/*
 				 * Create the output of the search
 				 */
@@ -647,91 +639,88 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$debug[$table]['res'] = $res;
 	
 				// run through the results
-				while($row=array_shift($res)) {
+				while ($row = array_shift($res)) {
 					$debug['count']++;
 	
 					// check if there is really no records with lng/lat = 0
-					if (floatval($row['lat'])==0 || floatval($row['lng'])==0) {
+					if (floatval($row['lat']) == 0 || floatval($row['lng']) == 0) {
 						continue;
 					}
 	
-					$markerArray = $this->getMarker($row,'search.', $i);
+					$markerArray = $this->getMarker($row, 'search.', $i);
 	
-					$markerArray['###SEARCHID###'] = $i+1;
+					$markerArray['###SEARCHID###'] = $i + 1;
 	
 					// set the title right
 					$title = ($this->cObj2->stdWrap(htmlspecialchars($row['rggmtitle']), $this->conf['title.']['searchresult.']));
 					$title = str_replace('\'', '"', $title);
 	
 					// icon for the map
-					$icon = 'marker'.($i+1).'.png';
+					$icon = 'marker'. ($i + 1) . '.png';
 	
 					// JS which displayes the search markers
 					$jsResultUpdate .= '
-						marker = createMarker(new GLatLng('.$row['lat'].','.$row['lng'].'), '. $row['uid'].', \''. $icon.'\', \''. $title.'\', \''. $row['table'].'\', 1);
+						marker = createMarker(new GLatLng(' . $row['lat'] . ',' . $row['lng'] . '), ' . $row['uid'] . ', \'' . $icon . '\', \'' . $title . '\', \'' . $row['table'] . '\', 1);
 	
-						map.addOverlay( marker );
-						searchresultmarkers['.$i.'] = marker;
-						bounds.extend(new GLatLng('.$row['lat'].','.$row['lng'].'));
+						map.addOverlay(marker);
+						searchresultmarkers[' . $i . '] = marker;
+						bounds.extend(new GLatLng(' . $row['lat'] . ',' . $row['lng'] . '));
 					';
 	
 					$i++;
 	
-					$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+					$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray, array(), $wrappedSubpartArray);
 				}
 	
-				$jsResultUpdate.= $test;
+				$jsResultUpdate .= $test;
 	
 				$markerArray['###SEARCHEXPRESSION###'] = $searchForm['rggmsearchValue'];
 				$markerArray['###SEARCHCOUNT###'] = $i;
-	
-	
+
 				$subpartArray['###CONTENT###'] = $content_item;
-	
+
 				$jsResultUpdate .= '
 					var zoom=map.getBoundsZoomLevel(bounds);
-	
+
 					var centerLat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) /2;
 					var centerLng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) /2;
 					map.setCenter(new GLatLng(centerLat,centerLng),zoom);
 				';
-	
-	
+
 				// Nothing found
 				if ($i ==0) {
 					$subpartArray['###CONTENT###'] = $this->pi_getLL('searchNoResult');
 					$jsResultUpdate = '';
 				}
 
-				$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray,$wrappedSubpartArray);
+				$content .= $this->cObj->substituteMarkerArrayCached($template['list'], $markerArray, $subpartArray, $wrappedSubpartArray);
 			}
 
 			$debugOut = 0;
-			if ($debugOut==1) {
-				$content = t3lib_div::view_array($debug).$content;
+			if ($debugOut == 1) {
+				$content = t3lib_div::view_array($debug) . $content;
 			}
-			
+
 		// minimum character length not reached
 		} else {
 			$error['minChars'] = sprintf($this->pi_getLL('searchMinChars'), $this->conf['search.']['minChars']);
-			$objResponse->addAssign('searchFormError', 'innerHTML',$content);
+			$objResponse->addAssign('searchFormError', 'innerHTML', $content);
 		}
 
 		// if any errors are found, load the error template
 		if (count($error) > 0) {
-			$template['list'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_SEARCH_RESULTS_ERROR###');
-			$template['item'] = $this->cObj->getSubpart( $template['list'],'###SINGLE###');
+			$template['list'] = $this->cObj->getSubpart($this->templateCode, '###TEMPLATE_SEARCH_RESULTS_ERROR###');
+			$template['item'] = $this->cObj->getSubpart( $template['list'], '###SINGLE###');
 			
 			foreach ($error as $key) {
 				$markerArray['###ERROR###'] = $key;
-				$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);
+				$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray);
 			}
 			$subpartArray['###CONTENT###'] = $content_item;
 
 			$markerArray['###LL_HEADER###'] = $this->pi_getLL('search_error_header');				
 
-			$content.= $this->cObj->substituteMarkerArrayCached($template['list'],$markerArray, $subpartArray);
-			
+			$content .= $this->cObj->substituteMarkerArrayCached($template['list'], $markerArray, $subpartArray);
 		}
 		
 		$objResponse->addScript($this->cObj->stdWrap($jsResultDelete, $smallConf['modify.']['deleteJS']));
@@ -750,37 +739,36 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */
 	function ajaxGetActiveRecords($area, $cat)	{
 		// template
-		$template['allrecords'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_ACTIVERECORDS###');
-		$template['item'] = $this->cObj2->getSubpart( $template['allrecords'],'###SINGLE###');
+		$template['allrecords'] = $this->cObj2->getSubpart($this->templateCode, '###TEMPLATE_ACTIVERECORDS###');
+		$template['item'] = $this->cObj2->getSubpart( $template['allrecords'], '###SINGLE###');
 		$smallConf = $this->conf['recordsOnMap.'];
 
 		// language markers
 		$languageMarkers = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'recordsonmap');
 
 		// query
-		$table 		= $this->config['tables'];
-		$field 		= '*';
-		$where 		= $this->helperGetAvailableRecords($cat, $area);		
-		$orderBy 	= $smallConf['orderBy'];
-		$limit 		= $smallConf['limit'];
-		$res 			= $this->generic->exec_SELECTquery($field,$table,$where,'',$orderBy, $limit);
+		$table   = $this->config['tables'];
+		$field   = '*';
+		$where   = $this->helperGetAvailableRecords($cat, $area);		
+		$orderBy = $smallConf['orderBy'];
+		$limit   = $smallConf['limit'];
+		$res     = $this->generic->exec_SELECTquery($field, $table, $where, '', $orderBy, $limit);
 
-		while($row=array_shift($res)) {
+		while ($row = array_shift($res)) {
 			$markerArray = $this->getMarker($row, 'recordsOnMap.', $i);
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray, array(), $wrappedSubpartArray);
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray, array(), $wrappedSubpartArray);
 		}
-		
+
 		$subpartArray['###CONTENT###'] = $content_item;
 
 		$markerArray = $languageMarkers;
-		$content.= $this->cObj2->substituteMarkerArrayCached($template['allrecords'],$markerArray, $subpartArray);
+		$content .= $this->cObj2->substituteMarkerArrayCached($template['allrecords'], $markerArray, $subpartArray);
 
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-		$objResponse->addAssign('rggooglemap-recordsonmap', 'innerHTML',$content);
-		
+		$objResponse->addAssign('rggooglemap-recordsonmap', 'innerHTML', $content);
+
 		return $objResponse->getXML();
 	}
-
 
 	/**
 	 * Initialize the map and all of its needed JS
@@ -824,16 +812,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 		}
 
-
 		$markerArray['###DYNAMIC_JS###'] = $this->getJs();
 
 		// load spefic files if needed for clustering
-		if ($this->conf['map.']['activateCluster']==1) { // gxmarkers
+		if ($this->conf['map.']['activateCluster'] == 1) { // gxmarkers
 			$subpartArray['###CLUSTER_2###'] = '';
 
-		} elseif ($this->conf['map.']['activateCluster']==2) { // markerclusterer
+		} elseif ($this->conf['map.']['activateCluster'] == 2) { // markerclusterer
 			$subpartArray['###CLUSTER_1###'] = '';
-
 		} else { // no clustering
 			$subpartArray['###CLUSTER_1###'] = $subpartArray['###CLUSTER_2###'] = '';
 		}
@@ -843,7 +829,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$GLOBALS['TSFE']->additionalHeaderData['rggooglemap_js'] = $totalJS;
 	}
 
-
 	/**
 	 * Load the info message popup window
 	 *
@@ -852,24 +837,23 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param int	$prefix: Prefix for tabs in info window
 	 * @return	The content of the info window
 	 */
-	function ajaxGetInfomsg($uid, $table, $tmplPrefix=1)	{
-		$template['infobox'] = $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_INFOBOX_'.$tmplPrefix.'###');
+	function ajaxGetInfomsg($uid, $table, $tmplPrefix = 1) {
+		$template['infobox'] = $this->cObj->getSubpart($this->templateCode, '###TEMPLATE_INFOBOX_' . $tmplPrefix . '###');
 		
 		// query for single record
-		$field	= '*';
-		$where	= 'uid = '.intval($uid);
-		$res		= $this->generic->exec_SELECTquery($field,$table,$where);
+		$field = '*';
+		$where = 'uid = ' . intval($uid);
+		$res   = $this->generic->exec_SELECTquery($field, $table, $where);
 		$row=array_shift($res);
 		
-		$markerArray = $this->getMarker($row,'popup.');		
-		$content.= $this->cObj->substituteMarkerArrayCached($template['infobox'], $markerArray);
-		
+		$markerArray = $this->getMarker($row, 'popup.');		
+		$content .= $this->cObj->substituteMarkerArrayCached($template['infobox'], $markerArray);
+
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('infobox', 'innerHTML', $content);
-		
+
 		return $objResponse->getXML();
 	}
-
 
 	/**
 	 * Creates the result records
@@ -879,40 +863,39 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @return	Html $currentPage List
 	 */	
 	function getDynamicList($catList, $currentPage) {
-		$content			= '';
-		$smallConf		= $this->conf['recordList.'];
-		$currentPage	= intval($currentPage);		
-		
+		$content     = '';
+		$smallConf   = $this->conf['recordList.'];
+		$currentPage = intval($currentPage);		
+
 		// no result if no categories selected
 		if ($catList == '') {
 			return $content;
 		}
-		
+
 		// template
-		$template['all']	= $this->cObj->getSubpart($this->templateCode,'###TEMPLATE_RECORDLIST###');
-		$template['item']	= $this->cObj->getSubpart( $template['all'],'###SINGLE###');
+		$template['all'] = $this->cObj->getSubpart($this->templateCode, '###TEMPLATE_RECORDLIST###');
+		$template['item'] = $this->cObj->getSubpart($template['all'], '###SINGLE###');
 		$markerArray = $subpartArray = $wrappedSubpartArray = array();
 		
 		// general query parts
 		$field = '*';
 		$table = $this->config['tables'];
 		$where = $this->helperGetAvailableRecords($catList);
-		$limit = ($currentPage*$smallConf['limit']).','.$smallConf['limit'];
+		$limit = ($currentPage * $smallConf['limit']) . ',' . $smallConf['limit'];
 				
 		// count
-		$maxRecords	= $this->generic->exec_COUNTquery($table,$where);
-		$maxPages		= ceil($maxRecords/$smallConf['limit']);
-		$max				= ($smallConf['limit']>= $maxRecords) ? $maxRecords : ($currentPage*$smallConf['limit'] + $smallConf['limit']);
-		
+		$maxRecords = $this->generic->exec_COUNTquery($table, $where);
+		$maxPages = ceil($maxRecords / $smallConf['limit']);
+		$max = ($smallConf['limit'] >= $maxRecords) ? $maxRecords : ($currentPage*$smallConf['limit'] + $smallConf['limit']);
 
 		// query for the results
-		$i=0;
+		$i = 0;
 		$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $smallConf['orderBy'], $limit);
-		while($row=array_shift($res)) {
-			$markerArray = $this->getMarker($row,'recordList.', $i);
+		while ($row = array_shift($res)) {
+			$markerArray = $this->getMarker($row, 'recordList.', $i);
 			$i++;
-			
-			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'],$markerArray);
+
+			$content_item .= $this->cObj->substituteMarkerArrayCached($template['item'], $markerArray);
 		}
 		$subpartArray['###CONTENT###'] = $content_item;
 		$markerArray = $this->helperGetLLMarkers(array(), $smallConf['LL'], 'recordlist');		
@@ -923,34 +906,33 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		// general text (Record x - y from z)		 
 		$markerArray['###PB_STATISTIC###'] = sprintf(
 			$this->pi_getLL('pagebrowser'),
-			$currentPage*$smallConf['limit']+1,
+			$currentPage*$smallConf['limit'] + 1,
 			$max,
 			$maxRecords
 		);
-		
+
 		// current page (Page x)
 		$markerArray['###PB_ACT###'] = sprintf(
 			$this->pi_getLL('pagebrowser_act'),
-			$currentPage+1
+			$currentPage + 1
 		);
-		
+
 		// previous page
 		if ($currentPage > 0) {
-			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($currentPage-1).')" ';
-			$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+			$pb = ' onClick="' . $this->prefixId . 'getDynamicList(\'' . $catList . '\',' . ($currentPage - 1) . ')" ';
+			$wrappedSubpartArray['###PB_PREV###'] = explode('|', '<a href="javascript:void(0);"' . $pb . '>|</a>');
 		} else {
 			$subpartArray['###HIDE_PREV###'] = ' ';
 		}
-		
+
 		// next page
-		if ($currentPage +1 < $maxPages) {
-			$new = $currentPage+1;
-			$pb = ' onClick="'.$this->prefixId.'getDynamicList(\''.$catList.'\','.($new).')" ';
-			$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"'.$pb.'>|</a>');
+		if ($currentPage + 1 < $maxPages) {
+			$pb = ' onClick="' . $this->prefixId . 'getDynamicList(\'' . $catList . '\',' . ($currentPage + 1) . ')" ';
+			$wrappedSubpartArray['###PB_NEXT###'] = explode('|', '<a href="javascript:void(0);"' . $pb . '>|</a>');
 		} else {
 			$subpartArray['###HIDE_NEXT###'] = 'x';
 		}
-		
+
 		$content.= $this->cObj->substituteMarkerArrayCached($template['all'], $markerArray, $subpartArray, $wrappedSubpartArray);
 
 		return $content;
@@ -968,18 +950,17 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		if (is_Array($data['cb'])){
 			$objResponse->addAssign('mapcatlist', 'innerHTML', implode(',', $data['cb']));
 		} else {
-			$objResponse->addAssign('mapcatlist', 'innerHTML','9999');
+			$objResponse->addAssign('mapcatlist', 'innerHTML', '9999');
 		}
-		
+
 		// if the dynamic List is needed
 		if ($this->config['loadDynamicList'] == 1) {
 			$objResponse->addAssign('formResult', 'innerHTML',$this->getDynamicList($this->intExplode(',', $data['cb']), 0));
 		}
-		
+
 		return $objResponse->getXML();
 	}
-	
-	
+
 	/**
 	 * Ajax wrapper function which calles the "real" list function
 	 *
@@ -989,13 +970,12 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 */	
 	function ajaxGetDynamicList($catList, $page) {
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-		$content.= $this->getDynamicList($catList, $page);
+		$content .= $this->getDynamicList($catList, $page);
 
 		$objResponse->addAssign('formResult', 'innerHTML', $content);
 		//$objResponse->addScript('setTimeout("fdTableSort.init()", 1000);');		
 		return $objResponse->getXML();	
-	}		
-
+	}
 
 	/**
 	 * Modifies the menu output with including the cateory selection
@@ -1003,15 +983,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	array	$data: selected checboxes
 	 * @return	Result records
 	 */
-	function ajaxProcessCatTree($data)	{
+	function ajaxProcessCatTree($data) {
 		$content.= $this->showMenu($data['cb']);
 
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
-		$objResponse->addAssign('rggooglemap-menu', 'innerHTML',$content);
+		$objResponse->addAssign('rggooglemap-menu', 'innerHTML', $content);
 
 		return $objResponse->getXML();
-  }
-  
+	}
 
 	/**
 	 * Creates the categorymenu
@@ -1019,42 +998,44 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * @param	int	$id: parent_id for the recursive function
 	 * @return	categorymenu with parent_id = $id
 	 */
-	function displayCatMenu($id=0, $level=0) {
+	function displayCatMenu($id = 0, $level = 0) {
 		$level++;
 		$i = 0;
-		
+
 		// actived checkbox for selected category
-		$checkedBox = explode(',',$this->config['categoriesActive']);
+		$checkedBox = t3lib_div::trimExplode(',', $this->config['categoriesActive']);
 
 		// template
 		if ($this->config['menu-categorytree'] == 0) {
-			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU###');
+			$template['total'] = $this->cObj2->getSubpart($this->templateCode, '###TEMPLATE_CATMENU###');
 		} else {
-			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_TREE###');
+			$template['total'] = $this->cObj2->getSubpart($this->templateCode, '###TEMPLATE_CATMENU_TREE###');
 		}
-		$template['item']	= $this->cObj2->getSubpart($template['total'],'###SINGLE###');
+		$template['item'] = $this->cObj2->getSubpart($template['total'], '###SINGLE###');
 		
 		// query
 		$table = 'tx_rggooglemap_cat';
 		$field = '*';
-		$where = 'hidden= 0 AND deleted = 0 AND parent_uid = '.$id;
-		$where.= ($this->config['categories']!='') ? ' AND uid IN('.$this->config['categories'].')' : '';
-	
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit='');
-		
-		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		$where = 'hidden= 0 AND deleted = 0 AND parent_uid = ' . $id;
+		if ($this->config['categories'] != '') {
+			$where .= ' AND uid IN(' . $this->config['categories'] . ')';	
+		}
+
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field, $table, $where, $groupBy = '', $orderBy, $limit = '');
+
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$i++;
-							
-			$markerArray = $this->getMarker($row,'catMenu.', $i);
 			
+			$markerArray = $this->getMarker($row, 'catMenu.', $i);
+
 			// category image
 			$imgTSConfig = $this->conf['catMenu.']['icon.'];
-			$imgTSConfig['file'] = 'uploads/tx_rggooglemap/'.$row['image'];
+			$imgTSConfig['file'] = 'uploads/tx_rggooglemap/' . $row['image'];
 			$markerArray['###ICON###'] = $this->cObj2->IMAGE($imgTSConfig);
-			
-			$markerArray['###CHECKED###'] = (in_array($row['uid'],$checkedBox)) ? ' checked ="checked" ' : '';
+
+			$markerArray['###CHECKED###'] = (in_array($row['uid'], $checkedBox)) ? ' checked ="checked" ' : '';
 			$markerArray['###RECURSIVE###'] = $this->displayCatMenu($row['uid']);
-			
+
 			if ($markerArray['###RECURSIVE###'] != '') {
 				// todo
 	#			$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###TEMPLATE_CATMENU_NOCHECKBOX###');
@@ -1069,19 +1050,17 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###LEVEL###'] = $level;
 		$markerArray['###FIRST_LEVEL###'] = ($id == 0) ? ' id="rggmmenulvl1" ' : '';
 		
-		
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 		
 
 		if ($i > 0) {
-			$content.= $this->cObj->substituteMarkerArrayCached($template['total'], $markerArray, $subpartArray);
+			$content .= $this->cObj->substituteMarkerArrayCached($template['total'], $markerArray, $subpartArray);
 		} else {
 			$content = '';
 		}
 
 		return $content;
 	}
-
 
 	/**
 	 * Creates the javascript which needs to be build dynamically
@@ -1093,15 +1072,15 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		// map type
 		$markerArray['###MAP_TYPE_MAPNIK###'] = $markerArray['###MAP_TYPE_TAH###'] = 0;
-		if ($this->config['mapType']!='') {
+		if ($this->config['mapType'] != '') {
 			// mapnik typoe
-			if (strpos($this->config['mapType'], 'MAPNIK') !== false) {
+			if (strpos($this->config['mapType'], 'MAPNIK') !== FALSE) {
 				$this->config['mapType'] = t3lib_div::rmFromList('MAPNIK', $this->config['mapType']);
 				$markerArray['###MAP_TYPE_MAPNIK###'] = 1;
 				$markerArray['###MAP_TYPE_MAPNIK_TITLE###'] = $this->conf['map.']['mapnik_title'];
 			}
 			// tiles@home typoe
-			if (strpos($this->config['mapType'], 'TAH') !== false) {
+			if (strpos($this->config['mapType'], 'TAH') !== FALSE) {
 				$this->config['mapType'] = t3lib_div::rmFromList('TAH', $this->config['mapType']);
 				$markerArray['###MAP_TYPE_TAH###'] = 1;
 				$markerArray['###MAP_TYPE_TAH_TITLE###'] = $this->conf['map.']['tah_title'];
@@ -1112,14 +1091,26 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$this->config['mapType'] = 'G_NORMAL_MAP';
 			}
 			
-			$markerArray['###MAP_TYPES###'] = ',{mapTypes:['.$this->config['mapType'].']}';
+			$markerArray['###MAP_TYPES###'] = ',{mapTypes:[' . $this->config['mapType'] . ']}';
 
 		}
 		
-		if ($this->config['mapNavControl'] == 'large' || $this->config['mapNavControl'] == 2) $settings .= 'map.addControl(new GLargeMapControl());';
-		elseif ($this->config['mapNavControl'] == 'small' || $this->config['mapNavControl'] == 1) $settings .= 'map.addControl(new GSmallMapControl());';
-		if ($this->config['mapTypeControl'] == 'show' || $this->config['mapTypeControl'] == '1') $settings .= 'map.addControl(new GMapTypeControl());';
-		if ($this->config['mapOverview'] == 1) $settings .= 'map.addControl(new GOverviewMapControl());';
+		switch ($this->config['mapNavControl']) {
+			case 'small':
+			case 1:
+				$settings .= 'map.addControl(new GSmallMapControl());';
+				break;
+			case 'large':
+			case 2:
+				$settings .= 'map.addControl(new GLargeMapControl());';
+				break;
+		}
+		if ($this->config['mapTypeControl'] == 'show' || $this->config['mapTypeControl'] == '1') {
+			$settings .= 'map.addControl(new GMapTypeControl());';
+		}
+		if ($this->config['mapOverview'] == 1) {
+			$settings .= 'map.addControl(new GOverviewMapControl());';
+		}
 		
 		if ($this->config['mapControlOnMouseOver'] == 1) {
 			$hideControlsOnMouseOut = 'map.hideControls();
@@ -1130,33 +1121,38 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				map.hideControls();
 				});';
 		}
-		if ($this->conf['enableDoubleClickZoom'] == 1)	$settings .= 'map.enableDoubleClickZoom();';
-		if ($this->conf['enableContinuousZoom'] == 1)	$settings .= 'map.enableContinuousZoom();';
-		if ($this->conf['enableScrollWheelZoom'] == 1) $settings .= 'map.enableScrollWheelZoom();';
-		
-		
+		if ($this->conf['enableDoubleClickZoom'] == 1) {
+			$settings .= 'map.enableDoubleClickZoom();';
+		}
+		if ($this->conf['enableContinuousZoom'] == 1) {
+			$settings .= 'map.enableContinuousZoom();';
+		}
+		if ($this->conf['enableScrollWheelZoom'] == 1) {
+			$settings .= 'map.enableScrollWheelZoom();';
+		}
+
 		// urls
 		$xmlUrlConf = $this->conf['xmlURL.'];
 		$url = $this->cObj2->typolink('', $xmlUrlConf);
-		
-		$urlForIcons = t3lib_div::getIndpEnv('TYPO3_SITE_URL').'uploads/tx_rggooglemap/';
-		$urlExt = t3lib_div::getIndpEnv('TYPO3_SITE_URL').t3lib_extMgm::siteRelpath('rggooglemap');
-		
+
+		$urlForIcons = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . 'uploads/tx_rggooglemap/';
+		$urlExt = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . t3lib_extMgm::siteRelpath('rggooglemap');
+
 		// records for the selected categories
-		if ($this->config['categoriesActive']!= '') {
+		if ($this->config['categoriesActive'] != '') {
 			$selectedCat = 'var cat = new Array();
 			cat["cb"] = new Object();';
-			$cats = explode(',',$this->config['categoriesActive']);
-			foreach ($cats as $key=>$value) {
-				$selectedCat .= 'cat["cb"]['.$value.'] = '.$value.';';			
+			$cats = t3lib_div::trimExplode(',', $this->config['categoriesActive']);
+			foreach ($cats as $key => $value) {
+				$selectedCat .= 'cat["cb"]['.$value.'] = ' . $value . ';';
 			}
-			$selectedCat.= ' tx_rggooglemap_pi1processCat(cat);';
+			$selectedCat .= ' tx_rggooglemap_pi1processCat(cat);';
 		} else {
-			$selectedCat.= ' tx_rggooglemap_pi1processCat("default");';
+			$selectedCat .= ' tx_rggooglemap_pi1processCat("default");';
 		}
-		
+
 		// use cluster, default = 0
-		switch($this->conf['map.']['activateCluster']) {
+		switch ($this->conf['map.']['activateCluster']) {
 			case 1:
 				$addMarker = 'clusterer.AddMarker(marker,title);';
 				$markerArray['###MAP_CLUSTER###'] = 1;
@@ -1171,7 +1167,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				break;
 		}
 
-
 		$markerArray['###HIDECONTROLSMOUSEOUT###'] = $hideControlsOnMouseOut;
 		$markerArray['###POI_ON_START###'] = $this->getPoiOnStart();
 		$markerArray['###SETTINGS###'] = $settings;
@@ -1185,7 +1180,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$markerArray['###URL###'] = $url;
 		$markerArray['###BOUNDS###'] = intval($this->config['useBoundsOnStart']);
 		$markerArray['###DEBUG###'] = ($this->conf['map.']['debug']==1) ? '' : '//';
-		
+
 		// get coordinates from user's browser
 		$markerArray['###USE_USER_LOCATION###'] = intval($this->conf['map.']['useUserLocationForMapCenter']) == 1 ? 1 : 0;
 		$markerArray['###USE_USER_LOCATION_ZOOMLEVEL###'] = intval($this->conf['map.']['useUserLocationForMapCenter.']['zoomLevel']) == 0 ? 0 : intval($this->conf['map.']['useUserLocationForMapCenter.']['zoomLevel']);
@@ -1196,14 +1191,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 
 			// set the correct paths if no icon is found
-			if ($row['image']=='') {
-				$iconPath 	= $this->conf['map.']['defaultIcon'];
-				$iconPathJS	= t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->conf['map.']['defaultIcon'];
+			if ($row['image'] == '') {
+				$iconPath = $this->conf['map.']['defaultIcon'];
+				$iconPathJS	= t3lib_div::getIndpEnv('TYPO3_SITE_URL') . $this->conf['map.']['defaultIcon'];
 			} else {
-				$iconPath = 'uploads/tx_rggooglemap/'.$row['image'];
+				$iconPath = 'uploads/tx_rggooglemap/' . $row['image'];
 				$iconPathJS	= $urlForIcons.$row['image'];
 			}
-		
+
 			$iconSize = @getimagesize($iconPath);
 			$width = 0;
 			$height = 0;
@@ -1212,49 +1207,46 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			if (!is_array($iconSize)) {
 				$iconSizeConf = $this->conf['map.']['iconSize.'];
 
-				$current	= $row['uid'] . '.';
-				$width		= (intval($iconSizeConf[$current]['width']) > 0) ? intval($iconSizeConf[$current]['width']) : intval($iconSizeConf['default.']['width']);
-				$height		= (intval($iconSizeConf[$current]['height']) > 0) ? intval($iconSizeConf[$current]['height']) : intval($iconSizeConf['default.']['height']);
+				$current = $row['uid'] . '.';
+				$width   = (intval($iconSizeConf[$current]['width']) > 0) ? intval($iconSizeConf[$current]['width']) : intval($iconSizeConf['default.']['width']);
+				$height  = (intval($iconSizeConf[$current]['height']) > 0) ? intval($iconSizeConf[$current]['height']) : intval($iconSizeConf['default.']['height']);
 			} else {
-				$width		= $iconSize[0];
-				$height		= $iconSize[1];
+				$width   = $iconSize[0];
+				$height  = $iconSize[1];
 			}
 
-			$key = 'gicons['.$row['uid'].']';
+			$key = 'gicons[' . $row['uid'] . ']';
 			$gicon .= $key . '= new GIcon(baseIcon);' . chr(10);
 			$gicon .= $key . '.image = "'.$iconPathJS.'";' . chr(10);
 			$gicon .= $key . '.iconSize = new GSize('.$width.', '.$height.');' . chr(10);
-			$gicon .= $key . '.iconAnchor = new GPoint('.($width/2).', '.($height/2).');' . chr(10);
-			$gicon .= $key . '.infoWindowAnchor = new GPoint('.($width/2).', '.($height/2).');' . chr(10) . chr(10);
+			$gicon .= $key . '.iconAnchor = new GPoint(' . ($width / 2) . ', ' . ($height / 2) . ');' . chr(10);
+			$gicon .= $key . '.infoWindowAnchor = new GPoint(' . ($width / 2) . ', ' . ($height / 2) . ');' . chr(10) . chr(10);
 		}
-		
+
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 
 		$markerArray['###GICONS###'] = $gicon;
-		
+
 		if ($this->conf['map.']['activateCluster'] == 3) {
 			$icon = str_replace('###CURRENT_URL###', t3lib_div::getIndpEnv('TYPO3_SITE_URL'), $this->conf['map.']['activateCluster.']['3.']['icon']);
 			$markerArray['###GICONS###'].= $icon;
 		}
 
-
-    // Adds hook for processing of extra javascript
+	    // Adds hook for processing of extra javascript
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraGetJsHook'])) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['extraGetJsHook'] as $_classRef) {
-				$_procObj			= & t3lib_div::getUserObj($_classRef);
-				$markerArray	= $_procObj->extraGetJsProcessor($markerArray, $this);
+				$_procObj = & t3lib_div::getUserObj($_classRef);
+				$markerArray = $_procObj->extraGetJsProcessor($markerArray, $this);
 			}
 		}
-
 
 		$jsTemplateCode = $this->cObj2->fileResource($this->conf['templateFileJS']);
 		$template['all'] = $this->cObj2->getSubpart($jsTemplateCode,'###ALL###');
 
-		$js.= $this->cObj2->substituteMarkerArrayCached($template['all'],$markerArray);
+		$js .= $this->cObj2->substituteMarkerArrayCached($template['all'], $markerArray);
 
 		return $js;
 	}
-
 
 	/**
 	 * Get the correct JS to show a poi after loading the page.
