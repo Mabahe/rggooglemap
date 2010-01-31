@@ -777,7 +777,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		$objResponse = new tx_xajax_response($GLOBALS['TSFE']->metaCharset);
 		$objResponse->addAssign('rggooglemap-recordsonmap', 'innerHTML',$content);
-
+		
 		return $objResponse->getXML();
 	}
 
@@ -1934,8 +1934,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			}
 			$where .= ($catTmp) ? ' AND ( '.substr($where2,0,-3).' ) ' : '';
 			
-			
-			
 			$limit = '';
 			
 			if ($this->conf['extraquery']==1) {
@@ -1945,8 +1943,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				}
 			}
 			
-			
-			// Adds hook for processing of the xml func
+				// Adds hook for processing of the xml func
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
 				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
 					$_procObj	= & t3lib_div::getUserObj($_classRef);

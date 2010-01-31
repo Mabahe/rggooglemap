@@ -5,8 +5,6 @@
 var gicons=[];
 ###GICONS###
 
-
-
  
 function makeMap() {
 	if (GBrowserIsCompatible()) {
@@ -32,11 +30,9 @@ function makeMap() {
 		if (###MAP_TYPE_MAPNIK### == 1) { loadMap_mapnik("###MAP_TYPE_MAPNIK_TITLE###"); }
 		if (###MAP_TYPE_TAH### == 1)  { loadMap_tah("###MAP_TYPE_TAH_TITLE###"); }
 
-
 		//###__MAKEMAP### 
 		
 		getXMLData(1);
-		
 
 		cat = document.getElementById("mapcatlist").innerHTML;
 		
@@ -50,19 +46,15 @@ function makeMap() {
 		});
 		
 		###HIDECONTROLSMOUSEOUT###
-		
-
-		
+				
 		###POI_ON_START###
 		
 	}
 }
 
-
-
 function getXMLData(clearOverlay) {
 
-	if (clearOverlay !=123) {
+	if (clearOverlay != 123) {
 		show('rggooglemapload');
 	}
 	
@@ -72,14 +64,13 @@ function getXMLData(clearOverlay) {
 
 	###DEBUG###GLog.writeUrl(myXmlVar);
 	
-	// clear clusterts
-	for (var i=0;i < rggmclustermarkers.length; i++) {
+	// clear clusters
+	for (var i = 0; i < rggmclustermarkers.length; i++) {
 		map.removeOverlay(rggmclustermarkers[i]); 
 	}
 	//rggmclustermarkers = [];
 
-
-	var markersList= [];
+	var markersList = [];
 	var request = GXmlHttp.create();
 	request.open("GET", myXmlVar, true);
 	request.onreadystatechange = function() {
@@ -89,14 +80,12 @@ function getXMLData(clearOverlay) {
 			var xmlDoc = request.responseXML;
 			var markers = xmlDoc.documentElement.getElementsByTagName("marker");
 			
-			
-			if (clearOverlay ==12) {
-			map.clearOverlays();gmarkers.length = 0;
-			setTimeout('getXMLData(11)', 100000);
+			if (clearOverlay == 12) {
+				map.clearOverlays();gmarkers.length = 0;
+				setTimeout('getXMLData(11)', 100000);
 			}
 			
-			if(d("rggooglemap-recordsonmap")){tx_rggooglemap_pi1activeRecords(getBound(),cat); }
-
+			if (d("rggooglemap-recordsonmap")){tx_rggooglemap_pi1activeRecords(getBound(),cat); }
 
 			var count=0;
 			var length = gmarkers.length;
@@ -105,9 +94,12 @@ function getXMLData(clearOverlay) {
 				gmarkers = [];
 				map.clearOverlays();
 			}
-			var rggmclustermarkerscount =0 ;
+
+			if (d("rgooglemap-"))
+
+			var rggmclustermarkerscount = 0;
 			
-			###DEBUG###GLog.write('POIs from request : '+markers.length);
+			###DEBUG###GLog.write('POIs from request : ' + markers.length);
 			for (var i = 0; i < markers.length; i++) {
 				
 				// obtain the attribues of each marker
@@ -133,7 +125,7 @@ function getXMLData(clearOverlay) {
 						###ADD_MARKER###					
 						
 					} else {
-						if (gmarkers[id2]!=1 ) {
+						if (gmarkers[id2]!=1) {
 							//GLog.write('mid: '+title+'    '+count,'black');
 							//clusterer.AddMarker(marker,title);
 							
@@ -174,7 +166,7 @@ function getXMLData(clearOverlay) {
 
 function createMarker(point, id, img, title,table, searchIons) { 
 	
-	if(searchIons==1) {
+	if (searchIons==1) {
 		icon = searchIcon;
 		icon.image = "###URL_ICONS###"+img;
 		//alert(icon.image);
@@ -182,8 +174,7 @@ function createMarker(point, id, img, title,table, searchIons) {
 		var icon = gicons[img];
 	}
 
-//	
-	
+	//
 	// var marker = new GxMarker( point, icon, ""+ title, { "offset": new GSize(10, -20), "isStatic": false } );
 	//
 	if (table == 'rggmcluster') {
@@ -195,13 +186,11 @@ function createMarker(point, id, img, title,table, searchIons) {
 	// var marker = new GxMarker( point, "http://www.rggooglemap.com/uploads/tx_rggooglemap/VirtError_02.gif", ""+title );
 	var url = "###URL###&no_cache=1&tx_rggooglemap_pi1[detail]="+id+"&tx_rggooglemap_pi1[table]="+table;
 
-
-		GEvent.addListener(marker, "click", function() {
-	if (table == 'rggmcluster') {
-				map.zoomIn();
-				
-	} else {
- 			var req = GXmlHttp.create();
+	GEvent.addListener(marker, "click", function() {
+		if (table == 'rggmcluster') {
+			map.zoomIn();
+		} else {
+			var req = GXmlHttp.create();
 			req.open("GET", url, true );
 			req.onreadystatechange = function() {
 				if ( req.readyState == 4 ) {
@@ -209,9 +198,8 @@ function createMarker(point, id, img, title,table, searchIons) {
 				}
 			};
 			req.send(null);
-
-			}
-		});
+		}
+	});
 
 	return marker;
 }
@@ -224,7 +212,7 @@ function myclick(i, lng, lat, table,showMarker) {
 	req.open("GET", url, true);
 	var t=this;
 	req.onreadystatechange = function() {
-		if ( req.readyState == 4 ) {
+		if (req.readyState == 4) {
 			t.map.openInfoWindowHtml( new GLatLng(lat, lng), req.responseText );
 		}
 	};
