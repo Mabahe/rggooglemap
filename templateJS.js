@@ -95,8 +95,6 @@ function getXMLData(clearOverlay) {
 				map.clearOverlays();
 			}
 
-			if (d("rgooglemap-"))
-
 			var rggmclustermarkerscount = 0;
 			
 			###DEBUG###GLog.write('POIs from request : ' + markers.length);
