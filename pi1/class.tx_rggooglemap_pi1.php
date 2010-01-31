@@ -70,7 +70,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1791:     function xmlFunc($content,$conf)
  * 1889:     function xmlAddRecord($table, $row,$conf, $img, $test)
  * 1911:     function xmlGetRowInXML($row,$conf)
- * 1926:     function xmlNewLevel($name,$beginEndFlag=0,$params=array())
  * 1949:     function xmlGetResult()
  * 1961:     function xmlFieldWrap($field,$value)
  * 1966:     function xmlTopLevelName()
@@ -1859,25 +1858,25 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	
 	
 	
-	/*
-	* **********************************
-	* ********** X M L *****************
-	* **********************************
-	**/
-	function xmlFunc($content,$conf)	{
+	/**
+	 * ********************************** 
+	 * ********** X M L *****************
+	 * **********************************
+	 */
+	function xmlFunc($content, $conf) {
 		$this->init($conf);
 		$this->pi_initPIflexForm(); // Init FlexForm configuration for plugin
-		
+
 		$postvars = t3lib_div::GPvar('tx_rggooglemap_pi1');
 		$areaArr = $this->intExplode(', ', $postvars['area'], 1);
-		
+
 		// fetch the content of a single poi
-		if ($postvars['detail']!='') {
+		if ($postvars['detail'] != '') {
 			$content = $this->getPoiContent($postvars['detail'],1,$postvars['table']);
 
 			return $content;
 		}
-			
+
 		// categories
 		$cat = $postvars['cat'];
 		if ($cat) { // cat selected
@@ -1885,11 +1884,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$catList = $this->intExplode(',', $cat);
 			}
 		} else { // nothing selected means 1st call!
-			$catList =  explode(',', $this->config['categoriesActive']);
+			$catList =  t3lib_div::trimExplode(',', $this->config['categoriesActive']);
 		}
-		
+
 		$this->xmlRenderHeader();
-		
+
 		if ($catList) {
 			$catImg = $this->helperGetCategoryImage(array()); // category images
 						
@@ -1901,16 +1900,16 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			else {
 				$field = '*';
 			}
-			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' '.$this->config['pid_list'];
+			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' ' . $this->config['pid_list'];
 			
 			if (count($areaArr) > 1) {
-				$where .= ' AND lng between ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
+				$where .= ' AND lng BETWEEN ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
 					AND	lat BETWEEN ' . $areaArr[0] . ' AND ' . $areaArr[2];
 			}
 			
 			// category selection
 			$catTmp = FALSE;
-			foreach ($catList as $key=>$value) {
+			foreach ($catList as $key => $value) {
 				if ($value) {
 					$catTmp = TRUE;
 					$where2 .= ' FIND_IN_SET(' . $value . ',rggmcat) OR';
@@ -1929,20 +1928,20 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			
 				// Adds hook for processing of the xml func
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'])) {
-				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
+				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['xmlFuncHook'] as $_classRef) {
 					$_procObj = & t3lib_div::getUserObj($_classRef);
 					$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
 				}
 			}
 			
 			$count = 0;
-			$res = $this->generic->exec_SELECTquery($field,$table,$where,$groupBy,$orderBy,$limit);
+			$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $orderBy, $limit);
 			
 			if ($this->conf['map.']['activateCluster'] == 3) {
 				$res = $this->helperClusterRecords($res, $areaArr);			
 			}
 
-			$this->xmlNewLevel('markers', TRUE);
+			$this->xmlStartLevel('markers');
 			while ($row = array_shift($res)) {
 				$test = '';
 				$count++;
@@ -1950,9 +1949,28 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 				$img = $catImg[$catList[0]];	
 				$img = $catList[0];
 				
-				$this->xmlAddRecord($table, $row,$conf, $img, $test);
+				$this->xmlAddRecord($table, $row, $conf, $img, $test);
 			}
-			$this->xmlNewLevel('markers', FALSE);
+			$this->xmlEndLevel('markers');
+
+				// Hook for returning additional dataset
+			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'])) {
+				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['datasetHook'] as $_classRef) {
+					$_procObj = & t3lib_div::getUserObj($_classRef);
+					$params = array(
+						'categories' => $catList,
+					);
+					if (count($areaArr) > 1) {
+						$params['area'] = array(
+							'minLatitude'  => $areaArr[0],
+							'maxLatitude'  => $areaArr[2],
+							'minLongitude' => $areaArr[1],
+							'maxLongitude' => $areaArr[3],
+						);
+					}
+					$_procObj->prepareDataset($params, $this);
+				}
+			}
 		}
 		$this->xmlRenderFooter();
 		
@@ -1985,9 +2003,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			'img'   => $img,
 			'table' => $row['table'],
 		);
-		$this->xmlNewLevel('marker', TRUE, $attributes);
+		$this->xmlStartLevel('marker', $attributes);
 		$this->xmlGetRowInXML($row, $conf);
-		$this->xmlNewLevel('marker', FALSE);
+		$this->xmlEndLevel('marker');
 	}
 
 	/**
@@ -2009,36 +2027,33 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Filling the marker of the template with values of the records. Image processing and so on
+	 * Creates a new XML level.
 	 *
-	 * @param	array		$row: all fields of one record
+	 * @param	string		$name: name of the new level
+	 * @param	boolean		$closeTag
 	 * @param	array		$conf: The PlugIn configuration
+	 * @param	
 	 * @return element "html" @ xml
 	 */
-	function xmlNewLevel($name, $beginEndFlag = FALSE, $params = array()) {
-		if ($beginEndFlag) {
-			$this->xmlLines[] = $this->xmlIcode . $this->getXmlStartTag($name, $params);
-		} else {
-			$this->xmlLines[] = $this->xmlIcode . '</' . $name . '>';
-		}
-	}
-
-	/**
-	 * Returns an XML starting tag.
-	 * 
-	 * @param	string		$name
-	 * @param	array		$attributes
-	 * @return	string
-	 */
-	protected function getXmlStartTag($name, $attributes = array()) {
+	public function xmlStartLevel($name, $attribute = array(), $isEmpty = FALSE) {
 		$tag = '<' . $name;
 		if (count($attributes)) {
 			foreach ($attributes as $key => $val) {
 				$tag .= ' ' . $key . '="' . htmlspecialchars($val) . '"';
 			}
 		}
-		$tag .= '>';
-		return $tag;
+		$tag .= $isEmpty ? ' />' : '>';
+		$this->xmlLines[] = $this->xmlIcode . $tag;
+	}
+
+	/**
+	 * Ends an XML level.
+	 * 
+	 * @param	string		$name: name of the level to end
+	 * @return	void
+	 */
+	public function xmlEndLevel($name) {
+		$this->xmlLines[] = $this->xmlIcode . '</' . $name . '>';
 	}
 	
 	function xmlGetResult() {
@@ -2051,23 +2066,22 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 
 	// just returns the top level name
-	function xmlTopLevelName() {
+	protected function xmlTopLevelName() {
 		return 'dataset';
 	}
 
 	// rendering header
-	function xmlRenderHeader() {
-		$this->xmlNewLevel($this->xmlTopLevelName(), TRUE);
+	protected function xmlRenderHeader() {
+		$this->xmlStartLevel($this->xmlTopLevelName());
 	}
 	
 	
 	// rendering footer
-	function xmlRenderFooter() {
-		$this->xmlNewLevel($this->xmlTopLevelName(), FALSE);
+	protected function xmlRenderFooter() {
+		$this->xmlEndLevel($this->xmlTopLevelName());
 	}
 
 } // class tx_rggooglemap
-
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/pi1/class.tx_rggooglemap_pi1.php'])	{
