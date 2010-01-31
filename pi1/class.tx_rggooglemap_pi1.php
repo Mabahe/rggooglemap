@@ -2030,17 +2030,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	 * Creates a new XML level.
 	 *
 	 * @param	string		$name: name of the new level
-	 * @param	boolean		$closeTag
-	 * @param	array		$conf: The PlugIn configuration
-	 * @param	
-	 * @return element "html" @ xml
+	 * @param	array		$attributes: attributes of the tag
+	 * @param	boolean		$isEmpty: whether the tag should be closed right away as it does not contain subitems
+	 * @return	void
 	 */
-	public function xmlStartLevel($name, $attribute = array(), $isEmpty = FALSE) {
+	public function xmlStartLevel($name, $attributes = array(), $isEmpty = FALSE) {
 		$tag = '<' . $name;
-		if (count($attributes)) {
-			foreach ($attributes as $key => $val) {
-				$tag .= ' ' . $key . '="' . htmlspecialchars($val) . '"';
-			}
+		foreach ($attributes as $key => $val) {
+			$tag .= ' ' . $key . '="' . htmlspecialchars($val) . '"';
 		}
 		$tag .= $isEmpty ? ' />' : '>';
 		$this->xmlLines[] = $this->xmlIcode . $tag;
@@ -2057,7 +2054,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	}
 	
 	function xmlGetResult() {
-		$content = implode(chr(10),$this->xmlLines);
+		$content = implode(chr(10), $this->xmlLines);
 		return $content;
 	}
 
