@@ -1132,7 +1132,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		// urls
 		$xmlUrlConf = $this->conf['xmlURL.'];
+	
+			// disable realurl for the xml url
+		$realurlTmp = $GLOBALS['TSFE']->config['config']['tx_realurl_enable'];
+		$GLOBALS['TSFE']->config['config']['tx_realurl_enable'] = 0;
 		$url = $this->cObj2->typolink('', $xmlUrlConf);
+		$GLOBALS['TSFE']->config['config']['tx_realurl_enable'] = $realurlTmp;		
+		
+
 
 		$urlForIcons = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . 'uploads/tx_rggooglemap/';
 		$urlExt = t3lib_div::getIndpEnv('TYPO3_SITE_URL') . t3lib_extMgm::siteRelpath('rggooglemap');
