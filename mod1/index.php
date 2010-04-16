@@ -30,7 +30,7 @@
 
 
 	// DEFAULT initialization of a module [BEGIN]
-if (!$GLOBALS['SOBE'])	{
+if (!isset($GLOBALS['SOBE'])) {
 	unset($MCONF);
 	require_once("conf.php");
 	require_once($BACK_PATH."init.php");
@@ -199,6 +199,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	}
 	function genJScode($settings, $onload, $scripttags = true)	{
+		global $BACK_PATH;
 			// get the key if multidomain is used
 			if (trim($this->confArr['googleKey2']) != '') {
 				$keyListTmp = explode('#####', $this->confArr['googleKey2']);
@@ -480,7 +481,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     '.$onload.'
     //]]>
     </script><script type="text/javascript" src="sort.js"></script>
-	 '.$this->xajax->getJavascript('../../../../'.t3lib_extMgm::extRelPath("xajax"))
+	 '.$this->xajax->getJavascript( $BACK_PATH . '../' . t3lib_extMgm::siteRelPath("xajax"))
 	.($scripttags?'':'<script type="text/javascript">/*<![CDATA[*/
    	');
 		return $content;
