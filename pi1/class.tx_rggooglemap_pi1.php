@@ -650,8 +650,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 	
 					$markerArray['###SEARCHID###'] = $i + 1;
 	
-					// set the title right
-					$title = ($this->cObj2->stdWrap(htmlspecialchars($row['rggmtitle']), $this->conf['title.']['searchresult.']));
+						// set the correct title
+					$field = ($this->conf['title.']['useRggmTitle'] == 1) ? 'rggmtitle' : $this->conf['title.'][$table];
+					$title = ($this->cObj2->stdWrap(htmlspecialchars($row[$field]), $this->conf['title.']['searchresult.']));
 					$title = str_replace('\'', '"', $title);
 	
 					// icon for the map
