@@ -723,9 +723,9 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			$content .= $this->cObj->substituteMarkerArrayCached($template['list'], $markerArray, $subpartArray);
 		}
 		
-		$objResponse->addScript($this->cObj->stdWrap($jsResultDelete, $smallConf['modify.']['deleteJS']));
+		$objResponse->addScript($this->cObj->stdWrap($jsResultDelete, $smallConf['modify.']['deleteJS.']));
 		$objResponse->addAssign('searchFormResult', 'innerHTML', $content);
-		$objResponse->addScript($this->cObj->stdWrap($jsResultUpdate, $smallConf['modify.']['updateJS']));
+		$objResponse->addScript($this->cObj->stdWrap($jsResultUpdate, $smallConf['modify.']['updateJS.']));
 
 		return $objResponse->getXML();
 	}
