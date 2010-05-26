@@ -1908,6 +1908,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		}
 
 		$this->xmlRenderHeader();
+		$where = array();
 
 		if ($catList) {
 			$catImg = $this->helperGetCategoryImage(array()); // category images
@@ -1920,10 +1921,10 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 			else {
 				$field = '*';
 			}
-			$where = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' ' . $this->config['pid_list'];
+			$where['basic'] = 'lng!=0 AND lat!= 0 AND lng!=\'\' AND lat!=\'\' ' . $this->config['pid_list'];
 			
 			if (count($areaArr) > 1) {
-				$where .= ' AND lng BETWEEN ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
+				$where['area'] = ' AND lng BETWEEN ' . $areaArr[1] . ' AND ' . $areaArr[3] . '
 					AND	lat BETWEEN ' . $areaArr[0] . ' AND ' . $areaArr[2];
 			}
 			
@@ -1935,14 +1936,14 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					$where2 .= ' FIND_IN_SET(' . $value . ',rggmcat) OR';
 				}
 			}
-			$where .= ($catTmp) ? ' AND ( ' . substr($where2, 0, -3) . ' ) ' : '';
+			$where['category'] = ($catTmp) ? ' AND ( ' . substr($where2, 0, -3) . ' ) ' : '';
 
 			$limit = '';
 
 			if ($this->conf['extraquery'] == 1) {
 				$extraquery = ($GLOBALS['TSFE']->fe_user->getKey('ses', 'rggmttnews2'));
 				if ($extraquery != '') {
-					$where .= ' AND uid IN (' . $extraquery . ') ';
+					$where['extraquery'] = ' AND uid IN (' . $extraquery . ') ';
 				}
 			}
 			
@@ -1953,6 +1954,8 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 					$where = $_procObj->extraSearchProcessor($table,$where,$orderBy, $limit, $postvars, $this);
 				}
 			}
+			
+			$where = implode(' ', $where);
 			
 			$count = 0;
 			$res = $this->generic->exec_SELECTquery($field, $table, $where, $groupBy, $orderBy, $limit);
