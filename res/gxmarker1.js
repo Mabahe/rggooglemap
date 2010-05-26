@@ -132,6 +132,7 @@ GxMarker.prototype.showTooltip = function() {
             var opacity = this.tooltip.opacity / 100;
             this.tooltipObject = document.createElement("div");
             this.tooltipObject.style.display    = "none";
+            this.tooltipObject.style.position   = "absolute";
             this.tooltipObject.style.zIndex     = 50000;
             this.tooltipObject.innerHTML        = "<div class=\"markerTooltip\">" + this.tooltip.contents + "</div>";
             map.getPane(G_MAP_MARKER_PANE).appendChild(this.tooltipObject);
