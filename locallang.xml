@@ -38,6 +38,7 @@
 			<label index="saveError">Error: No position chosen!</label>
 			<label index="latitude">Latitude</label>
 			<label index="longitude">Longitude</label>
+			<label index="zoom">Zoom</label>
 			<label index="uid">Id</label>
 			<label index="name">Name</label>
 			<label index="category">Category</label>

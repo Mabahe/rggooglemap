@@ -250,11 +250,13 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         GEvent.addListener(marker, "dragend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
+          document.getElementById("centerzoom").value = map.getZoom();
         });
         
         GEvent.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
+          document.getElementById("centerzoom").value = map.getZoom();
 
         });
 
@@ -786,8 +788,9 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 		$content .= $this->doc->section($LANG->getLL("headerChoosePOI"),'',0,1);
 
 		if ($this->wizardMode)	{
-			$content .=	$LANG->getLL("latitude").': <input id="centerlatitude" name="google[centerlatitude]" value="'.$this->confArr['startLat'].'" type="text"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'.
-					$LANG->getLL("longitude").': <input id="centerlongitude" name="google[centerlongitude]" value="'.$this->confArr['startLong'].'" type="text"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			$content .=	$LANG->getLL("latitude").': <input id="centerlatitude" name="google[centerlatitude]" value="'.$this->confArr['startLat'].'" type="text"> &nbsp; &nbsp;' .
+					$LANG->getLL("longitude").': <input id="centerlongitude" name="google[centerlongitude]" value="'.$this->confArr['startLong'].'" type="text"> &nbsp; &nbsp;' . 
+					$LANG->getLL("zoom") . ': <input id="centerzoom"  style="width:20px" disabled="disabled" value="' . $this->confArr['startZoom'] .'" type="text" />  &nbsp; &nbsp;
 					<input id="submitButton" type="button" value="'.$LANG->getLL("save").'" onclick=\'savePoint("map'.$this->mapIdx.'");\' /> &nbsp; &nbsp;
 					<input id="submitButton" type="button" value="'.$LANG->getLL("save_and_close").'" onclick=\'savePoint("map'.$this->mapIdx.'"); window.close();\' /> &nbsp; &nbsp;
 					<input id="submitButton" type="button" value="'.$LANG->getLL("close").'" onclick=\'window.close();\' /><br />
