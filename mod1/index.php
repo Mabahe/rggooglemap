@@ -112,9 +112,9 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			$this->doc = t3lib_div::makeInstance("mediumDoc");
 			$this->doc->backPath = $BACK_PATH;
 	#		$this->doc->form='<form action="" method="POST">';
-			
+
 			$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
-			
+
 			// get the key if multidomain is used
 			if (trim($this->confArr['googleKey2']) != '') {
 				$keyListTmp = explode('#####', $this->confArr['googleKey2']);
@@ -129,7 +129,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 					$this->confArr['googleKey'] = $keyList[$currentDomain];
 				}
 			}
-			
+
 			// some settings from Extension Manager (map control, ..)
 			$settings = '';
       if ($this->confArr['mapNavigation'] == 'large') {
@@ -139,7 +139,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       }
 			if ($this->confArr['mapType'] == 'on') $settings .= 'map.addControl(new GMapTypeControl());';
 			if ($this->confArr['mapOverview'] == 'on') $settings .= 'map.addControl(new GOverviewMapControl());';
-			
+
 			// onload just for map view
 			if ((string)$this->MOD_SETTINGS["function"] == 1) $onload = 'window.onload = load;';
 			else $onload = '';
@@ -148,8 +148,8 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 				// JavaScript
 			$this->doc->JScode = $this->genJScode($settings, $onload);
 			$this->doc->postCode = $this->genPostJScode();
-			
-			$headerSection = $this->doc->getHeader("pages",$this->pageinfo,$this->pageinfo["_thePath"])."<br />".$LANG->sL("LLL:EXT:lang/locallang_core.xml:labels.path").": ".t3lib_div::fixed_lgd_pre($this->pageinfo["_thePath"],50);
+
+			$headerSection = $this->doc->getHeader("pages",$this->pageinfo,$this->pageinfo["_thePath"])."<br />".$LANG->sL("LLL:EXT:lang/locallang_core.xml:labels.path").": ".t3lib_div::fixed_lgd_cs($this->pageinfo["_thePath"],50);
 
 			$this->content.=$this->doc->startPage($LANG->getLL("title"));
 			$this->content.=$this->doc->header($LANG->getLL("title"));
@@ -157,7 +157,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			$this->content.=$this->doc->section("",$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,"SET[function]",$this->MOD_SETTINGS["function"],$this->MOD_MENU["function"])));
 			$this->content.=$this->doc->divider(5);
 
-  	  
+
       // include generic table access
       require_once(t3lib_extMgm::extPath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
   	  $this->generic = t3lib_div::makeInstance('tx_rggooglemap_table');
@@ -165,8 +165,8 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 			// Render content:
 			switch((string)$this->MOD_SETTINGS["function"])	{
-  			case 1: 
-  				$this->content.=$this->viewMap();  
+  			case 1:
+  				$this->content.=$this->viewMap();
   			break;
   			case 2:
   				if(t3lib_div::_GP('updateGeoData')){
@@ -174,7 +174,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 	  			}
   				if(t3lib_div::_GP('updateGeoData2')){
 						$this->updateGeoData2(t3lib_div::_GP('updateGeoData2'));
-	  			}	  			
+	  			}
 	  			$this->content.=$this->viewRecordList();
 
   			break;
@@ -213,7 +213,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 				if ($keyList[$currentDomain] != '') {
 					$this->confArr['googleKey'] = $keyList[$currentDomain];
 				}
-			}	
+			}
 		$content = chr(10).($scripttags?'<script language="javascript" type="text/javascript">':'').'
 					script_ended = 0;
 					function jumpToUrl(URL)	{
@@ -223,7 +223,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 				<script src="http://maps.google.com/maps?file=api&amp;v=2.58&amp;key='.$this->confArr['googleKey'].'" type="text/javascript"></script>
     <script type="text/javascript">
     //<![CDATA[
-    
+
     var map = null;
     var geocoder = null;
 
@@ -239,7 +239,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         var center = new GLatLng(lat.value, lng.value);
         map.setCenter(center, '.$this->confArr['startZoom'].');
         geocoder = new GClientGeocoder();
-        
+
         '.$settings.'
         var marker = new GMarker(center, {draggable: true});
 
@@ -252,7 +252,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
           document.getElementById("centerzoom").value = map.getZoom();
         });
-        
+
         GEvent.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
@@ -266,20 +266,20 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 						document.getElementById("centerlatitude").value = marker.getPoint().lat();
 						document.getElementById("centerlongitude").value = marker.getPoint().lng();
 					}
-        });  
+        });
 
 
         map.addOverlay(marker);
       }
     }
 
-    function loadPOI() { 
+    function loadPOI() {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map"));
         var center = new GLatLng(document.getElementById("centerlatitude").value, document.getElementById("centerlongitude").value );
         map.setCenter(center, '.$this->confArr['startZoom'].');
         geocoder = new GClientGeocoder();
-        
+
         '.$settings.'
         var marker = new GMarker(center, {draggable: true});
 
@@ -291,7 +291,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
         });
-        
+
         GEvent.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
@@ -301,21 +301,21 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         GEvent.addListener(map, "click", function(overlay, point) {
             marker.setPoint(point);
             document.getElementById("centerlatitude").value = marker.getPoint().lat();
-            document.getElementById("centerlongitude").value = marker.getPoint().lng();  
-        });  
+            document.getElementById("centerlongitude").value = marker.getPoint().lng();
+        });
 
 
         map.addOverlay(marker);
       }
     }
-    
-    
+
+
      function loadhover(name, lng, lat) {
       if (GBrowserIsCompatible()) {
-      
-      var l = document.getElementById("mapLink"); 
+
+      var l = document.getElementById("mapLink");
       l.style.visibility = "visible";
-      
+
         var m = document.getElementById("mapHover");
         m.style.height = "230px";
         m.style.width = "470px";
@@ -329,7 +329,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         var marker = new GMarker(center);
         var info = "<strong>"+name+"</strong><br />Long:"+lng+"<br />Lat:"+lat;
         map.addOverlay(marker);
-        
+
         GEvent.addListener(marker, "click", function() {
           marker.openInfoWindowHtml(info);
         });
@@ -340,11 +340,11 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
      function loadPoint(lat,lng) {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map"));
-        
+
         var center = new GLatLng(lat, lng);
         map.setCenter(center, '.$this->confArr['startZoom'].');
         geocoder = new GClientGeocoder();
-        
+
         '.$settings.'
         var marker = new GMarker(center, {draggable: true});
 
@@ -356,7 +356,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
         });
-        
+
         GEvent.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
@@ -366,15 +366,15 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         GEvent.addListener(map, "click", function(overlay, point) {
             marker.setPoint(point);
             document.getElementById("centerlatitude").value = marker.getPoint().lat();
-            document.getElementById("centerlongitude").value = marker.getPoint().lng();  
-        });  
-        
-                
+            document.getElementById("centerlongitude").value = marker.getPoint().lng();
+        });
+
+
         document.getElementById("centerlatitude").value = lat;
         document.getElementById("centerlongitude").value = lng;
 
         map.addOverlay(marker);
-        
+
         ShowHide("options");
       }
     }
@@ -398,28 +398,28 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
               document.getElementById("centerlatitude").value = marker.getPoint().lat();
               document.getElementById("centerlongitude").value = marker.getPoint().lng();
 
-      
+
               GEvent.addListener(marker, "dragstart", function() {
                 map.closeInfoWindow();
               });
-      
+
               GEvent.addListener(marker, "dragend", function() {
                 document.getElementById("centerlatitude").value = marker.getPoint().lat();
                 document.getElementById("centerlongitude").value = marker.getPoint().lng();
               });
-              
+
               GEvent.addListener(map, "moveend", function() {
                 document.getElementById("centerlatitude").value = marker.getPoint().lat();
                 document.getElementById("centerlongitude").value = marker.getPoint().lng();
-      
+
               });
 
               GEvent.addListener(map, "click", function(overlay, point) {
                   marker.setPoint(point);
                   document.getElementById("centerlatitude").value = marker.getPoint().lat();
-                  document.getElementById("centerlongitude").value = marker.getPoint().lng();  
-              });  
-                      
+                  document.getElementById("centerlongitude").value = marker.getPoint().lng();
+              });
+
               ShowHide("options");
 
             }
@@ -427,7 +427,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         );
       }
     }
-    
+
     function ShowHide(id) {
         obj = document.getElementsByTagName("div");
 
@@ -441,10 +441,10 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
             obj[id].style.visibility = "visible";
             obj[id].style.height = "150px";
           }
-          
+
         // id != options
-        } else {    
-         var m = document.getElementById("mapHover");   
+        } else {
+         var m = document.getElementById("mapHover");
           if (obj[id].style.visibility == "visible"){
             obj[id].style.visibility = "hidden";
             m.style.height = "0px";
@@ -453,33 +453,33 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
             obj[id].style.visibility = "visible";
             m.style.height = "230px";
           }
-        
-        
+
+
         }
-        
+
     }
     function autocomplete2 (text, id) {
        document.getElementById("selectAuto").value = text;
        document.getElementById("select").value = id;
-       
+
        obj = document.getElementById("completeresult");
        obj.style.display = "none";
     }
     function autocompleteShow () {
        obj = document.getElementById("completeresult");
-       obj.style.display = "inline";    
-    }   
+       obj.style.display = "inline";
+    }
     function autoload (text, id) {
        document.getElementById("selectAutoLoad").value = text;
        document.getElementById("selectLoad").value = id;
-       
+
        obj = document.getElementById("completeresultLoad");
        obj.style.display = "none";
     }
     function autoloadShow () {
        obj = document.getElementById("completeresultLoad");
-       obj.style.display = "inline";    
-    }     
+       obj.style.display = "inline";
+    }
     '.$onload.'
     //]]>
     </script><script type="text/javascript" src="sort.js"></script>
@@ -498,10 +498,10 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 				</script>
 				<style type="text/css">
         <!--
-          .error { 
+          .error {
             color:red;text-align:center;font-weight:bold;
           }
-          .success { 
+          .success {
             color:green;text-align:center;font-weight:bold;
           }
           .right {
@@ -510,7 +510,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           .catcolor {
             font-size:1px; width:6px;height:8px;float:left; margin-right:5px;
           }
-          
+
           h4 {
             border-bottom:1px solid #777;
             Xborder-top:1px solid #777;
@@ -519,7 +519,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           }
           #centerlatitude,#centerlongitude{ width:130px; }
           a:hover {text-decoration:underline;}
-          
+
                     #autopreselect a, #autopreselect a:link, #autopreselect a:visited, #autopreselect a:active {
             display:block;
             padding:2px 0;margin:0;
@@ -533,8 +533,8 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           }
           #autopreselect {
             padding:0;margin:0;
-            position:absolute; 
-            height:100px; 
+            position:absolute;
+            height:100px;
             overflow:auto;
             border:1px solid #ccc;
             background:#fff;
@@ -564,7 +564,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	/**
 	 * Shows all the records and initalize xajax-request for changing hide/show
-	 */	    
+	 */
   function viewRecordList() {
     require_once (PATH_t3lib."class.t3lib_tcemain.php");
     global $BACK_PATH,$LANG,$TCA,$BE_USER,$TSFE;
@@ -572,21 +572,21 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     //  geocoding
     $geocode = array();
     $tables = explode(',',$this->confArr['tables']);
-    
+
     foreach ($tables as $key=>$singleTable) {
-      $singleTable = trim($singleTable);    
+      $singleTable = trim($singleTable);
       if (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData',$singleTable))) {
             if ($call = $serviceObj->addressFields()) {
               $geocode[$singleTable] = $call;
             }
       }
-    } 
+    }
 
-    
+
     $content .= $this->doc->section($LANG->getLL("headerList"),'',0,1);
 
 		// override tree depth
-		$content.= '<form method="post"> 
+		$content.= '<form method="post">
 									'.$this->getTreeDepth().'
 									<input type="submit" />
 								</form>';
@@ -594,16 +594,16 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     // query
 		$vars = t3lib_div::_POST('rggm');
 		$treeDepth = (isset($vars['depth']) && intval($vars['depth'])>0) ? intval($vars['depth']) : $this->confArr['recursive'];
-    
-    
+
+
     $field = '*';
     $where = 'pid IN('.$this->getTreeList($this->id,$treeDepth,$level=0,' AND deleted = 0 AND hidden = 0').') AND deleted = 0';
     $res = $this->generic->exec_SELECTquery($field,$this->confArr['tables'],$where,$groupBy,$orderBy,$offset);
-    
+
     if (count($res) != 0) { # at lease one record available
 	     $out.='
              <form id="listForm" name="listForm">
-             <div style="height:400px;overflow:auto;"><table cellpadding="1" cellspacing="1" class="bgColor4 sortable" id="listrecord" width="100%">       
+             <div style="height:400px;overflow:auto;"><table cellpadding="1" cellspacing="1" class="bgColor4 sortable" id="listrecord" width="100%">
               <tr class="tableheader bgColor5">
                 <td></td>
                 <td>'.$LANG->getLL("name").'</td>
@@ -612,18 +612,18 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
                 <!--<td align="center">'.$LANG->getLL("display").'</td>--!>
                 <td align="center">'.$LANG->getLL("map").'</td>
               </tr>';
-              
+
         $catTitle = $this->getCatTitle();
         $tableTitles = array();
-        
-        foreach(t3lib_div::trimExplode(',',$this->confArr['tables']) as $key) {  
+
+        foreach(t3lib_div::trimExplode(',',$this->confArr['tables']) as $key) {
 	        $tableTitles[$key] = $GLOBALS['TCA'][$key]['ctrl']['label'];
 				}
 
         while($row=array_shift($res)) { # single record
       		$title = htmlspecialchars($row[$tableTitles[$row['table']]]);
           $show = ($record['show']==1) ? ' checked ' : '' ;
-          
+
           if (intval($row['lng'])==0 || intval($row['lat'])==0) {
             $hide=' disabled="disabled" ';
             // geocoding for records
@@ -635,7 +635,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
             }
           }else {
             $hide='';
-            $map = '<a style="cursor: help;" onclick="loadhover(\''.$title.'\','.$row['lat'].','.$row['lng'].')">'.$LANG->getLL("mapLink").'</a>' ; 
+            $map = '<a style="cursor: help;" onclick="loadhover(\''.$title.'\','.$row['lat'].','.$row['lng'].')">'.$LANG->getLL("mapLink").'</a>' ;
           }
 
       		$j++;
@@ -645,13 +645,13 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
                   <td>'.$this->getIconFromRecord($row['table'],$row['uid']).'</td>
                   <td>'.$title.'</td>
                   <td>'.$catTitle[$firstCat].'</td>
-                  <td align="center">'.$this->getLL($row['table']).'</td>                      
+                  <td align="center">'.$this->getLL($row['table']).'</td>
                   <!-- <td align="center"><input type="checkbox" name=new['.$row['table'].']['.$row['uid'].'] value="'.$row['uid'].'" '.$show.$hide.' />'.' </td>--!>
                   <td align="center">'.$map.'</td>
             		</tr>
-                <input type="hidden" name=old['.$row['table'].']['.$row['uid'].'] value="'.$row['uid'].'">';            	
+                <input type="hidden" name=old['.$row['table'].']['.$row['uid'].'] value="'.$row['uid'].'">';
         }
-          
+
     	$out.='</table></div>
               <div id="mapHover"></div>
               <div id="mapLink" style="visibility:hidden;" class="right">
@@ -674,40 +674,40 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	/**
 	 * xajax request to save changes off display-feature
-	 * DEPRICATED	 
-	 */	 
-  function xajaxListRecords($arg) { 
+	 * DEPRICATED
+	 */
+  function xajaxListRecords($arg) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER,$TSFE;
-    
+
     // if checkbox set
     if ($arg['control'] == 1) {
       foreach ($arg['old'] as $k=>$v) { // for every table
         $old = $arg['old'][$k]; // previous activated checkbox (before editing)
         $new = $arg['new'][$k]; // checkboxes after editing
         #$content.= 'OLD'.t3lib_div::view_array($old);
-        #$content.= 'NEW'.t3lib_div::view_array($new);  
-       
+        #$content.= 'NEW'.t3lib_div::view_array($new);
+
         // set display = 0 > hide
         if (!isset($new)) {
           $deleteIDs = implode(',',$old);
         } else {
-          $delete = array_diff_assoc($old, $new); 
-          $deleteIDs = implode(',',$delete);  
+          $delete = array_diff_assoc($old, $new);
+          $deleteIDs = implode(',',$delete);
         }
        	$where = 'uid IN ('.$deleteIDs.') AND deleted = 0';
         $saveData['tx_rggooglemap_display'] = 0;
         $table = $k;
-        $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,$saveData); 
-                       
+        $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,$saveData);
+
         // set display = 1  > show
         if (isset($new)) {
-          $insert = array_intersect($new,$old); 
-          $insertIDs = implode(',',$insert);           
+          $insert = array_intersect($new,$old);
+          $insertIDs = implode(',',$insert);
          	$where = 'uid IN ('.$insertIDs.') AND deleted = 0';
           $saveData['tx_rggooglemap_display'] = 1;
-          $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,$saveData); 
+          $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,$saveData);
         }
-      	
+
       }
       $content.= '<div class="success">'.$LANG->getLL("saveDisplay").'</div>';
     } else {
@@ -716,10 +716,10 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     // Instantiate the tx_xajax_response object
     $objResponse = new tx_xajax_response();
     $objResponse->addAssign("listOut","innerHTML", $content );
-      
-    return $objResponse->getXML();  
+
+    return $objResponse->getXML();
   }
-  
+
 /**
 	 * Update the GeoData in a Data Row
 	 * @param	string var: id|table|fields
@@ -731,9 +731,9 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     $uid = intval($var[0]);
     $table = $var[1];
     $fields = $var[2];
-    
+
     #echo $uid.'__'.$table.'___'.$fields;
-    
+
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,'.$fields,$table,'uid = '.$uid);
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
     if ($row['uid']!='') {
@@ -742,10 +742,10 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       foreach ($address as $key=>$value) {
       	$geocode[] = $row[$value];
       }
-      
+
       $geoAdress = implode(',',$geocode);
       $geoAdress = str_replace(array('ß', 'ö', 'ä', 'ü'), array('ss', 'oe', 'ae', 'ue'), $geoAdress);
-     
+
       $url = 'http://maps.google.com/maps/geo?q='.urlencode($geoAdress).'&output=csv&key='.$this->confArr['googleKey'];
       $response=stripslashes(t3lib_div::getUrl($url));
 
@@ -753,14 +753,14 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       if ($response[0]=='200' && $response[2]!= '' && $response[3] != '' && (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData',$table)))) {
         // get the lng + lat field to save
       $lat = $serviceObj->getTable('lat');
-      $lng = $serviceObj->getTable('lng');   
-      
-      $update[$lat] = $response[2]; 
+      $lng = $serviceObj->getTable('lng');
+
+      $update[$lat] = $response[2];
       $update[$lng] = $response[3];
- 
+
       #t3lib_div::print_array($update);
       	$success = $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,'uid='.$uid,$update);
-      	
+
       	if ($success) {
 					return '1';
 				} else {
@@ -769,17 +769,17 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       } else {
 				return 'error with geocoding with: '.$geoAdress.' => error code: '.implode(',',$response);
 			}
-    
-    
+
+
     } else {
 			return 'error: no id';
 		}
-    
-    
 
-		
-		
-	}	
+
+
+
+
+	}
 /* ======== Map View
 ======================*/
 
@@ -789,7 +789,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 		if ($this->wizardMode)	{
 			$content .=	$LANG->getLL("latitude").': <input id="centerlatitude" name="google[centerlatitude]" value="'.$this->confArr['startLat'].'" type="text"> &nbsp; &nbsp;' .
-					$LANG->getLL("longitude").': <input id="centerlongitude" name="google[centerlongitude]" value="'.$this->confArr['startLong'].'" type="text"> &nbsp; &nbsp;' . 
+					$LANG->getLL("longitude").': <input id="centerlongitude" name="google[centerlongitude]" value="'.$this->confArr['startLong'].'" type="text"> &nbsp; &nbsp;' .
 					$LANG->getLL("zoom") . ': <input id="centerzoom"  style="width:20px" disabled="disabled" value="' . $this->confArr['startZoom'] .'" type="text" />  &nbsp; &nbsp;
 					<input id="submitButton" type="button" value="'.$LANG->getLL("save").'" onclick=\'savePoint("map'.$this->mapIdx.'");\' /> &nbsp; &nbsp;
 					<input id="submitButton" type="button" value="'.$LANG->getLL("save_and_close").'" onclick=\'savePoint("map'.$this->mapIdx.'"); window.close();\' /> &nbsp; &nbsp;
@@ -802,7 +802,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
                         <input type="text" size="70" name="address" value="'.$LANG->getLL("geocodeSearchValue").'" onfocus="if(this.value==\''.$LANG->getLL("geocodeSearchValue").'\')this.value=\'\';" />
                         <input type="submit" value="'.$LANG->getLL("geocodeButton").'"  />
                       </fieldset>
-                    </form>   
+                    </form>
 
                   </div>
 
@@ -820,7 +820,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
                     <input id="submitButton" type="button" value="'.$LANG->getLL("save").'" onclick=\'xajax_getPoi(xajax.getFormValues("testForm2"));\' />
                   </form>
                   <br />
-                  
+
                   <a href="javascript:ShowHide(\'options\')">'.$LANG->getLL("showHideOptions").'</a>
                   <div id="options" style="visibility:hidden;height:0px;">
                     <form action="#" onsubmit="showAddress(this.address.value); return false">
@@ -831,21 +831,21 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
                       </fieldset>
                     </form>
 
-                    <form id="loadForm" name="loadForm">'.$selection.'  
+                    <form id="loadForm" name="loadForm">'.$selection.'
                       <fieldset>
                         <legend>'.$LANG->getLL("headerloadRecord").'</legend>
                         <input type="text" style="width:250px;" name="selectAutoLoad" id="selectAutoLoad" value=""  onkeyup=\'autoloadShow(); xajax_autoload(xajax.getFormValues("loadForm")); \'  />
                         <div id="completeresultLoad"></div>
                       </fieldset>
                     </form>
-                
+
                     <fieldset>
                       <legend>'.$LANG->getLL("headerloadPOI").'</legend>
                       <a href="#" onClick="loadPOI()">'.$LANG->getLL("loadPOILink").'</a>
                     </fieldset>
                   </div>
-                  
-                  
+
+
                   <div id="savePoints"></div>';
 		}
 		return $content;
@@ -854,9 +854,9 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	/**
 	 * xajax-request after clicking 1st save-Button
-	 *  => checking if there is a long/lat	 
-	 */	
-  function xajaxGetPoi($arg)        {       
+	 *  => checking if there is a long/lat
+	 */
+  function xajaxGetPoi($arg)        {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
     #$content.=t3lib_div::view_array($arg);
     $arg = $arg['google'];
@@ -867,38 +867,38 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     } else {
       $content .= '<br /><div class="error">'.$LANG->getLL("saveError").'</div>';
     }
-   
+
     // Instantiate the tx_xajax_response object
     $objResponse = new tx_xajax_response();
     $objResponse->addAssign("savePoints","innerHTML", $content);
-      
+
     return $objResponse->getXML();
-  } 
+  }
 
 	/**
-	 * called by xajaxGetPoi to get 
+	 * called by xajaxGetPoi to get
 	 *    1) dropdown to save POI to a record
-	 *    2) Link to save POI to new record	 
-	 *    and to initalize xajax-request for saving the record	 
-	 */	
+	 *    2) Link to save POI to new record
+	 *    and to initalize xajax-request for saving the record
+	 */
   function getPOIs ($arg) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
-    $content.= $this->doc->section($LANG->getLL("headerSave"),'',0,1);    
-    
+    $content.= $this->doc->section($LANG->getLL("headerSave"),'',0,1);
+
     // 1) inserts POI to a new record
     $table = 'tt_address';
     $content.='<h4>'.$LANG->getLL("headerSavePOINew").'</h4><ul>';
-    
+
     $tableList = t3lib_div::trimExplode(',', $this->confArr['tables']);
     foreach ($tableList as $key) {
 
-					$content.=$this->getNewRecord($key,$this->id, $arg['centerlongitude'], $arg['centerlatitude']);		
+					$content.=$this->getNewRecord($key,$this->id, $arg['centerlongitude'], $arg['centerlatitude']);
 		}
-		
+
 		$content.= '</ul>';
-    
+
     $content.='<h4>'.$LANG->getLL("headerSavePOI").'</h4>';
-    
+
      # fancy new auto suggest/complete
       $selection = '<input type="text" style="width:250px;" name="selectAuto" id="selectAuto" value=""  onkeyup=\'autocompleteShow(); xajax_autocomplete(xajax.getFormValues("saveForm")); \'  />
                     <input type="hidden" name="select" id="select" />
@@ -907,22 +907,22 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     $content.= '
                 <form id="saveForm" name="saveForm">'.$selection.'
                   <input type="hidden" name="long" value="'.$arg['centerlongitude'].'"/>
-                  <input type="hidden" name="lat" value="'.$arg['centerlatitude'].'"/>  
+                  <input type="hidden" name="lat" value="'.$arg['centerlatitude'].'"/>
                   <input type="checkbox" name="override" id="override" value="on" /> <label for="override">'.$LANG->getLL("confirmation").'</label>
                   <br /><br />
                   <input id="submitButton" type="button" value="'.$LANG->getLL("save").'" onclick=\'xajax_insertPoi(xajax.getFormValues("saveForm"));\' />
                 </form>
                 <div id="resultDiv"></div>';
-    
+
     return $content;
   }
 
 	/**
 	 * xajax-request to save the POI to a record
-	 */	
-  function xajaxInsertPoi($arg)        {     
-  
-    global $BACK_PATH,$LANG,$TCA,$BE_USER;      
+	 */
+  function xajaxInsertPoi($arg)        {
+
+    global $BACK_PATH,$LANG,$TCA,$BE_USER;
     if ($arg['override'] == 'on' && $arg['select']!='') {
       $content.= $this->newSaveRecord($arg);
 
@@ -933,41 +933,41 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
     $objResponse = new tx_xajax_response();
     $objResponse->addAssign("resultDiv","innerHTML", $content);
-      
+
     return $objResponse->getXML();
-  } 
+  }
 
 	/**
 	 * saving procedure and checking first if there is already a record with the same POI
-	 */	
+	 */
   function newSaveRecord ($arg) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
     #$content = t3lib_div::view_array($arg);
     $divider = strpos($arg['select'], ';');
     $table = substr($arg['select'],0,$divider);
     $id = substr($arg['select'],$divider+1,strlen($arg['select']));
-    
+
      $serviceChain='';
     while (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData', $table, $serviceChain))) {
-      $serviceChain.=','.$serviceObj->getServiceKey();    
+      $serviceChain.=','.$serviceObj->getServiceKey();
       if ($tempuser=$serviceObj->init()) {
-  
+
         // user found, just stop to search for more
         $latField = $serviceObj->getTable('lat');
         $lngField = $serviceObj->getTable('lng');
-     
-        // Security check > no double entries    
+
+        // Security check > no double entries
         $i = 0;
         $field = 'name,uid,lng';
         $where = 'pid IN('.$this->getTreeList($this->id,$this->confArr['recursive'],$level=0,' AND deleted = 0 AND hidden = 0').') AND deleted = 0 AND hidden = 0 AND lng = '.$arg['long'].' AND lat = '.$arg['lat'];
         $res = $this->generic->exec_SELECTquery($field,$this->confArr['tables'],$where,$groupBy,$orderBy,'0,10');
-        
-        while($row=array_shift($res)) { # single record    
+
+        while($row=array_shift($res)) { # single record
           $i++;
           $doubleTitle = $row['name'];
           $doubleTable = $row['table'];
         }
-        
+
         if ($i > 0) { # double entry saveSamePosition
           $content .= '<div class="error">'.sprintf($LANG->getLL("saveSamePosition"), $doubleTitle).'</div>';
         } else {
@@ -975,26 +975,26 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
           $saveData[$lngField] = $arg['long'];
          	$saveData[$latField] = $arg['lat'];
       		$saveData['tstamp'] = time();
-      
+
           $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,$saveData);
-          
-          $content .= '<div class="success">'.$LANG->getLL("saveSuccss").'</div>';       
+
+          $content .= '<div class="success">'.$LANG->getLL("saveSuccss").'</div>';
         }
         return $content;
-      } 
+      }
         }
     }
 
 	/**
-	 * xajax-request: filling out a div with the auto loading results	 
-	 */	  
-  function xajaxAutoComplete($arg)        {       
+	 * xajax-request: filling out a div with the auto loading results
+	 */
+  function xajaxAutoComplete($arg)        {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
-    
+
     $autoselect = $arg['selectAuto'];
     $i = 0;
     $content = '';
-    
+
     if (strlen($autoselect) >0 || $autoselect == '*') {
       // query for autocomplete
       $field = 'uid, lng, lat,name,rggmcat';
@@ -1002,57 +1002,57 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       $where = 'pid IN('.$this->getTreeList($this->id,$this->confArr['recursive'],$level=0,' AND deleted = 0 AND hidden = 0').') ';
       // if searchexpression is a word
       if ($autoselect != '*') $where.= 'AND name LIKE \'%'.$autoselect.'%\'';
-      
+
       $res = $this->generic->exec_SELECTquery($field,$this->confArr['tables'],$where,$groupBy,$orderBy,$offset);
-      while($row=array_shift($res)) { # single record    
+      while($row=array_shift($res)) { # single record
         $onclick = 'onclick=\'autocomplete2("'.$row['name'].'", "'.$row['table'].';'.$row['uid'].'");\'  ' ;
      	  $selection.='<a href="#" '.$onclick.$empty.'>'.$this->getIconFromRecordNoLink($row['table']).$row['name'].'</a>';
     		$i++;
-      }      
-      if ($i > 0) { 
+      }
+      if ($i > 0) {
         $content = '<div id="autopreselect" >'.$selection.'</div>';
-      } 
+      }
     } else {
       $content = '';
     }
-   
+
     // Instantiate the tx_xajax_response object
     $objResponse = new tx_xajax_response();
     $objResponse->addAssign("completeresult","innerHTML", $content);
-      
+
     return $objResponse->getXML();
-  } 
+  }
 
   function viewMassGeocoding() {
     require_once (PATH_t3lib."class.t3lib_tcemain.php");
     global $BACK_PATH,$LANG,$TCA,$BE_USER,$TSFE;
 
     $content=$this->doc->section('Geocode Massindex','',0,1);
-    
+
     // create form
-    $content.= 
+    $content.=
 		'
 			<form method="post">
 				'.$this->getTreeDepth().'
-				'.$this->getTableSelection().'	
-				
+				'.$this->getTableSelection().'
+
 				<input type="hidden" name="rggm[start]" value="1" />
-				<input type="submit" />			
+				<input type="submit" />
 			</form>
 		';
-    
-    
-    
-    
+
+
+
+
   #  $content.= '<a href="index.php?&id='.$this->id.'&SET[function]=3&rggm[start]=1">Start Mass Index</a>';
-    
+
     $vars = t3lib_div::_GP('rggm');
-    
-    
+
+
     $content.= t3lib_div::view_array($vars);
 
 
-		
+
     if ($vars['start']==1 && count($vars['tables'])>0) {
 
 			$countYes = $countAll = 0;
@@ -1065,75 +1065,75 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 	    //  geocoding
 	    $geocode = array();
 	    $tables = explode(',',$this->confArr['tables']);
-	    
+
 	    foreach ($tableList as $key=>$singleTable) {
-	      $singleTable = trim($singleTable);    
+	      $singleTable = trim($singleTable);
 	      if (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData',$singleTable))) {
 	            if ($call = $serviceObj->addressFields()) {
 	              $geocode[$singleTable] = $call;
 	            }
 	      }
-	    } 
-	
+	    }
+
 	    // query
 	    $field = '*';
 	    $tables = implode(',', $tableList);
 	    $where = 'pid IN('.$this->getTreeList($this->id,$vars['depth'],$level=0,' AND deleted = 0 AND hidden = 0').')  AND deleted = 0';
 	    $res = $this->generic->exec_SELECTquery($field,$tables,$where,$groupBy,$orderBy,$offset);
 
-      foreach(t3lib_div::trimExplode(',',$this->confArr['tables']) as $key) {  
+      foreach(t3lib_div::trimExplode(',',$this->confArr['tables']) as $key) {
         $tableTitles[$key] = $GLOBALS['TCA'][$key]['ctrl']['label'];
 			}
-	    
+
 	    while($row=array_shift($res)) { # single record
 
 	    	if (intval($row['lng'])!=0 && intval($row['lat'])!=0) {
 					continue;
 				}
-	    
+
 	    	$countAll++;
 	      if ($geocode[$row['table']]!='') {
 	    		$title = htmlspecialchars($row[$tableTitles[$row['table']]]);
 					$msg = $this->updateGeoData2($row['uid'].'|'.$row['table'].'|'.$geocode[$row['table']]);
-	    		
+
 					if ($msg==1) {
 						$countYes++;
 						$content.= $row['uid'].' - '.$title.' => yeah <br /><br />';
 					} else {
 						$content.= $row['uid'].' - '.$title.' => error <br /><br />';
 					}
-					
-	    		
-	    		
+
+
+
 	      } else {
 					$content.= 'no geocoding <br /><br />';
 				}
 
-	    
+
 	    }
 	    $content.= 'Geocoded records: '.$countYes.' from '.$countAll;
 	#              $map = '<span style="color:red;"><a href="?id='.$this->id.'&amp;SET[function]=2&amp;updateGeoData2='.$row['uid'].'|'.$row['table'].'|'.$geocode[$row['table']].'">'.$LANG->getLL('loadgeodata').'</a></span>';
-		}	
-	
-    
+		}
+
+
     return $content;
   }
 
-  
+
 /* ======== div functions
 ==========================*/
 
 	/**
 	 * returns droddown with all POIs
-	 */	  
+	 */
   function xajaxAutoLoad ($arg) {
 
       global $BACK_PATH,$LANG,$TCA,$BE_USER;
-    
+
     $autoselect = $arg['selectAutoLoad'];
     $i = 0;
    # $content = t3lib_div::view_array($arg);
-    
+
     if (strlen($autoselect) >1 || $autoselect == '*') {
       // query for autoload
       $field = 'uid, lng, lat,name';
@@ -1141,81 +1141,81 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       $where = 'pid IN('.$this->getTreeList($this->id,$this->confArr['recursive'],$level=0,' AND deleted = 0 AND hidden = 0').') ';
       // if searchexpression is a word
       if ($autoselect != '*') $where.= 'AND name LIKE \'%'.$autoselect.'%\'';
-      
+
       $res = $this->generic->exec_SELECTquery($field,$this->confArr['tables'],$where,$groupBy,$orderBy,$offset);
-      while($row=array_shift($res)) { # single record    
+      while($row=array_shift($res)) { # single record
         $onclick = 'onclick=\'loadPoint("'.$row['lat'].'", "'.$row['lng'].'");\'  ' ;
      	  $selection.='<a href="#" '.$onclick.$empty.'>'.$this->getIconFromRecordNoLink($row['table']).$row['name'].'</a>';
     		$i++;
-      }      
-      if ($i > 0) { 
+      }
+      if ($i > 0) {
         $content .= '<div id="autopreselect" >'.$selection.'</div>';
-      } 
+      }
     } else {
       $content ='';
     }
-   
+
     // Instantiate the tx_xajax_response object
     $objResponse = new tx_xajax_response();
     $objResponse->addAssign("completeresultLoad","innerHTML", $content);
-      
+
     return $objResponse->getXML();
-  } 
+  }
 
 
 
 	/**
 	 * returns icon with edit-link
-	 */	  	
+	 */
   function getIconFromRecord($table,$row) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
     $iconAltText = t3lib_BEfunc::getRecordIconAltText($row,$table);
     $elementTitle=t3lib_BEfunc::getRecordPath($row,'1=1',0);
     $elementTitle=t3lib_div::fixed_lgd_cs($elementTitle,-($BE_USER->uc['titleLen']));
     $elementIcon=t3lib_iconworks::getIconImage($table,'',$BACK_PATH,'class="c-recicon" title="'.$iconAltText.'"');
-    
+
     $params='&edit['.$table.']['.$row.']=edit';
     $editOnClick=t3lib_BEfunc::editOnClick($params,$BACK_PATH);
-    
+
     return '<a href="#" onclick="'.htmlspecialchars($editOnClick).'">'.$elementIcon.'</a>';
   }	# end function getIconFromRecord()
 
 	/**
 	 * returns icon without edit-link
-	 */	  	
+	 */
   function getIconFromRecordNoLink($table) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
     $elementIcon=t3lib_iconworks::getIconImage($table,'',$BACK_PATH,'');
 
     return $elementIcon;
   }	# end function getIconFromRecordNoLink()
-    
-  
+
+
 	/**
 	 * Returns title with edit-link
-	 */	    
+	 */
   function getTextFromRecord ($table, $row) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
     $params='&edit['.$table.']['.$row['uid'].']=edit';
-    $editOnClick=t3lib_BEfunc::editOnClick($params,$BACK_PATH);  
-    return '<a href="#" onclick="'.htmlspecialchars($editOnClick).'" title="'.$row['name'].' ('.$row['uid'].')">'.$row['name'].'</a>'; 
+    $editOnClick=t3lib_BEfunc::editOnClick($params,$BACK_PATH);
+    return '<a href="#" onclick="'.htmlspecialchars($editOnClick).'" title="'.$row['name'].' ('.$row['uid'].')">'.$row['name'].'</a>';
   } # end function getTextFromRecord()
-  
+
 
 	/**
 	 * Returns onClick for link to new record with the coordinates
-	 */	  
+	 */
   function getNewRecord ($table,$pid, $lngVal, $latVal) {
     global $BACK_PATH,$LANG,$TCA,$BE_USER;
 		$out = $latField = $lngField = '';
 		while (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData', $table, $serviceChain))) {
-			$serviceChain.=','.$serviceObj->getServiceKey();    
+			$serviceChain.=','.$serviceObj->getServiceKey();
 			if ($tempuser=$serviceObj->init()) {
 					$latField = $serviceObj->getTable('lat');
 					$lngField = $serviceObj->getTable('lng');
 			}
 		}
-		
+
 		// just create the link if the service object found a translation
 		if ($latField != '' && $lngField != '') {
 	    $params = '&edit['.$table.']['.$pid.']=new';
@@ -1226,10 +1226,10 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
     return $out;
   } # end getNewRecord
-	
+
 	/**
 	 * Returns the title of a category, based on the uid of the category
-	 */	
+	 */
   function getCatTitle() {
     $where = 'hidden = 0 AND deleted = 0';
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, title','tx_rggooglemap_cat',$where,$groupBy='',$orderBy,$limit='');
@@ -1240,7 +1240,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
   }
 	/**
 	 * Returns the title of a category, based on the uid of the category
-	 */	
+	 */
 
   function getCatColor() {
     $where = 'hidden = 0 AND deleted = 0';
@@ -1249,7 +1249,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     if ($row['color'] != '') $data [$row['uid']] = '<div style="background:'.$row['color'].';" class="catcolor"></div>';
     }
     return $data;
-  }  
+  }
 
   function getLL($key) {
     global $LANG;
@@ -1261,18 +1261,18 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	/**
 	* Get all pids recursive
-	*/	  
+	*/
 	function getTreeList($id, $depth, $begin=0, $perms_clause) {
 		$depth = intval($depth);
 		$begin = intval($begin);
 		$id = intval($id);
-		
+
 		if ($begin==0) {
 			$theList = $id;
 		} else {
 			$theList = '';
 		}
-		
+
 		if ($id && $depth > 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'pid='.$id.$perms_clause);
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -1284,36 +1284,36 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 				}
 			}
 		}
-		
+
 		return $theList;
 	}
 
 
 	/**
 	* Get a select field for the tree depth
-	*/	
+	*/
 	function getTreeDepth() {
 		$content = '<label for="rggmdepth">
 									<select id="rggmdepth" name="rggm[depth]>';
 		$vars = t3lib_div::_POST('rggm');
 		$act = (isset($vars['depth']) && intval($vars['depth'])>0) ? intval($vars['depth']) : $this->confArr['recursive'];
-		
+
 		for($i=0;$i<=10;$i++) {
 			$selected = ($act==$i) ? ' selected="selected" ' : '';
 			$content.= '<option value="'.$i.'"'.$selected.'>'.$i.'</option>';
 		}
-		
+
 		$content.= '</select>'.$GLOBALS['LANG']->getLL("depth").'</label>';
 
 		return $content;
-	}	
-	
+	}
+
 	function getTableSelection() {
 		$tableList = explode(',', $this->confArr['tables']);
 		$vars = t3lib_div::_POST('rggm');
-		
+
 		$content.= '<div class="field">';
-		
+
 		foreach ($tableList as $key) {
 			$selected = ($vars['tables'][$key]=='on' || $vars['start']!=1) ? ' checked="checked"' : '';
 			$content.= '<label for="rggmtable-'.$key.'">
@@ -1321,18 +1321,18 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 									</label>
 			';
 		}
-		
+
 		$content.= '</div>';
-	
+
 		return $content;
 	}
 
 	/**
-	* Create links to create records for all available tables 
-	*/		
+	* Create links to create records for all available tables
+	*/
 	function getLinksToNewRecords() {
     $content = '<br />'.$GLOBALS['LANG']->getLL("createNewRecordPlain").': <ul>';
-    
+
     $tableArr = explode(',',$this->confArr['tables']);
     foreach ($tableArr as $key => $table) {
       $params='&edit['.$table.']['.$this->id.']=new';
@@ -1342,11 +1342,11 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
       $content.= '<li><a href="#" onclick="'.htmlspecialchars($editOnClick).'">'.$tableName.'</a></li> ';
     }
     $content.= '</ul>';
-		
+
 		return $content;
 	}
 
-} # END ALL	
+} # END ALL
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rggooglemap/mod1/index.php'])	{
@@ -1357,10 +1357,10 @@ if (!$GLOBALS['SOBE'])	{
   // Make instance:
   $SOBE = t3lib_div::makeInstance('tx_rggooglemap_module1');
   $SOBE->init();
-  
+
   // Include files?
   foreach($SOBE->include_once as $INC_FILE)	include_once($INC_FILE);
-  
+
   $SOBE->main();
   $SOBE->printContent();
 }
