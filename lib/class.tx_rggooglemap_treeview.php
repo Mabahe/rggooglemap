@@ -59,7 +59,7 @@ class tx_rggm_tceFunc_selectTreeView extends t3lib_treeview {
 			return $GLOBALS['LANG']->sL( 'LLL:EXT:ab_linklist/locallang_db.php:tx_ablinklist_categories', 1 );
 		}
 	}
-	
+
 	/**
 	 * Wrap the plus/minus icon in a link
 	 *
@@ -80,7 +80,7 @@ class tx_rggm_tceFunc_selectTreeView extends t3lib_treeview {
 			return $icon;
 		}
 	}
-	
+
    	function initializePositionSaving()     {
 			   // Get stored tree structure:
 	   $this->stored=unserialize($this->BE_USER->uc['browseTrees'][$this->treeName]);
@@ -101,13 +101,13 @@ class tx_rggm_tceFunc_selectTreeView extends t3lib_treeview {
 			   }
 			}
 	   	}
-	}	
+	}
 }
-	
+
 class tx_rggm_treeview {
 
-	function displayCategoryTree($PA, $fobj)    {        
-        
+	function displayCategoryTree($PA, $fobj)    {
+
 //		debug($PA);
 		$table = $PA['table'];
 		$field = $PA['field'];
@@ -116,7 +116,7 @@ class tx_rggm_treeview {
 
 			// Field configuration from TCA:
 		$config = $PA['fieldConf']['config'];
-      
+
 			// it seems TCE has a bug and do not work correctly with '1'
 		$config['maxitems'] = ($config['maxitems']==2) ? 1 : $config['maxitems'];
 			// Getting the selector box items from the system
@@ -137,8 +137,8 @@ class tx_rggm_treeview {
 					unset($selItems[$tk]);
 				}
 			}
-		}		
-		
+		}
+
 			// Creating the label for the "No Matching Value" entry.
 		$nMV_label = isset($PA['fieldTSConfig']['noMatchingValue_label']) ? $this->pObj->sL($PA['fieldTSConfig']['noMatchingValue_label']) : '[ '.$this->pObj->getLL('l_noMatchingValue').' ]';
 		$nMV_label = @sprintf($nMV_label, $PA['itemFormElValue']);
@@ -146,20 +146,20 @@ class tx_rggm_treeview {
 		$maxitems = intval($config['maxitems']);
 		$minitems = intval($config['minitems']);
 		$size = intval($config['size']);
-		
-			// build tree selector		
-		$item.= '<input type="hidden" name="'.$PA['itemFormElName'].'_mul" value="'.($config['multiple']?1:0).'" />';
-	
+
+			// build tree selector
+		$item = '<input type="hidden" name="'.$PA['itemFormElName'].'_mul" value="'.($config['multiple']?1:0).'" />';
+
 			// Set max and min items:
 		$maxitems = t3lib_div::intInRange($config['maxitems'],0);
 		if (!$maxitems)	$maxitems=100000;
 		$minitems = t3lib_div::intInRange($config['minitems'],0);
-	
+
 			// Register the required number of elements:
 		$this->pObj->requiredElements[$PA['itemFormElName']] = array($minitems,$maxitems,'imgName'=>$table.'_'.$row['uid'].'_'.$field);
 		if($config['treeView'] AND $config['foreign_table']) {
 			global $TCA, $LANG;
-			if ($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']) { 
+			if ($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']) {
 				$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 			}
 			if($config['treeViewClass'] AND is_object($treeViewObj = &t3lib_div::getUserObj($config['treeViewClass'],'user_',false)))      {
@@ -175,11 +175,11 @@ class tx_rggm_treeview {
 			$treeViewObj->expandFirst = 1;
 			$treeViewObj->fieldArray = array('uid','title'); // those fields will be filled to the array $treeViewObj->tree
 			$treeViewObj->ext_IconMode = '1'; // no context menu on icons
-			$treeViewObj->title = $LANG->sL($TCA[$config['foreign_table']]['ctrl']['title']);	
+			$treeViewObj->title = $LANG->sL($TCA[$config['foreign_table']]['ctrl']['title']);
 			$treeViewObj->thisScript = 'alt_doc.php';
 			$treeViewObj->treeName = $config['treeName'];
-			$treeViewObj->hiddenField = '<input type="hidden" name="'.$config['treeName'].'_pm" value="">'; 
-			
+			$treeViewObj->hiddenField = '<input type="hidden" name="'.$config['treeName'].'_pm" value="">';
+
 			$treeViewObj->TCEforms_itemFormElName = $PA['itemFormElName'];
 			if ($table==$config['foreign_table']) {
 				$treeViewObj->TCEforms_nonSelectableItemsArray[] = $row['uid'];
@@ -195,10 +195,10 @@ class tx_rggm_treeview {
 					}
 				}
 			}
-				
+
 			$treeContent = '<script type="text/javascript">
 							/*<![CDATA[*/
-			
+
 
 			// ***************
 			// Used to connect the db/file browser with this document and the formfields on it!
@@ -406,16 +406,16 @@ class tx_rggm_treeview {
 			}
 
 			// END: dbFileCon parts.
-		
+
 				/*]]>*/
 								function set'.$config['treeName'].'PM(pm) {
-									document.editform.'.$config['treeName'].'_pm.value = pm;							
+									document.editform.'.$config['treeName'].'_pm.value = pm;
 								}
-							</script>';	
-				
+							</script>';
+
 				// render tree html
 			$treeContent.=$treeViewObj->getBrowsableTree();
-	
+
 			$treeItemC = count($treeViewObj->ids);
 			if ($defItems[0]) { // add default items to the tree table. In this case the value [not categorized]
 				$treeItemC += count($defItems);
@@ -429,8 +429,8 @@ class tx_rggm_treeview {
 			} elseif ($GLOBALS['CLIENT']['BROWSER']=='msie') { // to suppress the unneeded horizontal scrollbar IE needs a width of at least 320px
 				$width = 320;
 			}
-			$config['autoSizeMax'] = t3lib_div::intInRange($config['autoSizeMax'],0);			
-      
+			$config['autoSizeMax'] = t3lib_div::intInRange($config['autoSizeMax'],0);
+
             $height = $config['autoSizeMax'] ? t3lib_div::intInRange($treeItemC+2,t3lib_div::intInRange($size,1),$config['autoSizeMax']) : $size;
 				// hardcoded: 16 is the height of the icons
 			$height=$height*16;
@@ -449,21 +449,21 @@ class tx_rggm_treeview {
 			}
 			$thumbnails.= '</select>';
 		}
-				
+
 			// Perform modification of the selected items array:
 		$itemArray = t3lib_div::trimExplode(',',$PA['itemFormElValue'],1);
 		foreach($itemArray as $tk => $tv) {
 			$tvP = explode('|',$tv,2);
-			
+
 			if (in_array($tvP[0],$removeItems) && !$PA['fieldTSConfig']['disableNoMatchingValueElement'])	{
 				$tvP[1] = rawurlencode($nMV_label);
-				
+
 			} elseif (isset($PA['fieldTSConfig']['altLabels.'][$tvP[0]])) {
-					
+
         $tvP[1] = rawurlencode($this->pObj->sL($PA['fieldTSConfig']['altLabels.'][$tvP[0]]));
 			} else {
 		    $title = rawurldecode($tvP[1]);
-				/*umlaute 
+				/*umlaute
         $tvP[1] = rawurlencode($this->pObj->sL($title));
 				*/
 				$tvP[1] = rawurlencode($title);
@@ -475,7 +475,7 @@ class tx_rggm_treeview {
 		if (intval($confArr['categorySelectedWidth'])) {
 			$sWidth = t3lib_div::intInRange($confArr['categorySelectedWidth'],1,600);
 		}
-       
+
 		$params=array(
 			'size' => $size,
 			'autoSizeMax' => t3lib_div::intInRange($config['autoSizeMax'],0),
@@ -496,9 +496,9 @@ class tx_rggm_treeview {
 		$altItem = '<input type="hidden" name="'.$PA['itemFormElName'].'" value="'.htmlspecialchars($PA['itemFormElValue']).'" />';
 		#print_r($PA);
 		$item = $this->pObj->renderWizards(array($item,$altItem),$config['wizards'],$table,$row,$field,$PA,$PA['itemFormElName'],$specConf);
-		
+
 		return $this->NA_Items.$item;
-	
+
 	}
 
 }

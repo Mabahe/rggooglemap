@@ -41,12 +41,12 @@
  */
 class tx_rggooglemap_itemsProcFunc {
 
-/**
- * insert 'codes', found in the ['what_to_display'] array to the selector in the BE.
- *
- * @param	array		$config: extension configuration array
- * @return	array		$config array with extra codes merged in
- */
+	/**
+	 * insert 'codes', found in the ['what_to_display'] array to the selector in the BE.
+	 *
+	 * @param	array		$config: extension configuration array
+	 * @return	array		$config array with extra codes merged in
+	 */
 	function user_insertExtraCodes($config) {
 		if(is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['what_to_display'])) {
 			$config['items'] = array_merge($config['items'], $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rggooglemap']['what_to_display']);

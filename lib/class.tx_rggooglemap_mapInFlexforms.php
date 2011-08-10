@@ -43,35 +43,35 @@ class user_mapInFlexforms {
 	function map($conf) {
 
  		$ll = $GLOBALS['LANG']->includeLLFile('EXT:rggooglemap/locallang_flex.xml');
-			// load settings from EM	
+			// load settings from EM
 		$tmp_confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 
 			// error check, required for 4.2, if settings are saved in EM
 		if ($tmp_confArr['googleKey']=='') {
 			return 'Please go back to the Extension Manager, click on the ext rggooglemap and press the "Update"-Button!';
 		}
-		
+
 			// get the default values, either from the flexforms or as fallback from EM settings
 		$xml = $conf['row']['pi_flexform'];
 		$array = t3lib_div::xml2array($xml);
 		if (!is_array($array)) return 'Update once';
-				
+
 		$tmpDefault = $array['data']['sDEF']['lDEF'];
-		
+
 		$lat = ($tmpDefault['lat']['vDEF'] != '') ? $tmpDefault['lat']['vDEF'] : $tmp_confArr['startLat'];
 		$lng = ($tmpDefault['lng']['vDEF'] != '') ? $tmpDefault['lng']['vDEF'] : $tmp_confArr['startLong'];
-	
+
 			// set all the js we need
 		$js = '
 			var map = null;
 			var geocoder = null;
 			var marker = null;
 			var point = null;
-			
+
 			function simpelMapLoad() {
 				if (GBrowserIsCompatible()) {
 					var point = new GLatLng('.$lat.','.$lng.');
-					
+
 				  map = new GMap2(document.getElementById("map"));
 					map.setCenter(point,'.$tmp_confArr['startZoom'].');
 					map.enableContinuousZoom();
@@ -80,15 +80,15 @@ class user_mapInFlexforms {
 
 
 					geocoder = new GClientGeocoder();
-				
-					
+
+
 					marker = new GMarker(point, {draggable: true});
 					map.addOverlay(marker);
-				
+
 					GEvent.addListener(marker, "dragend", function() {
 						document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
 					});
-					
+
 					GEvent.addListener(map, "click", function(overlay, point) {
 						if (point)	{
 							marker.setPoint(point);
@@ -96,8 +96,8 @@ class user_mapInFlexforms {
 						}
 					);
 				}
-			}		
-			
+			}
+
 			function showAddress(address) {
 				var address = document.getElementById("geocodeaddress").value;
 				if (geocoder) {
@@ -114,12 +114,12 @@ class user_mapInFlexforms {
 						}
 				);
 			}
-			} 
+			}
 
 		  function requestAjax() {
 		    new Ajax.Request("ajax.php", {
 					parameters: {
-						"ajaxID": "tx_rggooglemap_ajax::getMap", 
+						"ajaxID": "tx_rggooglemap_ajax::getMap",
 						"rggm[table]"  : $("rggmtable").value,
 						"rggm[title]"  : $("rggmtitle").value,
 						"rggm[latlng]" : $("rggmlatlng").value,
@@ -152,28 +152,28 @@ class user_mapInFlexforms {
 		$labelStyles = ' style="display:block;float:left;width:90px;" ';
 		$fieldsetStyles = ' style="width:440px;" ';
 		$map = '
-			<div id="map" 
+			<div id="map"
 				style="color:#ccc;padding-top:'.$paddingTop.'px;font-size:20px;text-align:center;width:'.$tmp_confArr['mapWidth'].'px;height:'.$mapHeight.'px;border:1px solid #ccc;">
 						 ... '.$this->ll('wait').' ....
 			</div>
 			<div style="margin:5px 10px">
 				<fieldset '.$fieldsetStyles.'>
 					<legend>'.$this->ll('geocode.legend').'</legend>
-					<input id="geocodeaddress" value="Gosau, Austria" style="width:300px;" /> 
+					<input id="geocodeaddress" value="Gosau, Austria" style="width:300px;" />
 					<input type="button" value="'.$this->ll('geocode.start').'" onclick="showAddress();" />
 				</fieldset>
 				<br />
-				
+
 				<fieldset '.$fieldsetStyles.'>
 					<legend>'.$this->ll('save.legend').'</legend>
 					<input id="rggmlatlng" type="hidden" style="width:300px" value="'.$lat.','.$lng.'" />
-					
+
 					<label for="rggmtitle" '.$labelStyles.'>'.$this->hoverHelpText('title').$this->ll('save.title').'</label>
 						<input id="rggmtitle" type="text" value="" style="width:177px" />
 					<br />
-	
+
 					<label for="rggmcategory" '.$labelStyles.'>'.$this->hoverHelpText('cat').$this->ll('save.cat').'</label>
-						'.$this->getCategoryRecords().'	
+						'.$this->getCategoryRecords().'
 					<br />
 					<label for="rggmtable" '.$labelStyles.'>'.$this->hoverHelpText('table').$this->ll('save.table').'</label>
 						'.$this->getTables($tmp_confArr['tables']).'
@@ -190,7 +190,7 @@ class user_mapInFlexforms {
 				'.$js.'
 				setTimeout(" simpelMapLoad()",500);
 			</script>
-			
+
 			<div id="rggmresult"> </div>
 			';
 
@@ -202,11 +202,11 @@ class user_mapInFlexforms {
 	 *
 	 * @param	string		$key: key in the language file
 	 * @return	string the translation
-	 */	
+	 */
 	function ll($key) {
 		return $GLOBALS['LANG']->getLL('usermap.'.$key);
 	}
-	
+
 	function hoverHelpText($key) {
 		$title = $this->ll('help.'.$key.'.title');
 		if ($title != '') {
@@ -226,7 +226,7 @@ class user_mapInFlexforms {
 				</span>
 			</a>
 		';
-		
+
 		return $content;
 	}
 
@@ -235,82 +235,82 @@ class user_mapInFlexforms {
 	 *
 	 * @param	string		$tableList: all allowed tables
 	 * @return the select form
-	 */		
+	 */
 	function getTables($tableList) {
 		$tableList = t3lib_div::trimExplode(',', $tableList);
-		
+
 		$content.= '<select id="rggmtable" style="width:122px">';
-		
+
 		foreach ($tableList as $table) {
 			$value = $GLOBALS['LANG']->sL($GLOBALS['TCA'][$table]['ctrl']['title']). ' ('.$table.')';
 			$content.= '<option value="'.$table.'">'.$value.'</option>';
 		}
-	
+
 		$content.= '</select>';
-	
+
 		return $content;
 	}
-	
+
 	function getPidRecords($startingpoint, $pageId) {
-		
+
 		$content.= '<select id="rggmpid" style="width:122px">
 									<option value="'.$pageId.'">'.$this->ll('save.currentpage').' ('.$pageId.')</option>
 								';
-		
+
 		// Pids from startingpoint
 		if ($startingpoint != '') {
 			$tempList = explode(',', $startingpoint);
-	
+
 			foreach ($tempList as $key) {
 				$pos1 = strpos($key, '_');
 				$pos2 = strpos($key, '|');
-				
+
 				$id = substr($key, $pos1+1, ($pos2-$pos1-1));
 				$name = htmlspecialchars(urldecode(substr($key, $pos2+1)));
-				
+
 				$content.= '<option value="'.$id.'">'.$name.' ('.$id.')</option>';
 			}
 		}
-		
+
 		// Pids from page TSConfig
 		$pagesTSC = t3lib_BEfunc::getPagesTSconfig($pageId);
 		$pidList = $pagesTSC['rggooglemap.']['pid.'];
-		
+
 		if (is_array($pidList) && count($pidList) > 0) {
 			foreach ($pidList as $key => $value) {
 				$content.= '<option value="'.$key.'">'.htmlspecialchars($value).' ('.$key.')</option>';
 			}
 		}
-		
-		$content.= '</select>';
-	
-		return $content;
-	}	
 
-	
+		$content.= '</select>';
+
+		return $content;
+	}
+
+
 	/**
 	 * Get a select field holding the googlemap categories
 	 *
 	 * @return the select form
-	 */		
+	 */
 	function getCategoryRecords() {
-		$tableList = t3lib_div::trimExplode(',', $tableList);
-		
-		$content.= '<select id="rggmcategory" style="width:122px">
+		//$tableList = t3lib_div::trimExplode(',', $tableList);
+
+		$content = '<select id="rggmcategory" style="width:122px">
 									<option value="0">-</option>
 								';
-		
+
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,title', 'tx_rggooglemap_cat', 'deleted=0 AND hidden=0', '', 'title DESC');
-		
+
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$content.= '<option value="'.$row['uid'].'">'.$row['title'].'</option>';
 		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
-	
+
 		$content.= '</select>';
-	
+
 		return $content;
-	}	
+	}
 
 }
 

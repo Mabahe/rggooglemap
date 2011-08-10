@@ -80,144 +80,144 @@ class tx_rggm_fe extends tslib_pibase {
 	 * @return array the modified $saveData array
 	 */
 	function substituteMarkers($conf) {
-    // default settings for the map
-    $this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
-    $key = $this->realConf->conf['rggm.']['mapKey'] ? $this->realConf->conf['rggm.']['mapKey'] : $this->confArr['googleKey'];
-    $lng = $this->realConf->conf['rggm.']['mapLng'] ? $this->realConf->conf['rggm.']['mapLng'] : $this->confArr['startLong'];
-    $lat = $this->realConf->conf['rggm.']['mapLat'] ? $this->realConf->conf['rggm.']['mapLat'] : $this->confArr['startLat'];
-    $selected = '';
+		// default settings for the map
+		$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
+		$key = $this->realConf->conf['rggm.']['mapKey'] ? $this->realConf->conf['rggm.']['mapKey'] : $this->confArr['googleKey'];
+		$lng = $this->realConf->conf['rggm.']['mapLng'] ? $this->realConf->conf['rggm.']['mapLng'] : $this->confArr['startLong'];
+		$lat = $this->realConf->conf['rggm.']['mapLat'] ? $this->realConf->conf['rggm.']['mapLat'] : $this->confArr['startLat'];
+		$selected = '';
 
 
-    // who called
-    #####################
-    # EXT ve_guestbook
-    #####################
+		// who called
+		#####################
+		# EXT ve_guestbook
+		#####################
 
-    if($this->calledBy == 've_guestbook') {
-      if ($this->realConf->conf['rggm.']['loadEverything'] == 1) {
-  			require_once(t3lib_extMgm::extPath('rggooglemap').'pi1/class.tx_rggooglemap_pi1.php');
-  			$this->rggm2 = t3lib_div::makeInstance('tx_rggooglemap_pi1');
-  			$this->markerArray['###INSERT_MAP###'] = $this->rggm2->showMap('',$this->realConf->conf['rggm.']);
-      } else {
-        $this->markerArray['###INSERT_MAP###'] = $this->getMap();
-      }
+		if ($this->calledBy == 've_guestbook') {
+			if ($this->realConf->conf['rggm.']['loadEverything'] == 1) {
+				require_once(t3lib_extMgm::extPath('rggooglemap') . 'pi1/class.tx_rggooglemap_pi1.php');
+				$this->rggm2 = t3lib_div::makeInstance('tx_rggooglemap_pi1');
+				$this->markerArray['###INSERT_MAP###'] = $this->rggm2->showMap('', $this->realConf->conf['rggm.']);
+			} else {
+				$this->markerArray['###INSERT_MAP###'] = $this->getMap();
+			}
 			$this->markerArray['###TX_RGGMVEGUESTBOOK_LAT###'] = $this->conf['data']['tx_rggmveguestbook_lat'];
 			$this->markerArray['###TX_RGGMVEGUESTBOOK_LNG###'] = $this->conf['data']['tx_rggmveguestbook_lng'];
 			$this->markerArray['###UID###'] = $this->conf['data']['uid'];
 
-      if ($this->conf['data']['tx_rggmveguestbook_lat']!='' && $this->conf['data']['tx_rggmveguestbook_lng']!='') {
-        $this->markerArray['###SHOWONMAP###']	= '<a href="javascript:void(0)" onClick=myclick('.$this->conf['data']['uid'].','.$this->conf['data']['tx_rggmveguestbook_lng'].','.$this->conf['data']['tx_rggmveguestbook_lat'].',"tx_veguestbook_entries") >'.$this->realConf->conf['rggm.']['showOnMap'].'</a>';
-      } else {
-        $this->markerArray['###SHOWONMAP###']	= '';
-      }
+			if ($this->conf['data']['tx_rggmveguestbook_lat'] !== '' && $this->conf['data']['tx_rggmveguestbook_lng'] !== '') {
+				$this->markerArray['###SHOWONMAP###'] = '<a href="javascript:void(0)" onClick=myclick(' . $this->conf['data']['uid'] . ',' . $this->conf['data']['tx_rggmveguestbook_lng'] . ',' . $this->conf['data']['tx_rggmveguestbook_lat'] . ',"tx_veguestbook_entries") >' . $this->realConf->conf['rggm.']['showOnMap'] . '</a>';
+			} else {
+				$this->markerArray['###SHOWONMAP###'] = '';
+			}
 
 
-    #####################
-    # EXT tt_news
-    #####################
-    } elseif ($this->calledBy == 'tt_news' && $this->realConf->conf['rggm.']) {
-      $id = $GLOBALS['TSFE']->id;
-      $uid = $this->conf['data']['uid'];
+		#####################
+		# EXT tt_news
+		#####################
+		} elseif ($this->calledBy === 'tt_news' && $this->realConf->conf['rggm.']) {
+			$id = $GLOBALS['TSFE']->id;
+			$uid = $this->conf['data']['uid'];
 
-      // get from session
-      $idList = $GLOBALS["TSFE"]->fe_user->getKey('ses','rggmttnews2');
-      $idList[$uid] = $uid;
+			// get from session
+			$idList = $GLOBALS['TSFE']->fe_user->getKey('ses', 'rggmttnews2');
+			$idList[$uid] = $uid;
 
-  		// save selected uids into session
-  		$GLOBALS["TSFE"]->fe_user->setKey('ses', 'rggmttnews2', $idList);
-  		$GLOBALS['TSFE']->fe_user->storeSessionData();
+			// save selected uids into session
+			$GLOBALS['TSFE']->fe_user->setKey('ses', 'rggmttnews2', $idList);
+			$GLOBALS['TSFE']->fe_user->storeSessionData();
 
-      if ($this->conf['data']['tx_rggmttnews_lng']!='' && $this->conf['data']['tx_rggmttnews_lat']!='') {
-        $this->markerArray['###SHOWONMAP###']	= '<a href="javascript:void(0)" onClick="myclick('.$this->conf['data']['uid'].','.$this->conf['data']['tx_rggmttnews_lng'].','.$this->conf['data']['tx_rggmttnews_lat'].',\'tt_news\')" >'.$this->realConf->conf['rggm.']['showOnMap'].'</a>';
-      } else {
-        $this->markerArray['###SHOWONMAP###']	= '';
-      }
-      if ($this->realConf->conf['rggm.']['detail']==1) {
-        $this->markerArray['###INSERT_SINGLEMAP###'] = $this->singleMap($key);
-      }
-
-
-    #####################
-    # EXT th_mailformplus
-    #####################
-		}	elseif($this->calledBy == 'th_mailformplus') {
+			if ($this->conf['data']['tx_rggmttnews_lng'] !== '' && $this->conf['data']['tx_rggmttnews_lat'] !== '') {
+				$this->markerArray['###SHOWONMAP###'] = '<a href="javascript:void(0)" onClick="myclick(' . $this->conf['data']['uid'] . ',' . $this->conf['data']['tx_rggmttnews_lng'] . ',' . $this->conf['data']['tx_rggmttnews_lat'] . ',\'tt_news\')" >' . $this->realConf->conf['rggm.']['showOnMap'] . '</a>';
+			} else {
+				$this->markerArray['###SHOWONMAP###'] = '';
+			}
+			if ($this->realConf->conf['rggm.']['detail'] == 1) {
+				$this->markerArray['###INSERT_SINGLEMAP###'] = $this->singleMap($key);
+			}
 
 
-      // delete a entry
-      $postvars = t3lib_div::_GP('delete');
-      if ($postvars && $this->recordBelongsToUser(intval($postvars['id']))) {
-        $where = 'uid = '.intval($postvars['id']);
-        $table = 'tt_address';
-        $query = $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table,$where,Array('deleted'=>1));
-        header('Location: '.t3lib_div::getIndpEnv('TYPO3_REQUEST_DIR').$this->pi_getPageLink($GLOBALS["TSFE"]->id, '',''));
-      }
+			#####################
+			# EXT th_mailformplus
+			#####################
+		} elseif ($this->calledBy === 'th_mailformplus') {
 
-      $count = 0;
 
-      // somebody logged in?
-      if (is_array($GLOBALS["TSFE"]->fe_user->user)) {
+			// delete a entry
+			$postvars = t3lib_div::_GP('delete');
+			if ($postvars && $this->recordBelongsToUser(intval($postvars['id']))) {
+				$where = 'uid = ' . intval($postvars['id']);
+				$table = 'tt_address';
+				$query = $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, array('deleted' => 1));
+				header('Location: ' . t3lib_div::getIndpEnv('TYPO3_REQUEST_DIR') . $this->pi_getPageLink($GLOBALS['TSFE']->id, '', ''));
+			}
 
-        $tempArray = Array(
-          'value_lastname' => 'last_name',
-          'value_firstname' => 'first_name',
-          'value_city' => 'city',
-          'value_plz' => 'zip',
-          'value_tel' => 'telephone',
-          'value_email' => 'email',
-          'value_street' => 'address',
-          'value_additionalInformation' => 'comments',
-        );
-        foreach ($tempArray as $k=>$v) {
-          $this->markerArray['###'.$k.'###'] = $GLOBALS["TSFE"]->fe_user->user[$v];
-        }
+			$count = 0;
 
-        $myPois = $this->getMyPoi();
-        $count = $myPois['count'];
-        $this->markerArray['###INSERT_MYPOI###'] = $myPois['content'];
-        $this->markerArray['###INSERT_USERINFO###'] = '<input type="hidden" name="user_id" value="'.$GLOBALS["TSFE"]->fe_user->user['uid'].'" />';
-        $this->markerArray['###INSERT_SUBMIT###'] = ($count<$this->realConf->conf['rggm.']['maxPerUser']) ? $this->realConf->conf['rggm.']['submitField'] : $this->realConf->conf['rggm.']['submitFieldMaximum'];
-      }
+			// somebody logged in?
+			if (is_array($GLOBALS['TSFE']->fe_user->user)) {
 
-      // if edit-postvars
-      $postvars = t3lib_div::_GP('edit');
-      if ($postvars && $this->recordBelongsToUser(intval($postvars['id']))) {
-        $recordId = intval($postvars['id']);
-        // query to fill the fields with values from the DB
-        $field = '*';
-        $where = 'hidden = 0 AND deleted = 0 AND uid = '.$recordId;
-        $table = 'tt_address';
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit);
-        $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				$tempArray = array(
+					'value_lastname' => 'last_name',
+					'value_firstname' => 'first_name',
+					'value_city' => 'city',
+					'value_plz' => 'zip',
+					'value_tel' => 'telephone',
+					'value_email' => 'email',
+					'value_street' => 'address',
+					'value_additionalInformation' => 'comments',
+				);
+				foreach ($tempArray as $k => $v) {
+					$this->markerArray['###' . $k . '###'] = $GLOBALS['TSFE']->fe_user->user[$v];
+				}
 
-        // fill mailform with existing values of DB
-        $tempArray = Array(
-          'value_lastname' => 'name',
-          'value_plz' => 'zip',
-          'value_lat' => 'tx_rggooglemap_lat',
-          'value_lng' => 'tx_rggooglemap_lng',
-          'value_tel' => 'phone',
-          'value_email' => 'email',
-          'value_street' => 'address',
-          'value_tel' => 'phone',
-          'value_additionalInformation' => 'description',
-          'value_plz' => 'zip'
-        );
-        foreach ($tempArray as $k=>$v) {
-          $this->markerArray['###'.$k.'###'] = $row[$v];
-        }
+				$myPois = $this->getMyPoi();
+				$count = $myPois['count'];
+				$this->markerArray['###INSERT_MYPOI###'] = $myPois['content'];
+				$this->markerArray['###INSERT_USERINFO###'] = '<input type="hidden" name="user_id" value="' . $GLOBALS['TSFE']->fe_user->user['uid'] . '" />';
+				$this->markerArray['###INSERT_SUBMIT###'] = ($count<$this->realConf->conf['rggm.']['maxPerUser']) ? $this->realConf->conf['rggm.']['submitField'] : $this->realConf->conf['rggm.']['submitFieldMaximum'];
+			}
 
-        $lat = $row['tx_rggooglemap_lat'] ? $row['tx_rggooglemap_lat'] : $lat;
-        $lng = $row['tx_rggooglemap_lng'] ? $row['tx_rggooglemap_lng'] : $lng;
-        $selected = $row['tx_rggooglemap_cat2'];
-        $this->markerArray['###INSERT_RECORDID###'] = '<input type="hidden" name="uniqueid" value="'.$recordId.'" />';
+			// if edit-postvars
+			$postvars = t3lib_div::_GP('edit');
+			if ($postvars && $this->recordBelongsToUser(intval($postvars['id']))) {
+				$recordId = intval($postvars['id']);
+				// query to fill the fields with values from the DB
+				$field = '*';
+				$where = 'hidden = 0 AND deleted = 0 AND uid = ' . $recordId;
+				$table = 'tt_address';
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where);
+				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 
-        $link = ($count<$this->realConf->conf['rggm.']['maxPerUser']) ? $this->cObj->typolink($this->realConf->conf['rggm.']['newEntry'], Array('parameter' => $GLOBALS['TSFE']->id)) : '';
-        $this->markerArray['###INSERT_WARNING###'] = $this->realConf->conf['rggm.']['insertWarning'].$link.'<br />';
-        $this->markerArray['###INSERT_SUBMIT###'] = ($count<=$this->realConf->conf['rggm.']['maxPerUser']) ? $this->realConf->conf['rggm.']['submitFieldChange'] : '';
-      }
+				// fill mailform with existing values of DB
+				$tempArray = array(
+					'value_lastname' => 'name',
+					'value_plz' => 'zip',
+					'value_lat' => 'tx_rggooglemap_lat',
+					'value_lng' => 'tx_rggooglemap_lng',
+					'value_tel' => 'phone',
+					'value_email' => 'email',
+					'value_street' => 'address',
+					'value_tel' => 'phone',
+					'value_additionalInformation' => 'description',
+					'value_plz' => 'zip'
+				);
+				foreach ($tempArray as $k => $v) {
+					$this->markerArray['###' . $k . '###'] = $row[$v];
+				}
 
-      $this->markerArray['###INSERT_MAP###'] = $this->getMapInline($key, $lng, $lat);
-      $this->markerArray['###INSERT_CAT###']  = $this->getCategories($selected);
+				$lat = $row['tx_rggooglemap_lat'] ? $row['tx_rggooglemap_lat'] : $lat;
+				$lng = $row['tx_rggooglemap_lng'] ? $row['tx_rggooglemap_lng'] : $lng;
+				$selected = $row['tx_rggooglemap_cat2'];
+				$this->markerArray['###INSERT_RECORDID###'] = '<input type="hidden" name="uniqueid" value="' . $recordId . '" />';
+
+				$link = ($count<$this->realConf->conf['rggm.']['maxPerUser']) ? $this->cObj->typolink($this->realConf->conf['rggm.']['newEntry'], Array('parameter' => $GLOBALS['TSFE']->id)) : '';
+				$this->markerArray['###INSERT_WARNING###'] = $this->realConf->conf['rggm.']['insertWarning'].$link.'<br />';
+				$this->markerArray['###INSERT_SUBMIT###'] = ($count<=$this->realConf->conf['rggm.']['maxPerUser']) ? $this->realConf->conf['rggm.']['submitFieldChange'] : '';
+			}
+
+			$this->markerArray['###INSERT_MAP###'] = $this->getMapInline($key, $lng, $lat);
+			$this->markerArray['###INSERT_CAT###']  = $this->getCategories($selected);
 		}
 	}
 
@@ -397,14 +397,14 @@ function makeMap() {
 	 * @return <select>-field with all categories
 	 */
   function getCategories($selected) {
-    $cat.= '<select name="poi_cat" class="formInput validate-selection formSelect">';
+    $cat = '<select name="poi_cat" class="formInput validate-selection formSelect">';
 
   // query for the categories
     $table = 'tx_rggooglemap_cat';
     $field = '*';
     $where = 'deleted = 0 AND hidden = 0 '.$this->realConf->conf['rggm.']['catWhere'];
     $orderBy = $this->realConf->conf['rggm.']['catOrderBy'] ? $this->realConf->conf['rggm.']['catOrderBy'] : 'title ASC';
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit);
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy);
     while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
       $active = ($selected==$row['uid']) ? ' selected="selected" ' : '';
       $cat.= '<option '.$active.'class="formOption" value="'.$row['uid'].'"> '.$row['title'].'</option>';
@@ -420,13 +420,13 @@ function makeMap() {
 	 * @return the records
 	 */
   function getMyPoi() {
-    $poi.= '	<div class="row"><label for="mypoi">Meine Punkte</label><div class="formText"><ul>';
+    $poi = '	<div class="row"><label for="mypoi">Meine Punkte</label><div class="formText"><ul>';
     // query for the POIs of a user
     $table = 'tt_address';
     $field = '*';
     $where = 'deleted = 0 AND hidden = 0 AND tx_rgthmailformplus_feuser ='.$GLOBALS["TSFE"]->fe_user->user['uid'];
     $orderBy = $this->realConf->conf['rggm.']['myPoiOrderBy'] ? $this->realConf->conf['rggm.']['myPoiOrderBy'] : 'name ASC';
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit);
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy);
     $i = 0;
     while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
       $i++;
@@ -455,7 +455,7 @@ function makeMap() {
    $field = 'uid';
    $where = 'hidden = 0 AND deleted = 0 AND tx_rgthmailformplus_feuser ='.$GLOBALS["TSFE"]->fe_user->user['uid'].' AND uid = '.$id;
    $table = 'tt_address';
-   $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where,$groupBy='',$orderBy,$limit);
+   $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($field,$table,$where);
    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
    if ($row['uid']!='') return true;
    else return false;
