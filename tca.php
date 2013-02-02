@@ -26,7 +26,7 @@ $TCA["tx_rggooglemap_cat"] = array (
 						 	"eval" => "trim, required",
 					 ),
 				),
-			 
+
 			 "descr" => array (
 						"exclude" => 1,
 						"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat.descr",
@@ -36,7 +36,7 @@ $TCA["tx_rggooglemap_cat"] = array (
 								"rows" => "5",
 						)
 				),
-				
+
 			 "tabprefix" => array (
 						"exclude" => 1,
 						"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat.tabprefix",
@@ -48,7 +48,7 @@ $TCA["tx_rggooglemap_cat"] = array (
 				),
 
 
-			"parent_uid" => array (		
+			"parent_uid" => array (
 				'exclude' => 1,
 				'label' => 'LLL:EXT:rggooglemap/locallang_db.xml:tt_address.tx_rggooglemap_cat',
 				'config' => array (
@@ -63,7 +63,7 @@ $TCA["tx_rggooglemap_cat"] = array (
 					'autoSizeMax' => 10,
 					'minitems' => 0,
 					'maxitems' => 5,
-	
+
 				)
 			),
 

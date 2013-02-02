@@ -4,45 +4,45 @@ lib.parseFunc.allowTags := addToList(map)
 
 plugin.tx_rggooglemap_pi1 {
 	templateFile = EXT:rggooglemap/template.html
-	templateFileJS = EXT:rggooglemap/templateJS.js  
+	templateFileJS = EXT:rggooglemap/templateJS.js
 	cssFile = EXT:rggooglemap/res/rggm.css
-	pidList = 
-	recursive = 
-	mapDiv = map  
+	pidList =
+	recursive =
+	mapDiv = map
 	mapWidth = 769
 	mapHeight = 450
 	mapLng = 13.537216186523438
 	mapLat = 47.585673399138294
 	mapZoom = 11
-	mapKey = 
+	mapKey =
 	mapType = G_NORMAL_MAP
 	mapControl = 1
 	mapNavigation = 1
 	mapNavigationOnMouseOver = 0
 	mapOverview = 0
-	
+
 	enableDoubleClickZoom = 1
 	enableContinuousZoom = 1
 	enableScrollWheelZoom = 1
-	
+
 	mapAvailableCats =
-	mapActiveCats =  
-  
+	mapActiveCats =
+
 	defaultCountry = Austria
-	defaultTable = tt_address	
+	defaultTable = tt_address
 	generalLL = show,search,directions,more,back,lng,lat,exampleaddress
-	
+
 	# not yet finished
 	getRecordOverlay = 0
 
 	##################
-	# View MAP 
+	# View MAP
 	##################
 	map {
 		LL = loading,remove-directions
-		
+
 		defaultIcon = typo3conf/ext/rggooglemap/res/dot.png
-		
+
 		# Icon sizes if it can be fetched from the image
 		iconSize {
 			# default as fallback
@@ -50,7 +50,7 @@ plugin.tx_rggooglemap_pi1 {
 				width  = 16
 				height = 16
 			}
-		
+
 			# use the category uid to set the sizes for each category seperatly
 			999 {
 				width  = 32
@@ -62,14 +62,14 @@ plugin.tx_rggooglemap_pi1 {
 		tah_title = T@H
 		mapnik_title = Mapnik
 		debug = 0
-		
+
 		# language of the map
 		addLanguage = 1
-		addLanguage.override = 
+		addLanguage.override =
 
 		# cluster function
 		activateCluster = 0
-		
+
 		activateCluster.3 {
 			icon (
 				gicons[91919199]= new GIcon(baseIcon);
@@ -78,13 +78,13 @@ plugin.tx_rggooglemap_pi1 {
 				gicons[91919199].infoWindowAnchor = new GPoint(28, 28);
 			)
 		}
-		
+
 		# use the feature of browsers like FF 3.5 to get the location of the user
 		useUserLocationForMapCenter = 0
 		useUserLocationForMapCenter.zoomLevel = 10
 
 	}
-	
+
 	##################
 	# Category Menu
 	##################
@@ -93,7 +93,7 @@ plugin.tx_rggooglemap_pi1 {
 		icon {
 			file.maxW = 11
 			file.maxH = 11
-		}	
+		}
 	}
 
 	##################
@@ -111,7 +111,7 @@ plugin.tx_rggooglemap_pi1 {
 	search {
 		minChars = 3
 		fields {
-			tt_address = title,description,name 
+			tt_address = title,description,name
 			fe_users = comments,name,first_name,last_name,company
 			tx_tour_record = title,description,teasertext,waydescriptiontext
 			tx_housing_record = title,description,keywords,text
@@ -121,46 +121,46 @@ plugin.tx_rggooglemap_pi1 {
 
 		LL = label_name,label_maponly,label_cat,label_radius,label_zip,label_activateradius,submit,description,clearsearch,error-header
 		radiusSearch = 0
-		
+
 		radiusSearch {
 			# todo > to manual
 			# http://code.google.com/intl/de-DE/apis/maps/documentation/geocoding/#CSV bottom
 			minAccuracy = 4
 		}
-		
+
 		# modify the js which is sent at a search
 		modify {
 			deleteJS {
-			
+
 			}
 			updateJS {
-			
+
 			}
 		}
     }
-	
+
 	##################
 	# Locationbox
 	##################
 	location {
 		LL = description,search,exampleaddress,zoomlevel_5,zoomlevel_9,zoomlevel_14,label_address,label_zoomlevel
 	}
-	
 
-	
+
+
 	##################
 	# Active records
 	##################
 	recordsOnMap {
 		LL = description,wait
-		
+
 		orderBy = rggmtitle ASC
 		#limit = 0,5
 	}
-	
 
-	
-	
+
+
+
 	##################
 	# POI menu
 	##################
@@ -168,15 +168,15 @@ plugin.tx_rggooglemap_pi1 {
 		catOrder = title
 		recordsOrder = rggmtitle
 		recordsOrderBy = asc
-    
+
 		# stdWrap for all fields of the category
 		category {
 			title {
-				htmlSpecialChars = 1	 
+				htmlSpecialChars = 1
 			}
 		}
 	}
-  
+
 	# URL for the ajax request
 	# 20.value is filled, so don't use that!
 	xmlURL {
@@ -186,42 +186,42 @@ plugin.tx_rggooglemap_pi1 {
 		additionalParams.stdWrap.cObject {
 			10 = TEXT
 			10.value = &type=500
-			
+
 			20 = TEXT
 		}
 	}
-	
-	
+
+
 	# Title which is displayed when hovering a POI icon on the map
-	# choose the field which is used + stdWrap for it 
+	# choose the field which is used + stdWrap for it
 	title {
 		# makes it faster because queries are smaller
 		useRggmTitle = 1
-		
+
 		# otherwise specify the title field
 		tt_address = name
 		tx_staticregion_region = title
 		tx_housing_record = title
 		tx_city_record = title
 		tx_tour_record = title
-		
+
 		# stdWrap for all fields, syntax is table.<stWrap>
 		tt_address.noTrimWrap = |<div class="region"><u>Address</u>: |</div>|
-		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: |</div>	|	
+		tx_staticregion_region.noTrimWrap = |<div class="region"><u>Region</u>: |</div>	|
 		tx_housing_record.noTrimWrap = |<div class="housing"><u>Unterkunft</u>: |</div>|
 		tx_city_record.noTrimWrap = |<div class="city"><u>Ort</u>: |</div>|
 		tx_tour_record.noTrimWrap = |<div class="tour"><u>Wanderung</u>: |</div>	|
 		searchresult.noTrimWrap = |<div class=searchresult><u>Treffer</u>: |</div>|
 	}
-	
+
 
 
 	##################
-	# View Directions 
+	# View Directions
 	##################
 	directions {
 		LL = title,description,label_country,label_record,label_address,search,remove-directions
-		
+
 		orderBy = rggmtitle ASC
 		limit = 0,50
 	}
@@ -246,7 +246,7 @@ plugin.tx_rggooglemap_pi1 {
 				}
 			image {
 				htmlSpecialChars = 0
-				
+
 			}
 			email {
 				htmlSpecialChars = 0
@@ -256,8 +256,8 @@ plugin.tx_rggooglemap_pi1 {
 					required = 1
 					typolink.parameter.current = 1
 				}
-				
-			}		
+
+			}
 			www {
 				htmlSpecialChars = 0
 				setContentToCurrent = 1
@@ -266,16 +266,16 @@ plugin.tx_rggooglemap_pi1 {
 					required = 1
 					typolink.parameter.current = 1
 				}
-				
+
 			}
 		}
-		
-		
+
+
 		# CITY RECORDS
 		tx_city_record {
 			lng.crop=10
 			lat.crop=10
-			
+
 			logo {
 				htmlSpecialChars = 0
 				setContentToCurrent = 1
@@ -290,9 +290,9 @@ plugin.tx_rggooglemap_pi1 {
 					}
 					params = style="float:right"
 				}
-		
-			}	
-			
+
+			}
+
 			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
 			generic {
 				link = TEXT
@@ -303,9 +303,9 @@ plugin.tx_rggooglemap_pi1 {
 						title.field = title
 					}
 				}
-	
+
 			}
-		
+
 			# end generic
 		}
 
@@ -314,7 +314,7 @@ plugin.tx_rggooglemap_pi1 {
 		tx_staticregion_region {
 			lng.crop=10
 			lat.crop=10
-			
+
 			image {
 				htmlSpecialChars = 0
 				setContentToCurrent = 1
@@ -329,8 +329,8 @@ plugin.tx_rggooglemap_pi1 {
 					}
 					params = style="float:right"
 				}
-			}	
-			
+			}
+
 			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
 			generic {
 				link = TEXT
@@ -341,9 +341,9 @@ plugin.tx_rggooglemap_pi1 {
 						title.field = title
 					}
 				}
-	
+
 			}
-		
+
 			# end generic
 		}
 ############
@@ -366,37 +366,37 @@ plugin.tx_rggooglemap_pi1 {
 						maxH = 60
 					}
 					params = style="float:right"
-					
+
 					imageLinkWrap  = 1
-					imageLinkWrap {	
+					imageLinkWrap {
 						enable = 1
 						typolink {
 							title.field= tx_chgalleryTitle
-							
+
 							parameter.override.cObject = IMG_RESOURCE
 							parameter.override.cObject {
 								file.import.data = TSFE:lastImageInfo|origFile
 								file.maxW = 800
 								file.maxH = 600
-								
+
 								stdWrap.postUserFunc = user_replaceSpaces
 							}
-				
+
 							# used lightbox is pmkslimbox
 							ATagParams = rel="lightbox"
 							ATagParams.override = rel="lightbox[presentlb{field:uid}]"
 							ATagParams.insertData = 1
-							
-							
+
+
 						}
-					}	
-					
+					}
+
 				}
 			}
-			
+
 			tx_rggmtour_lng.crop=10
 			tx_rggmtour_lat.crop=10
-			
+
 			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
 			generic {
 				link = TEXT
@@ -407,9 +407,9 @@ plugin.tx_rggooglemap_pi1 {
 						title.field = title
 					}
 				}
-	
+
 			}
-		
+
 			# end generic
 		}
 
@@ -430,35 +430,35 @@ plugin.tx_rggooglemap_pi1 {
 					params = style="float:right"
 
 					imageLinkWrap  = 1
-					imageLinkWrap {	
+					imageLinkWrap {
 						enable = 1
 						typolink {
 							title.field= tx_chgalleryTitle
-							
+
 							parameter.override.cObject = IMG_RESOURCE
 							parameter.override.cObject {
 								file.import.data = TSFE:lastImageInfo|origFile
 								file.maxW = 800
 								file.maxH = 600
-								
+
 								stdWrap.postUserFunc = user_replaceSpaces
 							}
-				
+
 							# used lightbox is pmkslimbox
 							ATagParams = rel="lightbox"
 							ATagParams.override = rel="lightbox[presentlb{field:uid}]"
 							ATagParams.insertData = 1
-							
-							
+
+
 						}
-					}	
-								
+					}
+
 				}
 			}
-			
+
 			tx_rggmhousing_lng.crop=10
 			tx_rggmhousing_lat.crop=10
-			
+
 			### add generic markers using the syntax poi.<tablename>.<generic_marker_name>
 			generic {
 				link = TEXT
@@ -469,7 +469,7 @@ plugin.tx_rggooglemap_pi1 {
 						returnLast = url
 						additionalParams.cObject = COA
 						additionalParams.cObject {
-							
+
 							10 = CONTENT
 							10 {
 								table = tx_housing_cat
@@ -479,28 +479,28 @@ plugin.tx_rggooglemap_pi1 {
 									join =  tx_housing_record_cat_mm ON (tx_housing_cat.uid = tx_housing_record_cat_mm.uid_foreign) INNER JOIN tx_housing_record ON (tx_housing_record.uid = tx_housing_record_cat_mm.uid_local)
 									max = 1
 								}
-								
+
 								renderObj = TEXT
 								renderObj {
 									field = catuid
 									wrap = &tx_housing_pi1[cat]=|
 								}
-						
+
 							}
-							
+
 							20 = TEXT
 							20 {
 								field = uid
 								wrap = &tx_housing_pi1[record]=|
 							}
-							
+
 						}
 						title.field = title
 					}
 				}
-	
+
 			}
-		
+
 			# end generic
 		}
 
@@ -508,7 +508,7 @@ plugin.tx_rggooglemap_pi1 {
 
 	# stdWrap for all markers in the popup window
 	popup {
-		
+
 	}
 
 }
@@ -529,7 +529,7 @@ plugin.tx_rggooglemap_pi2 {
 		house = tx_housing_record
 	}
 
-	# allow JS links, works only if the target ID is the current page 
+	# allow JS links, works only if the target ID is the current page
 	useJSlinkOnSamePage = 1
 
 	# typolink for the link
@@ -559,13 +559,13 @@ export_xml {
 
 	## Includes the lib:
 	#includeLibs.export_xml = EXT:rggooglemap/pi1/class.tx_rgooglemap_pi1.php
-  
+
 	## Inserting the USER cObject for XML rendering
 	10 = CONTENT
 	10 {
 		table = tt_content
 		select {
-			pidInList = this   
+			pidInList = this
 			max = 1
 			andWhere = list_type='rggooglemap_pi1'
 			#  languageField = sys_language_uid

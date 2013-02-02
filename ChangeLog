@@ -1,7 +1,11 @@
-17-01-2010  Xavier Perseguers  <typo3@perseguers.ch>
+2012-02-02  Xavier Perseguers  <xavier@typo3.org>
 
-	* Fixed bug #6061: Naming annoyances: tt_address is not marked as being modified
+	* [TASK][CLEANUP] Remove trailing whitespaces
 
-06-11-2006  Georg Ringer  <typo3@ringerge.org>
+2010-01-17  Xavier Perseguers  <typo3@perseguers.ch>
 
-	* Initial release
+	* [BUGFIX] #6061: Naming annoyances: tt_address is not marked as being modified
+
+2006-06-11  Georg Ringer  <typo3@ringerge.org>
+
+	* [TASK] Initial release

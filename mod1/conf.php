@@ -5,7 +5,7 @@ define('TYPO3_MOD_PATH', '../typo3conf/ext/rggooglemap/mod1/');
 $BACK_PATH='../../../../typo3/';
 $MCONF['name']='web_txrggooglemapM1';
 
-	
+
 $MCONF['access']='user,group';
 $MCONF['script']='index.php';
 

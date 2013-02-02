@@ -24,14 +24,14 @@ t3lib_extMgm::addService($_EXTKEY, 'rggmData', 'tx_rggooglemap_sv1',
 		'title' => 'tt_address for rggooglemap ',
 		'description' => 'Gets the needed data out of tt_address',
 		'subtype' => 'tt_address',
-		
+
 		'available' => true,
 		'priority' => 50,
 		'quality' => 50,
-		
+
 		'os' => '',
 		'exec' => '',
-		
+
 		'classFile' => t3lib_extMgm::extPath($_EXTKEY).'sv1/class.tx_rggooglemap_sv1.php',
 		'className' => 'tx_rggooglemap_sv1',
 	)

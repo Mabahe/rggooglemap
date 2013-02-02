@@ -38,38 +38,38 @@ class tx_rggooglemap_tcemainprocdm {
 	/**
 	 * Set coordinates for a table if the table is configured to and no coordinates are set yet
 	 *
-	 * @param	string		$status mode of change 
+	 * @param	string		$status mode of change
 	 * @param	string		$table the table which gets changed
 	 * @param	string		$id uid of the record
 	 * @param	array		$fieldArray the updateArray
-	 * @param	array		$this obj    	 
+	 * @param	array		$this obj
 	 * @return	an updated fieldArray()
 	 */
 	function processDatamap_postProcessFieldArray ($status, $table, $id, &$fieldArray, &$that) {
-		
+
 		// get settings from the EM
 		$tmp_confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
-		
+
 		// service for this table
 		$serviceObj = t3lib_div::makeInstanceService('rggmData',$table);
-		
-		// if autosearch is enabled and there is a service for that table    
-		if ($tmp_confArr['autoGeocode']!=1 
-				|| !t3lib_div::inList($tmp_confArr['tables'], $table) 
+
+		// if autosearch is enabled and there is a service for that table
+		if ($tmp_confArr['autoGeocode']!=1
+				|| !t3lib_div::inList($tmp_confArr['tables'], $table)
 				|| !is_object($serviceObj)) {
 			return $fieldArray;
 		}
-		
+
 		// get the lat/lng fields of that table
 		$lat = $serviceObj->getTable('lat');
 		$lng = $serviceObj->getTable('lng');
-		
+
 		// if there is geocoding available
 		$geocodeFields = $serviceObj->addressFields();
-		
+
 		// if lat/lang is in fieldArray, user wants to set it himself
 		if ($geocodeFields!='') {
-		
+
 			// get the record
 			if ($status == 'new') {
 				$row = $fieldArray;
@@ -78,38 +78,38 @@ class tx_rggooglemap_tcemainprocdm {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table,'uid = '.$id);
 				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 				$GLOBALS['TYPO3_DB']->sql_free_result($res);
-			}			
-			
+			}
+
 			// if the lat/lng fields are empty
 			if ($row[$lat] == '' && $row[$lng] == '') {
-				
+
 				// build the string for the search, in the correct order with helping array
 				$address = t3lib_div::trimExplode(',', $geocodeFields);
 				$geocode = array();
-				
+
 				foreach ($address as $key=>$value) {
 					$geocode[] = $row[$value];
 				}
 				$geoAdress = implode(',',$geocode);
-				
+
 				// call google service
 				$url = 'http://maps.google.com/maps/geo?q='.urlencode($geoAdress).'&output=csv&key='.$tmp_confArr['googleKey'];
 				$response=stripslashes(t3lib_div::getURL($url));
-				
+
 				// determain the result
 				$response = explode(',',$response);
-				
+
 				// if there is a result
 				if ($response[0]=='200' && $response[2]!= '' && $response[3] != '') {
 					// add the coordinates to the updateArray
-					$fieldArray[$lat] = $response[2]; 
+					$fieldArray[$lat] = $response[2];
 					$fieldArray[$lng] = $response[3];
 				}
 			}
-			
-			
-		} 
-	
+
+
+		}
+
 		return $fieldArray;
 	}
 }

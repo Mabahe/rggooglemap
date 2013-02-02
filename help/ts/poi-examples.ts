@@ -1,18 +1,18 @@
 # /***************************
-#  *      TS example 
+#  *      TS example
 #  *    EXT rggooglemap
 #  *    Georg Ringer
 #  * http://www.rgooglemap.com/
-#  ***************************/ 
+#  ***************************/
 
-plugin.tx_rggooglemap_pi1	
-	
+plugin.tx_rggooglemap_pi1
+
 	poi {
-		
+
 			## TABLE NAME, e.g. tt_address
 			tt_address {
 				# for every field there is full stdWrap functionality available!
-	
+
 				# Add a t: only if the field phone is filled
 				phone {
 					stdWrap {
@@ -20,7 +20,7 @@ plugin.tx_rggooglemap_pi1
 						required = 1
 					}
 				}
-			
+
 				# Add "E-mail: " if the field email is filled and link it to its own value
 				email {
 					setContentToCurrent = 1
@@ -30,7 +30,7 @@ plugin.tx_rggooglemap_pi1
 						typolink.parameter.current = 1
 					}
 				}
-				
+
 				# Add an image to the POI
 				image {
 					# set the current value to current
@@ -48,18 +48,18 @@ plugin.tx_rggooglemap_pi1
 						params = style="float:right"
 					}
 				}
-							
+
 		}
 		# END of table specific configuration
-		
-		## Generic way to create as many markers as you like by. 
+
+		## Generic way to create as many markers as you like by.
 		## The key of the cObj will be the used as ###GENERIC_XXXXX### (transformed to upper case)
-		
+
 		generic {
 			# Create a link to the single view of this record
-			# Marker will look like ###GENERIC_LINK### 
+			# Marker will look like ###GENERIC_LINK###
 			# This is just an example, working but rggooglemap doesn't provide any single view for this link!
-			
+
 			link = TEXT
 			link {
 				typolink {

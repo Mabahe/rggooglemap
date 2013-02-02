@@ -78,11 +78,11 @@ class tx_rggooglemap_wizard	{
 		$params['wConf'] = $GLOBALS['TCA'][$params['table']]['columns'][$params['field']]['config']['wizards']['googlemap'];
 		$params['row'] = t3lib_BEfunc::getRecord($params['table'], $params['uid']);
 
-		
+
 		$this->content = '';
-		
+
 		$wiz = $this->renderWizard($params);
-			
+
 		$this->content .= $this->doc->startPage($LANG->getLL('mlang_tabs_tab'));
 		$this->content .= $wiz;
 	}
@@ -93,7 +93,7 @@ class tx_rggooglemap_wizard	{
 		$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
 		$settings = '';
 		if ($this->confArr['mapNavigation'] == 'large')	{
-			$settings .= 'map.addControl(new GLargeMapControl());'; 
+			$settings .= 'map.addControl(new GLargeMapControl());';
 		} else	{
 			$settings .= 'map.addControl(new GSmallMapControl());';
 		}
@@ -105,7 +105,7 @@ class tx_rggooglemap_wizard	{
 		}
 
 		$onload = 'window.onload = all_load;';
-		
+
 		$this->confArr['lat_field'] = $params['wConf']['lat_field'];
 		if (doubleval($params['row'][$params['wConf']['lat_field']]))	{
 			$this->confArr['startLat'] = $params['row'][$params['wConf']['lat_field']];

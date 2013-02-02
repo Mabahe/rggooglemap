@@ -38,8 +38,8 @@ require_once(PATH_t3lib.'class.t3lib_svbase.php');
 class tx_rggooglemap_sv1 extends t3lib_svbase {
 	var $prefixId = 'tx_rggooglemap_sv1'; // Same as class name
 	var $scriptRelPath = 'sv1/class.tx_rggooglemap_sv1.php'; // Path to this script relative to the extension dir.
-	var $extKey = 'rggooglemap'; // The extension key.	
-	
+	var $extKey = 'rggooglemap'; // The extension key.
+
 	/**
 	* Initialization of the class, not needed in this case
 	*
@@ -48,29 +48,29 @@ class tx_rggooglemap_sv1 extends t3lib_svbase {
 		$available = parent::init();
 		return $available;
 	}
-	
-	
+
+
 	/**
 	 * Get the translated fields. This is needed to perform queries without knowing
-	 * the exact field names. "Translate" every field by setting the key to the 
-	 * name you want and the field to the original field name		
+	 * the exact field names. "Translate" every field by setting the key to the
+	 * name you want and the field to the original field name
 	 *
 	 * @param	string		$field: Give a fieldname to get the translated one
 	 * @return	mixed	With a given field return the translated fieldname, otherwise
-	 * 	all translated fields as a table	
+	 * 	all translated fields as a table
 	 */
 	function getTable($field='') {
 		$tbl['lng'] = 'tx_rggooglemap_lng';
-		$tbl['lat'] = 'tx_rggooglemap_lat';  
-		$tbl['rggmcat'] = 'tx_rggooglemap_cat';            
+		$tbl['lat'] = 'tx_rggooglemap_lat';
+		$tbl['rggmcat'] = 'tx_rggooglemap_cat';
 		$tbl['rggmtitle'] = 'name';
-		
+
 		if ($field) {
 			return ($tbl[$field]) ? $tbl[$field] : $field;
 		} else {
 			return $tbl;
 		}
-	}    
+	}
 
 
 	/**
@@ -78,7 +78,7 @@ class tx_rggooglemap_sv1 extends t3lib_svbase {
 	 *
 	 * @param	string		$string: A lies of fields
 	 * @return	string translated fields
-	 */	
+	 */
 	function mergeFields($string) {
 		$whereFields = $this->getTable();
 		$whereOld = array_keys($whereFields);
@@ -88,17 +88,17 @@ class tx_rggooglemap_sv1 extends t3lib_svbase {
 
 
 	/**
-	 * Set the addressFields of a table, this is needed for automatic geocoding 
-	 * of the table. Order is important, needs to be like Steet,City,Country	
-	 * 
+	 * Set the addressFields of a table, this is needed for automatic geocoding
+	 * of the table. Order is important, needs to be like Steet,City,Country
+	 *
 	 * If the table doesn't represent an address (e.g. mountains), return ''!
-	 * 	 	
+	 *
 	 *
 	 * @return	string List of fields which represent an address
-	 */	
+	 */
 	function addressFields() {
 		$address = 'address,city,zip,country';
-		
+
 		return $address;
 	}
 }

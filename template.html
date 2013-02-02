@@ -14,17 +14,17 @@
  xxxxxxxxxxxx                                xxxxxxxxxxx
  xxxx   Ringer Georg .::. typo et ringerge dot org  xxxx
  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 
+
  .: Structure of the template file :.
   - Main Template:        This is the main template, including the map and the tree
   - Record List (First):  Template for the records which are selected via the checkboxes, 1st page
   - Record List (2nd):    Template for the records which are selected via the checkboxes, other pages
-  - InfoBox:              Template for the popup 
+  - InfoBox:              Template for the popup
   - POI Nr.1:             1st tab
   - POI Nr.2:             2nd tab
   - POI Nr.3:             3rd tab
   - POI _K_ Nr.1:         Special template for prefix "K", 1st tab
-  - POI _K_ Nr.2:         Special template for prefix "K", 2nd tab  
+  - POI _K_ Nr.2:         Special template for prefix "K", 2nd tab
   - LocationBox:          Template for the geocoding location box
   - Visible Records:      Template for all visible records
   - Menu Template         Show all records of the selected categories and starting point
@@ -32,11 +32,11 @@
   - SearchResult:         Template for the search results
   - Cattree               Templates for a single line of the category tree
   - Catmenu               Template for the category tree on menu view
-  
+
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  J S  -  H E A D E R  - - - - -  
+  -  J S  -  H E A D E R  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Subpart for the JS-Header which is used to embed the needed javascript files
 Available markers:
@@ -45,7 +45,7 @@ Available markers:
 
 <!-- ###HEADER### -->
 <!--
- 
+
  	<script type="text/javascript" src="###PATH###res/simpletreemenu.js"></script>
 -->
 <!--
@@ -81,7 +81,7 @@ Available markers:
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  M A P  -  T E M P L A T E  - - - - -  
+  -  M A P  -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This is the main subpart, holding the map
 
@@ -103,7 +103,7 @@ Available markers:
 	</div>
 </div>
 
-  
+
 <div id="formResult"></div>
 
 
@@ -114,7 +114,7 @@ Available markers:
 <div class="rggooglemap-directionresults">
 	<div id="removedirections" style="display:none"><a href="javascript:removeDirections();">###LL_REMOVE-DIRECTIONS###</a></div>
 	<div id="getdirections">
-	
+
 	</div>
 
 </div>
@@ -129,31 +129,31 @@ Available markers:
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  R E C O R D  -  L I S T    - - - -  
+  -  R E C O R D  -  L I S T    - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the records which are selected via the checkboxes
 
 <!-- ###TEMPLATE_RECORDLIST### -->
 <div class="rggooglemap-results">
 	<div class="rggooglemap-pb">
-	
+
 		<div class="rggooglemap-stat">###PB_STATISTIC###</div>
 		<div class="rggooglemap-links">
 			<div class="rggooglemap-prev"><!-- ###HIDE_PREV### --> <!-- ###PB_PREV### --> ###LL_PREV### <!-- ###PB_PREV### --> <!-- ###HIDE_PREV### --></div>
 			<div class="rggooglemap-act">###PB_ACT###</div>
 			<div class="rggooglemap-next"><!-- ###HIDE_NEXT### --> <!-- ###PB_NEXT### --> ###LL_NEXT### <!-- ###PB_NEXT### --> <!-- ###HIDE_NEXT### --></div>
-	
+
 			<div class="rggooglemap-clr"></div>
 		</div>
-		
-	
+
+
 	</div>
-	
+
 	<ul>
 		<!-- ###CONTENT### -->
 		 <!-- ###SINGLE### -->
 	    <li style>
-	      <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >###RGGMTITLE###</a>  
+	      <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >###RGGMTITLE###</a>
 	    </li>
 		 <!-- ###SINGLE### -->
 	  <!-- ###CONTENT### -->
@@ -161,19 +161,19 @@ Template for the records which are selected via the checkboxes
 </div>
  <!-- ###TEMPLATE_RECORDLIST### -->
 
- 
- 
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  I N F O B O X  -  T E M P L A T E  - - - - -  
+  -  I N F O B O X  -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Template for the popup 
+Template for the popup
 
 <!-- ###TEMPLATE_INFOBOX_1### -->
 
 	<div id="dragbar1" onMousedown="initializedrag(event,this.parentNode)" class="tx-rgpopup-dragbar">
 		<div class="tx-rgpopup-left">
 			###NAME###
-		</div>	
+		</div>
 		<div class="tx-rgpopup-right">
 			<a href="javascript:hide('infobox');"> <img src="typo3conf/ext/rggooglemap/res/close.gif"></a>
 		</div>
@@ -201,12 +201,12 @@ Lat: ###LNG###<br>
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  P O I I N F O  -  T E M P L A T E  - - - -  
+  -  P O I I N F O  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template(s) for the info windows on the map.
-Make as many as you like. 
+Make as many as you like.
 
-  -  N R .  I  -  T E M P L A T E  - - - -  
+  -  N R .  I  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1st tab
 
@@ -216,21 +216,21 @@ Make as many as you like.
       <h3>###RGGMTITLE###</h3>
       ###ADDRESS###<br />
       ###ZIP### ###CITY### <small>###COUNTRY###</small><br /><br />
-      
+
       ###WWW###
       ###PHONE###
-      ###FAX### 
+      ###FAX###
 <br />
 <br />
       <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >###LL_DIRECTIONS###</a>
-      
+
   </div>
 </div>
 
 <!-- ###TEMPLATE_INFOPOI_TT_ADDRESS_1### -->
 
 
-  -  N R .  II  -  T E M P L A T E  - - - -  
+  -  N R .  II  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 2nd tab
 
@@ -244,16 +244,16 @@ Make as many as you like.
 		    <input dragover="true" size="20" maxlength="40" name="saddr" id="saddr" value="" type="text"><br />
 		    <input value="###LL_SEARCH###" type="submit" />
 		    <input id="daddr" value="###TITLE###@###LAT###,###LNG###" type="hidden" />
-			</form> 
+			</form>
 
 			<br />
-      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a> 
+      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a>
   </div>
 </div>
 <!-- ###TEMPLATE_INFOPOI_TT_ADDRESS_2### -->
 
 
-  -  N R .  III  -  T E M P L A T E  - - - -  
+  -  N R .  III  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 3rd tab
 
@@ -267,10 +267,10 @@ Make as many as you like.
 
   <div class="poi-content">
   ###CE###
-Nulla facilisi. Pellentesque massa mauris, consequat ac, posuere vel, dapibus quis, erat. 
-Vestibulum auctor. <br />Etiam molestie orci vitae nulla. Cras eros. Vivamus gravida mi in ipsum. 
-Donec at dolor at diam tristique ultricies. <br />Ut libero augue, tempor eget, suscipit quis, 
-venenatis et, lacus. Maecenas libero dolor, aliquet id, <br />consectetuer et, suscipit non, libero. 
+Nulla facilisi. Pellentesque massa mauris, consequat ac, posuere vel, dapibus quis, erat.
+Vestibulum auctor. <br />Etiam molestie orci vitae nulla. Cras eros. Vivamus gravida mi in ipsum.
+Donec at dolor at diam tristique ultricies. <br />Ut libero augue, tempor eget, suscipit quis,
+venenatis et, lacus. Maecenas libero dolor, aliquet id, <br />consectetuer et, suscipit non, libero.
 Maecenas suscipit. Donec tempor. Maecenas eros sapien, <br />euismod non, luctus et, tincidunt vel, erat.
   </div>
 </div>
@@ -278,7 +278,7 @@ Maecenas suscipit. Donec tempor. Maecenas eros sapien, <br />euismod non, luctus
 <!-- ###TEMPLATE_INFOPOI_TX_TT_ADDRESS_3### -->
 
 
-  -  N R .  K  -  T E M P L A T E  - - - -  
+  -  N R .  K  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "Special" template for categories with a prefix. In this case, the prefix is "k"
 
@@ -293,7 +293,7 @@ Maecenas suscipit. Donec tempor. Maecenas eros sapien, <br />euismod non, luctus
 special template, just for this category <br />
 <strong>Directions</strong> <br />
 - <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, '###TABLE###');" >To here</a> <br />
-- <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,4, '###TABLE###');" >From here</a> <br /> 
+- <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,4, '###TABLE###');" >From here</a> <br />
 
   </div>
 </div>
@@ -306,7 +306,7 @@ special template, just for this category <br />
   <ul id="poitab">
     <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>  </ul>
   <div class="poi-content" style="height:120px;">
-    Directions: <b>To here</b> 
+    Directions: <b>To here</b>
     <br />Start address:
     <form action="http://maps.google.com/maps" method="get" target="_blank">
       <input type="text" size=40 maxlength=40 name="saddr" id="saddr" value="" /><br />
@@ -322,10 +322,10 @@ special template, just for this category <br />
 <!-- ###TEMPLATE_INFOPOI_K_4### -->
 <div id="poi" style="width:250px;">
   <ul id="poitab">
-    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>  
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>
   </ul>
   <div class="poi-content" style="height:120px;">
-   <b>From here</b> 
+   <b>From here</b>
     <br />End address:
     <form action="http://maps.google.com/maps" method="get" target="_blank">
       <input type="text" SIZE=40 maxlength=40 name="daddr" id="daddr" value="" /><br />
@@ -339,14 +339,14 @@ special template, just for this category <br />
 </div>
 <!-- ###TEMPLATE_INFOPOI_K_4### -->
 
-  -  N R .  1  ve_guestbook  -  T E M P L A T E    
+  -  N R .  1  ve_guestbook  -  T E M P L A T E
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "Special" template for ve_guestbook
 
 <!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_1### -->
 <div id="poi" style="width:250px;">
   <ul id="poitab">
-    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>  
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>
     <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tx_veguestbook_entries');" >more...</a></li>
   </ul>
 
@@ -362,7 +362,7 @@ special template, just for this category <br />
 <!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_2### -->
 <div id="poi" style="width:250px;">
   <ul id="poitab">
-    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>  
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>
     <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tx_veguestbook_entries');" >more...</a></li>
   </ul>
 
@@ -380,7 +380,7 @@ special template, just for this category <br />
 ============================================================================================================================================================
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  L O C A T I O N B O X  - - - - - - - - - - 
+  -  L O C A T I O N B O X  - - - - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the geocoding location box
 
@@ -389,29 +389,29 @@ Template for the geocoding location box
 <form action="#" id="geocode" name="geocode" onsubmit="showAddress(this.address.value, this.zoom.value); return false;">
   <fieldset class="csc-mailform">
   	<div class="csc-mailform-field">
-  		<label for="rggm-location-address">###LL_LABEL_ADDRESS###</label> 
+  		<label for="rggm-location-address">###LL_LABEL_ADDRESS###</label>
   		<input id="rggm-location-address" type="text" name="address" value="###LL_EXAMPLEADDRESS###" onFocus="if(this.value==defaultValue)this.value='';"  />
   	</div>
 
   	<div class="csc-mailform-field">
-  		<label for="rggm-location-zoom">###LL_LABEL_ZOOMLEVEL###</label> 
+  		<label for="rggm-location-zoom">###LL_LABEL_ZOOMLEVEL###</label>
 		  <select name="zoom" id="rggm-location-zoom">
 		  	<option value="5">###LL_ZOOMLEVEL_5###</option>
 		  	<option value="9">###LL_ZOOMLEVEL_9###</option>
 		  	<option value="14">###LL_ZOOMLEVEL_14###</option>
 		  </select>
   	</div>
-  	
+
   	<div class="csc-mailform-field">
   		<input type="submit" value="###LL_SEARCH###" class="csc-mailform-submit"  />
   	</div>
-  </fieldset>  
+  </fieldset>
 </form>
  <!-- ###TEMPLATE_LOCATIONBOX### -->
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  R E C O R D S   O N   T H E   M A P  - - - 
+  -  R E C O R D S   O N   T H E   M A P  - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for all visible records which are currently displayed on the map
 
@@ -423,7 +423,7 @@ Template for all visible records which are currently displayed on the map
 <!-- ###TEMPLATE_RECORDSONMAP### -->
 
 
-  -  R E S U L T S  - - - - - - -  
+  -  R E S U L T S  - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the active records (the ones which are shown on the map)
 
@@ -433,7 +433,7 @@ Template for the active records (the ones which are shown on the map)
 		<!-- ###CONTENT### -->
 		 <!-- ###SINGLE### -->
 	    <li>
-	      ###RGGMTITLE### &middot; <a href="javascript:void(0);" onclick="myclick(###UID###,###LNG###,###LAT###, '###TABLE###')" >###LL_SHOW###</a>   
+	      ###RGGMTITLE### &middot; <a href="javascript:void(0);" onclick="myclick(###UID###,###LNG###,###LAT###, '###TABLE###')" >###LL_SHOW###</a>
 	    </li>
 		 <!-- ###SINGLE### -->
 	  <!-- ###CONTENT### -->
@@ -443,14 +443,14 @@ Template for the active records (the ones which are shown on the map)
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  M E N U  -  T E M P L A T E  - - - -  
+  -  M E N U  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Show all records of the selected categories and starting point, linking to the map on a different page
 
 <!-- ###TEMPLATE_MENU### -->
 <div class="rggooglemap-menu">
 
-	
+
 	<ul class="rggooglemap-menucat">
 		<!-- ###CONTENT### --><!-- ###ITEM_SINGLE### -->
 		  <li><div class="rggooglemap-menutitle">###TITLE###</div>
@@ -458,7 +458,7 @@ Show all records of the selected categories and starting point, linking to the m
 			    <!-- ###CONTENT2### --><!-- ###ITEM_SINGLE2### -->
 			    	<li>
 							<!-- ###LINK_ITEM### -->###RGGMTITLE### <!-- ###LINK_ITEM### -->
-	
+
 						</li>
 			    <!-- ###ITEM_SINGLE2### --><!-- ###CONTENT2### -->
 					<li class="rggooglemap-menuitemlast"></li>
@@ -466,14 +466,14 @@ Show all records of the selected categories and starting point, linking to the m
 		  </li>
 		<!-- ###ITEM_SINGLE### --><!-- ###CONTENT### -->
 	</ul>
-	
+
 
 
 </div>
  <!-- ###TEMPLATE_MENU### -->
- 
+
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  S E A R C H  B O X - - - - - - - - - - - -  
+  -  S E A R C H  B O X - - - - - - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the searchbox
 <!-- ###TEMPLATE_SEARCH### -->
@@ -482,24 +482,24 @@ Template for the searchbox
 	<fieldset class="csc-mailform">
 		<div class="csc-mailform-field">
 			<label for="rggm-search-name">###LL_LABEL_NAME###</label>
-			<input size="30" type="text" id="rggm-search-name" name="rggmsearchValue" onFocus="if(this.value==defaultValue)this.value='';" value="Hotel" />  	
+			<input size="30" type="text" id="rggm-search-name" name="rggmsearchValue" onFocus="if(this.value==defaultValue)this.value='';" value="Hotel" />
 		</div>
-		
+
 		<div class="csc-mailform-field csc-mailform-checkbox">
 			<label for="rggm-search-maponly">###LL_LABEL_MAPONLY###</label>
 			<input type="checkbox" id="rggm-search-maponly" name="rggmOnMap" />
 		</div>
-		
+
 		<div class="csc-mailform-field csc-mailform-checkbox">
 			<label for="rggm-search-cat">###LL_LABEL_CAT###</label>
 			<select id="rggm-search-cat" name="rggmCat" >
 				<option selected="selected" value="">-</option>
 				###CATEGORY###
-			</select>	
+			</select>
 		</div>
 
 		<!-- ###HIDE_RADIUSSEARCH### -->
-		<div class="csc-mailform-field csc-mailform-checkbox">		
+		<div class="csc-mailform-field csc-mailform-checkbox">
 			<label for="rggm-search-activateradius">###LL_LABEL_ACTIVATERADIUS###</label>
 			<input id="rggm-search-activateradius" name="rggmActivateRadius" value="on" type="checkbox" />
 		</div>
@@ -519,7 +519,7 @@ Template for the searchbox
 				<option value="30">30 km</option>
 				<option value="50">50 km</option>
 				<option value="100">100 km</option>
-			</select>		
+			</select>
   	</div>
   	<!-- ###HIDE_RADIUSSEARCH### -->
 
@@ -527,17 +527,17 @@ Template for the searchbox
 		  <input type="hidden" id="rggmBound" name="rggmBound" />
 		  <input type="submit" value="###LL_SEARCH###" class="csc-mailform-submit"  />
   	</div>
-  </fieldset>  
-  
+  </fieldset>
+
   <script type="text/javascript">
   	###AUTOSUBMIT###tx_rggooglemap_pi1search(xajax.getFormValues('rggmsearch'));
   </script>
-  
+
 </form>
 
 <div id="searchFormResult"></div>
  <!-- ###TEMPLATE_SEARCH### -->
- 
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   -  S E A R C H  -  R E S U L T  - - - - - - -
@@ -575,7 +575,7 @@ Template for the search results
 <!-- ###TEMPLATE_SEARCH_RESULTS_ERROR### -->
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  C A T T R E E -  T E M P L A T E  - - - - -  
+  -  C A T T R E E -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 These 2 templates are used for the category tree menu. 1st for the menu next to the map, the 2nd one for the menu view
 
@@ -589,7 +589,7 @@ These 2 templates are used for the category tree menu. 1st for the menu next to 
 			<div>
 				<input ###CHECKED### type="checkbox" id="rggm-cat-###UID###" name="cb[###UID###]" value="###UID###" onclick="tx_rggooglemap_pi1processCat(xajax.getFormValues('xajax_cat'));clearCat(); " />
 	  		<label for="rggm-cat-###UID###">###ICON### ###TITLE###</label>
-				###DESCR### ###RECURSIVE###	
+				###DESCR### ###RECURSIVE###
 			</div>
     </li>
 	 <!-- ###SINGLE### -->
@@ -613,7 +613,7 @@ These 2 templates are used for the category tree menu. 1st for the menu next to 
 <!-- ###TEMPLATE_CATMENU_TREE### -->
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  C A T M E N U -  T E M P L A T E  - - - - -  
+  -  C A T M E N U -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The template for the catmenu for the menu view
 
@@ -636,48 +636,48 @@ The template for the catmenu for the menu view
     <form action="" onsubmit="return false;" name="xajax_cat" id="xajax_cat">
 		  <fieldset>
 		      ###ITEMS###
-			</fieldset>    
+			</fieldset>
     </form>
   </div>
 <!-- ###TEMPLATE_CATMENU_MAIN### -->
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  D I R E C T I O N S -  T E M P L A T E  - -  
+  -  D I R E C T I O N S -  T E M P L A T E  - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the directions
 
 <!-- ###TEMPLATE_DIRECTIONS### -->
 <strong>###LL_TITLE###</strong><br />
 ###LL_DESCRIPTION###<br /><br />
- 
+
 <script type="text/javascript">
   if (GBrowserIsCompatible()) {
 		var gdir2=new GDirections(map, document.getElementById('getdirections2'));
 	}
 </script>
- 
- 
+
+
 <form action="#" id="geocode" name="geocode" onsubmit="getDirectionsLong(this.directionaddr.value, this.fromcountry.value, this.fromaddress.value, 'removedirections2'); return false;">
   <fieldset class="csc-mailform">
   	<div class="csc-mailform-field">
-  		<label for="rggm-directions-address">###LL_LABEL_ADDRESS###</label> 
+  		<label for="rggm-directions-address">###LL_LABEL_ADDRESS###</label>
   		<input id="rggm-directions-address" type="text" name="fromaddress" value="###LL_EXAMPLEADDRESS###" onFocus="if(this.value==defaultValue)this.value='';" />
   	</div>
 
   	<div class="csc-mailform-field">
-  		<label for="rggm-directions-country">###LL_LABEL_COUNTRY###</label> 
+  		<label for="rggm-directions-country">###LL_LABEL_COUNTRY###</label>
 		  <select name="fromcountry" id="rggm-directions-country">
 				<option value="Austria">Austria</option>
 				<option value="Germany">Germany</option>
 		  </select>
- 
+
   	</div>
-  	
-  	
+
+
 		<!-- ###HIDE_MULTISELECTION### -->
   	<div class="csc-mailform-field">
-  		<label for="rggm-directions-record">###LL_LABEL_RECORD###</label> 
+  		<label for="rggm-directions-record">###LL_LABEL_RECORD###</label>
 		  <select name="directionaddr" id="rggm-directions-record">
 				<!-- ###CONTENT### -->
 				 <!-- ###SINGLE### -->
@@ -687,8 +687,8 @@ Template for the directions
 		  </select>
   	</div>
 		<!-- ###HIDE_MULTISELECTION### -->
-		
-		<!-- ###HIDE_SINGLESELECTION### -->		  	
+
+		<!-- ###HIDE_SINGLESELECTION### -->
 				<!-- ###CONTENT_SINGLE### -->
 				 <!-- ###SINGLE_SINGLE### -->
 						<input value="###TITLE###@###LAT###,###LNG###" type="hidden" name="directionaddr" />
@@ -697,10 +697,10 @@ Template for the directions
 
 		<!-- ###HIDE_SINGLESELECTION### -->
 
-  	<div class="csc-mailform-field">  	
+  	<div class="csc-mailform-field">
   		<input type="submit" value="###LL_SEARCH###" class="csc-mailform-submit"  />
   	</div>
-  </fieldset>  
+  </fieldset>
 </form>
 
 
@@ -709,7 +709,7 @@ Template for the directions
 		<a onclick="gdir2.clear();hide('removedirections2')" href="javascript:void(0);">###LL_REMOVE-DIRECTIONS###</a>
 	</div>
 	<div id="getdirections2">
-	
+
 	</div>
 
 </div>
@@ -718,12 +718,12 @@ Template for the directions
 
 <!-- ###TEMPLATE_DIRECTIONS### -->
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- = =  T H E   E  N D = = = = = = = = = = = = =  
+ = =  T H E   E  N D = = = = = = = = = = = = =
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- = =  N E W  = = = = = = = = = = = = =  
+ = =  N E W  = = = = = = = = = = = = =
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -755,10 +755,10 @@ Template for the directions
 		    <input dragover="true" size="20" maxlength="40" name="saddr" id="saddr" value="" type="text"><br />
 		    <input value="###LL_SEARCH###" type="submit" />
 		    <input id="daddr" value="###TITLE###@###LAT###,###LNG###" type="hidden" />
-			</form> 
+			</form>
 
 			<br />
-      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a> 
+      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a>
   </div>
 </div>
 <!-- ###TEMPLATE_INFOPOI_TX_CITY_RECORD_2### -->
@@ -774,7 +774,7 @@ Template for the directions
       ###DESCRIPTION###
       <br />
       <a href="###GENERIC_LINK###">###LL_MORE###</a> <br />
-      
+
   </div>
 </div>
 <script type="text/javascript">
@@ -801,7 +801,7 @@ Template for the directions
       <br />
       <a href="###GENERIC_LINK###">###LL_MORE###</a> <br />
       <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Anfahrt</a>
-      
+
   </div>
 </div>
 <script type="text/javascript">
@@ -813,7 +813,7 @@ Template for the directions
 	}
 	}, Lightbox);
 </script>
-<!-- ###TEMPLATE_INFOPOI_TX_HOUSING_RECORD_1### --> 
+<!-- ###TEMPLATE_INFOPOI_TX_HOUSING_RECORD_1### -->
 
 <!-- ###TEMPLATE_INFOPOI_TX_HOUSING_RECORD_2### -->
 <div id="poi" style="width:250px;">
@@ -825,10 +825,10 @@ Template for the directions
 		    <input dragover="true" size="20" maxlength="40" name="saddr" id="saddr" value="" type="text"><br />
 		    <input value="###LL_SEARCH###" type="submit" />
 		    <input id="daddr" value="###TITLE###@###LAT###,###LNG###" type="hidden" />
-			</form> 
+			</form>
 
 			<br />
-      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a> 
+      <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >###LL_BACK###</a>
   </div>
 </div>
 <!-- ###TEMPLATE_INFOPOI_TX_HOUSING_RECORD_2### -->
@@ -846,6 +846,6 @@ Template for the directions
       <a href="###GENERIC_LINK###">###LL_MORE###</a> <br />
   </div>
 </div>
-<!-- ###TEMPLATE_INFOPOI_TX_STATICREGION_REGION_1### --> 
+<!-- ###TEMPLATE_INFOPOI_TX_STATICREGION_REGION_1### -->
   </body>
 </html>

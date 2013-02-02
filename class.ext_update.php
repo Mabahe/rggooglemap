@@ -48,11 +48,11 @@ class ext_update {
 		$content .= '<p><i>'.$this->LL('text.intro2').'</i></p><br />';
 		$content .= $this->getCheckbox('copymarkers');
 		$content .= $this->getCheckbox('copycategories', false);
-						
+
 		$content .= '<br /><input type="submit" name="update" value="'.$this->LL('button.update').'" />';
 		$content .= '</form>';
 
-		
+
 		if (t3lib_div::_GP('update')) {
 			$content .= '<h3>'.$this->LL('text.updated').'</h3>';
 			$content .= '<p>'.$this->processUpdate().'</p>';
@@ -71,17 +71,17 @@ class ext_update {
 		$serverPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT').'/';
 		$extPath = $serverPath.t3lib_extMgm::siteRelPath('rggooglemap');
 		$filemount = '';
-		
+
 		$notify = $success = $error = array();
 
-		
+
 		/***************
 		 * #1 Copy files
-		 *************'*/ 		 
+		 *************'*/
 		if ($vars['copymarkers']==1) {
 			$files = t3lib_div::getFilesInDir($extPath.'res/icons/search/', 'png,gif,jpg', 1);
 			$target = 'uploads/tx_rggooglemap/';
-			
+
 			// copy files
 			foreach ($files as $file) {
 				$newFileName = $serverPath.$target . basename($file);
@@ -98,14 +98,14 @@ class ext_update {
 
 		/***************
 		 * #1 Copy files
-		 *************'*/ 		 
+		 *************'*/
 		if ($vars['copycategories']==1) {
-			$sql = 'UPDATE tt_address 
+			$sql = 'UPDATE tt_address
 							SET tx_rggooglemap_cat = tx_rggooglemap_cat2;';
-			
+
 			$GLOBALS['TYPO3_DB']->sql_query($sql);
 
-			$success[] = $this->LL('msg.copy.category');			
+			$success[] = $this->LL('msg.copy.category');
 		}
 
 
@@ -120,9 +120,9 @@ class ext_update {
 	 * Render a checkbox including a label
 	 *
 	 * @param	string		$name: Name of the checkbox which is also used for the label
-	 * @param	boolean		$checked: If checkbox is checked by default  	 
+	 * @param	boolean		$checked: If checkbox is checked by default
 	 * @return	string final checkbox
-	*/	 
+	*/
 	function getCheckbox($name, $checked=true) {
 		$vars = t3lib_div::_POST();
 		$checkedText = ($checked || $vars[$name]==1) ? ' checked="checked" ' : '';
@@ -135,14 +135,14 @@ class ext_update {
 							';
 		return $content;
 	}
-	
-	
+
+
 	/**
 	 * Render warning, success and notify messages
 	 *
 	 * @param	array		$error: Array holding the error msgs
 	 * @param	array		$success: Array holding the success msgs
-	 * @param	array		$notify: Array holding the notify msgs  	 
+	 * @param	array		$notify: Array holding the notify msgs
 	 * @return	all msgs
 	*/
 	function getErrorWarning($error, $success, $notify=array()) {
@@ -157,7 +157,7 @@ class ext_update {
 			$content.= '<div style="padding:5px;margin:5px;width:400px;color:#FF9900;background-color: #FFF5E5;border: 1px solid #FF9900;">
 										<strong>'.$this->LL('msg.warning').'</strong><br />'.implode('<br />', $notify).'</div>';
 		}
-				
+
 		if (count($error)>0) {
 			$content.= '<div style="padding:5px;margin:5px;width:400px;color:#CB0912;background-color: #FAE6E7;border: 1px solid #CB0912;">
 										<strong>'.$this->LL('msg.error').'</strong><br />'.implode('<br />', $error).'</div>';
@@ -171,7 +171,7 @@ class ext_update {
 	*
 	* @param	string		$key: Key of the text
 	* @return Text from the locallang.xml
-	*/	
+	*/
 	function LL($key) {
 		return $GLOBALS['LANG']->getLL('update.'.$key);
 	}
@@ -185,7 +185,7 @@ class ext_update {
 	function access() {
 		return true;
 	}
-	
+
 }
 
 // Include extension?

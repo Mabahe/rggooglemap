@@ -807,7 +807,6 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 		$template['total'] = $this->cObj2->getSubpart($this->templateCode,'###HEADER###');
 		$markerArray = $subpartArray = array();
 		$markerArray['###PATH###'] = t3lib_extMgm::siteRelpath('rggooglemap');
-		$markerArray['###MAP_KEY###'] = $this->config['mapKey'];
 
 		if ($this->conf['map.']['addLanguage'] == 1) {
 			if ($this->conf['map.']['addLanguage.']['override'] != '') {

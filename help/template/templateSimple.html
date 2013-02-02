@@ -14,17 +14,17 @@
  xxxxxxxxxxxx                                xxxxxxxxxxx
  xxxx   Ringer Georg .::. typo et ringerge dot org  xxxx
  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
- 
+
  .: Structure of the template file :.
   - Main Template:        This is the main template, including the map and the tree
   - Record List (First):  Template for the records which are selected via the checkboxes, 1st page
   - Record List (2nd):    Template for the records which are selected via the checkboxes, other pages
-  - InfoBox:              Template for the popup 
+  - InfoBox:              Template for the popup
   - POI Nr.1:             1st tab
   - POI Nr.2:             2nd tab
   - POI Nr.3:             3rd tab
   - POI _K_ Nr.1:         Special template for prefix "K", 1st tab
-  - POI _K_ Nr.2:         Special template for prefix "K", 2nd tab  
+  - POI _K_ Nr.2:         Special template for prefix "K", 2nd tab
   - LocationBox:          Template for the geocoding location box
   - Visible Records:      Template for all visible records
   - Menu Template         Show all records of the selected categories and starting point
@@ -32,11 +32,11 @@
   - SearchResult:         Template for the search results
   - Cattree               Templates for a single line of the category tree
   - Catmenu               Template for the category tree on menu view
-  
+
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  M A I N  -  T E M P L A T E  - - - - -  
+  -  M A I N  -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This is the main template, including the map and the tree
 
@@ -50,7 +50,7 @@ This is the main template, including the map and the tree
 <!-- ###MAP### -->
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  R E C O R D  -  L I S T  ( F I R S T ) - -  
+  -  R E C O R D  -  L I S T  ( F I R S T ) - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the records which are selected via the checkboxes, 1st page
 
@@ -63,7 +63,7 @@ Template for the records which are selected via the checkboxes, 1st page
 	<!-- ###CONTENT### -->
 	 <!-- ###SINGLE### -->
     <li>
-      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>  
+      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>
     </li>
 	 <!-- ###SINGLE### -->
   <!-- ###CONTENT### -->
@@ -73,7 +73,7 @@ Template for the records which are selected via the checkboxes, 1st page
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  R E C O R D  -  L I S T  ( 2 n d)  - - - -  
+  -  R E C O R D  -  L I S T  ( 2 n d)  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the records which are selected via the checkboxes, other pages
 
@@ -86,7 +86,7 @@ Template for the records which are selected via the checkboxes, other pages
 	<!-- ###CONTENT### -->
 	 <!-- ###SINGLE### -->
     <li>
-      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>  
+      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>
     </li>
 	 <!-- ###SINGLE### -->
   <!-- ###CONTENT### -->
@@ -94,19 +94,19 @@ Template for the records which are selected via the checkboxes, other pages
 
  <!-- ###TEMPLATE_RECORDLIST### -->
 
- 
- 
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  I N F O B O X  -  T E M P L A T E  - - - - -  
+  -  I N F O B O X  -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Template for the popup 
+Template for the popup
 
 <!-- ###TEMPLATE_INFOBOX_1### -->
 
 	<div id="dragbar1" onMousedown="initializedrag(event,this.parentNode)" class="tx-rgpopup-dragbar">
 		<div class="tx-rgpopup-left">
 			###NAME###
-		</div>	
+		</div>
 		<div class="tx-rgpopup-right">
 			<a href="javascript:hide('infobox');"> <img src="typo3conf/ext/rggooglemap/res/close.gif"></a>
 		</div>
@@ -129,7 +129,7 @@ Lat: ###LNG###<br>
 	 <!-- ###SINGLE### -->
 <!-- ###CONTENT### -->
 </ul>
-###CE###  
+###CE###
 
 
 <br /><br />&middot; <a  href="javascript:void(0)" onClick=' myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, "###TABLE###") '>Show on map</a>
@@ -142,12 +142,12 @@ Lat: ###LNG###<br>
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  P O I I N F O  -  T E M P L A T E  - - - -  
+  -  P O I I N F O  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template(s) for the info windows on the map.
-Make as many as you like. 
+Make as many as you like.
 
-  -  N R .  I  -  T E M P L A T E  - - - -  
+  -  N R .  I  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1st tab
 
@@ -157,12 +157,12 @@ Make as many as you like.
     <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Information</a></li>
     <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Picture</a></li>
   </ul>
-  
-  <div class="poi-content"> 
+
+  <div class="poi-content">
     <b>ID:</b>###TABPREFIX### ###NAME### (###UID###)<br />
-    
+
     <b>Description:</b> ###DESCRIPTION###
-    
+
     <br />
     <a href="javascript:void(0)" onclick=" show('infobox'); tx_rggooglemap_pi1infomsg(###UID###, '###TABLE###'); ">Show info window</a>
   </div>
@@ -171,7 +171,7 @@ Make as many as you like.
 <!-- ###TEMPLATE_INFOPOI_1### -->
 
 
-  -  N R .  II  -  T E M P L A T E  - - - -  
+  -  N R .  II  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 2nd tab
 
@@ -181,11 +181,11 @@ Make as many as you like.
     <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Information</a></li>
     <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Picture</a></li>
   </ul>
-  
+
   <div class="poi-content">
     ###EMAIL### <br />
     ###WWW###<br />
-    <br />###IMAGE### 
+    <br />###IMAGE###
   </div>
 </div>
 
@@ -194,7 +194,7 @@ Make as many as you like.
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  L O C A T I O N B O X  - - - - - - - - - - 
+  -  L O C A T I O N B O X  - - - - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the geocoding location box
 
@@ -208,7 +208,7 @@ Enter the location with the syntax: <i>Street, City, Country</i> or <i>City, Cou
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  V I S I B L E   R E C O R D S - -  
+  -  V I S I B L E   R E C O R D S - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for all visible records
 
@@ -220,7 +220,7 @@ Please wait for a small moment - <img src="typo3conf/ext/rggooglemap/res/ajax-lo
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  A C T I V E   R E C O R D S  - - - - - - -  
+  -  A C T I V E   R E C O R D S  - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the active records (the ones which are shown on the map)
 
@@ -229,7 +229,7 @@ Template for the active records (the ones which are shown on the map)
 	<!-- ###CONTENT### -->
 	 <!-- ###SINGLE### -->
     <li>
-      ###NAME### &middot; <a href="javascript:void(0)" onclick=" show('infobox'); tx_rggooglemap_pi1infomsg(###UID###, '###TABLE###',1); ">Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>  
+      ###NAME### &middot; <a href="javascript:void(0)" onclick=" show('infobox'); tx_rggooglemap_pi1infomsg(###UID###, '###TABLE###',1); ">Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>
     </li>
 	 <!-- ###SINGLE### -->
   <!-- ###CONTENT### -->
@@ -239,7 +239,7 @@ Template for the active records (the ones which are shown on the map)
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  M E N U  -  T E M P L A T E  - - - -  
+  -  M E N U  -  T E M P L A T E  - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Show all records of the selected categories and starting point, linking to the map on a different page
 
@@ -264,23 +264,23 @@ Show all records of the selected categories and starting point, linking to the m
 
 </div>
  <!-- ###TEMPLATE_MENU### -->
- 
+
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  S E A R C H  B O X - - - - - - - - - - - -  
+  -  S E A R C H  B O X - - - - - - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Template for the searchbox
 <!-- ###TEMPLATE_SEARCH### -->
 Search for a record, e.g. <i>"Hotel"</i>
 <form action="#" id="rggmsearch" name="rggmsearch" onsubmit="tx_rggooglemap_pi1search(xajax.getFormValues('rggmsearch')); return false">
   <input type="hidden" id="rggmBound" name="rggmBound" />
-  <input size="30" type="text" name="rggmsearchValue" onFocus="if(this.value==defaultValue)this.value='';" value="Hotel" /> 
+  <input size="30" type="text" name="rggmsearchValue" onFocus="if(this.value==defaultValue)this.value='';" value="Hotel" />
 
   &nbsp;&nbsp;<input type="checkbox" id="rggmOnMap" name="rggmOnMap" /> <label for="rggmOnMap">on map only</label><br />
   <input type="submit" value="Go!" />
 </form>
 <div id="searchFormResult"></div>
  <!-- ###TEMPLATE_SEARCH### -->
- 
+
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   -  S E A R C H  -  R E S U L T  - - - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -291,7 +291,7 @@ Template for the search results
 	<!-- ###CONTENT### -->
 	 <!-- ###SINGLE### -->
     <li>
-      ###NAME### &middot; <a ###POPUP###>Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>  
+      ###NAME### &middot; <a ###POPUP###>Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>
     </li>
 	 <!-- ###SINGLE### -->
   <!-- ###CONTENT### -->
@@ -302,7 +302,7 @@ Template for the search results
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  C A T T R E E -  T E M P L A T E  - - - - -  
+  -  C A T T R E E -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 These 2 templates are used for the category tree menu. 1st for the menu next to the map, the 2nd one for the menu view
 
@@ -323,7 +323,7 @@ These 2 templates are used for the category tree menu. 1st for the menu next to 
 <!-- ###TEMPLATE_CATMENU_TREE### -->
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -  C A T M E N U -  T E M P L A T E  - - - - -  
+  -  C A T M E N U -  T E M P L A T E  - - - - -
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The template for the catmenu for the menu view
 
@@ -338,7 +338,7 @@ The template for the catmenu for the menu view
 <!-- ###TEMPLATE_CATMENU_MENU### -->
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- = =  T H E   E  N D = = = = = = = = = = = = =  
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+ = =  T H E   E  N D = = = = = = = = = = = = =
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   </body>
 </html>

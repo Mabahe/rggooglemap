@@ -45,22 +45,22 @@ class tx_rggooglemap_linkhandler {
 	 * @param	string		$link_param: Complete string of the linkhandler
 	 * @param	obj		$pObj: object of the calling class
 	 * @return	Googlemaps including geocoding
-	 */	
+	 */
 	function main($linktxt, $confOrig, $linkHandlerKeyword, $linkHandlerValue, $link_param, &$pObj) {
 
 		$params = explode('|', $linkHandlerValue );
 
 		$pagesTSC = t3lib_BEfunc::getPagesTSconfig($GLOBALS['TSFE']->id);
 		$conf = $pagesTSC['rggooglemap.']['link.'];
-		
+
 		// just id set: <map ID>text</map>
 		if (count($params) == 1) {
-			
+
 			$tableType = $conf['tableType'];
 
 		// id + target-id set: <map ID TARGET>text</map>
 		} elseif (count($params) == 2) {
-			
+
 			// if 2nd param is no integer, assume it is the tablename (or its given name by TS)
 			if (intval($params[1]) == 0) {
 				$tableType	= $params[1];
@@ -68,10 +68,10 @@ class tx_rggooglemap_linkhandler {
 			} else {
 				$mapId 			= $params[1];
 			}
-			
+
 		// id + target + table set: <map ID TARGET TABLE>text</table>
 		} elseif (count($params) == 3) {
-			$mapId 			= $params[1]; 
+			$mapId 			= $params[1];
 			$tableType	= $params[2];
 		}
 
@@ -84,11 +84,11 @@ class tx_rggooglemap_linkhandler {
 		} else {
 			$table			= $tableList[0];
 		}
-		
+
 		// Check if the minium requirements are fulfilled
 		if ($table =='' || intval($params[0]) == 0) {
 			return $link;
-		} 
+		}
 
 		// get the generic query class
 		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
@@ -117,12 +117,12 @@ class tx_rggooglemap_linkhandler {
 				if ($table != $tableList[0]) {
 					$linkConf['additionalParams'] .= '&tx_rggooglemap_pi1[table]='.$table;
 				}
-			
-				$link = $pObj->typolink($linktxt, $linkConf);	
+
+				$link = $pObj->typolink($linktxt, $linkConf);
 			}
-	
+
 		}
-		
+
 		// output the link if generated
 		if (!empty($link)) {
 		#	$link = '<span class="maplink">'.$link.'</span>';

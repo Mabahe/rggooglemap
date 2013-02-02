@@ -13,20 +13,20 @@ $tmp_confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggoog
 if (strpos($tmp_confArr['tables'], 'tt_address') !== false) {
 	$tempColumns = array (
 		"tx_rggooglemap_lng" => array (
-			"exclude" => 1,		
+			"exclude" => 1,
 			"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tt_address.tx_rggooglemap_lng",
 			"config" => array (
-				"type" => "input",	
+				"type" => "input",
 				"size" => "20",
 			)
 		),
 		"tx_rggooglemap_lat" => array (
-			"exclude" => 1,		
+			"exclude" => 1,
 			"label" => "LLL:EXT:rggooglemap/locallang_db.xml:tt_address.tx_rggooglemap_lat",
 			"config" => array (
-				"type" => "input",	
+				"type" => "input",
 				"size" => "20",
-	
+
 			)
 		),
 		"tx_rggooglemap_cat" => array (
@@ -48,7 +48,7 @@ if (strpos($tmp_confArr['tables'], 'tt_address') !== false) {
 			)
 		),
 	);
-	
+
 	// fields for tt_address
 	$value = 'tt_address';
 	t3lib_div::loadTCA($value);
@@ -63,20 +63,20 @@ if (strpos($tmp_confArr['tables'], 'tt_address') !== false) {
 $tables = t3lib_div::trimExplode(',', $tmp_confArr['tables']);
 foreach ($tables as $key=>$singleTable) {
 	$singleTable = trim($singleTable);
-	
+
 	$serviceChain='';
 	while (is_object($serviceObj = t3lib_div::makeInstanceService('rggmData', $singleTable, $serviceChain))) {
-		$serviceChain.=','.$serviceObj->getServiceKey();    
+		$serviceChain.=','.$serviceObj->getServiceKey();
 		if ($tempuser=$serviceObj->init()) {
-		
+
 			// user found, just stop to search for more
 			if ($tmp_confArr['wizards'])	{
 				$lat = $serviceObj->getTable('lat');
 				$lng = $serviceObj->getTable('lng');
 				$cat = $serviceObj->getTable('rggmcat');
-				
+
 				t3lib_div::loadTCA($singleTable);
-				
+
 				// wizard
 				$TCA[$singleTable]['columns'][$lng]['config']['wizards'] = array(
 					'_POSITION' => 'right',
@@ -90,7 +90,7 @@ foreach ($tables as $key=>$singleTable) {
 						'lng_field' => $lng,
 					),
 				);
-				
+
 				// latitude
 				$TCA[$singleTable]['columns'][$lat]['config']['wizards'] = array(
 					'_POSITION' => 'right',
@@ -104,7 +104,7 @@ foreach ($tables as $key=>$singleTable) {
 						'lng_field' => $lng,
 					),
 				);
-				
+
 				// longitude
 				$TCA[$singleTable]['columns'][$cat]['config'] = array (
 					'type' => 'select',
@@ -120,13 +120,13 @@ foreach ($tables as $key=>$singleTable) {
 					'wizards' => array(
 					),
 				);
-				
+
 			}
 			break;
 		}
 	}
-	
-}  
+
+}
 
 
 
@@ -154,7 +154,7 @@ if (TYPO3_MODE=="BE")	{
 	t3lib_extMgm::addModule("web","txrggooglemapM1","",t3lib_extMgm::extPath($_EXTKEY)."mod1/");
 }
 
-// Category 
+// Category
 $TCA["tx_rggooglemap_cat"] = array (
     "ctrl" => array (
         'title' => 'LLL:EXT:rggooglemap/locallang_db.xml:tx_rggooglemap_cat',
@@ -163,7 +163,7 @@ $TCA["tx_rggooglemap_cat"] = array (
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         "default_sortby" => "ORDER BY crdate",
-        "delete" => "deleted",    
+        "delete" => "deleted",
         'treeParentField' => 'parent_uid',
         "enablecolumns" => array (
             "disabled" => "hidden",

@@ -39,7 +39,7 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 	var $scriptRelPath = 'pi2/class.tx_rggooglemap_pi2.php';	// Path to this script relative to the extension dir.
 	var $extKey = 'rggooglemap';	// The extension key.
 	var $pi_checkCHash = TRUE;
-	
+
 	/**
 	 * The main method of the PlugIn
 	 *
@@ -51,19 +51,19 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 		$linkText = $this->cObj->getCurrentVal();
 		$params = $this->cObj->parameters;
 		unset($params['allParams']); // unset this key to count correctly
-		
+
 		$params = array_keys($params);
 		$tableType = '';
 
 
 		// just id set: <map ID>text</map>
 		if (count($params) == 1) {
-			
+
 			$tableType = $conf['tableType'];
 
 		// id + target-id set: <map ID TARGET>text</map>
 		} elseif (count($params) == 2) {
-			
+
 			// if 2nd param is no integer, assume it is the tablename (or its given name by TS)
 			if (intval($params[1]) == 0) {
 				$tableType	= $params[1];
@@ -71,10 +71,10 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 			} else {
 				$mapId 			= $params[1];
 			}
-			
+
 		// id + target + table set: <map ID TARGET TABLE>text</table>
 		} elseif (count($params) == 3) {
-			$mapId 			= $params[1]; 
+			$mapId 			= $params[1];
 			$tableType	= $params[2];
 		}
 
@@ -87,11 +87,11 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 		} else {
 			$table			= $tableList[0];
 		}
-		
+
 		// Check if the minium requirements are fulfilled
 		if ($table =='' || intval($params[0]) == 0) {
 			return $link;
-		} 
+		}
 
 		// get the generic query class
 		require_once( t3lib_extMgm::siteRelpath('rggooglemap').'lib/class.tx_rggooglemap_table.php');
@@ -109,30 +109,30 @@ class tx_rggooglemap_pi2 extends tslib_pibase {
 			// use a js link if the map is on the same page
 			if ($conf['useJSlinkOnSamePage'] == 1 && $GLOBALS['TSFE']->id == $mapId) {
 				$link = '<a href="javascript:void(0);" onclick="myclick('.$row['uid'].','.$row['lng'].','.$row['lat'].',"'.$table.'");">'.$linkText.'</a>';
-			
+
 			// generate a typolink
 			} else {
 				$linkConf = $conf['link.'];
 				$linkConf['parameter'] = $mapId;
 				$linkConf['additionalParams'] .= '&tx_rggooglemap_pi1[poi]='.$row['uid'];
-				
+
 				// add tablename only if it is no the default table
 				if ($table != $tableList[0]) {
 					$linkConf['additionalParams'] .= '&tx_rggooglemap_pi1[table]='.$table;
 				}
-			
-				$link = $this->cObj->typolink($linkText, $linkConf);	
+
+				$link = $this->cObj->typolink($linkText, $linkConf);
 			}
-	
+
 		}
-		
+
 		// output the link if generated
 		if (!empty($link)) {
 			$link = '<span class="maplink">'.$link.'</span>';
 		} else {
 			$link = $linkText;
 		}
-		
+
 		return $link;
 	}
 }
