@@ -1,4 +1,4 @@
-# cat=basic; type=string;label=Google Maps API key: Key need to get a working map. Get it at http://www.google.com/apis/maps/signup.html
+# cat=basic; type=string;label=Google Maps API key: Key need to get a working map. Activate it at https://code.google.com/apis/console under Service > Google Maps API v3 and then get it under API Access > Simple API Access
 googleKey = ABCDEFG
 
 	# cat=basic; settings=formName:tsStyleConfigForm,width:850px,height:50px; type=user[EXT:constantsextended/class.tx_constantsextended.php:&tx_constantsextended->textarea];label=Keys for multidomain-environment:Use the extension constantsextended to enable this feature! Syntax: Each line is for one domain like http://www.domain.com/=ABCDEFG, next line: http://www.domain.at/=HIJKLMNO. Important: With and without www is essential! Trailing slash (/) needed!
@@ -9,16 +9,16 @@ googleKey2 =
 mapWidth = 470
 
 # cat=basic; type=int[0-600]; label=Map height: Height of the map in the BE-Module
-mapHeight = 300 
+mapHeight = 300
 
 # cat=basic;type=int[0-800]; label=Popup map width: Width of the map in the wizard popup
-mapWidth_popup = 780 
+mapWidth_popup = 780
 
 # cat=basic; type=int[0-600]; label=Popup map height: Height of the map in the wizard popup
 mapHeight_popup = 550
 
 # cat=basic; type=string; label=Record orderBy: Set an existing field name of tt_address (uid, name, ...)
-orderBy = uid ASC 
+orderBy = uid ASC
 
 # cat=basic; type=string; label=Starting Longitude: Set starting point (Longitude)
 startLong = 13.5296630859375
@@ -29,7 +29,7 @@ startLat = 47.57571508225466
 # cat=basic; type=int[0-20]; label=Starting Zoom: Set starting zoom
 startZoom = 13
 
-# cat=basic/enable; type=options[large=large,small=small]; label=Large or Small Navigation: Large or small  pan/zoom control in the Google Map 
+# cat=basic/enable; type=options[large=large,small=small]; label=Large or Small Navigation: Large or small  pan/zoom control in the Google Map
 mapNavigation = large
 
 # cat=basic/enable; type=options[on=on,off=off]; label=Map Type: Buttons that let the user toggle between map types (such as Map and Satellite)
@@ -46,13 +46,13 @@ recursive = 2
 autoSuggest = on
 
 # cat=basic; type=boolean; label=Wizards: Enable wizards
-wizards = 1 
+wizards = 1
 
 # cat=basic; type=string; label=Supportet tables, be careful!
 tables = tt_address
 
 # cat=basic; type=boolean; label=Auto Insert of lng+lat for new records: If a new record is saved, it is tried to get its coordinates.
-autoGeocode = 1 
+autoGeocode = 1
 
 # cat=basic; type=boolean; label=No Category records in page module: Don't show the category records in the page module
 hideInPageModule = 0

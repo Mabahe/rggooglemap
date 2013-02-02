@@ -73,17 +73,17 @@
                               } else if (b==16 && a.x>=35230 && a.x<=35232 && a.y>=22892 && a.y<= 22895) {
                                 return "http://p28123.typo3server.info/fileadmin/dev/map/tiles/Tile_"+(a.x)+"_"+(a.y)+"_"+b+".jpg";
                               } else {
-                                return G_NORMAL_MAP.getTileLayers()[0].getTileUrl(a,b);
+                                return MapTypeId.ROADMAP.getTileLayers()[0].getTileUrl(a,b);
                               }
                       	   }';
-      $additionalMap = 'var copyright = new GCopyright(1,new GLatLngBounds(new GLatLng(37.584580682182, 3.5339760780334), new GLatLng(57.584580682182, 23.533976078033)), 0, "Digitales Oberösterreichisches Raum-Informations-System");
+      $additionalMap = 'var copyright = new GCopyright(1,new GLatLngBounds(new google.maps.LatLng(37.584580682182, 3.5339760780334), new google.maps.LatLng(57.584580682182, 23.533976078033)), 0, "Digitales Oberösterreichisches Raum-Informations-System");
       	var copyrightCollection = new GCopyrightCollection(\'Custom Layer\');
   		copyrightCollection.addCopyright(copyright);
 
   		var tilelayers = [new GTileLayer(copyrightCollection , 16, 17)];
   		tilelayers[0].getTileUrl = CustomGetTileUrl;
 
-  		var custommap = new GMapType(tilelayers, G_SATELLITE_MAP.getProjection(), "Custom Layer", {errorMessage:"No chart data available"});
+  		var custommap = new GMapType(tilelayers, MapTypeId.SATELLITE.getProjection(), "Custom Layer", {errorMessage:"No chart data available"});
   		map.addMapType(custommap);';
 
   		$js = str_replace('//###MAKEMAP###',$additionalMap,$js);

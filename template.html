@@ -53,6 +53,7 @@ Available markers:
 -->
 	<script type="text/javascript" src="###PATH###res/pde.js"></script>
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=###MAP_KEY###" type="text/javascript"></script>
+	<!--script src="https://maps.googleapis.com/maps/api/js?key=###MAP_KEY###&amp;sensor=true" type="text/javascript"></script-->
 
 <!-- ###CLUSTER_1### -->
 	<script type="text/javascript" src="###PATH###res/js/clusterer.js"></script>
@@ -652,7 +653,7 @@ Template for the directions
 ###LL_DESCRIPTION###<br /><br />
 
 <script type="text/javascript">
-  if (GBrowserIsCompatible()) {
+  if (true /*GBrowserIsCompatible()*/) {
 		var gdir2=new GDirections(map, document.getElementById('getdirections2'));
 	}
 </script>

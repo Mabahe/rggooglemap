@@ -28,7 +28,7 @@
 								<size>6</size>
 								<selectedListStyle>width:150px</selectedListStyle>
 								<itemListStyle>width:150px</itemListStyle>
-								
+
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.0</numIndex>
@@ -37,7 +37,7 @@
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.6</numIndex>
 										<numIndex index="1">CATMENU</numIndex>
-									</numIndex>	
+									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.2</numIndex>
 										<numIndex index="1">MENU</numIndex>
@@ -45,24 +45,24 @@
 									<numIndex index="3" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.3</numIndex>
 										<numIndex index="1">LOCATION</numIndex>
-									</numIndex>								
+									</numIndex>
 									<numIndex index="4" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.4</numIndex>
 										<numIndex index="1">RECORDSONMAP</numIndex>
-									</numIndex>	
+									</numIndex>
 									<numIndex index="5" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.5</numIndex>
 										<numIndex index="1">SEARCH</numIndex>
-									</numIndex>	
+									</numIndex>
 									<numIndex index="7" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:general.show.7</numIndex>
 										<numIndex index="1">DIRECTIONS</numIndex>
-									</numIndex>	
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>
 					</show>
-				
+
 					<key>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.key</label>
@@ -86,8 +86,8 @@
 								<show_thumbs>1</show_thumbs>
 							</config>
 						</TCEforms>
-					</categoriesselected>	
-					
+					</categoriesselected>
+
 					<categories>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:general.categories</label>
@@ -195,7 +195,7 @@
 							</config>
 						</TCEforms>
 					</height>
-					
+
 					<lng>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.lng</label>
@@ -286,7 +286,7 @@
 									<numIndex index="15" type="array">
 										<numIndex index="0">15</numIndex>
 										<numIndex index="1">15</numIndex>
-									</numIndex>	
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>
@@ -303,19 +303,19 @@
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.map</numIndex>
-										<numIndex index="1">G_NORMAL_MAP</numIndex>
+										<numIndex index="1">MapTypeId.ROADMAP</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.satellite</numIndex>
-										<numIndex index="1">G_SATELLITE_MAP</numIndex>
+										<numIndex index="1">MapTypeId.SATELLITE</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.hybrid</numIndex>
-										<numIndex index="1">G_HYBRID_MAP</numIndex>
+										<numIndex index="1">MapTypeId.HYBRID</numIndex>
 									</numIndex>
 									<numIndex index="3" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.physical</numIndex>
-										<numIndex index="1">G_PHYSICAL_MAP</numIndex>
+										<numIndex index="1">MapTypeId.TERRAIN</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.type.mapnik</numIndex>
@@ -363,7 +363,7 @@
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.large</numIndex>
 										<numIndex index="1">large</numIndex>
-									</numIndex>									
+									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">LLL:EXT:rggooglemap/locallang_flex.xml:map.nav_controls.none</numIndex>
 										<numIndex index="1">none</numIndex>
@@ -372,7 +372,7 @@
 							</config>
 						</TCEforms>
 					</nav_controls>
-					
+
 					<controlonmouseouver>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.controlonmouseover</label>
@@ -390,7 +390,7 @@
 							</config>
 						</TCEforms>
 					</mapoverview>
-					
+
 					<useBoundsOnStart>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.useBoundsOnStart</label>
@@ -399,7 +399,7 @@
 							</config>
 						</TCEforms>
 					</useBoundsOnStart>
-					
+
 					<loadDynamicList>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.loadDynamicList</label>
@@ -407,8 +407,8 @@
 							<type>check</type>
 							</config>
 						</TCEforms>
-					</loadDynamicList> 
-					
+					</loadDynamicList>
+
 					<showondefault>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:map.showondefault</label>
@@ -418,13 +418,13 @@
 								<eval>trim</eval>
 							</config>
 						</TCEforms>
-					</showondefault>					 
-					
+					</showondefault>
+
 				</el>
 			</ROOT>
 		</map>
 
-		
+
 	<!--
 		###############
 		### 3th tab: Search & Directions
@@ -488,7 +488,7 @@
 								<show_thumbs>1</show_thumbs>
 							</config>
 						</TCEforms>
-					</map>				
+					</map>
 
 					<menucatsortorder>
 						<TCEforms>
@@ -515,7 +515,7 @@
 								</items>
 							</config>
 						</TCEforms>
-					</menucatsortorder>	
+					</menucatsortorder>
 
 					<menucatsortorderby>
 						<TCEforms>
@@ -535,7 +535,7 @@
 							</config>
 						</TCEforms>
 					</menucatsortorderby>
-					
+
 					<menurecordsort>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menurecordsort</label>
@@ -561,8 +561,8 @@
 								</items>
 							</config>
 						</TCEforms>
-					</menurecordsort>	
-					
+					</menurecordsort>
+
 					<menurecordsortby>
 						<TCEforms>
 							<label>LLL:EXT:rggooglemap/locallang_flex.xml:menu.menurecordsortorder</label>
@@ -590,11 +590,11 @@
 							</config>
 						</TCEforms>
 					</usecategorytree>
-		
+
 				</el>
 			</ROOT>
 		</menu>
-	
+
 
 	<!--
 		###############
@@ -607,7 +607,7 @@
 					<sheetTitle>LLL:EXT:rggooglemap/locallang_flex.xml:usermap.sheetTitle</sheetTitle>
 				</TCEforms>
 				<type>array</type>
-				
+
 				<el>
 					<map>
 						<TCEforms>

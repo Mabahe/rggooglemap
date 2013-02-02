@@ -1,5 +1,6 @@
 2012-02-02  Xavier Perseguers  <xavier@typo3.org>
 
+	* [TASK] Upgrade to Google Map v3: Initial work mainly for Backend module
 	* [TASK] Use dispatch script for Backend module
 	* [TASK][CLEANUP] Remove globals declaration in Backend module
 	* [TASK][CLEANUP] Remove trailing whitespaces

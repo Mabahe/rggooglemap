@@ -115,7 +115,7 @@ function PdMarkerBlinkOnOff(id) {
 
 function isPdMarker(a) {
 	if (a.isMarker)
-		return true;		
+		return true;
 	return false;
 }
 
@@ -213,10 +213,10 @@ GMap2.prototype.zoomToMarkers = function(slopPercentage, heightOffsetPct) {
 		count++;
 	}
 	if (count == 1)
-		this.setCenter(new GLatLng(x,y), this.getZoom());
+		this.setCenter(new google.maps.LatLng(x,y), this.getZoom());
 	else if (count > 1)
 	{
-		var center = new GLatLng((minX + maxX) / 2, (minY + maxY) / 2)
+		var center = new google.maps.LatLng((minX + maxX) / 2, (minY + maxY) / 2)
 		span = new GSize(Math.abs(maxX - minX), Math.abs(maxY - minY));
 		slopWid = 0;
 		slopHgt = 0;
@@ -231,10 +231,10 @@ GMap2.prototype.zoomToMarkers = function(slopPercentage, heightOffsetPct) {
 		if (typeof heightOffsetPct != "undefined")
 		{
 			deltaHgt = span.height * heightOffsetPct / 100;
-			center = new GLatLng(center.lat() + deltaHgt, center.lng());
+			center = new google.maps.LatLng(center.lat() + deltaHgt, center.lng());
 		}
 		// needs slop
-		var bounds = new GLatLngBounds(new GLatLng(minX-slopHgt, minY-slopWid), new GLatLng(maxX+slopHgt, maxY+slopWid)); // sw, ne
+		var bounds = new GLatLngBounds(new google.maps.LatLng(minX-slopHgt, minY-slopWid), new google.maps.LatLng(maxX+slopHgt, maxY+slopWid)); // sw, ne
 		var zoom = this.getBoundsZoomLevel(bounds);
 		this.setCenter(center, zoom);
 	}
@@ -361,7 +361,7 @@ function PdMarker(a, b, tooltip) {
 }
 
 // PdMarker.prototype = new GMarker;
-PdMarker.prototype = new GMarker(new GLatLng(1, 1));
+PdMarker.prototype = new GMarker(new google.maps.LatLng(1, 1));
 
 
 function addMarkerToMapList(map,marker) {
@@ -404,10 +404,10 @@ PdMarker.prototype.initialize = function(a) {
 		this.map = a;
 		setPoweredBy(a);
 
-		GEvent.bindDom(this, "mouseover", this, this.onMouseOver);
-		GEvent.bindDom(this, "mouseout",  this, this.onMouseOut);
-		GEvent.bindDom(this, "click",  this, this.onClick);
-		GEvent.bind(this.map, "zoomend", this, this.reZoom);
+		google.maps.event.bindDom(this, "mouseover", this, this.onMouseOver);
+		google.maps.event.bindDom(this, "mouseout",  this, this.onMouseOut);
+		google.maps.event.bindDom(this, "click",  this, this.onClick);
+		google.maps.event.bind(this.map, "zoomend", this, this.reZoom);
 	}
 	catch(e) {
 		alert("PdMarker initialize error: " + e);
@@ -571,7 +571,7 @@ PdMarker.prototype.setIcon = function(a) {
 	this.remove();
 	this.icon = a;
 	this.initialize(this.map);
-	this.redraw(true); 
+	this.redraw(true);
 }
 
 PdMarker.prototype.setMarkerZIndex = function(a) {
@@ -790,7 +790,7 @@ PdMarker.prototype.closeDetailWin = function() {
 	{
 		this.setMouseOutEnabled(true);
 		this.onMouseOut();
-		// GEvent.trigger(this, "mouseout");
+		// google.maps.event.trigger(this, "mouseout");
 	      this.map.getPane(G_MAP_FLOAT_PANE).removeChild(this.detailObject);
 		this.detailObject = null;
 	}
@@ -914,7 +914,7 @@ function setTTPosition(theObj) {
 	var pt  = theObj.getPoint();
 	var ttPos = latLongToPixel(map, pt, map.getZoom());
 	var theIcon = theObj.getIcon();
-	
+
 //	ttPos.x += Math.floor(theIcon.iconAnchor.x/2);
 	ttPos.y -= Math.floor(theIcon.iconAnchor.y/2);
 

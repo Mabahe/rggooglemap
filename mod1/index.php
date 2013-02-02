@@ -47,7 +47,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 	var $pageinfo;
 
 	/** @var tx_xajax */
-	protected $xajax;
+	public $xajax;
 
 	/** @var tx_rggooglemap_table */
 	protected $generic;
@@ -127,17 +127,18 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			}
 
 			// some settings from Extension Manager (map control, ..)
-			$settings = '';
-			if ($this->confArr['mapNavigation'] == 'large') {
-				$settings .= 'map.addControl(new GLargeMapControl());';
-			} else {
-				$settings .= 'map.addControl(new GSmallMapControl());';
+			$mapOptions = array();
+			//if ($this->confArr['mapNavigation'] == 'large')	{
+			//	$mapOptions .= 'map.addControl(new GLargeMapControl());';
+			//} else	{
+			$mapOptions[] = 'scaleControl: true';
+			//}
+			if ($this->confArr['mapType'] == 'on')	{
+				$mapOptions[] = 'mapTypeControl: true';
 			}
-			if ($this->confArr['mapType'] == 'on') {
-				$settings .= 'map.addControl(new GMapTypeControl());';
-			}
-			if ($this->confArr['mapOverview'] == 'on') {
-				$settings .= 'map.addControl(new GOverviewMapControl());';
+			if ($this->confArr['mapOverview'] == 'on')	{
+				$mapOptions[] = 'overviewMapControl: true';
+				$mapOptions[] = 'overviewMapControlOptions: { opened: true }';
 			}
 
 			// onload just for map view
@@ -149,7 +150,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 			$onload = 'window.onload = load;';
 
 			// JavaScript
-			$this->doc->JScode = $this->genJScode($settings, $onload);
+			$this->doc->JScode = $this->genJScode($mapOptions, $onload);
 			$this->doc->postCode = $this->genPostJScode();
 
 			$headerSection = $this->doc->getHeader("pages", $this->pageinfo, $this->pageinfo["_thePath"]) . "<br />" . $GLOBALS['LANG']->sL("LLL:EXT:lang/locallang_core.xml:labels.path") . ": " . t3lib_div::fixed_lgd_cs($this->pageinfo["_thePath"], 50);
@@ -200,7 +201,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 
 	}
 
-	function genJScode($settings, $onload, $scripttags = true) {
+	public function genJScode(array $mapOptions, $onload, $scripttags = true) {
 		// get the key if multidomain is used
 		if (trim($this->confArr['googleKey2']) != '') {
 			$keyListTmp = explode('#####', $this->confArr['googleKey2']);
@@ -221,7 +222,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 						document.location = URL;
 					}
 				</script>
-				<script src="http://maps.google.com/maps?file=api&amp;v=2.58&amp;key=' . $this->confArr['googleKey'] . '" type="text/javascript"></script>
+				<script src="https://maps.googleapis.com/maps/api/js?key=' . $this->confArr['googleKey'] . '&amp;sensor=true" type="text/javascript"></script>
     <script type="text/javascript">
     //<![CDATA[
 
@@ -233,86 +234,107 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     }
 
     function doload(mapname) {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map"));
-      	var lat = document.getElementById("centerlatitude");
+	  if (true /*GBrowserIsCompatible()*/) {
+		var lat = document.getElementById("centerlatitude");
       	var lng  = document.getElementById("centerlongitude");
-        var center = new GLatLng(lat.value, lng.value);
-        map.setCenter(center, ' . $this->confArr['startZoom'] . ');
-        geocoder = new GClientGeocoder();
+      	var center = new google.maps.LatLng(lat, lng);
 
-        ' . $settings . '
-        var marker = new GMarker(center, {draggable: true});
+		var myOptions = {
+			center: center,
+			zoom: ' . $this->confArr['startZoom'] . ',
+			mapTypeId: google.maps.MapTypeId.ROADMAP' . (
+				count($mapOptions) > 0
+					? ',' . implode(',', $mapOptions)
+					: ''
+			) . '
+		};
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-        GEvent.addListener(marker, "dragstart", function() {
+        geocoder = new google.maps.Geocoder();
+        var marker = new google.maps.Marker({
+			position: center,
+			draggable: true,
+			map: map
+		});
+
+        google.maps.event.addListener(marker, "dragstart", function() {
           map.closeInfoWindow();
         });
 
-        GEvent.addListener(marker, "dragend", function() {
+        google.maps.event.addListener(marker, "dragend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
           document.getElementById("centerzoom").value = map.getZoom();
         });
 
-        GEvent.addListener(map, "moveend", function() {
+        google.maps.event.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
           document.getElementById("centerzoom").value = map.getZoom();
 
         });
 
-        GEvent.addListener(map, "click", function(overlay, point) {
+        google.maps.event.addListener(map, "click", function(overlay, point) {
 					if (point)	{
 						marker.setPoint(point);
 						document.getElementById("centerlatitude").value = marker.getPoint().lat();
 						document.getElementById("centerlongitude").value = marker.getPoint().lng();
 					}
         });
-
-
-        map.addOverlay(marker);
       }
     }
 
     function loadPOI() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map"));
-        var center = new GLatLng(document.getElementById("centerlatitude").value, document.getElementById("centerlongitude").value );
-        map.setCenter(center, ' . $this->confArr['startZoom'] . ');
-        geocoder = new GClientGeocoder();
+      if (true /*GBrowserIsCompatible()*/) {
+        var lat = document.getElementById("centerlatitude");
+      	var lng  = document.getElementById("centerlongitude");
+      	var center = new google.maps.LatLng(lat, lng);
 
-        ' . $settings . '
-        var marker = new GMarker(center, {draggable: true});
+		var myOptions = {
+			center: center,
+			zoom: ' . $this->confArr['startZoom'] . ',
+			mapTypeId: google.maps.MapTypeId.ROADMAP' . (
+				count($mapOptions) > 0
+					? ',' . implode(',', $mapOptions)
+					: ''
+			) . '
+		};
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        geocoder = new google.maps.Geocoder();
 
-        GEvent.addListener(marker, "dragstart", function() {
+        var marker = new google.maps.Marker({
+			position: center,
+			draggable: true,
+			map: map
+		});
+
+        google.maps.event.addListener(marker, "dragstart", function() {
           map.closeInfoWindow();
         });
 
-        GEvent.addListener(marker, "dragend", function() {
+        google.maps.event.addListener(marker, "dragend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
         });
 
-        GEvent.addListener(map, "moveend", function() {
+        google.maps.event.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
 
         });
 
-        GEvent.addListener(map, "click", function(overlay, point) {
+        google.maps.event.addListener(map, "click", function(overlay, point) {
             marker.setPoint(point);
             document.getElementById("centerlatitude").value = marker.getPoint().lat();
             document.getElementById("centerlongitude").value = marker.getPoint().lng();
         });
 
-
-        map.addOverlay(marker);
       }
     }
 
 
      function loadhover(name, lng, lat) {
-      if (GBrowserIsCompatible()) {
+      if (true /*GBrowserIsCompatible()*/) {
 
       var l = document.getElementById("mapLink");
       l.style.visibility = "visible";
@@ -322,16 +344,22 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         m.style.width = "470px";
         m.style.visibility = "visible";
 
-        var center = new GLatLng(lng, lat);
-        var map = new GMap2(m);
-        map.setCenter(center, 13);
-        map.addControl(new GSmallMapControl());
+        var center = new google.maps.LatLng(lng, lat);
+        var myOptions = {
+        	center: center,
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scaleControl: true
+        };
+        var map = new google.maps.Map(m, myOptions);
 
-        var marker = new GMarker(center);
+        var marker = new google.maps.Marker({
+			position: center,
+			map: map
+		});
         var info = "<strong>"+name+"</strong><br />Long:"+lng+"<br />Lat:"+lat;
-        map.addOverlay(marker);
 
-        GEvent.addListener(marker, "click", function() {
+        google.maps.event.addListener(marker, "click", function() {
           marker.openInfoWindowHtml(info);
         });
         // marker.openInfoWindowHtml(info);
@@ -339,32 +367,44 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     }
 
      function loadPoint(lat,lng) {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map"));
+      if (true /*GBrowserIsCompatible()*/) {
+        var lat = document.getElementById("centerlatitude");
+      	var lng  = document.getElementById("centerlongitude");
 
-        var center = new GLatLng(lat, lng);
-        map.setCenter(center, ' . $this->confArr['startZoom'] . ');
-        geocoder = new GClientGeocoder();
+		var myOptions = {
+			center: new google.maps.LatLng(lat, lng),
+			zoom: ' . $this->confArr['startZoom'] . ',
+			mapTypeId: google.maps.MapTypeId.ROADMAP' . (
+				count($mapOptions) > 0
+					? ',' . implode(',', $mapOptions)
+					: ''
+			) . '
+		};
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        geocoder = new google.maps.Geocoder();
 
-        ' . $settings . '
-        var marker = new GMarker(center, {draggable: true});
+        var marker = new google.maps.Marker({
+			position: center,
+			draggable: true,
+			map: map
+		});
 
-        GEvent.addListener(marker, "dragstart", function() {
+        google.maps.event.addListener(marker, "dragstart", function() {
           map.closeInfoWindow();
         });
 
-        GEvent.addListener(marker, "dragend", function() {
+        google.maps.event.addListener(marker, "dragend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
         });
 
-        GEvent.addListener(map, "moveend", function() {
+        google.maps.event.addListener(map, "moveend", function() {
           document.getElementById("centerlatitude").value = marker.getPoint().lat();
           document.getElementById("centerlongitude").value = marker.getPoint().lng();
 
         });
 
-        GEvent.addListener(map, "click", function(overlay, point) {
+        google.maps.event.addListener(map, "click", function(overlay, point) {
             marker.setPoint(point);
             document.getElementById("centerlatitude").value = marker.getPoint().lat();
             document.getElementById("centerlongitude").value = marker.getPoint().lng();
@@ -374,48 +414,57 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
         document.getElementById("centerlatitude").value = lat;
         document.getElementById("centerlongitude").value = lng;
 
-        map.addOverlay(marker);
-
         ShowHide("options");
       }
     }
 
     function showAddress(address) {
       if (geocoder) {
-        geocoder.getLatLng(
-          address,
+        geocoder.geocode(
+          {
+          	address: address
+          },
           function(point) {
             if (!point) {
               alert(address + " not found");
             } else {
-
-              var map = new GMap2(document.getElementById("map"));
-              ' . $settings . '
-              map.setCenter(point, 13);
-              var marker = new GMarker(point, {draggable: true});
-              map.addOverlay(marker);
+				var myOptions = {
+					center: point,
+					zoom: ' . $this->confArr['startZoom'] . ',
+					mapTypeId: google.maps.MapTypeId.ROADMAP' . (
+						count($mapOptions) > 0
+							? ',' . implode(',', $mapOptions)
+							: ''
+					) . '
+				};
+        		var map = new google.maps.Map(document.getElementById("map"), myOptions);
+              	var marker = new google.maps.Marker({
+					position: point,
+					draggable: true,
+					map: map
+				});
               marker.openInfoWindowHtml(address);
 
               document.getElementById("centerlatitude").value = marker.getPoint().lat();
               document.getElementById("centerlongitude").value = marker.getPoint().lng();
 
 
-              GEvent.addListener(marker, "dragstart", function() {
+              google.maps.event.addListener(marker, "dragstart", function() {
                 map.closeInfoWindow();
               });
 
-              GEvent.addListener(marker, "dragend", function() {
+              google.maps.event.addListener(marker, "dragend", function() {
                 document.getElementById("centerlatitude").value = marker.getPoint().lat();
                 document.getElementById("centerlongitude").value = marker.getPoint().lng();
               });
 
-              GEvent.addListener(map, "moveend", function() {
+              google.maps.event.addListener(map, "moveend", function() {
                 document.getElementById("centerlatitude").value = marker.getPoint().lat();
                 document.getElementById("centerlongitude").value = marker.getPoint().lng();
 
               });
 
-              GEvent.addListener(map, "click", function(overlay, point) {
+              google.maps.event.addListener(map, "click", function(overlay, point) {
                   marker.setPoint(point);
                   document.getElementById("centerlatitude").value = marker.getPoint().lat();
                   document.getElementById("centerlongitude").value = marker.getPoint().lng();
@@ -483,7 +532,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
     }
     ' . $onload . '
     //]]>
-    </script><script type="text/javascript" src="sort.js"></script>
+    </script><script type="text/javascript" src="' . t3lib_extMgm::extRelPath('rggooglemap') . 'mod1/sort.js"></script>
 	 ' . $this->xajax->getJavascript($GLOBALS['BACK_PATH'] . '../' . t3lib_extMgm::siteRelPath("xajax"))
 			. ($scripttags ? '' : '<script type="text/javascript">/*<![CDATA[*/
    	');
@@ -624,7 +673,7 @@ class tx_rggooglemap_module1 extends t3lib_SCbase {
 					$hide = ' disabled="disabled" ';
 					// geocoding for records
 					if ($geocode[$row['table']] != '') {
-						$map = '<span style="color:red;"><a href="?id=' . $this->id . '&amp;SET[function]=2&amp;updateGeoData2=' . $row['uid'] . '|' . $row['table'] . '|' . $geocode[$row['table']] . '">' . $GLOBALS['LANG']->getLL('loadgeodata') . '</a></span>';
+						$map = '<span style="color:red;"><a href="mod.php?M=web_txrggooglemapM1&amp;id=' . $this->id . '&amp;SET[function]=2&amp;updateGeoData2=' . $row['uid'] . '|' . $row['table'] . '|' . $geocode[$row['table']] . '">' . $GLOBALS['LANG']->getLL('loadgeodata') . '</a></span>';
 					} else {
 						// if no geocoding possible
 						$map = '<span style="color:red;text-decoration:line-through;">' . $GLOBALS['LANG']->getLL("mapLink") . '</span>';

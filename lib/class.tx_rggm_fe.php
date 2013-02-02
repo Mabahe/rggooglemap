@@ -271,14 +271,14 @@ class tx_rggm_fe extends tslib_pibase {
         $GLOBALS['TSFE']->additionalHeaderData['b121212ttnews'] = '<script type="text/javascript">
 
           function makeMap() {
-            if (GBrowserIsCompatible()) {
-              var map = new GMap2(document.getElementById("mapDetail"));
-              var center = new GLatLng('.$row['lat'].', '.$row['lng'].');
+            if (true /*GBrowserIsCompatible()*/) {
+              var map = new google.maps.Map(document.getElementById("mapDetail"));
+              var center = new google.maps.LatLng('.$row['lat'].', '.$row['lng'].');
               map.setCenter(center, 3);
 
           '.$icon.'
 
-            GEvent.addListener(marker, "click", function() {
+            google.maps.event.addListener(marker, "click", function() {
             var url = "'.$url.'&no_cache=1&tx_rggooglemap_pi1[detail]='.$row['uid'].'&tx_rggooglemap_pi1[table]='.$table.'";
               var req = GXmlHttp.create();
               req.open("GET", url, true );
@@ -338,17 +338,19 @@ class tx_rggm_fe extends tslib_pibase {
     $GLOBALS['TSFE']->additionalHeaderData['b121211'] = '<script src="http://maps.google.com/maps?file=api&amp;v=2.61&amp;key='.$key.'" type="text/javascript"></script>';
     $GLOBALS['TSFE']->additionalHeaderData['b121212'] = '<script type="text/javascript">
 function makeMap() {
-  if (GBrowserIsCompatible()) {
-    var map2 = new GMap2(document.getElementById("mapLoad"));
-
-    var center = new GLatLng('.$lat.', '.$lng.');
-
-    map2.setCenter(center, 3);
-    geocoder2 = new GClientGeocoder();
-
-    map2.addControl(new GSmallMapControl());
-    //map.addControl(new GOverviewMapControl());
-
+  if (true /*GBrowserIsCompatible()*/) {
+		var myOptions = {
+			center: new google.maps.LatLng('.$lat.', '.$lng.'),
+			zoom: ' . $this->confArr['startZoom'] . ',
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scaleControl: true,
+		  	overviewMapControl: true,
+			overviewMapControlOptions: {
+				opened: true
+			}
+		};
+		var map2 = new google.maps.Map(document.getElementById("mapLoad"), myOptions);
+		var geocoder2 = new google.maps.Geocoder();
 
       // ============================
       //var pos = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(0,0));
@@ -356,31 +358,34 @@ function makeMap() {
       //map2.getContainer().appendChild(document.getElementById("geocode"));
       // ============================
 
-    var marker = new GMarker(center, {draggable: true});
-    map2.enableDragging();
+		var marker = new google.maps.Marker({
+			position: center,
+			draggable: true,
+			map: map2
+		});
+		map2.enableDragging();
 
-    GEvent.addListener(marker, "dragstart", function() {
-      map2.closeInfoWindow();
+		google.maps.event.addListener(marker, "dragstart", function() {
+		map2.closeInfoWindow();
     });
 
-    GEvent.addListener(marker, "dragend", function() {
+    google.maps.event.addListener(marker, "dragend", function() {
       document.getElementById("rggm_liad_lat").value = marker.getPoint().lat();
       document.getElementById("rggm_liad_lng").value = marker.getPoint().lng();
     });
 
-    GEvent.addListener(map2, "moveend", function() {
+    google.maps.event.addListener(map2, "moveend", function() {
       document.getElementById("rggm_liad_lat").value = marker.getPoint().lat();
       document.getElementById("rggm_liad_lng").value = marker.getPoint().lng();
 
     });
 
-    GEvent.addListener(map2, "click", function(overlay, point) {
+    google.maps.event.addListener(map2, "click", function(overlay, point) {
         marker.setPoint(point);
         document.getElementById("rggm_liad_lat").value = marker.getPoint().lat();
         document.getElementById("rggm_liad_lng").value = marker.getPoint().lng();
     });
 
-    map2.addOverlay(marker);
   }
 
 }

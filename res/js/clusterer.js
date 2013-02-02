@@ -43,9 +43,9 @@ Clusterer = function ( map )
     this.maxLinesPerInfoBox = Clusterer.defaultMaxLinesPerInfoBox;
     this.icon = Clusterer.defaultIcon;
 
-    GEvent.addListener( map, 'zoomend', Clusterer.MakeCaller( Clusterer.Display, this ) );
-    GEvent.addListener( map, 'moveend', Clusterer.MakeCaller( Clusterer.Display, this ) );
-    GEvent.addListener( map, 'infowindowclose', Clusterer.MakeCaller( Clusterer.PopDown, this ) );
+		google.maps.event.addListener( map, 'zoomend', Clusterer.MakeCaller( Clusterer.Display, this ) );
+		google.maps.event.addListener( map, 'moveend', Clusterer.MakeCaller( Clusterer.Display, this ) );
+		google.maps.event.addListener( map, 'infowindowclose', Clusterer.MakeCaller( Clusterer.PopDown, this ) );
     };
 
 
@@ -181,8 +181,8 @@ Clusterer.Display = function ( clusterer )
     dx *= 0.10;
     dy *= 0.10;
     bounds = new GLatLngBounds(
-      new GLatLng( sw.lat() - dy, sw.lng() - dx ),
-      new GLatLng( ne.lat() + dy, ne.lng() + dx ) );
+      new google.maps.LatLng( sw.lat() - dy, sw.lng() - dx ),
+      new google.maps.LatLng( ne.lat() + dy, ne.lng() + dx ) );
 
     // Partition the markers into visible and non-visible lists.
     var visibleMarkers = [];
@@ -236,7 +236,7 @@ Clusterer.Display = function ( clusterer )
 		{
 		cluster = new Object();
 		cluster.clusterer = clusterer;
-		cluster.bounds = new GLatLngBounds( new GLatLng( lat, lng ), new GLatLng( lat + latInc, lng + lngInc ) );
+		cluster.bounds = new GLatLngBounds( new google.maps.LatLng( lat, lng ), new google.maps.LatLng( lat + latInc, lng + lngInc ) );
 		cluster.markers = [];
 		cluster.markerCount = 0;
 		cluster.onMap = false;
@@ -316,10 +316,10 @@ Clusterer.Display = function ( clusterer )
 			yTotal += ( + marker.getPoint().lat() );
 			}
 		    }
-		var location = new GLatLng( yTotal / cluster.markerCount, xTotal / cluster.markerCount );
+		var location = new google.maps.LatLng( yTotal / cluster.markerCount, xTotal / cluster.markerCount );
 		marker = new GMarker( location, { icon: clusterer.icon } );
 		cluster.marker = marker;
-		GEvent.addListener( marker, 'click', Clusterer.MakeCaller( Clusterer.PopUp, cluster ) );
+			google.maps.event.addListener( marker, 'click', Clusterer.MakeCaller( Clusterer.PopUp, cluster ) );
 		}
 	    }
 	}

@@ -49,6 +49,9 @@ class tx_rggooglemap_wizard	{
 	var $content = '';
 	var $doc = NULL;
 
+	/** @var tx_rggooglemap_module1 */
+	protected $modObj;
+
 	/**
 	 * The init method getting called at startup
 	 *
@@ -91,17 +94,18 @@ class tx_rggooglemap_wizard	{
 		$item = '';
 
 		$this->confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['rggooglemap']);
-		$settings = '';
-		if ($this->confArr['mapNavigation'] == 'large')	{
-			$settings .= 'map.addControl(new GLargeMapControl());';
-		} else	{
-			$settings .= 'map.addControl(new GSmallMapControl());';
-		}
+		$mapOptions = array();
+		//if ($this->confArr['mapNavigation'] == 'large')	{
+		//	$mapOptions .= 'map.addControl(new GLargeMapControl());';
+		//} else	{
+			$mapOptions[] = 'scaleControl: true';
+		//}
 		if ($this->confArr['mapType'] == 'on')	{
-			$settings .= 'map.addControl(new GMapTypeControl());';
+			$mapOptions[] = 'mapTypeControl: true';
 		}
 		if ($this->confArr['mapOverview'] == 'on')	{
-			$settings .= 'map.addControl(new GOverviewMapControl());';
+			$mapOptions[] = 'overviewMapControl: true';
+			$mapOptions[] = 'overviewMapControlOptions: { opened: true }';
 		}
 
 		$onload = 'window.onload = all_load;';
@@ -125,9 +129,9 @@ class tx_rggooglemap_wizard	{
 		$this->modObj->confArr = $this->confArr;
 
 		$this->modObj->xajax = new tx_xajax();
-		$this->modObj->xajax->registerFunction(array("getPoi",&$this->modObj,"xajaxGetPoi"));
-		$this->modObj->xajax->registerFunction(array("insertPoi",&$this->modObj,"xajaxInsertPoi"));
-		$this->modObj->xajax->registerFunction(array("listRecords",&$this->modObj,"xajaxListRecords"));
+		$this->modObj->xajax->registerFunction(array("getPoi", $this->modObj, "xajaxGetPoi"));
+		$this->modObj->xajax->registerFunction(array("insertPoi", $this->modObj, "xajaxInsertPoi"));
+		$this->modObj->xajax->registerFunction(array("listRecords", $this->modObj, "xajaxListRecords"));
 
 		$item .= '';
 		if (!$this->doc->JScodeArray['rggooglemap_wizard_loadfunc'])	{
@@ -165,7 +169,7 @@ function all_load()	{
 			';
 		}
 
-		$this->doc->JScodeArray['rggooglemap_wizard_jscode'] = $this->modObj->genJScode($settings, $onload, false);
+		$this->doc->JScodeArray['rggooglemap_wizard_jscode'] = $this->modObj->genJScode($mapOptions, $onload, false);
 		$this->doc->JScodeArray[] = '
 
 loadMaps["'.$params['table'].'_'.$params['uid'].'_'.$params['wConf']['lat_field'].'"] = "map'.$params['table'].'_'.$params['uid'].'_'.$params['wConf']['lat_field'].'";

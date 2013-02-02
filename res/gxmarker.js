@@ -5,7 +5,7 @@
     This version is compatible only with Google Maps API Version 2
 
     GxMarker is merely an extended marker that allows styled tooltip events.
-   
+
     To setup a tooltip, pass in a third parameter (after the icon) to the
     GxMarker class:
         var marker = new GxMarker(new GPoint(lat,lng),icon,"My Tooltip",?opts?);
@@ -42,7 +42,7 @@ function GxLabel( content, opts ) {
 
     this.content = content;
 
-    if ( opts.offset && typeof opts.offset.width != "undefined" ) 
+    if ( opts.offset && typeof opts.offset.width != "undefined" )
         this.offset = opts.offset
     else
         this.offset = new GSize(0,0);
@@ -56,9 +56,9 @@ function GxLabel( content, opts ) {
         } else {
             __singleLabelRefCount++;
 
-            GEvent.addListener(this.marker, "mouseover",
+			google.maps.event.addListener(this.marker, "mouseover",
                 this.createSingletonClosure(this.show, this.anchor, this.offset, this.content));
-            GEvent.addListener(this.marker, "mouseout",
+			google.maps.event.addListener(this.marker, "mouseout",
                 this.createSingletonClosure(this.hide, this.anchor, this.offset, this.content));
             if ( !__singleLabel )
                 __singleLabel = this;
@@ -96,7 +96,7 @@ GxLabel.prototype.initialize = function(map) {
         t.container = document.createElement("div");
         t.container.className = t.className;
         t.container.style.position = "absolute";
-        
+
         if ( t.moveHandle && !t.moveHandleNode ) {
             t.moveHandlePanel = t.pane;
             t.contentNode    = document.createElement("div");
@@ -119,7 +119,7 @@ GxLabel.prototype.initialize = function(map) {
 
             t.insertPoint     = t.contentNode;
 
-            GEvent.bindDom(t.moveHandleNode, "mousedown", this, this.mouseDown);
+			google.maps.event.bindDom(t.moveHandleNode, "mousedown", this, this.mouseDown);
         } else {
             t.insertPoint = t.container;
         }
@@ -128,13 +128,13 @@ GxLabel.prototype.initialize = function(map) {
 
         t.pane.appendChild(t.container);
         var b = t.container;
-        GEvent.addDomListener(b, "click",
-            function(e) { stopEvent(e); GEvent.trigger(t, "click", e); });
-        GEvent.addDomListener(b, "mouseup", function(e) {
-            stopEvent(e); t.mouseUp(e); GEvent.trigger(t, "mouseup", e);
+		google.maps.event.addDomListener(b, "click",
+            function(e) { stopEvent(e); google.maps.event.trigger(t, "click", e); });
+		google.maps.event.addDomListener(b, "mouseup", function(e) {
+            stopEvent(e); t.mouseUp(e); google.maps.event.trigger(t, "mouseup", e);
         });
-        GEvent.addDomListener(b, "mousedown",
-            function(e) { stopEvent(e); GEvent.trigger(t, "mousedown", e); });
+		google.maps.event.addDomListener(b, "mousedown",
+            function(e) { stopEvent(e); google.maps.event.trigger(t, "mousedown", e); });
     }
 }
 
@@ -158,7 +158,7 @@ GxLabel.prototype.setContent = function(content) {
             img.src = "/static/images/close.png";
             img.alt = "";
             img.style.padding = "0px 2px";
-            GEvent.bindDom(img, "click", this, this.remove);
+			google.maps.event.bindDom(img, "click", this, this.remove);
             point.appendChild(img);
 
         }
@@ -178,7 +178,7 @@ GxLabel.prototype.remove = function() {
     if ( this.isStatic || --__singleLabelRefCount <= 0 ) {
        // hide next line, ringerge.org 15-1-07
        // this.container.parentNode.removeChild(this.container);
-        GEvent.trigger(this, "remove");
+		google.maps.event.trigger(this, "remove");
     }
 }
 
@@ -232,22 +232,22 @@ GxLabel.prototype.hide = function(point, offset) {
 
 GxLabel.prototype.mouseUp = function(e) {
     if ( this.mouseUpListener )
-        GEvent.removeListener(this.mouseUpListener);
+		google.maps.event.removeListener(this.mouseUpListener);
     if ( this.mouseMoveListener )
-        GEvent.removeListener(this.mouseMoveListener);
+		google.maps.event.removeListener(this.mouseMoveListener);
     if ( this.startDrag ) {
 
     }
-    GEvent.trigger(this, "moveend", this.anchor);
+	google.maps.event.trigger(this, "moveend", this.anchor);
     this.startDrag = false;
 }
 
 GxLabel.prototype.mouseMove = function(e) {
     if ( !this.startDrag ) {
         if ( this.mouseUpListener )
-            GEvent.removeListener(this.mouseUpListener);
+			google.maps.event.removeListener(this.mouseUpListener);
         if ( this.mouseMoveListener )
-            GEvent.removeListener(this.mouseMoveListener);
+			google.maps.event.removeListener(this.mouseMoveListener);
         return false;
     }
 
@@ -263,7 +263,7 @@ GxLabel.prototype.mouseDown = function(e) {
     this.startDrag = true;
 /*
     var mapBounds = this.map.getBounds();
-    var topleft = new GLatLng(
+    var topleft = new google.maps.LatLng(
         mapBounds.getSouthWest().lat(),
         mapBounds.getNorthEast().lng());
     this.topLeftPoint = this.map.getCurrentMapType().getProjection().fromLatLngToPixel(topleft, this.map.getZoom());
@@ -273,16 +273,16 @@ GxLabel.prototype.mouseDown = function(e) {
                 dojo.html.getAbsoluteX(document.getElementById("map")),
                 dojo.html.getAbsoluteY(document.getElementById("map")));
     if ( !this.mouseUpListener ) {
-        this.mouseUpListener = GEvent.bindDom(document.getElementById("map"),
+        this.mouseUpListener = google.maps.event.bindDom(document.getElementById("map"),
             "mouseup", this, this.mouseUp);
     }
     if ( !this.mouseMoveListener ) {
-        this.mouseUpListener = GEvent.bindDom(document.getElementById("map"),
+        this.mouseUpListener = google.maps.event.bindDom(document.getElementById("map"),
             "mousemove", this, this.mouseMove);
     }
 }
 
-/* 
+/*
  * Kills an event's propagation and default action.  Not sure who the original
  * author of this function is, but I love it.
   */
@@ -293,7 +293,7 @@ function stopEvent(eventObject) {
     if (window.event && window.event.cancelBubble ) {
         window.event.cancelBubble = true;
     }
-                                      
+
     if (eventObject && eventObject.preventDefault) {
         eventObject.preventDefault();
     }
@@ -327,7 +327,7 @@ function GxMarker(point, icon, tooltip, opts) {
     GMarker.apply(this, [ point, icon ]);
 }
 
-GxMarker.prototype = new GMarker(new GLatLng(1,1));
+GxMarker.prototype = new GMarker(new google.maps.LatLng(1,1));
 
 function debug(msg) {
     var d = document.getElementById("debug") ?

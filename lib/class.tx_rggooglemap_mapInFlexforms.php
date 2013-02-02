@@ -69,27 +69,27 @@ class user_mapInFlexforms {
 			var point = null;
 
 			function simpelMapLoad() {
-				if (GBrowserIsCompatible()) {
-					var point = new GLatLng('.$lat.','.$lng.');
+				if (true /*GBrowserIsCompatible()*/) {
+					var point = new google.maps.LatLng('.$lat.','.$lng.');
 
-				  map = new GMap2(document.getElementById("map"));
+				  map = new google.maps.Map(document.getElementById("map"));
 					map.setCenter(point,'.$tmp_confArr['startZoom'].');
 					map.enableContinuousZoom();
 					map.addControl(new GLargeMapControl());
 					map.addControl(new GMapTypeControl());
 
 
-					geocoder = new GClientGeocoder();
+					geocoder = new google.maps.Geocoder();
 
 
 					marker = new GMarker(point, {draggable: true});
 					map.addOverlay(marker);
 
-					GEvent.addListener(marker, "dragend", function() {
+					google.maps.event.addListener(marker, "dragend", function() {
 						document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
 					});
 
-					GEvent.addListener(map, "click", function(overlay, point) {
+					google.maps.event.addListener(map, "click", function(overlay, point) {
 						if (point)	{
 							marker.setPoint(point);
 						document.getElementById("rggmlatlng").value = marker.getPoint().lat() + "," + marker.getPoint().lng();
@@ -101,8 +101,10 @@ class user_mapInFlexforms {
 			function showAddress(address) {
 				var address = document.getElementById("geocodeaddress").value;
 				if (geocoder) {
-						geocoder.getLatLng(
-						address,
+						geocoder.geocode(
+						{
+							address: address
+						},
 						function(newpoint) {
 						if (!newpoint) {
 								alert(address + " not found");

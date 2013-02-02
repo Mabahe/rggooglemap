@@ -664,11 +664,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 					// JS which displayes the search markers
 					$jsResultUpdate .= '
-						marker = createMarker(new GLatLng(' . $row['lat'] . ',' . $row['lng'] . '), ' . $row['uid'] . ', \'' . $icon . '\', \'' . $title . '\', \'' . $row['table'] . '\', 1);
+						marker = createMarker(new google.maps.LatLng(' . $row['lat'] . ',' . $row['lng'] . '), ' . $row['uid'] . ', \'' . $icon . '\', \'' . $title . '\', \'' . $row['table'] . '\', 1);
 
 						map.addOverlay(marker);
 						searchresultmarkers[' . $i . '] = marker;
-						bounds.extend(new GLatLng(' . $row['lat'] . ',' . $row['lng'] . '));
+						bounds.extend(new google.maps.LatLng(' . $row['lat'] . ',' . $row['lng'] . '));
 					';
 
 					$i++;
@@ -688,7 +688,7 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 					var centerLat = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) /2;
 					var centerLng = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) /2;
-					map.setCenter(new GLatLng(centerLat,centerLng),zoom);
+					map.setCenter(new google.maps.LatLng(centerLat,centerLng),zoom);
 				';
 
 				// Nothing found
@@ -1092,10 +1092,25 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 			// check again because could be that mapnik / TAH are the only one selected
 			if ($this->config['mapType'] == '') {
-				$this->config['mapType'] = 'G_NORMAL_MAP';
+				$this->config['mapType'] = 'MapTypeId.ROADMAP';
+			}
+			// fallback compatibility with v2
+			switch ($this->config['mapType']) {
+				case 'G_NORMAL_MAP':
+					$this->config['mapType'] = 'MapTypeId.ROADMAP';
+					break;
+				case 'G_SATELLITE_MAP':
+					$this->config['mapType'] = 'MapTypeId.SATELLITE';
+					break;
+				case 'G_HYBRID_MAP':
+					$this->config['mapType'] = 'MapTypeId.HYBRID';
+					break;
+				case 'G_PHYSICAL_MAP':
+					$this->config['mapType'] = 'MapTypeId.TERRAIN';
+					break;
 			}
 
-			$markerArray['###MAP_TYPES###'] = ',{mapTypes:[' . $this->config['mapType'] . ']}';
+			$markerArray['###MAP_TYPES###'] = ',{mapTypeId:' . $this->config['mapType'] . '}';
 
 		}
 
@@ -1118,11 +1133,11 @@ class tx_rggooglemap_pi1 extends tslib_pibase {
 
 		if ($this->config['mapControlOnMouseOver'] == 1) {
 			$hideControlsOnMouseOut = 'map.hideControls();
-				GEvent.addListener(map, "mouseover", function(){
-				map.showControls();
+				google.maps.event.addListener(map, "mouseover", function(){
+					map.showControls();
 				});
-				GEvent.addListener(map, "mouseout", function(){
-				map.hideControls();
+				google.maps.event.addListener(map, "mouseout", function(){
+					map.hideControls();
 				});';
 		}
 		if ($this->conf['enableDoubleClickZoom'] == 1) {

@@ -6,7 +6,7 @@
 
     A more full-featured marker that supports tooltips and hover events.  The
     first iteration just supports triggering of mouse over events, and tooltips.
-   
+
     To setup a tooltip, pass in a third parameter (after the icon) to the
     GxMarker class:
         var marker = new GxMarker( new GPoint(lat,lng), icon, "My Tooltip" );
@@ -21,7 +21,7 @@
 
     Please refer to http://code.toeat.com/package/gxmarker for additional
     documentation.
-    
+
     TESTED PLATFORMS:
         Linux: Firefox
         Windows: Firefox, IE6
@@ -31,7 +31,7 @@
     and it does not work for you, I recommend you submit a patch.  This software
     is licensed under the GNU Lesser General Public License (LGPL):
     the full text at: http://opensource.org/licenses/lgpl-license.php
-	
+
 	Update: 04/07/06 - modified to load with API v2.44+ of the Google Maps API
 	Modified by Robert Aspinall - raspinall (AT) gmail (dot) com
 */
@@ -67,7 +67,7 @@ function GxMarker( a, b, tooltip ) {
     }
 }
 
-GxMarker.prototype = new GMarker(new GLatLng(1, 1));
+GxMarker.prototype = new GMarker(new google.maps.LatLng(1, 1));
 
 GxMarker.prototype.setTooltip = function( string ) {
     this.removeTooltip();
@@ -80,8 +80,8 @@ GxMarker.prototype.initialize = function( a ) {
     try {
         GMarker.prototype.initialize.call(this, a);
         // Setup the mouse over/out events
-		GEvent.bind(this, "mouseover", this, this.onMouseOver);
-		GEvent.bind(this, "mouseout", this, this.onMouseOut);
+		google.maps.event.bind(this, "mouseover", this, this.onMouseOver);
+		google.maps.event.bind(this, "mouseout", this, this.onMouseOut);
     } catch(e) {
 		alert(e);
     }
@@ -118,12 +118,12 @@ GxMarker.prototype.onInfoWindowOpen = function() {
 
 GxMarker.prototype.onMouseOver = function() {
     this.showTooltip();
-  //  GEvent.trigger(this, "mouseover");
+  //  google.maps.event.trigger(this, "mouseover");
 };
 
 GxMarker.prototype.onMouseOut = function() {
     this.hideTooltip();
-  //  GEvent.trigger(this, "mouseout");
+  //  google.maps.event.trigger(this, "mouseout");
 };
 
 GxMarker.prototype.showTooltip = function() {
@@ -138,7 +138,7 @@ GxMarker.prototype.showTooltip = function() {
             map.getPane(G_MAP_MARKER_PANE).appendChild(this.tooltipObject);
 		}
 
-        var c = map.fromLatLngToDivPixel(new GLatLng(this.getPoint().y, this.getPoint().x));
+        var c = map.fromLatLngToDivPixel(new google.maps.LatLng(this.getPoint().y, this.getPoint().x));
 		try {
         	this.tooltipObject.style.top  = c.y - ( this.getIcon().iconAnchor.y + 5 ) + "px";
         	this.tooltipObject.style.left = c.x + "px";
