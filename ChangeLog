@@ -1,5 +1,7 @@
 2012-02-02  Xavier Perseguers  <xavier@typo3.org>
 
+	* [TASK] Use dispatch script for Backend module
+	* [TASK][CLEANUP] Remove globals declaration in Backend module
 	* [TASK][CLEANUP] Remove trailing whitespaces
 
 2010-01-17  Xavier Perseguers  <typo3@perseguers.ch>
