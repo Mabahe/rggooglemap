@@ -1,0 +1,99 @@
+<!-- ###MAP### -->
+<div class="mapnest">
+  <div class="maptop">
+    <div class="mapcat" style="display:none;">
+      <form action="" onsubmit="return false;" name="xajax_cat" id="xajax_cat">
+      
+        
+        ###CAT_MENU###
+      </form>
+    </div>
+    <div id="map" style="height:###MAP_HEIGHT###px;width:###MAP_WIDTH###px"></div>
+  </div>
+  
+  <div class="mapbottom">
+    <div id="formResult"></div>
+  </div>
+
+
+</div>
+
+<div id="infobox" style="left:490px;top:320px;"></div>
+<div id="coordinfo"></div>
+
+
+ <script type="text/javascript">ddtreemenu.createTree("treemenu1", true);</script>
+
+
+<!-- ###MAP### -->
+
+
+  -  N R .  I  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1st tab
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_1### -->
+<div id="poi" style="width:220px">
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tt_news');" >Info</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tt_news');" >weiteres</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, 'tt_news');" >Bilder</a></li>
+  </ul>
+  
+  <div class="poi-content"> 
+    <b>###TITLE###</b><br />
+    ###SHORT### <br />
+    Detailseite: ###SHOWLINK### <br />
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_1### -->
+
+
+  -  N R .  II  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2nd tab
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_2### -->
+<div id="poi" style="width:220px">
+  <ul id="poitab">
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tt_news');" >Info</a></li>
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tt_news');" >Weiteres</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, 'tt_news');" >Bilder</a></li>
+  </ul>
+  
+  <div class="poi-content">
+    ###BODYTEXT###
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_2### -->
+
+
+  -  N R .  III  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3rd tab
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_3### -->
+<div id="poi" style="width:220px">
+  <ul id="poitab">
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tt_news');" >Info</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tt_news');" >Weiteres</a></li>
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, 'tt_news');" >Bilder</a></li>
+  </ul>
+  
+  <div class="poi-content">
+    ###IMAGE###
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_TT_NEWS_3### -->
+
+
+<!-- ###TEMPLATE_CATMENU### -->
+
+    <li>
+      <input ###CHECKED### type="checkbox" name="cb[###UID###]" value="###UID###" onclick="tx_rggooglemap_pi1processCat(xajax.getFormValues('xajax_cat'));clearCat(); " /> ###ICON### ###TITLE### ###RECURSIVE###
+    </li>
+
+<!-- ###TEMPLATE_CATMENU### -->

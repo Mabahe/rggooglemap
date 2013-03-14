@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin &quot;tx_rggooglemap2_pi1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pagebrowser">Record %s-%s of %s total</label>
+			<label index="pagebrowser_prev">Previous page (%s)</label>
+			<label index="pagebrowser_next">Next page (%s)</label>		
+			<label index="pagebrowser_act">Page %s</label>
+			<label index="searchNoResult">Sorry, nothing found</label>			
+			<label index="searchMinChars">Minimum length of %s characters</label>			
+    </languageKey>
+
+
+
+    <!-- GERMAN (DEUTSCH) -->
+		<languageKey index="de" type="array">
+			<label index="pagebrowser">Datensatz %s-%s von %s insgesamt</label>
+			<label index="pagebrowser_prev">&lt;a %s&gt;vorige Seite (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_next">&lt;a %s&gt;nächste Seite (%s)&lt;/a&gt;</label>
+			<label index="pagebrowser_act">Seite %s</label>		
+			<label index="searchNoResult">&lt;i&gt;Leider kein Ergebnis&lt;/&gt;</label>
+			<label index="searchMinChars">&lt;i&gt;Minimumlänge von %s Buchstaben benötigt&lt;/i&gt;</label>
+    </languageKey>
+		
+		
+	</data>
+</T3locallang>

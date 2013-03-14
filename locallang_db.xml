@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <type>database</type>
+        <description>Language labels for database tables/fields belonging to extension 'rggooglemap'</description>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="tt_content.list_type_pi1">Google Map (rggooglemap)</label>
+            <label index="tt_address.tx_rggooglemap_lng">Longitude</label>
+            <label index="tt_address.tx_rggooglemap_lat">Latitude</label>
+            <label index="tt_address.tx_rggooglemap_display">Show</label>
+            <label index="tt_address.tx_rggooglemap_cat">Category</label>
+            <label index="tt_address.tx_rggooglemap_tab">Count of tabs</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.0">1</label>            
+            <label index="tt_address.tx_rggooglemap_tab.I.1">2</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.2">3</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.3">4</label>                        
+            <label index="tt_address.tx_rggooglemap_image">Image</label>
+            <label index="tt_address.tx_rggooglemap_ce">Connected CEs</label>
+
+            <label index="tx_rggooglemap_cat">POI Category</label>
+            <label index="tx_rggooglemap_cat.title">Name</label>
+            <label index="tx_rggooglemap_cat.descr">Description</label>
+            <label index="tx_rggooglemap_cat.color">Color</label>
+            <label index="tx_rggooglemap_cat.tabprefix">Prefix for template</label>  
+
+            <label index="tx_rggooglemap_generic">Mapping settings for rggooglemap</label>
+            <label index="tx_rggooglemap_generic.tablename">Table</label>            
+            <label index="tx_rggooglemap_generic.mapping">Mapping</label>                  
+        </languageKey>
+        
+        <!-- German -->
+        <languageKey index="de" type="array">
+            <label index="tt_content.list_type_pi1">Google Map (rggooglemap)</label>
+            <label index="tt_address.tx_rggooglemap_lng">Längengrad</label>
+            <label index="tt_address.tx_rggooglemap_lat">Breitengrad</label>
+            <label index="tt_address.tx_rggooglemap_display">anzeigen</label>
+            <label index="tt_address.tx_rggooglemap_cat">Kategorie</label>
+            <label index="tt_address.tx_rggooglemap_tab">Anzahl Reiter</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.0">1</label>            
+            <label index="tt_address.tx_rggooglemap_tab.I.1">2</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.2">3</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.3">4</label>                        
+            <label index="tt_address.tx_rggooglemap_image">Bild</label>
+            <label index="tt_address.tx_rggooglemap_ce">Inkludierte CEs</label>
+
+            <label index="tx_rggooglemap_cat">POI Kategorien</label>
+            <label index="tx_rggooglemap_cat.title">Name</label>
+            <label index="tx_rggooglemap_cat.descr">Beschreibung</label>
+            <label index="tx_rggooglemap_cat.color">Farbe</label>
+            <label index="tx_rggooglemap_cat.tabprefix">Prefix für Template</label>
+            
+            <label index="tx_rggooglemap_generic">Mapping Einstellungen für rggooglemap</label>
+            <label index="tx_rggooglemap_generic.tablename">Tabelle</label>            
+            <label index="tx_rggooglemap_generic.mapping">Mapping</label>            
+            
+        </languageKey>
+        
+        <!-- French, thx to zatmania -->
+		    <languageKey index="fr" type="array">
+            <label index="tt_content.list_type_pi1">Google Map (rggooglemap)</label>
+            <label index="tt_address.tx_rggooglemap_lng">Longitude</label>
+            <label index="tt_address.tx_rggooglemap_lat">Latitude</label>
+            <label index="tt_address.tx_rggooglemap_display">Voir</label>
+            <label index="tt_address.tx_rggooglemap_cat">Catégories</label>
+            <label index="tt_address.tx_rggooglemap_tab">Nombre d'onglets</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.0">1</label>            
+            <label index="tt_address.tx_rggooglemap_tab.I.1">2</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.2">3</label>
+            <label index="tt_address.tx_rggooglemap_tab.I.3">4</label>                        
+            <label index="tx_rggooglemap_cat">Catégories POI</label>
+            <label index="tx_rggooglemap_cat.title">Nom</label>
+            <label index="tx_rggooglemap_cat.descr">Description</label>
+            <label index="tx_rggooglemap_cat.color">Couleur</label>
+        </languageKey>
+    
+    
+    </data>
+</T3locallang>

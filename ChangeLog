@@ -1,0 +1,9 @@
+(add new changes on top of this file)
+
+02-18-2013 Ulrik Høyer Kold (personal) <kontakt@ulrikkold.dk>, Ulrik Høyer Kold (corporate) <uhk@netimage.dk>
+
+	* Updated the PHP and JS to use Google Maps API v3 - sponsored by Indre Mission, http://www.indremission.dk
+
+06-11-06 Georg Ringer  <typo3@ringerge.org>
+
+	* Initial release

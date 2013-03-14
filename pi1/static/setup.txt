@@ -1,0 +1,164 @@
+plugin.tx_rggooglemap_pi1 {
+  templateFile = EXT:rggooglemap/template.html
+  pidList = 44
+  recursive = 
+  mapDiv = map  
+  mapWidth = 300
+  mapHeight = 450
+  mapLng = 13.537216186523438
+  mapLat = 47.585673399138294
+  mapZoom = 11
+  mapKey = 
+  mapType = ROADMAP
+  mapControl = show
+  mapNavigation = small
+  mapNavigationOnMouseOver = 0
+  mapOverview = 0
+  mapActiveCats = 
+  mapAvailableCats = 
+
+
+  enableDoubleClickZoom = 1
+  enableContinuousZoom = 1
+  enableScrollWheelZoom = 1
+  
+  recordsPerPage = 10
+
+
+  # Icon for teh category tree
+  catIcon = IMAGE
+  catIcon {
+    file.maxW = 11
+    file.maxH = 11
+    stdWrap.spaceAfter=0
+  }
+
+
+  # stdWrap for all markers in the info bubble
+  poi {
+    name.wrap = 
+  }
+
+  
+  # Images in the info bubble
+  imageFields = image
+  
+  poiImage = IMAGE
+  poiImage {
+    file.maxW = 60
+    file.maxH = 80
+    #imageLightbox2 = 1
+    #imageLightbox2.imageset = 1
+    #imageLightbox2.saveImageShow = 1
+    #imageLightbox2.printImageShow = 1
+    wrap =
+    imageLinkWrap = 1
+    imageLinkWrap {
+      enable = 1
+      bodyTag = <body bgColor="#dddddd">
+      wrap = <a href="javascript:close();"> | </a>
+      width = 1000m
+      height = 800
+      JSwindow = 1
+      JSwindow.newWindow = 1
+      JSwindow.expand = 17,20
+    }
+  #  stdWrap.spaceAfter=10
+  }  
+  
+  # Links in the info bubble
+  linkFields = email,www
+  
+  link {
+    # static text for www
+    #www.value = A link
+    # dynamic text from given field
+    #www.field= name
+  }
+  
+  
+  
+  # stdWrap for all markers in the popup window
+  popup {
+  
+  }  
+  
+  
+  # view MENU
+  menu {
+    orderByCat = title
+    orderByRecord = name
+  }
+  
+  # search settings
+  search {
+    minChars = 3
+    tt_address = title,description,name
+    tt_address {
+        orderBy = name
+    }
+    fe_users = comments,name,first_name,last_name,company
+  }
+  
+  activateCluster = 0
+  
+  geocodeDefaultCountry = germany
+  
+  # CSS styles
+  _CSS_DEFAULT_STYLE (
+  )
+
+
+}
+# end pi1
+
+# link tags
+plugin.tx_rggooglemap_pi2 {
+  mapId < plugin.tx_rggooglemap_pi1.mapId
+  tt_addressOnly = 1
+  tableType = tt_address
+} 
+
+# category tags
+plugin.tx_rggooglemap_pi3 {
+  mapId < plugin.tx_rggooglemap_pi1.mapId
+} 
+
+
+## Set up page/type number:
+export_xml >
+export_xml = PAGE
+export_xml {
+  typeNum=500
+  config.disableAllHeaderCode = 1
+  config.metaCharset = utf-8
+  config.additionalHeaders = Content-Type:text/xml;charset=utf-8
+  config.xhtml_cleaning = 0
+  config.admPanel = 0
+  config.sendNoCacheHeaders = 1
+  config.no_cache = 1
+  
+  ## Includes the lib:
+  #includeLibs.export_xml = EXT:rggooglemap/pi1/class.tx_rgooglemap_pi1.php
+  
+  ## Inserting the USER cObject for XML rendering
+  10 = CONTENT
+  10 {
+    table = tt_content
+    select {
+      pidInList = this   
+      max = 1
+      andWhere = list_type='rggooglemap_pi1'
+    #  languageField = sys_language_uid
+    }
+
+    renderObj = COA
+    renderObj {
+      10 < plugin.tx_rggooglemap_pi1
+      10.userFunc = tx_rggooglemap_pi1->xmlFunc
+    }
+  }  
+}
+
+
+

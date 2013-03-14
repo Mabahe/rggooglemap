@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for extension 'rggooglemap'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<!-- Insert plugin -->
+      <label index="pi1_title">Google Map (rggooglemap)</label>
+			<label index="pi1_plus_wiz_description">Inserts a google map based on tt_address</label>
+			<!-- BE Module (Menu) -->
+			<label index="mlang_tabs_tab">Google-Map</label>
+			<label index="mlang_labels_tabdescr">Find an interesting point via BE in the google map</label>
+			<label index="mlang_labels_tablabel">Google map POI finder</label>
+		  <label index="title">Module for extension rggooglemap</label>
+			<!-- BE Module (Plugin) -->
+      <label index="function1">1. Map &amp; saving a point</label>
+			<label index="function2">2. Showing all Records</label>
+			<label index="function3">3. Settings</label>
+			<label index="headerChoosePOI">1.) Drag the marker around » Choose a point » Click "Save"</label>
+			<label index="headerSave">2.) Save the coordinates ...</label>
+			<label index="headerSavePOI">b) ... to an existing record</label>
+			<label index="headerSavePOINew">a) ... to a new record</label>
+			<label index="headerGeocode">Geocoding: Search for an address</label>
+			<label index="headerloadPOI">Load POI with long. + lat.</label>
+			<label index="headerloadRecord">Search + Load existing POI, just type the name</label>
+			<label index="loadPOILink">Insert longtitude + latitude in the fields and press the link</label>
+			<label index="geocodeButton">Search</label>
+			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
+			<label index="headerGetPoi">Load a record into the map</label>
+			<label index="clickHere">Click here</label>
+      <label index="headerList">List of tt_address-records</label>
+      <label index="headerListSave">Save changes</label>
+			<label index="firstEntryInDropdown">...save to...</label>
+  		<label index="noRecordsFound">No existing t	t_address-records found. Make a new one or choose an sys-folder with existing records.</label>
+  		<label index="noPageChosen">No page/sys-folder chosen. Please choose one and proceed.</label>
+			<label index="createNewRecord">Create a new record with this coordinates</label>
+			<label index="createNewRecordPlain">Create a plain new record</label>
+			<label index="save">Save</label>
+			<label index="saveError">Error: No position chosen!</label>
+			<label index="latitude">Latitude</label>
+			<label index="longitude">Longitude</label>
+			<label index="uid">Id</label>
+			<label index="name">Name</label>
+			<label index="category">Category</label>
+			<label index="display">Display</label>
+			<label index="map">Map</label>
+			<label index="mapLink">show</label>
+			<label index="table">Table</label>
+			<label index="saveErrorCheckbox">Error: Select Checkbox to save!</label>
+			<label index="saveErrorDropdown">Error: Choose a record to save the POI to!</label>
+			<label index="saveSamePosition">Error: The record "%s" has got the exact same position! Choose another location and press "Save" again!</label>
+			<label index="saveSuccss">Saving was successfull</label>
+			<label index="saveDisplay">Changes were successfull saved!</label>
+			<label index="confirmation">Sure?</label>
+			<label index="showHideMap">Show/hide map</label>
+			<label index="showHideOptions">Show/hide options</label>
+			<label index="loadgeodata">Load Geodata</label>
+			<label index="save">Save</label>
+			<label index="save_and_close">Save and Close</label>
+			<label index="close">Close</label>
+
+
+        <!-- Flexforms  -->
+			<label index="flexform.sheets.general.title">Map</label>
+			<label index="flexform.sheets.general.show">Show</label>
+			<label index="flexform.sheets.general.show.0">Map</label>
+			<label index="flexform.sheets.general.show.1">POIs</label>
+			<label index="flexform.sheets.general.show.2">Menu</label>
+			<label index="flexform.sheets.general.show.3">Locationbox</label>
+			<label index="flexform.sheets.general.show.4">Active records</label>
+			<label index="flexform.sheets.general.show.5">Searchbox</label>
+      <label index="flexform.sheets.general.width">Width of map</label>
+			<label index="flexform.sheets.general.height">Height of map</label>
+			<label index="flexform.sheets.general.lng">Start Longitude</label>
+			<label index="flexform.sheets.general.lat">Start Latitude</label>
+			<label index="flexform.sheets.general.zoom">Start Zoom</label>
+			<label index="flexform.sheets.general.key">Googlemap Key</label>
+			<label index="flexform.sheets.general.type">Type of map</label>
+			<label index="flexform.sheets.general.type.map">Map</label>
+			<label index="flexform.sheets.general.type.satellite">Satellite</label>
+			<label index="flexform.sheets.general.type.hybrid">Hybrid</label>
+			<label index="flexform.sheets.general.type_controls">Show type controls</label>
+			<label index="flexform.sheets.general.type_controls.0"></label>
+			<label index="flexform.sheets.general.type_controls.1">Show</label>
+			<label index="flexform.sheets.general.type_controls.2">Hide</label>
+			<label index="flexform.sheets.general.nav_controls">Navigation controls</label>
+			<label index="flexform.sheets.general.nav_controls.none">None</label>
+			<label index="flexform.sheets.general.nav_controls.small">Small</label>
+			<label index="flexform.sheets.general.nav_controls.large">Large</label>
+			<label index="flexform.sheets.general.controlonmouseover">Hide Controls on Mouseover</label>
+			<label index="flexform.sheets.general.mapoverview">Hide overview window</label>
+
+			<label index="flexform.sheets.general.startingpoint">Starting point</label>
+			<label index="flexform.sheets.general.recursive">Recursive</label>
+			<label index="flexform.sheets.general.recursive.0"></label>
+			<label index="flexform.sheets.general.recursive.1">1 level</label>
+			<label index="flexform.sheets.general.recursive.2">2 levels</label>
+			<label index="flexform.sheets.general.recursive.3">3 levels</label>
+			<label index="flexform.sheets.general.recursive.4">4 levels</label>
+			<label index="flexform.sheets.general.recursive.infinite">Infinite</label>
+			<label index="flexform.sheets.general.categories">Selected categories</label>
+			<label index="flexform.sheets.general.categoriesselected">Available categories</label>
+
+			<label index="flexform.sheets.general.showondefault">Default POI</label>
+        <!-- Flexforms  2nd sheet -->
+			<label index="flexform.sheets.sorting.title">Sorting</label>
+			<label index="flexform.sheets.sorting.orderby.title">...order by</label>
+      <label index="flexform.sheets.sorting.orderby.asc">Ascending</label>
+			<label index="flexform.sheets.sorting.orderby.desc">Descending</label>
+			<label index="flexform.sheets.sorting.orderby.name">Name</label>
+			<label index="flexform.sheets.sorting.orderby.tstamp">Tstamp</label>
+
+      <label index="flexform.sheets.sorting.catsort">Category in POI view</label>
+      <label index="flexform.sheets.sorting.poisort">POIs in POI view</label>
+      <label index="flexform.sheets.sorting.checkboxsort">Checkboxes in MAP view</label>
+
+        <!-- Flexforms  3rd sheet -->
+			<label index="flexform.sheets.menu.title">Menu settings</label>
+			<label index="flexform.sheets.menu.startingpoint">Starting point</label>
+			<label index="flexform.sheets.menu.categories">Categories</label>
+			<label index="flexform.sheets.menu.header">Include</label>
+			<label index="flexform.sheets.menu.header.0">Header of Category</label>
+			<label index="flexform.sheets.menu.header.1">Description of Category</label>
+			<label index="flexform.sheets.menu.map">Page with the map</label>
+			<label index="flexform.sheets.menu.menucatsortorder">Category ordering</label>
+			<label index="flexform.sheets.menu.menurecordsortorder">Record ordering</label>
+			<label index="flexform.sheets.menu.usecategorytree">Use category tree in Menu</label>
+			<label index="flexform.sheets.menu.usesearchbox">Use searchbox in Menu</label>
+
+        <!-- general -->
+			<label index="tt_address">Address</label>
+			<label index="fe_users">FE-User</label>
+			<label index="tt_news">News</label>
+		</languageKey>
+
+
+		<languageKey index="de" type="array">
+			<!-- Insert plugin -->
+      <label index="pi1_title">Google Map (rggooglemap)</label>
+      <label index="pi1_plus_wiz_description">Google map, basierend auf tt_address</label>
+			<!-- BE Module (Menu) -->
+			<label index="mlang_labels_tabdescr">Finde einen interessanten Punkt auf der google map und ordne ihn einem Datensatz zu</label>
+			<label index="mlang_labels_tablabel">Google map POI-Suche</label>
+		  <label index="title">Modul für die Extension rggooglemap</label>
+			<!-- BE Module (Plugin) -->
+
+			<label index="function1">1.) Karte &amp; Punkt speichern</label>
+			<label index="function2">2.) Alle Datensätze zeigen</label>
+			<label index="headerChoosePOI">1.) Wähle mit dem Marker einen Punkt » Drücke "Speichern"</label>
+			<label index="headerSave">2.) Speichern der Koordinaten ...</label>
+			<label index="headerSavePOI">b) ... für einen existierenden Datensatz</label>
+			<label index="headerSavePOINew">a) ... für einen neuen Datensatz</label>
+			<label index="headerGeocode">Geocoding: Suche eine Adresse</label>
+			<label index="headerloadPOI">POI anhand Koordinaten laden</label>
+			<label index="headerloadRecord">Suchen + Laden eines POI</label>
+			<label index="loadPOILink">Koordinaten in Felder einfügen und hier klicken</label>
+			<label index="geocodeButton">Suchen</label>
+			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
+			<label index="headerGetPoi">Existierenden POI laden</label>
+			<label index="clickHere">hier klicken</label>
+			<label index="headerList">Liste mit tt_address-Datensätzen</label>
+      <label index="headerListSave">Änderungen speichern</label>
+			<label index="firstEntryInDropdown">...speichern für...</label>
+			<label index="noRecordsFound">Keine tt_address-Datensätze gefunden. Legen Sie einen an oder erstellen Sie einen neuen.</label>
+  		<label index="noPageChosen">Keine Seite/sys-folder ausgewählt!</label>
+			<label index="createNewRecord">Neuen Datensatz mit diesen Koordinaten erstellen</label>
+			<label index="createNewRecordPlain">Neuen (leeren) Datensatz erstellen</label>
+			<label index="save">Speichern</label>
+			<label index="saveError">Fehler: Keine Koordinaten ausgewählt!</label>
+			<label index="latitude">Breitengrad</label>
+			<label index="longitude">Längegrad</label>
+			<label index="name">Name</label>
+			<label index="uid">Id</label>
+			<label index="category">Kategorie</label>
+			<label index="display">Anzeigen</label>
+			<label index="map">Karte</label>
+			<label index="table">Tabelle</label>
+			<label index="mapLink">show</label>
+			<label index="saveErrorCheckbox">Fehler: Aktivieren Sie die Checkbox, um Änderungen zu speichern!</label>
+			<label index="saveErrorDropdown">Wählen Sie einen Datensatz aus, um Änderungen zu speichern!</label>
+			<label index="saveSamePosition">Fehler: Der Datensatz "%s" hat die genau gleiche Position. Wählen Sie eine andere Position!</label>
+			<label index="saveSuccss">POI wurde erfolgreich gespeichert!</label>
+			<label index="saveDisplay">Änderungen wurde erfolgreich gespeichert!</label>
+			<label index="confirmation">Sicher?</label>
+			<label index="showHideMap">Karte verbergen/anzeigen</label>
+			<label index="showHideOptions">Optionen verbergen/anzeigen</label>
+			<label index="loadgeodata">Geodaten laden</label>
+
+        <!-- Flexforms  -->
+			<label index="flexform.sheets.general.title">Allgemein</label>
+			<label index="flexform.sheets.general.show">Anzeige von</label>
+			<label index="flexform.sheets.general.show.0">Karte</label>
+			<label index="flexform.sheets.general.show.1">POIs</label>
+			<label index="flexform.sheets.general.show.2">Menü</label>
+			<label index="flexform.sheets.general.show.3">Ortsuche</label>
+			<label index="flexform.sheets.general.show.4">Aktive Datensätze</label>
+			<label index="flexform.sheets.general.show.5">Suche</label>
+      <label index="flexform.sheets.template.template_file">Template</label>
+			<label index="flexform.sheets.general.width">Breite der Karte</label>
+			<label index="flexform.sheets.general.height">Höhe der Karte</label>
+			<label index="flexform.sheets.general.lng">Längengrad</label>
+			<label index="flexform.sheets.general.lat">Breitengrad</label>
+			<label index="flexform.sheets.general.zoom">Zoom</label>
+			<label index="flexform.sheets.general.key">Googlemap Key</label>
+			<label index="flexform.sheets.general.type">Kartentyp</label>
+			<label index="flexform.sheets.general.type.map">Karte</label>
+			<label index="flexform.sheets.general.type.satellite">Satellit</label>
+			<label index="flexform.sheets.general.type.hybrid">Hybrid (Karte + Satellit)</label>
+			<label index="flexform.sheets.general.type_controls">Umschalter für Kartentyp anzeigen</label>
+			<label index="flexform.sheets.general.type_controls.0"></label>
+			<label index="flexform.sheets.general.type_controls.1">Anzeigen</label>
+			<label index="flexform.sheets.general.type_controls.2">Verstecken</label>
+			<label index="flexform.sheets.general.nav_controls">Navigationsschalter anzeigen</label>
+			<label index="flexform.sheets.general.nav_controls.none">Keine</label>
+			<label index="flexform.sheets.general.nav_controls.small">Klein</label>
+			<label index="flexform.sheets.general.nav_controls.large">Groß</label>
+			<label index="flexform.sheets.general.startingpoint">Ausgangspunkt</label>
+			<label index="flexform.sheets.general.recursive">Rekursiv</label>
+			<label index="flexform.sheets.general.recursive.0"></label>
+			<label index="flexform.sheets.general.recursive.1">1 Ebene</label>
+			<label index="flexform.sheets.general.recursive.2">2 Ebenen</label>
+			<label index="flexform.sheets.general.recursive.3">3 Ebenen</label>
+			<label index="flexform.sheets.general.recursive.4">4 Ebenen</label>
+			<label index="flexform.sheets.general.recursive.infinite">Unendlich</label>
+			<label index="flexform.sheets.general.categories">Aktive Kategorien</label>
+			<label index="flexform.sheets.general.categoriesselected">Verfügbare Kategorien</label>
+
+			<label index="flexform.sheets.general.showondefault">Standard POI</label>
+
+      <!-- Flexforms  2nd sheet -->
+			<label index="flexform.sheets.sorting.title">Sortierung</label>
+			<label index="flexform.sheets.sorting.orderby.title">...sortiert nach</label>
+      <label index="flexform.sheets.sorting.orderby.asc">aufsteigend</label>
+			<label index="flexform.sheets.sorting.orderby.desc">absteigend</label>
+			<label index="flexform.sheets.sorting.orderby.name">Name</label>
+			<label index="flexform.sheets.sorting.orderby.tstamp">Tstamp</label>
+
+      <label index="flexform.sheets.sorting.catsort">Kategorie in POI-Ansicht</label>
+      <label index="flexform.sheets.sorting.poisort">POIs in POI-Ansicht</label>
+      <label index="flexform.sheets.sorting.checkboxsort">Checkboxen in Karten-Ansicht</label>
+
+
+        <!-- Flexforms  3rd sheet -->
+			<label index="flexform.sheets.menu.title">Menü-Einstellungen</label>
+			<label index="flexform.sheets.menu.startingpoint">Ausgangspunkt</label>
+			<label index="flexform.sheets.menu.categories">Kategorien</label>
+			<label index="flexform.sheets.menu.header">Inklusive</label>
+			<label index="flexform.sheets.menu.header.0">Kategorietitel</label>
+			<label index="flexform.sheets.menu.header.1">Kategoriebeschreibung</label>
+			<label index="flexform.sheets.menu.map">Seite mit Karte</label>
+			<label index="flexform.sheets.menu.usecategorytree">Kategoriebaum im Menü verwenden</label>
+			<label index="flexform.sheets.menu.usesearchbox">Suche im Menü verwenden</label>
+
+
+        <!-- general -->
+			<label index="tt_address">Adresse</label>
+			<label index="fe_users">FE-User</label>
+
+		</languageKey>
+
+		<!-- FRENCH, thx to zatmania -->
+		<languageKey index="fr" type="array">
+			<!-- Insert plugin -->
+			<label index="pi1_title">Google Map (rggooglemap)</label>
+			<label index="pi1_plus_wiz_description">Insère une google map basée avec l'aide de l'extension tt_address</label>
+			<!-- BE Module (Menu) -->
+			<label index="mlang_tabs_tab">Google-Map</label>
+			<label index="mlang_labels_tabdescr">Positionner un point sur la map google via le BE</label>
+			<label index="mlang_labels_tablabel">Trouver un POI Google map</label>
+			<label index="title">Module de l'extension rggooglemap</label>
+			<!-- BE Module (Plugin) -->
+			<label index="function1">Carte &amp; sauvegarder un point</label>
+			<label index="function2">Voir tous les enregistrements</label>
+			<label index="function3">Options</label>
+			<label index="headerChoosePOI">1.) Positionnez le pointeur sur la carte » Choisissez un point » Cliquez sur "Sauvegarder"</label>
+			<label index="headerSave">2.) Sauvegardez les coordonnées...</label>
+			<label index="headerSavePOI">b) ... dans un enregistrement existant</label>
+			<label index="headerSavePOINew">a) ... comme nouvel enregistrement</label>
+			<label index="headerGeocode">Geocoding: recherche d'une adresse</label>
+			<label index="headerloadPOI">Chargement du  POI et de la long. + la lat.</label>
+			<label index="loadPOILink">Insérer la longtitude + la latitude au niveau des champs et cliquez sur le lien</label>
+			<label index="geocodeButton">Recherche</label>
+			<label index="geocodeSearchValue">1600 Amphitheatre Pky, Mountain View, CA</label>
+			<label index="headerGetPoi">Charger un enregistrement au niveau de la carte</label>
+			<label index="clickHere">Cliquer ici</label>
+			<label index="headerList">Liste des enregiistrements tt_address-records</label>
+			<label index="headerListSave">Sauvegarder les changements</label>
+			<label index="firstEntryInDropdown">...Enregistrer sous...</label>
+			<label index="noRecordsFound">Pas de tt_address-records trouvé. Créez-en un nouveau ou choisissez un sys-folder contenant des enregistrements.</label>
+			<label index="noPageChosen">Pas de page ou de sys-folder selectionné. Merci d'en choisir un et recommencez.</label>
+			<label index="createNewRecord">Créer un nouvel enregistrement avec ces coordonnées.</label>
+			<label index="createNewRecordPlain">Créer un nouvel enregistrement</label>
+			<label index="save">Sauvegarder</label>
+			<label index="saveError">Erreur: Pas de position selectionnée !</label>
+			<label index="latitude">Latitude</label>
+			<label index="longitude">Longitude</label>
+			<label index="uid">Id</label>
+			<label index="name">Nom</label>
+			<label index="category">Categorie</label>
+			<label index="display">Affichage</label>
+			<label index="map">Map</label>
+			<label index="mapLink">voir</label>
+			<label index="saveErrorCheckbox">Cocher une case pour sauvegarder !</label>
+			<label index="saveErrorDropdown">Choisissez un enregistrement pour sauvegarder le POI également!</label>
+			<label index="saveSuccss">Enregistrement réussi</label>
+			<label index="saveDisplay">Changements effectués avec succès !</label>
+			<label index="confirmation">Sûr?</label>
+			<label index="showHideMap">Voir/Cacher la carte</label>
+			<label index="showHideOptions">Voir/Cacher les options</label>
+
+        <!-- Flexforms  -->
+			<label index="flexform.sheets.general.title">Général</label>
+			<label index="flexform.sheets.general.show">Voir</label>
+			<label index="flexform.sheets.general.show.0">Carte</label>
+			<label index="flexform.sheets.general.show.1">POIs</label>
+			<label index="flexform.sheets.general.show.2">Menu</label>
+			<label index="flexform.sheets.template.template_file">Fichier Template</label>
+			<label index="flexform.sheets.general.width">Largeur de la carte</label>
+			<label index="flexform.sheets.general.height">Hauteur de la carte</label>
+			<label index="flexform.sheets.general.lng">Longitude</label>
+			<label index="flexform.sheets.general.lat">Latitude</label>
+			<label index="flexform.sheets.general.zoom">Zoom</label>
+			<label index="flexform.sheets.general.key">Clé Googlemap</label>
+			<label index="flexform.sheets.general.type">Type de carte</label>
+			<label index="flexform.sheets.general.type.map">Carte</label>
+			<label index="flexform.sheets.general.type.satellite">Satellite</label>
+			<label index="flexform.sheets.general.type.hybrid">Hybrid</label>
+			<label index="flexform.sheets.general.type_controls">Montrer les commandes type</label>
+			<label index="flexform.sheets.general.type_controls.0"></label>
+			<label index="flexform.sheets.general.type_controls.1">Voir</label>
+			<label index="flexform.sheets.general.type_controls.2">Cacher</label>
+			<label index="flexform.sheets.general.nav_controls">Commandes de Navigation</label>
+			<label index="flexform.sheets.general.nav_controls.none">Aucun</label>
+			<label index="flexform.sheets.general.nav_controls.small">Petit</label>
+			<label index="flexform.sheets.general.nav_controls.large">Grand</label>
+			<label index="flexform.sheets.general.startingpoint">Point de départ</label>
+			<label index="flexform.sheets.general.recursive">Recursif</label>
+			<label index="flexform.sheets.general.recursive.0"></label>
+			<label index="flexform.sheets.general.recursive.1">1 niveau</label>
+			<label index="flexform.sheets.general.recursive.2">2 niveaux</label>
+			<label index="flexform.sheets.general.recursive.3">3 niveaux</label>
+			<label index="flexform.sheets.general.recursive.4">4 niveaux</label>
+			<label index="flexform.sheets.general.recursive.infinite">Infini</label>
+			<label index="flexform.sheets.general.type.map.alternativeUrl">URL Alternative</label>
+			<label index="flexform.sheets.general.showondefault">FR: Default POI</label>
+        <!-- Flexforms  2nd sheet -->
+			<label index="flexform.sheets.sorting.title">Classement</label>
+			<label index="flexform.sheets.sorting.orderby.title">...trié par</label>
+      <label index="flexform.sheets.sorting.orderby.asc">Croissant</label>
+			<label index="flexform.sheets.sorting.orderby.desc">Décroissant</label>
+			<label index="flexform.sheets.sorting.orderby.name">Nom</label>
+			<label index="flexform.sheets.sorting.orderby.tstamp">Date</label>
+
+      <label index="flexform.sheets.sorting.catsort">Catégories dans la vue POI</label>
+      <label index="flexform.sheets.sorting.poisort">Vue des POIs dans POI</label>
+      <label index="flexform.sheets.sorting.checkboxsort">Case à cocher dans la vue "Carte"</label>
+
+        <!-- Flexforms  3rd sheet -->
+			<label index="flexform.sheets.menu.title">Menu options</label>
+			<label index="flexform.sheets.menu.startingpoint">Point de départ</label>
+			<label index="flexform.sheets.menu.categories">Catégories</label>
+			<label index="flexform.sheets.menu.header">Insertion</label>
+			<label index="flexform.sheets.menu.header.0">Entête de la catégorie</label>
+			<label index="flexform.sheets.menu.header.1">Description de la catégorie</label>
+			<label index="flexform.sheets.menu.map">Page contenant la carte</label>
+
+        <!-- general -->
+			<label index="tt_address">Addresse</label>
+			<label index="fe_users">FE-User</label>
+			<label index="tt_news">News</label>
+
+		</languageKey>
+
+	</data>
+</T3locallang>
