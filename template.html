@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title>Template for rggooglemap</title>
+  </head>
+  <body>
+
+ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ xxxxxxxxxxxxxxxxx    TEMPLATE-FILE     xxxxxxxxxxxxxxxx
+ xxxxxxxxxxxxxxxxx         for          xxxxxxxxxxxxxxxx
+ xxxxxxxxxxxxxxxxx     rggooglemap      xxxxxxxxxxxxxxxx
+ xxxxxxxxxxxx                                xxxxxxxxxxx
+ xxxx   Ringer Georg .::. typo et ringerge dot org  xxxx
+ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ .: Structure of the template file :.
+  - Main Template:        This is the main template, including the map and the tree
+  - Record List (First):  Template for the records which are selected via the checkboxes, 1st page
+  - Record List (2nd):    Template for the records which are selected via the checkboxes, other pages
+  - InfoBox:              Template for the popup 
+  - POI Nr.1:             1st tab
+  - POI Nr.2:             2nd tab
+  - POI Nr.3:             3rd tab
+  - POI _K_ Nr.1:         Special template for prefix "K", 1st tab
+  - POI _K_ Nr.2:         Special template for prefix "K", 2nd tab  
+  - LocationBox:          Template for the geocoding location box
+  - Visible Records:      Template for all visible records
+  - Menu Template         Show all records of the selected categories and starting point
+  - SearchBox:            Template for the searchbox
+  - SearchResult:         Template for the search results
+  - Cattree               Templates for a single line of the category tree
+  - Catmenu               Template for the category tree on menu view
+  
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  M A I N  -  T E M P L A T E  - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is the main template, including the map and the tree
+
+<!-- ###MAP### -->
+<div id="mapcatlist" style="display:none;"></div>
+<div class="mapnest">
+  <div class="maptop">
+    <div class="mapcat">
+      <form action="" onsubmit="return false;" name="xajax_cat" id="xajax_cat">
+      
+        
+        ###CAT_MENU###
+      </form>
+    </div>
+    <div id="map" style="height:###MAP_HEIGHT###px;width:###MAP_WIDTH###px"></div>
+  </div>
+  
+  <div class="mapbottom">
+    <div id="formResult"></div>
+  </div>
+
+
+</div>
+
+<div id="infobox" style="left:490px;top:320px;"></div>
+<div id="coordinfo"></div>
+
+
+
+
+
+<!-- ###MAP### -->
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  R E C O R D  -  L I S T  ( F I R S T ) - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the records which are selected via the checkboxes, 1st page
+
+<!-- ###TEMPLATE_RECORDLIST_FIRST### -->
+<div id="resultdiv">
+###PB_STATISTIC### <br /> ###PB_NEXT###
+
+
+<ul>
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+    <li>
+      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>  
+    </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
+</div>
+ <!-- ###TEMPLATE_RECORDLIST_FIRST### -->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  R E C O R D  -  L I S T  ( 2 n d)  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the records which are selected via the checkboxes, other pages
+
+<!-- ###TEMPLATE_RECORDLIST### -->
+###PB_STATISTIC### <br />
+###PB_PREV### <strong>###PB_ACT###</strong> ###PB_NEXT###
+
+
+<ul>
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+    <li>
+      ###NAME### &middot; <a href="javascript:void(0)" ###POPUP###>Info</a>  &middot; <a href="javascript:void(0)" onClick="myclick(###UID###,###LNG###,###LAT###,'###TABLE###')" >Show on map</a>  
+    </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
+
+ <!-- ###TEMPLATE_RECORDLIST### -->
+
+ 
+ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  I N F O B O X  -  T E M P L A T E  - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the popup 
+
+<!-- ###TEMPLATE_INFOBOX_1### -->
+
+	<div id="dragbar1" onMousedown="initializedrag(event,this.parentNode)" class="tx-rgpopup-dragbar">
+		<div class="tx-rgpopup-left">
+			###NAME###
+		</div>	
+		<div class="tx-rgpopup-right">
+			<a href="javascript:hide('infobox');"> <img src="typo3conf/ext/rggooglemap/res/close.gif"></a>
+		</div>
+	</div>
+	<div class="tx-rgpopup-mainNest">
+		<div class="tx-rgpopup-main">
+
+		this is a new test ###UID###
+			<b>###NAME###</b><br />
+###DESCRIPTION###<br>
+ID: ###UID###<br>
+Lng: ###LAT###<br>
+Lat: ###LNG###<br>
+
+<br><b>Kategorien</b><br>
+<ul>
+	 <!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+<li>###CAT_TITLE### (###CAT_UID###)</li>
+	 <!-- ###SINGLE### -->
+<!-- ###CONTENT### -->
+</ul>
+###CE###  
+
+
+<br /><br />&middot; <a  href="javascript:void(0)" onClick=' myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, "###TABLE###") '>Show on map</a>
+&middot; <a href="javascript:hide('infobox');" >close</a>
+
+		</div>
+	</div>
+ <!-- ###TEMPLATE_INFOBOX_1### -->
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  P O I I N F O  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template(s) for the info windows on the map.
+Make as many as you like. 
+
+  -  N R .  I  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1st tab
+
+<!-- ###TEMPLATE_INFOPOI_1### -->
+<div id="poi" style="width:220px">
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Information</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Picture</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, '###TABLE###');" >Prices</a></li>
+  </ul>
+  
+  <div class="poi-content"> 
+    <b>ID:</b>###TABPREFIX### ###NAME### (###UID###)<br />
+    
+    <b>Description:</b> ###DESCRIPTION###
+    
+    <br />
+    <a href="javascript:void(0)" onclick=" show('infobox'); tx_rggooglemap_pi1infomsg(###UID###, '###TABLE###'); ">Show info window</a>
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_1### -->
+
+
+  -  N R .  II  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2nd tab
+
+<!-- ###TEMPLATE_INFOPOI_2### -->
+<div id="poi" style="width:220px">
+  <ul id="poitab">
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Information</a></li>
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Picture</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, '###TABLE###');" >Prices</a></li>
+  </ul>
+  
+  <div class="poi-content">
+    ###EMAIL### <br />
+    ###WWW###<br />
+    <br />###IMAGE### 
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_2### -->
+
+
+  -  N R .  III  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3rd tab
+
+<!-- ###TEMPLATE_INFOPOI_3### -->
+<div id="poi" style="width:220px;">
+  <ul id="poitab">
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Information</a></li>
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, '###TABLE###');" >Picture</a></li>
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, '###TABLE###');" >Prices</a></li>
+  </ul>
+
+  <div class="poi-content">
+  ###CE###
+Nulla facilisi. Pellentesque massa mauris, consequat ac, posuere vel, dapibus quis, erat. 
+Vestibulum auctor. <br />Etiam molestie orci vitae nulla. Cras eros. Vivamus gravida mi in ipsum. 
+Donec at dolor at diam tristique ultricies. <br />Ut libero augue, tempor eget, suscipit quis, 
+venenatis et, lacus. Maecenas libero dolor, aliquet id, <br />consectetuer et, suscipit non, libero. 
+Maecenas suscipit. Donec tempor. Maecenas eros sapien, <br />euismod non, luctus et, tincidunt vel, erat.
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_3### -->
+
+
+  -  N R .  K  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"Special" template for categories with a prefix. In this case, the prefix is "k"
+
+<!-- ###TEMPLATE_INFOPOI_K_1### -->
+<div id="poi" style="width:220px;">
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>
+
+
+  </ul>
+  <div class="poi-content" >
+special template, just for this category <br />
+<strong>Directions</strong> <br />
+- <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,3, '###TABLE###');" >To here</a> <br />
+- <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,4, '###TABLE###');" >From here</a> <br /> 
+
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_K_1### -->
+
+
+<!-- ###TEMPLATE_INFOPOI_K_3### -->
+<div id="poi" style="width:220px;" >
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>  </ul>
+  <div class="poi-content" style="height:120px;">
+    Directions: <b>To here</b> 
+    <br />Start address:
+    <form action="http://maps.google.com/maps" method="get" target="_blank">
+      <input type="text" size=40 maxlength=40 name="saddr" id="saddr" value="" /><br />
+      <input value="Get Directions" type="submit">
+      <input type="hidden" name="daddr" value="###TX_RGGOOGLEMAP_LAT###,###TX_RGGOOGLEMAP_LNG### "/>
+    </form>
+    <br />
+    <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >back</a>
+  </div>
+</div>
+<!-- ###TEMPLATE_INFOPOI_K_3### -->
+
+<!-- ###TEMPLATE_INFOPOI_K_4### -->
+<div id="poi" style="width:220px;">
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >Single Tab</a></li>  
+  </ul>
+  <div class="poi-content" style="height:120px;">
+   <b>From here</b> 
+    <br />End address:
+    <form action="http://maps.google.com/maps" method="get" target="_blank">
+      <input type="text" SIZE=40 maxlength=40 name="daddr" id="daddr" value="" /><br />
+      <input value="Get Directions" type="submit">
+      <input type="hidden" name="saddr" value="###TX_RGGOOGLEMAP_LAT###,###TX_RGGOOGLEMAP_LNG### "/>
+    </form>
+    <br />
+    <a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, '###TABLE###');" >back</a>
+
+  </div>
+</div>
+<!-- ###TEMPLATE_INFOPOI_K_4### -->
+
+  -  N R .  1  ve_guestbook  -  T E M P L A T E    
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"Special" template for ve_guestbook
+
+<!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_1### -->
+<div id="poi" style="width:220px;">
+  <ul id="poitab">
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>  
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tx_veguestbook_entries');" >more...</a></li>
+  </ul>
+
+  <div class="poi-content" >
+      <b>Name</b>: ###FIRSTNAME### ###SURNAME### <br />
+      <b>from</b>: ###PLACE### <br />
+      <b>Text</b>: ###ENTRY###
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_1### -->
+
+<!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_2### -->
+<div id="poi" style="width:220px;">
+  <ul id="poitab">
+    <li><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,1, 'tx_veguestbook_entries');" >Info</a></li>  
+    <li class="act"><a href="javascript:void(0)" onclick="tx_rggooglemap_pi1tab(###UID###,2, 'tx_veguestbook_entries');" >more...</a></li>
+  </ul>
+
+  <div class="poi-content" >
+<b>more info about ###SURNAME### ###FIRSTNAME###:</b>
+###ENTRY### ###ENTRY### ###ENTRY###
+  </div>
+</div>
+
+<!-- ###TEMPLATE_INFOPOI_TX_VEGUESTBOOK_ENTRIES_2### -->
+
+
+
+
+============================================================================================================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  L O C A T I O N B O X  - - - - - - - - - - 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the geocoding location box
+
+<!-- ###TEMPLATE_SEARCHBOX### -->
+Enter the location with the syntax: <i>Street, City, Country</i> or <i>City, Country</i><br />
+<form action="#" id="geocode" name="geocode" onsubmit="showAddress(this.address.value); return false">
+  <input size="40" type="text" name="address" onFocus="if(this.value==defaultValue)this.value='';" value="Vienna, Austria" /> <br />
+  <input type="submit" value="Go!" />
+</form>
+ <!-- ###TEMPLATE_SEARCHBOX### -->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  V I S I B L E   R E C O R D S - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for all visible records
+
+<!-- ###TEMPLATE_RECORDSONMAP### -->
+<div id="rggooglemap-recordsonmap">
+Please wait for a small moment - <img src="typo3conf/ext/rggooglemap/res/ajax-loader.gif" alt="loader"/>
+</div>
+ <!-- ###TEMPLATE_RECORDSONMAP### -->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  A C T I V E   R E C O R D S  - - - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the active records (the ones which are shown on the map)
+
+<!-- ###TEMPLATE_ACTIVERECORDS### -->
+<ul>
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+    <li>
+      ###NAME### &middot; <a href="javascript:void(0)" onclick=" show('infobox'); tx_rggooglemap_pi1infomsg(###UID###, '###TABLE###',1); ">Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>  
+    </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
+
+ <!-- ###TEMPLATE_ACTIVERECORDS### -->
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  M E N U  -  T E M P L A T E  - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Show all records of the selected categories and starting point, linking to the map on a different page
+
+<!-- ###TEMPLATE_MENU### -->
+<div class="rggooglemap-menu">
+
+
+<ul id="rggooglemap-menu">
+<!-- ###CONTENT### --><!-- ###ITEM_SINGLE### -->
+  <li class="###ACT###">###TEXT### ###DESCRIPTION### ###TEST###
+    <ul>
+    <!-- ###CONTENT2### --><!-- ###ITEM_SINGLE2### -->
+    <li><!-- ###LINK### -->###NAME### <!-- ###LINK### -->###UID###</li>
+    <!-- ###ITEM_SINGLE2### --><!-- ###CONTENT2### -->
+
+    </ul>
+  </li>
+<!-- ###ITEM_SINGLE### --><!-- ###CONTENT### -->
+</ul>
+
+
+
+</div>
+ <!-- ###TEMPLATE_MENU### -->
+ 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  S E A R C H  B O X - - - - - - - - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the searchbox
+<!-- ###TEMPLATE_SEARCH### -->
+Search for a record, e.g. <i>"Hotel"</i>
+<form action="#" id="rggmsearch" name="rggmsearch" onsubmit="tx_rggooglemap_pi1search(xajax.getFormValues('rggmsearch')); return false">
+  <input type="hidden" id="rggmBound" name="rggmBound" />
+  <input size="30" type="text" name="rggmsearchValue" onFocus="if(this.value==defaultValue)this.value='';" value="Hotel" /> 
+
+  &nbsp;&nbsp;<input type="checkbox" id="rggmOnMap" name="rggmOnMap" /> <label for="rggmOnMap">on map only</label><br />
+  <input type="submit" value="Go!" />
+</form>
+<div id="searchFormResult"></div>
+ <!-- ###TEMPLATE_SEARCH### -->
+ 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  S E A R C H  -  R E S U L T  - - - - - - -
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Template for the search results
+
+<!-- ###TEMPLATE_SEARCH_RESULTS### -->
+<ul>
+	<!-- ###CONTENT### -->
+	 <!-- ###SINGLE### -->
+    <li>
+      ###NAME### &middot; <a ###POPUP###>Info</a>  &middot; <a onmouseover="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###, '###TABLE###')" >mouse</a> &middot; <a onClick="myclick(###UID###,###TX_RGGOOGLEMAP_LNG###,###TX_RGGOOGLEMAP_LAT###,'###TABLE###') ">On map</a>  
+    </li>
+	 <!-- ###SINGLE### -->
+  <!-- ###CONTENT### -->
+</ul>
+
+ <!-- ###TEMPLATE_SEARCH_RESULTS### -->
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  C A T T R E E -  T E M P L A T E  - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+These 2 templates are used for the category tree menu. 1st for the menu next to the map, the 2nd one for the menu view
+
+<!-- ###TEMPLATE_CATMENU### -->
+
+    <li>
+      <input ###CHECKED### type="checkbox" name="cb[###UID###]" value="###UID###" onclick="tx_rggooglemap_pi1processCat(xajax.getFormValues('xajax_cat'));clearCat(); " /> ###ICON### ###TITLE### ###RECURSIVE###
+    </li>
+
+<!-- ###TEMPLATE_CATMENU### -->
+
+<!-- ###TEMPLATE_CATMENU_TREE### -->
+
+    <li>
+      <input ###CHECKED### type="checkbox" name="cb[###UID###]" value="###UID###" id="rggmcb-###UID###" /> ###ICON### <label for="rggmcb-###UID###">###TITLE###</label>
+    </li>
+
+<!-- ###TEMPLATE_CATMENU_TREE### -->
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  C A T M E N U -  T E M P L A T E  - - - - -  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The template for the catmenu for the menu view
+
+<!-- ###TEMPLATE_CATMENU_MENU### -->
+<div class="mapcat">
+  <form action="" onsubmit="return false;" id="xajax_cat">
+  <div>###CAT_MENU###
+  <input type="submit"  onclick="rggmTree(xajax.getFormValues('xajax_cat'));" value="Aktualisieren"/>
+  </div>
+  </form>
+</div>
+<!-- ###TEMPLATE_CATMENU_MENU### -->
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ = =  T H E   E  N D = = = = = = = = = = = = =  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+  </body>
+</html>
